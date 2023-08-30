@@ -1,5 +1,5 @@
-import { SemanticEssentialColors } from "@/styles/colors";
-import { Sizes } from "@/styles/sizes";
+import { SemanticEssentialColors, semanticColorToHex } from "@/styles/colors";
+import { Sizes, minBlockSizeMap } from "@/styles/sizes";
 import {
 	AsProp,
 	PseudoClassProps,
@@ -7,6 +7,7 @@ import {
 } from "@/utils/typeHelpers";
 import React from "react";
 import styled from "styled-components";
+import { ButtonIconPosition, IconButtonWrapper } from "./IconButtonWrapper";
 
 export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
 	Pick<PseudoClassProps, "hover" | "active" | "focus"> & {
@@ -37,29 +38,69 @@ export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
 		 * Place icon trailing buton text
 		 **/
 		iconTrailing?: AsProp;
+		/**
+		 * Only an icon for a button
+		 */
+		iconOnly?: AsProp;
 	};
 
 const ButtonStyled = styled(
-	React.forwardRef<
-		HTMLElement,
-		ButtonPrimaryProps & { buttonSize: Sizes; fullWidth?: boolean }
-	>(function Button({ component: Component = "button", ...props }, ref) {
+	React.forwardRef<HTMLElement, ButtonPrimaryProps>(function Button(
+		{ component: Component = "button", ...props },
+		ref
+	) {
 		return <Component {...props} ref={ref} />;
 	})
-)``;
+)`
+	min-block-size: ${(props) => minBlockSizeMap[props.size!]};
+	border: none;
+	background-color: ${(props) => semanticColorToHex(props.colorSet!)};
+	display: flex;
+	font-size: inherit;
+	align-items: center;
+	justify-content: center;
+
+	& focus: {
+		border: solid 1px black;
+	}
+`;
 
 export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
-	({
-		colorSet = SemanticEssentialColors.ESSENTIAL_BRIGHT_ACCENT,
-		component,
-		size = Sizes.MEDIUM,
-		fullWidth,
-		iconLeading,
-		iconTrailing,
-		"aria-label": ariaLabel,
-		"aria-labelledby": ariaLabelledBy,
-		...props
-	}) => {
-		return <ButtonStyled {...props}></ButtonStyled>;
+	(
+		{
+			colorSet = SemanticEssentialColors.ESSENTIAL_BRIGHT_ACCENT,
+			component,
+			size = Sizes.MEDIUM,
+			fullWidth,
+			iconLeading,
+			iconTrailing,
+			iconOnly,
+			children,
+			"aria-label": ariaLabel,
+			"aria-labelledby": ariaLabelledBy,
+			...props
+		},
+		ref
+	) => {
+		const renderIcon = (position: ButtonIconPosition, icon?: AsProp) =>
+			icon && <IconButtonWrapper icon={icon} position={position} size={size} />;
+
+		return (
+			<ButtonStyled
+				ref={ref}
+				component={!component && props.href ? "a" : component}
+				aria-label={ariaLabel}
+				aria-labelledby={ariaLabelledBy}
+				colorSet={colorSet}
+				size={size}
+				fullWidth={fullWidth}
+				{...props}
+			>
+				{renderIcon(ButtonIconPosition.LEADING, iconLeading)}
+				{renderIcon(ButtonIconPosition.ONLY, iconOnly)}
+				{!iconOnly && children}
+				{renderIcon(ButtonIconPosition.TRAILING, iconTrailing)}
+			</ButtonStyled>
+		);
 	}
 );

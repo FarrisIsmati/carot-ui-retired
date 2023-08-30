@@ -24,6 +24,11 @@ export enum SemanticEssentialColors {
 	ESSENTIAL_ANNOUNCEMENT = "ESSENTIAL_ANNOUNCEMNT",
 }
 
+export type SemanticColors =
+	| SemanticBackgroundColors
+	| SemanticTextColors
+	| SemanticEssentialColors;
+
 export enum ColorBaseCore {
 	WHITE = "WHITE",
 	BLACK = "BLACK",
@@ -46,6 +51,12 @@ export enum ColorBaseCore {
 	GREEN_4 = "GREEN_4",
 	GREEN_5 = "GREEN_5",
 	GREEN_7 = "GREEN_7",
+	ERROR_2 = "ERROR_2",
+	ERROR_3 = "ERROR_3",
+	ERROR_4 = "ERROR_4",
+	ERROR_5 = "ERROR_5",
+	ERROR_6 = "ERROR_6",
+	ERROR_7 = "ERROR_7",
 }
 
 const colorBaseMap = {
@@ -70,6 +81,12 @@ const colorBaseMap = {
 	[ColorBaseCore.GREEN_4]: "#49A972",
 	[ColorBaseCore.GREEN_5]: "#B8D4B0",
 	[ColorBaseCore.GREEN_7]: "#F1F8E9",
+	[ColorBaseCore.ERROR_2]: "#601410",
+	[ColorBaseCore.ERROR_3]: "#8C1D18",
+	[ColorBaseCore.ERROR_4]: "#B3261E",
+	[ColorBaseCore.ERROR_5]: "#DC362E",
+	[ColorBaseCore.ERROR_6]: "#E46962",
+	[ColorBaseCore.ERROR_7]: "#EC928E",
 };
 
 const semanticColorMap = {
@@ -79,15 +96,22 @@ const semanticColorMap = {
 	[SemanticTextColors.TEXT_ANNOUNCEMENT]: ColorBaseCore.WHITE,
 	[SemanticTextColors.TEXT_BASE]: ColorBaseCore.BLACK,
 	[SemanticTextColors.TEXT_BRIGHT_ACCENT]: ColorBaseCore.GREEN_4,
-	[SemanticTextColors.TEXT_NEGATIVE]: ColorBaseCore.RED_3,
+	[SemanticTextColors.TEXT_NEGATIVE]: ColorBaseCore.ERROR_5,
 	[SemanticTextColors.TEXT_POSITIVE]: ColorBaseCore.GREEN_3,
 	[SemanticTextColors.TEXT_SUBDUED]: ColorBaseCore.NEUTRAL_2,
-	[SemanticTextColors.TEXT_WARNING]: ColorBaseCore.ORANGE_3,
+	[SemanticTextColors.TEXT_WARNING]: ColorBaseCore.ERROR_6,
+	[SemanticEssentialColors.ESSENTIAL_ANNOUNCEMENT]: ColorBaseCore.WHITE,
+	[SemanticEssentialColors.ESSENTIAL_BASE]: ColorBaseCore.ORANGE_5,
+	[SemanticEssentialColors.ESSENTIAL_BRIGHT_ACCENT]: ColorBaseCore.ORANGE_5,
+	[SemanticEssentialColors.ESSENTIAL_NEGATIVE]: ColorBaseCore.ERROR_5,
+	[SemanticEssentialColors.ESSENTIAL_POSITIVE]: ColorBaseCore.GREEN_5,
+	[SemanticEssentialColors.ESSENTIAL_SUBDUED]: ColorBaseCore.ORANGE_3,
+	[SemanticEssentialColors.ESSENTIAL_WARNING]: ColorBaseCore.ERROR_6,
 };
 
 // Convert base color names to HEX
 export const colorToHex = (colorBase: ColorBaseCore) => colorBaseMap[colorBase];
 
 // Convert semantic colors to HEX
-export const semanticColorToHex = (semanticColor: SemanticBackgroundColors) =>
+export const semanticColorToHex = (semanticColor: SemanticColors) =>
 	colorToHex(semanticColorMap[semanticColor]);

@@ -26,3 +26,8 @@ export type PseudoClassProps = {
 	isActive?: boolean;
 	active?: boolean;
 };
+
+/**
+ * Convert a token in px format to integer
+ **/
+export const pxToInt = (px: string) => parseInt(px, 10);
