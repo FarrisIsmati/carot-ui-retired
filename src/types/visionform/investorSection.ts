@@ -1,4 +1,4 @@
-import { ScheduleTypeFull } from "./dates";
+import { ScheduleTypeFull } from "./schedule";
 
 export enum InvestorType {
 	ACTIVE = "ACTIVE",
