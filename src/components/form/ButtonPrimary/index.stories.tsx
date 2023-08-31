@@ -1,51 +1,51 @@
 import { Sizes } from "@/styles/sizes";
 
 import { ArrowBack, ArrowForward, ArrowUpward } from "@material-ui/icons";
-import { default as PrimaryButton } from "./index";
+import { default as ButtonPrimary } from "./index";
 export default {
-	component: PrimaryButton,
+	component: ButtonPrimary,
 	title: "Primary Button",
 	tags: ["autodocs"],
 };
 
 // Large
-export const Default = () => <PrimaryButton>Button</PrimaryButton>;
+export const Default = () => <ButtonPrimary>Button</ButtonPrimary>;
 
 export const ButtonWithIconTrailingLarge = () => (
-	<PrimaryButton iconTrailing={ArrowBack}>Button</PrimaryButton>
+	<ButtonPrimary iconTrailing={ArrowBack}>Button</ButtonPrimary>
 );
 
 export const ButtonWithIconLeadingLarge = () => (
-	<PrimaryButton iconLeading={ArrowForward}>Button</PrimaryButton>
+	<ButtonPrimary iconLeading={ArrowForward}>Button</ButtonPrimary>
 );
 
 export const ButtonIconOnlyLarge = () => (
-	<PrimaryButton iconOnly={ArrowUpward} />
+	<ButtonPrimary iconOnly={ArrowUpward} />
 );
 
 export const ButtonDisabledLarge = () => (
-	<PrimaryButton disabled>Button</PrimaryButton>
+	<ButtonPrimary disabled>Button</ButtonPrimary>
 );
 
 // Small
 export const ButtonWithIconTrailingSmall = () => (
-	<PrimaryButton iconTrailing={ArrowBack} size={Sizes.SMALL}>
+	<ButtonPrimary iconTrailing={ArrowBack} size={Sizes.SMALL}>
 		Button
-	</PrimaryButton>
+	</ButtonPrimary>
 );
 
 export const ButtonWithIconLeadingSmall = () => (
-	<PrimaryButton iconLeading={ArrowForward} size={Sizes.SMALL}>
+	<ButtonPrimary iconLeading={ArrowForward} size={Sizes.SMALL}>
 		Button
-	</PrimaryButton>
+	</ButtonPrimary>
 );
 
 export const ButtonIconOnlySmall = () => (
-	<PrimaryButton iconOnly={ArrowUpward} size={Sizes.SMALL} />
+	<ButtonPrimary iconOnly={ArrowUpward} size={Sizes.SMALL} />
 );
 
 export const ButtonDisabledSmall = () => (
-	<PrimaryButton disabled size={Sizes.SMALL}>
+	<ButtonPrimary disabled size={Sizes.SMALL}>
 		Button
-	</PrimaryButton>
+	</ButtonPrimary>
 );

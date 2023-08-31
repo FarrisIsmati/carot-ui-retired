@@ -20,6 +20,8 @@ export default function RootLayout({
 				<header>
 					<p>Header</p>
 					<nav>Navigate</nav>
+					{/* Basic Sans & Poppins */}
+					<link rel="stylesheet" href="https://use.typekit.net/wak4qgj.css" />
 				</header>
 				{children}
 				<footer>Footer</footer>

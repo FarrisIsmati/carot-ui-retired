@@ -1,3 +1,12 @@
+export enum SemanticSetCores {
+	BASE = "BASE",
+	PRIMARY = "PRIMARY",
+	PRIMARY_ALT = "PRIMARY_ALT",
+	PRIMARY_ALT_2 = "PRIMARY_ALT_2",
+	SECONDARY = "SECONDARY",
+	NEGATIVE = "NEGATIVE",
+}
+
 export enum SemanticTextColors {
 	TEXT_BASE = "TEXT_BASE",
 	TEXT_PRIMARY = "TEXT_PRIMARY",
@@ -91,11 +100,6 @@ export enum SemanticEssentialColorsState {
 	ESSENTIAL_SECONDARY_DISABLED = "ESSENTIAL_SECONDARY_DISABLED",
 	ESSENTIAL_NEGATIVE_DISABLED = "ESSENTIAL_NEGATIVE_DISABLED",
 }
-
-export type SemanticColors = SemanticTextColors | SemanticEssentialColors;
-export type SemanticColorsState =
-	| SemanticTextColorsState
-	| SemanticEssentialColorsState;
 
 export enum ColorBaseCore {
 	WHITE = "WHITE",
@@ -286,7 +290,7 @@ export const semanticPalletMap = {
 	},
 };
 
-export interface ColorSet {
+export interface ColorSetStates {
 	default: string;
 	hover: string;
 	focus: string;
@@ -294,28 +298,89 @@ export interface ColorSet {
 	disabled: string;
 }
 
+export interface ColorSet {
+	text: ColorSetStates;
+	essential: ColorSetStates;
+}
+
 // Convert base color names to HEX
 export const colorToHex = (colorBase: ColorBaseCore) => colorBaseMap[colorBase];
 
+export const semanticCoreMap = {
+	BASE: {
+		text: SemanticTextColors.TEXT_BASE,
+		essential: SemanticEssentialColors.ESSENTIAL_BASE,
+	},
+	NEGATIVE: {
+		text: SemanticTextColors.TEXT_NEGATIVE,
+		essential: SemanticEssentialColors.ESSENTIAL_NEGATIVE,
+	},
+	PRIMARY: {
+		text: SemanticTextColors.TEXT_PRIMARY,
+		essential: SemanticEssentialColors.ESSENTIAL_PRIMARY,
+	},
+	PRIMARY_ALT: {
+		text: SemanticTextColors.TEXT_PRIMARY_ALT,
+		essential: SemanticEssentialColors.ESSENTIAL_PRIMARY_ALT,
+	},
+	PRIMARY_ALT_2: {
+		text: SemanticTextColors.TEXT_PRIMARY_ALT_2,
+		essential: SemanticEssentialColors.ESSENTIAL_PRIMARY_ALT_2,
+	},
+	SECONDARY: {
+		text: SemanticTextColors.TEXT_SECONDARY,
+		essential: SemanticEssentialColors.ESSENTIAL_SECONDARY,
+	},
+};
+
 // Convert semantic colors to HEX
-export const getColorSet = (semanticColor: SemanticColors) => {
+export const getColorSet = (semanticCore: SemanticSetCores) => {
 	const colorSet: ColorSet = {
-		default: "",
-		hover: "",
-		focus: "",
-		active: "",
-		disabled: "",
+		text: {
+			default: "",
+			hover: "",
+			focus: "",
+			active: "",
+			disabled: "",
+		},
+		essential: {
+			default: "",
+			hover: "",
+			focus: "",
+			active: "",
+			disabled: "",
+		},
 	};
-	Object.entries(semanticPalletMap[semanticColor]).forEach((kv) => {
+
+	const textPallet = semanticCoreMap[semanticCore].text;
+	Object.entries(semanticPalletMap[textPallet]).forEach((kv) => {
 		const keyWords = kv[0].split("_");
-		const state = keyWords[keyWords.length - 1].toLowerCase() as keyof ColorSet;
+		const state = keyWords[
+			keyWords.length - 1
+		].toLowerCase() as keyof ColorSetStates;
 		const colorBase = kv[1];
 
-		if (colorSet[state] === undefined) {
+		if (colorSet.text[state] === undefined) {
 			throw new Error(`Could not map color state '${state}' to pallet map`);
 		}
 
-		colorSet[state] = colorToHex(colorBase);
+		colorSet.text[state] = colorToHex(colorBase);
 	});
+
+	const essentialPallet = semanticCoreMap[semanticCore].essential;
+	Object.entries(semanticPalletMap[essentialPallet]).forEach((kv) => {
+		const keyWords = kv[0].split("_");
+		const state = keyWords[
+			keyWords.length - 1
+		].toLowerCase() as keyof ColorSetStates;
+		const colorBase = kv[1];
+
+		if (colorSet.essential[state] === undefined) {
+			throw new Error(`Could not map color state '${state}' to pallet map`);
+		}
+
+		colorSet.essential[state] = colorToHex(colorBase);
+	});
+
 	return colorSet;
 };

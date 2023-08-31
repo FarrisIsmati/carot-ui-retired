@@ -1,10 +1,11 @@
 import {
 	ColorBaseCore,
 	ColorSet,
-	SemanticEssentialColors,
+	SemanticSetCores,
 	colorToHex,
 	getColorSet,
 } from "@/styles/colors";
+import { semanticFonts } from "@/styles/fonts";
 import {
 	Sizes,
 	buttonPaddingMap,
@@ -18,7 +19,7 @@ import {
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ButtonIconPosition, IconButtonWrapper } from "./IconButtonWrapper";
 
 export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
@@ -56,7 +57,7 @@ export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
 		iconOnly?: AsProp;
 	};
 
-const ButtonStyled = styled(
+export const ButtonStyled = styled(
 	React.forwardRef<HTMLElement, ButtonPrimaryProps>(function Button(
 		{ component: Component = "button", colorSet, size, ...props },
 		ref
@@ -64,41 +65,45 @@ const ButtonStyled = styled(
 		return <Component {...props} ref={ref} />;
 	})
 )`
-	${(props) => `
-		min-block-size: ${minBlockSizeMap[props.size!]};
-		border: none;
-		background-color: ${props.colorSet?.default};
-		padding: ${buttonPaddingMap[props.size!]};
-		border-radius: ${spacer8};
-		display: flex;
-		font-size: inherit;
-		align-items: center;
-		justify-content: center;
+	${(props) => {
+		return css`
+			${semanticFonts.labelLarge}
+			color: ${props.colorSet?.text.default};
+			min-block-size: ${minBlockSizeMap[props.size!]};
+			border: none;
+			background-color: ${props.colorSet?.essential.default};
+			padding: ${buttonPaddingMap[props.size!]};
+			border-radius: ${spacer8};
+			display: flex;
+			font-size: inherit;
+			align-items: center;
+			justify-content: center;
 
-		&:disabled {
-			background-color: ${props.colorSet?.disabled};
-		}
+			&:disabled {
+				background-color: ${props.colorSet?.essential.disabled};
+			}
 
-		&:hover:not([disabled]) {
-			background-color: ${props.colorSet?.hover};
-			cursor: pointer;
-		}
+			&:hover:not([disabled]) {
+				background-color: ${props.colorSet?.essential.hover};
+				cursor: pointer;
+			}
 
-		&:focus:not([disabled]) {
-			outline: ${spacer2} solid ${colorToHex(ColorBaseCore.BLACK)};
-		}
+			&:focus:not([disabled]) {
+				outline: ${spacer2} solid ${colorToHex(ColorBaseCore.BLACK)};
+			}
 
-		&:active:not([disabled]) {
-			background-color: ${props.colorSet?.active};
-			cursor: pointer;
-		}
-	`}
+			&:active:not([disabled]) {
+				background-color: ${props.colorSet?.essential.active};
+				cursor: pointer;
+			}
+		`;
+	}}
 `;
 
 export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 	(
 		{
-			colorSet = getColorSet(SemanticEssentialColors.ESSENTIAL_PRIMARY),
+			colorSet = getColorSet(SemanticSetCores.PRIMARY),
 			component,
 			size = Sizes.LARGE,
 			fullWidth,
@@ -124,6 +129,9 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 				colorSet={colorSet}
 				size={size}
 				fullWidth={fullWidth}
+				onClick={(e: any) => {
+					e.target.blur();
+				}}
 				{...props}
 			>
 				{renderIcon(ButtonIconPosition.TRAILING, iconTrailing)}
