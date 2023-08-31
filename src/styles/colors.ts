@@ -1,33 +1,101 @@
-export enum SemanticBackgroundColors {
-	BACKGROUND_BASE = "BACKGROUND_BASE",
-	BACKGROUND_HIGHLIGHT = "BACKGROUND_HIGHLIGHT",
-	BACKGROUND_PRESS = "BACKGROUND_PRESS",
-}
-
 export enum SemanticTextColors {
 	TEXT_BASE = "TEXT_BASE",
-	TEXT_SUBDUED = "TEXT_SUBDUED",
-	TEXT_BRIGHT_ACCENT = "TEXT_BRIGHT_ACCENT",
+	TEXT_PRIMARY = "TEXT_PRIMARY",
+	TEXT_PRIMARY_ALT = "TEXT_PRIMARY_ALT",
+	TEXT_PRIMARY_ALT_2 = "TEXT_PRIMARY_ALT_2",
+	TEXT_SECONDARY = "TEXT_SECONDARY",
 	TEXT_NEGATIVE = "TEXT_NEGATIVE",
-	TEXT_WARNING = "TEXT_WARNING",
-	TEXT_POSITIVE = "TEXT_POSITIVE",
-	TEXT_ANNOUNCEMENT = "TEXT_ANNOUNCEMNT",
+}
+
+export enum SemanticTextColorsState {
+	// Default
+	TEXT_BASE_DEFAULT = "TEXT_BASE_DEFAULT",
+	TEXT_PRIMARY_DEFAULT = "TEXT_PRIMARY_DEFAULT",
+	TEXT_PRIMARY_ALT_DEFAULT = "TEXT_PRIMARY_ALT_DEFAULT",
+	TEXT_PRIMARY_ALT_2_DEFAULT = "TEXT_PRIMARY_ALT_2_DEFAULT",
+	TEXT_SECONDARY_DEFAULT = "TEXT_SECONDARY_DEFAULT",
+	TEXT_NEGATIVE_DEFAULT = "TEXT_NEGATIVE_DEFAULT",
+	// Hover
+	TEXT_BASE_HOVER = "TEXT_BASE_HOVER",
+	TEXT_PRIMARY_HOVER = "TEXT_PRIMARY_HOVER",
+	TEXT_PRIMARY_ALT_HOVER = "TEXT_PRIMARY_ALT_HOVER",
+	TEXT_PRIMARY_ALT_2_HOVER = "TEXT_PRIMARY_ALT_2_HOVER",
+	TEXT_SECONDARY_HOVER = "TEXT_SECONDARY_HOVER",
+	TEXT_NEGATIVE_HOVER = "TEXT_NEGATIVE_HOVER",
+	// Focus
+	TEXT_BASE_FOCUS = "TEXT_BASE_FOCUS",
+	TEXT_PRIMARY_FOCUS = "TEXT_PRIMARY_FOCUS",
+	TEXT_PRIMARY_ALT_FOCUS = "TEXT_PRIMARY_ALT_FOCUS",
+	TEXT_PRIMARY_ALT_2_FOCUS = "TEXT_PRIMARY_ALT_2_FOCUS",
+	TEXT_SECONDARY_FOCUS = "TEXT_SECONDARY_FOCUS",
+	TEXT_NEGATIVE_FOCUS = "TEXT_NEGATIVE_FOCUS",
+	// Active
+	TEXT_BASE_ACTIVE = "TEXT_BASE_ACTIVE",
+	TEXT_PRIMARY_ACTIVE = "TEXT_PRIMARY_ACTIVE",
+	TEXT_PRIMARY_ALT_ACTIVE = "TEXT_PRIMARY_ALT_ACTIVE",
+	TEXT_PRIMARY_ALT_2_ACTIVE = "TEXT_PRIMARY_ALT_2_ACTIVE",
+	TEXT_SECONDARY_ACTIVE = "TEXT_SECONDARY_ACTIVE",
+	TEXT_NEGATIVE_ACTIVE = "TEXT_NEGATIVE_ACTIVE",
+	// Disabled
+	TEXT_BASE_DISABLED = "TEXT_BASE_DISABLED",
+	TEXT_PRIMARY_DISABLED = "TEXT_PRIMARY_DISABLED",
+	TEXT_PRIMARY_ALT_DISABLED = "TEXT_PRIMARY_ALT_DISABLED",
+	TEXT_PRIMARY_ALT_2_DISABLED = "TEXT_PRIMARY_ALT_2_DISABLED",
+	TEXT_SECONDARY_DISABLED = "TEXT_SECONDARY_DISABLED",
+	TEXT_NEGATIVE_DISABLED = "TEXT_NEGATIVE_DISABLED",
 }
 
 export enum SemanticEssentialColors {
 	ESSENTIAL_BASE = "ESSENTIAL_BASE",
-	ESSENTIAL_SUBDUED = "ESSENTIAL_SUBDUED",
-	ESSENTIAL_BRIGHT_ACCENT = "ESSENTIAL_BRIGHT_ACCENT",
+	ESSENTIAL_PRIMARY = "ESSENTIAL_PRIMARY",
+	ESSENTIAL_PRIMARY_ALT = "ESSENTIAL_PRIMARY_ALT",
+	ESSENTIAL_PRIMARY_ALT_2 = "ESSENTIAL_PRIMARY_ALT_2",
+	ESSENTIAL_SECONDARY = "ESSENTIAL_SECONDARY",
 	ESSENTIAL_NEGATIVE = "ESSENTIAL_NEGATIVE",
-	ESSENTIAL_WARNING = "ESSENTIAL_WARNING",
-	ESSENTIAL_POSITIVE = "ESSENTIAL_POSITIVE",
-	ESSENTIAL_ANNOUNCEMENT = "ESSENTIAL_ANNOUNCEMNT",
 }
 
-export type SemanticColors =
-	| SemanticBackgroundColors
-	| SemanticTextColors
-	| SemanticEssentialColors;
+export enum SemanticEssentialColorsState {
+	// Default
+	ESSENTIAL_BASE_DEFAULT = "ESSENTIAL_BASE_DEFAULT",
+	ESSENTIAL_PRIMARY_DEFAULT = "ESSENTIAL_PRIMARY_DEFAULT",
+	ESSENTIAL_PRIMARY_ALT_DEFAULT = "ESSENTIAL_PRIMARY_ALT_DEFAULT",
+	ESSENTIAL_PRIMARY_ALT_2_DEFAULT = "ESSENTIAL_PRIMARY_ALT_2_DEFAULT",
+	ESSENTIAL_SECONDARY_DEFAULT = "ESSENTIAL_SECONDARY_DEFAULT",
+	ESSENTIAL_NEGATIVE_DEFAULT = "ESSENTIAL_NEGATIVE_DEFAULT",
+	// Hover
+	ESSENTIAL_BASE_HOVER = "ESSENTIAL_BASE_HOVER",
+	ESSENTIAL_PRIMARY_HOVER = "ESSENTIAL_PRIMARY_HOVER",
+	ESSENTIAL_PRIMARY_ALT_HOVER = "ESSENTIAL_PRIMARY_ALT_HOVER",
+	ESSENTIAL_PRIMARY_ALT_2_HOVER = "ESSENTIAL_PRIMARY_ALT_2_HOVER",
+	ESSENTIAL_SECONDARY_HOVER = "ESSENTIAL_SECONDARY_HOVER",
+	ESSENTIAL_NEGATIVE_HOVER = "ESSENTIAL_NEGATIVE_HOVER",
+	// Focus
+	ESSENTIAL_BASE_FOCUS = "ESSENTIAL_BASE_FOCUS",
+	ESSENTIAL_PRIMARY_FOCUS = "ESSENTIAL_PRIMARY_FOCUS",
+	ESSENTIAL_PRIMARY_ALT_FOCUS = "ESSENTIAL_PRIMARY_ALT_FOCUS",
+	ESSENTIAL_PRIMARY_ALT_2_FOCUS = "ESSENTIAL_PRIMARY_ALT_2_FOCUS",
+	ESSENTIAL_SECONDARY_FOCUS = "ESSENTIAL_SECONDARY_FOCUS",
+	ESSENTIAL_NEGATIVE_FOCUS = "ESSENTIAL_NEGATIVE_FOCUS",
+	// Active
+	ESSENTIAL_BASE_ACTIVE = "ESSENTIAL_BASE_ACTIVE",
+	ESSENTIAL_PRIMARY_ACTIVE = "ESSENTIAL_PRIMARY_ACTIVE",
+	ESSENTIAL_PRIMARY_ALT_ACTIVE = "ESSENTIAL_PRIMARY_ALT_ACTIVE",
+	ESSENTIAL_PRIMARY_ALT_2_ACTIVE = "ESSENTIAL_PRIMARY_ALT_2_ACTIVE",
+	ESSENTIAL_SECONDARY_ACTIVE = "ESSENTIAL_SECONDARY_ACTIVE",
+	ESSENTIAL_NEGATIVE_ACTIVE = "ESSENTIAL_NEGATIVE_ACTIVE",
+	// Disabled
+	ESSENTIAL_BASE_DISABLED = "ESSENTIAL_BASE_DISABLED",
+	ESSENTIAL_PRIMARY_DISABLED = "ESSENTIAL_PRIMARY_DISABLED",
+	ESSENTIAL_PRIMARY_ALT_DISABLED = "ESSENTIAL_PRIMARY_ALT_DISABLED",
+	ESSENTIAL_PRIMARY_ALT_2_DISABLED = "ESSENTIAL_PRIMARY_ALT_2_DISABLED",
+	ESSENTIAL_SECONDARY_DISABLED = "ESSENTIAL_SECONDARY_DISABLED",
+	ESSENTIAL_NEGATIVE_DISABLED = "ESSENTIAL_NEGATIVE_DISABLED",
+}
+
+export type SemanticColors = SemanticTextColors | SemanticEssentialColors;
+export type SemanticColorsState =
+	| SemanticTextColorsState
+	| SemanticEssentialColorsState;
 
 export enum ColorBaseCore {
 	WHITE = "WHITE",
@@ -37,6 +105,7 @@ export enum ColorBaseCore {
 	NEUTRAL_5 = "NEUTRAL_5",
 	NEUTRAL_6 = "NEUTRAL_6",
 	NEUTRAL_7 = "NEUTRAL_7",
+	NEUTRAL_8 = "NEUTRAL_8",
 	NEUTRAL_9 = "NEUTRAL_9",
 	RED_1 = "RED_1",
 	RED_3 = "RED_3",
@@ -67,6 +136,7 @@ const colorBaseMap = {
 	[ColorBaseCore.NEUTRAL_5]: "#9D9D9D",
 	[ColorBaseCore.NEUTRAL_6]: "#B8B8B8",
 	[ColorBaseCore.NEUTRAL_7]: "#D7D7D7",
+	[ColorBaseCore.NEUTRAL_8]: "#E7E7E7",
 	[ColorBaseCore.NEUTRAL_9]: "#F5F5F5",
 	[ColorBaseCore.RED_1]: "#8F350E",
 	[ColorBaseCore.RED_3]: "#DF6842",
@@ -89,29 +159,163 @@ const colorBaseMap = {
 	[ColorBaseCore.ERROR_7]: "#EC928E",
 };
 
-const semanticColorMap = {
-	[SemanticBackgroundColors.BACKGROUND_BASE]: ColorBaseCore.WHITE,
-	[SemanticBackgroundColors.BACKGROUND_HIGHLIGHT]: ColorBaseCore.NEUTRAL_9,
-	[SemanticBackgroundColors.BACKGROUND_PRESS]: ColorBaseCore.NEUTRAL_7,
-	[SemanticTextColors.TEXT_ANNOUNCEMENT]: ColorBaseCore.WHITE,
-	[SemanticTextColors.TEXT_BASE]: ColorBaseCore.BLACK,
-	[SemanticTextColors.TEXT_BRIGHT_ACCENT]: ColorBaseCore.GREEN_4,
-	[SemanticTextColors.TEXT_NEGATIVE]: ColorBaseCore.ERROR_5,
-	[SemanticTextColors.TEXT_POSITIVE]: ColorBaseCore.GREEN_3,
-	[SemanticTextColors.TEXT_SUBDUED]: ColorBaseCore.NEUTRAL_2,
-	[SemanticTextColors.TEXT_WARNING]: ColorBaseCore.ERROR_6,
-	[SemanticEssentialColors.ESSENTIAL_ANNOUNCEMENT]: ColorBaseCore.WHITE,
-	[SemanticEssentialColors.ESSENTIAL_BASE]: ColorBaseCore.ORANGE_5,
-	[SemanticEssentialColors.ESSENTIAL_BRIGHT_ACCENT]: ColorBaseCore.ORANGE_5,
-	[SemanticEssentialColors.ESSENTIAL_NEGATIVE]: ColorBaseCore.ERROR_5,
-	[SemanticEssentialColors.ESSENTIAL_POSITIVE]: ColorBaseCore.GREEN_5,
-	[SemanticEssentialColors.ESSENTIAL_SUBDUED]: ColorBaseCore.ORANGE_3,
-	[SemanticEssentialColors.ESSENTIAL_WARNING]: ColorBaseCore.ERROR_6,
+export const semanticPalletMap = {
+	// BASE
+	[SemanticTextColors.TEXT_BASE]: {
+		[SemanticTextColorsState.TEXT_BASE_DEFAULT]: ColorBaseCore.BLACK,
+		[SemanticTextColorsState.TEXT_BASE_HOVER]: ColorBaseCore.BLACK,
+		[SemanticTextColorsState.TEXT_BASE_FOCUS]: ColorBaseCore.BLACK,
+		[SemanticTextColorsState.TEXT_BASE_ACTIVE]: ColorBaseCore.BLACK,
+		[SemanticTextColorsState.TEXT_BASE_DISABLED]: ColorBaseCore.NEUTRAL_6,
+	},
+	[SemanticEssentialColors.ESSENTIAL_BASE]: {
+		[SemanticEssentialColorsState.ESSENTIAL_BASE_DEFAULT]: ColorBaseCore.WHITE,
+		[SemanticEssentialColorsState.ESSENTIAL_BASE_HOVER]: ColorBaseCore.WHITE,
+		[SemanticEssentialColorsState.ESSENTIAL_BASE_FOCUS]: ColorBaseCore.WHITE,
+		[SemanticEssentialColorsState.ESSENTIAL_BASE_ACTIVE]: ColorBaseCore.WHITE,
+		[SemanticEssentialColorsState.ESSENTIAL_BASE_DISABLED]:
+			ColorBaseCore.NEUTRAL_6,
+	},
+	// NEGATIVE
+	[SemanticTextColors.TEXT_NEGATIVE]: {
+		[SemanticTextColorsState.TEXT_NEGATIVE_DEFAULT]: ColorBaseCore.ERROR_4,
+		[SemanticTextColorsState.TEXT_NEGATIVE_HOVER]: ColorBaseCore.ERROR_4,
+		[SemanticTextColorsState.TEXT_NEGATIVE_FOCUS]: ColorBaseCore.ERROR_4,
+		[SemanticTextColorsState.TEXT_NEGATIVE_ACTIVE]: ColorBaseCore.ERROR_4,
+		[SemanticTextColorsState.TEXT_NEGATIVE_DISABLED]: ColorBaseCore.ERROR_4,
+	},
+	[SemanticEssentialColors.ESSENTIAL_NEGATIVE]: {
+		[SemanticEssentialColorsState.ESSENTIAL_NEGATIVE_DEFAULT]:
+			ColorBaseCore.ERROR_4,
+		[SemanticEssentialColorsState.ESSENTIAL_NEGATIVE_HOVER]:
+			ColorBaseCore.ERROR_4,
+		[SemanticEssentialColorsState.ESSENTIAL_NEGATIVE_FOCUS]:
+			ColorBaseCore.ERROR_4,
+		[SemanticEssentialColorsState.ESSENTIAL_NEGATIVE_ACTIVE]:
+			ColorBaseCore.ERROR_4,
+		[SemanticEssentialColorsState.ESSENTIAL_NEGATIVE_DISABLED]:
+			ColorBaseCore.ERROR_4,
+	},
+	// PRIMARY
+	[SemanticTextColors.TEXT_PRIMARY]: {
+		[SemanticTextColorsState.TEXT_PRIMARY_DEFAULT]: ColorBaseCore.WHITE,
+		[SemanticTextColorsState.TEXT_PRIMARY_HOVER]: ColorBaseCore.WHITE,
+
+		[SemanticTextColorsState.TEXT_PRIMARY_FOCUS]: ColorBaseCore.WHITE,
+
+		[SemanticTextColorsState.TEXT_PRIMARY_ACTIVE]: ColorBaseCore.WHITE,
+
+		[SemanticTextColorsState.TEXT_PRIMARY_DISABLED]: ColorBaseCore.WHITE,
+	},
+	[SemanticEssentialColors.ESSENTIAL_PRIMARY]: {
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_DEFAULT]:
+			ColorBaseCore.RED_3,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_HOVER]: ColorBaseCore.RED_1,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_FOCUS]: ColorBaseCore.RED_3,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_ACTIVE]:
+			ColorBaseCore.RED_1,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_DISABLED]:
+			ColorBaseCore.RED_7,
+	},
+	// PRIMARY ALT
+	[SemanticTextColors.TEXT_PRIMARY_ALT]: {
+		[SemanticTextColorsState.TEXT_PRIMARY_ALT_DEFAULT]: ColorBaseCore.WHITE,
+		[SemanticTextColorsState.TEXT_PRIMARY_ALT_HOVER]: ColorBaseCore.WHITE,
+
+		[SemanticTextColorsState.TEXT_PRIMARY_ALT_FOCUS]: ColorBaseCore.WHITE,
+
+		[SemanticTextColorsState.TEXT_PRIMARY_ALT_ACTIVE]: ColorBaseCore.WHITE,
+
+		[SemanticTextColorsState.TEXT_PRIMARY_ALT_DISABLED]: ColorBaseCore.WHITE,
+	},
+	[SemanticEssentialColors.ESSENTIAL_PRIMARY_ALT]: {
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_ALT_DEFAULT]:
+			ColorBaseCore.GREEN_3,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_ALT_HOVER]:
+			ColorBaseCore.GREEN_1,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_ALT_FOCUS]:
+			ColorBaseCore.GREEN_3,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_ALT_ACTIVE]:
+			ColorBaseCore.GREEN_1,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_ALT_DISABLED]:
+			ColorBaseCore.GREEN_7,
+	},
+	// PRIMARY ALT 2
+	[SemanticTextColors.TEXT_PRIMARY_ALT_2]: {
+		[SemanticTextColorsState.TEXT_PRIMARY_ALT_2_DEFAULT]: ColorBaseCore.BLACK,
+		[SemanticTextColorsState.TEXT_PRIMARY_ALT_2_HOVER]: ColorBaseCore.WHITE,
+
+		[SemanticTextColorsState.TEXT_PRIMARY_ALT_2_FOCUS]: ColorBaseCore.BLACK,
+
+		[SemanticTextColorsState.TEXT_PRIMARY_ALT_2_ACTIVE]: ColorBaseCore.BLACK,
+
+		[SemanticTextColorsState.TEXT_PRIMARY_ALT_2_DISABLED]:
+			ColorBaseCore.NEUTRAL_6,
+	},
+	[SemanticEssentialColors.ESSENTIAL_PRIMARY_ALT_2]: {
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_ALT_2_DEFAULT]:
+			ColorBaseCore.GREEN_5,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_ALT_2_HOVER]:
+			ColorBaseCore.GREEN_3,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_ALT_2_FOCUS]:
+			ColorBaseCore.GREEN_5,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_ALT_2_ACTIVE]:
+			ColorBaseCore.GREEN_5,
+		[SemanticEssentialColorsState.ESSENTIAL_PRIMARY_ALT_2_DISABLED]:
+			ColorBaseCore.GREEN_7,
+	},
+	// SECONDARY
+	[SemanticTextColors.TEXT_SECONDARY]: {
+		[SemanticTextColorsState.TEXT_SECONDARY_DEFAULT]: ColorBaseCore.BLACK,
+		[SemanticTextColorsState.TEXT_SECONDARY_HOVER]: ColorBaseCore.BLACK,
+		[SemanticTextColorsState.TEXT_SECONDARY_FOCUS]: ColorBaseCore.BLACK,
+		[SemanticTextColorsState.TEXT_SECONDARY_ACTIVE]: ColorBaseCore.BLACK,
+		[SemanticTextColorsState.TEXT_SECONDARY_DISABLED]: ColorBaseCore.NEUTRAL_6,
+	},
+	[SemanticEssentialColors.ESSENTIAL_SECONDARY]: {
+		[SemanticEssentialColorsState.ESSENTIAL_SECONDARY_DEFAULT]:
+			ColorBaseCore.NEUTRAL_9,
+		[SemanticEssentialColorsState.ESSENTIAL_SECONDARY_HOVER]:
+			ColorBaseCore.NEUTRAL_8,
+		[SemanticEssentialColorsState.ESSENTIAL_SECONDARY_FOCUS]:
+			ColorBaseCore.NEUTRAL_8,
+		[SemanticEssentialColorsState.ESSENTIAL_SECONDARY_ACTIVE]:
+			ColorBaseCore.NEUTRAL_8,
+		[SemanticEssentialColorsState.ESSENTIAL_SECONDARY_DISABLED]:
+			ColorBaseCore.NEUTRAL_9,
+	},
 };
+
+export interface ColorSet {
+	default: string;
+	hover: string;
+	focus: string;
+	active: string;
+	disabled: string;
+}
 
 // Convert base color names to HEX
 export const colorToHex = (colorBase: ColorBaseCore) => colorBaseMap[colorBase];
 
 // Convert semantic colors to HEX
-export const semanticColorToHex = (semanticColor: SemanticColors) =>
-	colorToHex(semanticColorMap[semanticColor]);
+export const getColorSet = (semanticColor: SemanticColors) => {
+	const colorSet: ColorSet = {
+		default: "",
+		hover: "",
+		focus: "",
+		active: "",
+		disabled: "",
+	};
+	Object.entries(semanticPalletMap[semanticColor]).forEach((kv) => {
+		const keyWords = kv[0].split("_");
+		const state = keyWords[keyWords.length - 1].toLowerCase() as keyof ColorSet;
+		const colorBase = kv[1];
+
+		if (colorSet[state] === undefined) {
+			throw new Error(`Could not map color state '${state}' to pallet map`);
+		}
+
+		colorSet[state] = colorToHex(colorBase);
+	});
+	return colorSet;
+};

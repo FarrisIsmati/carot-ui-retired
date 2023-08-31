@@ -1,5 +1,17 @@
-import { SemanticEssentialColors, semanticColorToHex } from "@/styles/colors";
-import { Sizes, minBlockSizeMap } from "@/styles/sizes";
+import {
+	ColorBaseCore,
+	ColorSet,
+	SemanticEssentialColors,
+	colorToHex,
+	getColorSet,
+} from "@/styles/colors";
+import {
+	Sizes,
+	buttonPaddingMap,
+	minBlockSizeMap,
+	spacer2,
+	spacer8,
+} from "@/styles/sizes";
 import {
 	AsProp,
 	PseudoClassProps,
@@ -15,7 +27,7 @@ export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
 		 * Set the semantic color used by the button
 		 * @default 'brightAccent
 		 **/
-		colorSet?: SemanticEssentialColors;
+		colorSet?: ColorSet;
 		/**
 		 * Render the component with a custom component or HTML element
 		 * @default 'button'
@@ -46,31 +58,49 @@ export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
 
 const ButtonStyled = styled(
 	React.forwardRef<HTMLElement, ButtonPrimaryProps>(function Button(
-		{ component: Component = "button", ...props },
+		{ component: Component = "button", colorSet, size, ...props },
 		ref
 	) {
 		return <Component {...props} ref={ref} />;
 	})
 )`
-	min-block-size: ${(props) => minBlockSizeMap[props.size!]};
-	border: none;
-	background-color: ${(props) => semanticColorToHex(props.colorSet!)};
-	display: flex;
-	font-size: inherit;
-	align-items: center;
-	justify-content: center;
+	${(props) => `
+		min-block-size: ${minBlockSizeMap[props.size!]};
+		border: none;
+		background-color: ${props.colorSet?.default};
+		padding: ${buttonPaddingMap[props.size!]};
+		border-radius: ${spacer8};
+		display: flex;
+		font-size: inherit;
+		align-items: center;
+		justify-content: center;
 
-	& focus: {
-		border: solid 1px black;
-	}
+		&:disabled {
+			background-color: ${props.colorSet?.disabled};
+		}
+
+		&:hover:not([disabled]) {
+			background-color: ${props.colorSet?.hover};
+			cursor: pointer;
+		}
+
+		&:focus:not([disabled]) {
+			outline: ${spacer2} solid ${colorToHex(ColorBaseCore.BLACK)};
+		}
+
+		&:active:not([disabled]) {
+			background-color: ${props.colorSet?.active};
+			cursor: pointer;
+		}
+	`}
 `;
 
 export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 	(
 		{
-			colorSet = SemanticEssentialColors.ESSENTIAL_BRIGHT_ACCENT,
+			colorSet = getColorSet(SemanticEssentialColors.ESSENTIAL_PRIMARY),
 			component,
-			size = Sizes.MEDIUM,
+			size = Sizes.LARGE,
 			fullWidth,
 			iconLeading,
 			iconTrailing,
@@ -96,10 +126,10 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 				fullWidth={fullWidth}
 				{...props}
 			>
-				{renderIcon(ButtonIconPosition.LEADING, iconLeading)}
+				{renderIcon(ButtonIconPosition.TRAILING, iconTrailing)}
 				{renderIcon(ButtonIconPosition.ONLY, iconOnly)}
 				{!iconOnly && children}
-				{renderIcon(ButtonIconPosition.TRAILING, iconTrailing)}
+				{renderIcon(ButtonIconPosition.LEADING, iconLeading)}
 			</ButtonStyled>
 		);
 	}

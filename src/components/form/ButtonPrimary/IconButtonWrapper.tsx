@@ -2,9 +2,9 @@ import {
 	Sizes,
 	iconButtonPaddingMap,
 	iconSizeMap,
-	minBlockSizeMap,
+	spacer24,
 } from "@/styles/sizes";
-import { AsProp, pxToInt } from "@/utils/typeHelpers";
+import { AsProp } from "@/utils/typeHelpers";
 import { styled } from "styled-components";
 
 interface IconWrapperProps {
@@ -13,36 +13,15 @@ interface IconWrapperProps {
 	icon: AsProp;
 }
 
-const Wrapper = styled.span<
-	Omit<IconWrapperProps, "icon"> & { iconSize: string }
->`
-	${({ size, iconSize, position }) => {
-		const iconPaddingPx = iconButtonPaddingMap[size];
-		const iconOnlyPosition =
-			(pxToInt(minBlockSizeMap[size]) - pxToInt(iconSize)) / 2;
+const Wrapper = styled.span<Omit<IconWrapperProps, "icon">>`
+	display: flex;
 
-		return `
-            display: flex;
-            position: absoulte;
-
-            ${
-							position === ButtonIconPosition.ONLY &&
-							`
-                top: ${iconOnlyPosition}px;
-                left: ${iconOnlyPosition}px;
-            `
-						}
-
-            ${
-							position === ButtonIconPosition.LEADING &&
-							`left: ${iconPaddingPx}`
-						}
-            ${
-							position === ButtonIconPosition.TRAILING &&
-							`right: ${iconPaddingPx}`
-						}
-        `;
-	}}
+	${(props) =>
+		props.position === ButtonIconPosition.LEADING &&
+		`padding-left: ${iconButtonPaddingMap[props.size]}`}
+	${(props) =>
+		props.position === ButtonIconPosition.TRAILING &&
+		`padding-right: ${iconButtonPaddingMap[props.size]}`}
 `;
 
 export enum ButtonIconPosition {
@@ -59,17 +38,13 @@ export const IconButtonWrapper = ({
 	const Icon = icon;
 	const iconSize =
 		position === ButtonIconPosition.ONLY && size === Sizes.LARGE
-			? "28px"
+			? spacer24
 			: iconSizeMap[size];
 
+	console.log(position);
 	return (
-		<Wrapper
-			position={position}
-			size={size}
-			iconSize={iconSize}
-			aria-hidden="true"
-		>
-			<Icon iconSize={iconSize} />
+		<Wrapper position={position} size={size} aria-hidden="true">
+			<Icon style={{ fontSize: iconSize }} />
 		</Wrapper>
 	);
 };
