@@ -8,7 +8,7 @@ import { IconPosition, IconWrapper } from "../ButtonPrimary/IconWrapper";
 export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 	(
 		{
-			colorSet = getColorSet(SemanticSetCores.PRIMARY_ALT),
+			colorSet = getColorSet(SemanticSetCores.SECONDARY),
 			component,
 			size = Sizes.LARGE,
 			fullWidth,

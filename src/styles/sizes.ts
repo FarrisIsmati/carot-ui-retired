@@ -1,3 +1,5 @@
+import { IconPosition } from "@/components/form/ButtonPrimary/IconWrapper";
+
 // Spacers
 export const spacer2 = "2px";
 export const spacer4 = "4px";
@@ -50,4 +52,11 @@ export const iconButtonPaddingMap = {
 	[Sizes.SMALL]: spacer8,
 	[Sizes.MEDIUM]: spacer8,
 	[Sizes.LARGE]: spacer12,
+};
+
+// Badge
+export const badgeLabelIconPaddingMap = {
+	[IconPosition.LEADING]: `${spacer2} ${spacer8} ${spacer2} ${spacer2}`,
+	[IconPosition.TRAILING]: `${spacer2} ${spacer2} ${spacer2} ${spacer8}`,
+	[IconPosition.ONLY]: spacer2,
 };

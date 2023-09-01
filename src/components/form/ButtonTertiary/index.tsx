@@ -2,13 +2,18 @@ import { SemanticSetCores, getColorSet } from "@/styles/colors";
 import { Sizes, iconButtonPaddingMap } from "@/styles/sizes";
 import { AsProp } from "@/utils/typeHelpers";
 import React from "react";
+import { styled } from "styled-components";
 import { ButtonPrimaryProps, ButtonStyled } from "../ButtonPrimary";
 import { IconPosition, IconWrapper } from "../ButtonPrimary/IconWrapper";
+
+const ButtonTertiaryStyled = styled(ButtonStyled)`
+	background-color: transparent;
+`;
 
 export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 	(
 		{
-			colorSet = getColorSet(SemanticSetCores.PRIMARY_ALT),
+			colorSet = getColorSet(SemanticSetCores.SECONDARY),
 			component,
 			size = Sizes.LARGE,
 			fullWidth,
@@ -33,7 +38,7 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 			);
 
 		return (
-			<ButtonStyled
+			<ButtonTertiaryStyled
 				ref={ref}
 				component={!component && props.href ? "a" : component}
 				aria-label={ariaLabel}
@@ -50,7 +55,7 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 				{renderIcon(IconPosition.ONLY, iconOnly)}
 				{!iconOnly && children}
 				{renderIcon(IconPosition.LEADING, iconLeading)}
-			</ButtonStyled>
+			</ButtonTertiaryStyled>
 		);
 	}
 );

@@ -9,6 +9,7 @@ import { semanticFonts } from "@/styles/fonts";
 import {
 	Sizes,
 	buttonPaddingMap,
+	iconButtonPaddingMap,
 	minBlockSizeMap,
 	spacer2,
 	spacer8,
@@ -20,7 +21,7 @@ import {
 } from "@/utils/typeHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
-import { ButtonIconPosition, IconButtonWrapper } from "./IconButtonWrapper";
+import { IconPosition, IconWrapper } from "./IconWrapper";
 
 export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
 	Pick<PseudoClassProps, "hover" | "active" | "focus"> & {
@@ -81,6 +82,7 @@ export const ButtonStyled = styled(
 
 			&:disabled {
 				background-color: ${props.colorSet?.essential.disabled};
+				color: ${props.colorSet?.text.disabled};
 			}
 
 			&:hover:not([disabled]) {
@@ -90,6 +92,7 @@ export const ButtonStyled = styled(
 
 			&:focus:not([disabled]) {
 				outline: ${spacer2} solid ${colorToHex(ColorBaseCore.BLACK)};
+				background-color: ${props.colorSet?.essential.focus};
 			}
 
 			&:active:not([disabled]) {
@@ -117,8 +120,15 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 		},
 		ref
 	) => {
-		const renderIcon = (position: ButtonIconPosition, icon?: AsProp) =>
-			icon && <IconButtonWrapper icon={icon} position={position} size={size} />;
+		const renderIcon = (position: IconPosition, icon?: AsProp) =>
+			icon && (
+				<IconWrapper
+					icon={icon}
+					position={position}
+					size={size}
+					padding={iconButtonPaddingMap[size]}
+				/>
+			);
 
 		return (
 			<ButtonStyled
@@ -134,10 +144,10 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 				}}
 				{...props}
 			>
-				{renderIcon(ButtonIconPosition.TRAILING, iconTrailing)}
-				{renderIcon(ButtonIconPosition.ONLY, iconOnly)}
+				{renderIcon(IconPosition.TRAILING, iconTrailing)}
+				{renderIcon(IconPosition.ONLY, iconOnly)}
 				{!iconOnly && children}
-				{renderIcon(ButtonIconPosition.LEADING, iconLeading)}
+				{renderIcon(IconPosition.LEADING, iconLeading)}
 			</ButtonStyled>
 		);
 	}
