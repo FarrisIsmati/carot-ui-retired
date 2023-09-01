@@ -14,6 +14,7 @@ import {
 	spacer16,
 	spacer18,
 	spacer2,
+	spacer20,
 	spacer24,
 	spacer8,
 } from "@/styles/sizes";
@@ -24,7 +25,7 @@ import {
 } from "@/utils/typeHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
-import { IconPosition, IconWrapper } from "../IconWrapper";
+import { IconPosition, IconWrapper, getIconPosition } from "../IconWrapper";
 
 export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
 	Pick<PseudoClassProps, "hover" | "active" | "focus"> & {
@@ -61,16 +62,29 @@ export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
 		iconOnly?: AsProp;
 	};
 
-export const buttonPaddingMap = {
-	[Sizes.SMALL]: `${spacer10} ${spacer16}`,
-	[Sizes.MEDIUM]: `${spacer18} ${spacer24}`,
-	[Sizes.LARGE]: `${spacer18} ${spacer24}`,
-};
-
 export const iconButtonPaddingMap = {
 	[Sizes.SMALL]: spacer8,
 	[Sizes.MEDIUM]: spacer8,
-	[Sizes.LARGE]: spacer12,
+	[Sizes.LARGE]: spacer8,
+};
+
+const buttonIconPadding = (size: Sizes, iconPosition: IconPosition) => {
+	if (size === Sizes.LARGE || size === Sizes.MEDIUM) {
+		if (iconPosition === IconPosition.LEADING)
+			return `${spacer16} ${spacer20} ${spacer16} ${spacer24}`;
+		if (iconPosition === IconPosition.TRAILING)
+			return `${spacer16} ${spacer24} ${spacer16} ${spacer20}`;
+		if (iconPosition === IconPosition.ONLY) return spacer16;
+		if (iconPosition === IconPosition.NONE) return `${spacer18} ${spacer24}`;
+	}
+	if (size === Sizes.SMALL) {
+		if (iconPosition === IconPosition.LEADING)
+			return `${spacer8} ${spacer12} ${spacer8} ${spacer16}`;
+		if (iconPosition === IconPosition.TRAILING)
+			return `${spacer8} ${spacer16} ${spacer8} ${spacer12}`;
+		if (iconPosition === IconPosition.ONLY) return spacer8;
+		if (iconPosition === IconPosition.NONE) return `${spacer10} ${spacer16}`;
+	}
 };
 
 export const ButtonStyled = styled(
@@ -88,7 +102,14 @@ export const ButtonStyled = styled(
 			min-block-size: ${minBlockSizeMap[props.size!]};
 			border: none;
 			background-color: ${props.colorSet?.essential.default};
-			padding: ${buttonPaddingMap[props.size!]};
+			padding: ${buttonIconPadding(
+				props.size!,
+				getIconPosition({
+					iconLeading: props.iconLeading,
+					iconTrailing: props.iconTrailing,
+					iconOnly: props.iconOnly,
+				})
+			)};
 			border-radius: ${spacer8};
 			display: flex;
 			font-size: inherit;
@@ -153,6 +174,9 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 				aria-labelledby={ariaLabelledBy}
 				colorSet={colorSet}
 				size={size}
+				iconLeading={iconLeading}
+				iconTrailing={iconTrailing}
+				iconOnly={iconOnly}
 				fullWidth={fullWidth}
 				onClick={(e: any) => {
 					e.target.blur();

@@ -45,6 +45,9 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 				colorSet={colorSet}
 				size={size}
 				fullWidth={fullWidth}
+				iconLeading={iconLeading}
+				iconTrailing={iconTrailing}
+				iconOnly={iconOnly}
 				onClick={(e: any) => {
 					e.target.blur();
 				}}

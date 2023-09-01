@@ -28,6 +28,10 @@ export const ButtonDisabledLarge = () => (
 );
 
 // Small
+export const ButtonDefaultSmall = () => (
+	<ButtonPrimary size={Sizes.SMALL}>Button</ButtonPrimary>
+);
+
 export const ButtonWithIconTrailingSmall = () => (
 	<ButtonPrimary iconTrailing={ArrowBack} size={Sizes.SMALL}>
 		Button

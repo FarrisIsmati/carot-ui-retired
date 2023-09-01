@@ -5,12 +5,13 @@ import {
 	minBlockSizeMap,
 	spacer2,
 	spacer4,
+	spacer6,
 	spacer8,
 } from "@/styles/sizes";
 import { AsProp, StyledWrapperProps } from "@/utils/typeHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
-import { IconPosition, IconWrapper } from "../IconWrapper";
+import { IconPosition, IconWrapper, getIconPosition } from "../IconWrapper";
 
 export enum BadgeType {
 	LABEL = "LABEL",
@@ -48,10 +49,18 @@ export type BadgeProps = StyledWrapperProps & {
 	iconOnly?: AsProp;
 };
 
-export const badgePaddingMap = {
-	[BadgeType.LABEL]: spacer8,
-	[BadgeType.COUNT]: spacer2,
-	[BadgeType.DOT]: spacer2,
+const badgePadding = (badgeType: BadgeType, iconPosition: IconPosition) => {
+	if (badgeType === BadgeType.LABEL) {
+		if (iconPosition === IconPosition.LEADING)
+			return `${spacer2} ${spacer2} ${spacer2} ${spacer8}`;
+		if (iconPosition === IconPosition.TRAILING)
+			return `${spacer2} ${spacer8} ${spacer2} ${spacer2}`;
+		if (iconPosition === IconPosition.ONLY) return spacer2;
+		if (iconPosition === IconPosition.NONE) return `${spacer8} ${spacer6}`;
+	}
+
+	if (badgeType === BadgeType.COUNT || badgeType === BadgeType.DOT)
+		return spacer2;
 };
 
 export const BadgeStyled = styled(
@@ -70,7 +79,14 @@ export const BadgeStyled = styled(
 			border: none;
 			background-color: ${props.colorSet?.essential.default};
 			border-radius: ${spacer4};
-			padding: ${badgePaddingMap[props.badgeType!]};
+			padding: ${badgePadding(
+				props.badgeType!,
+				getIconPosition({
+					iconLeading: props.iconLeading,
+					iconTrailing: props.iconTrailing,
+					iconOnly: props.iconOnly,
+				})
+			)};
 			display: flex;
 			font-size: inherit;
 			align-items: center;
@@ -100,7 +116,7 @@ export default React.forwardRef<HTMLElement, BadgeProps>(
 				<IconWrapper
 					icon={icon}
 					position={position}
-					padding={spacer8}
+					padding={spacer2}
 					size={Sizes.SMALL}
 				/>
 			);
@@ -113,6 +129,9 @@ export default React.forwardRef<HTMLElement, BadgeProps>(
 				aria-labelledby={ariaLabelledBy}
 				colorSet={colorSet}
 				badgeType={badgeType}
+				iconLeading={iconLeading}
+				iconTrailing={iconTrailing}
+				iconOnly={iconOnly}
 				onClick={(e: any) => {
 					e.target.blur();
 				}}

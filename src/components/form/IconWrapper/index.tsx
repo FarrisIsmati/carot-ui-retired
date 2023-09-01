@@ -1,4 +1,4 @@
-import { Sizes, iconSizeMap, spacer28 } from "@/styles/sizes";
+import { Sizes, iconSizeMap, spacer24 } from "@/styles/sizes";
 import { AsProp } from "@/utils/typeHelpers";
 import { styled } from "styled-components";
 
@@ -11,6 +11,10 @@ interface IconWrapperProps {
 
 const Wrapper = styled.span<Omit<IconWrapperProps, "icon">>`
 	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: ${spacer24};
+	width: ${spacer24};
 	${(props) =>
 		props.position === IconPosition.LEADING && `padding-left: ${props.padding}`}
 	${(props) =>
@@ -25,6 +29,21 @@ export enum IconPosition {
 	NONE = "NONE",
 }
 
+export const getIconPosition = ({
+	iconLeading,
+	iconTrailing,
+	iconOnly,
+}: {
+	iconLeading?: AsProp;
+	iconTrailing?: AsProp;
+	iconOnly?: AsProp;
+}) => {
+	if (iconLeading) return IconPosition.LEADING;
+	if (iconTrailing) return IconPosition.TRAILING;
+	if (iconOnly) return IconPosition.ONLY;
+	return IconPosition.NONE;
+};
+
 export const IconWrapper = ({
 	position,
 	padding,
@@ -32,10 +51,7 @@ export const IconWrapper = ({
 	icon,
 }: IconWrapperProps) => {
 	const Icon = icon;
-	const iconSize =
-		position === IconPosition.ONLY && size === Sizes.LARGE
-			? spacer28
-			: iconSizeMap[size];
+	const iconSize = iconSizeMap[size];
 
 	return (
 		<Wrapper

@@ -1,6 +1,7 @@
 // Spacers
 export const spacer2 = "2px";
 export const spacer4 = "4px";
+export const spacer6 = "6px";
 export const spacer8 = "8px";
 export const spacer9 = "9px";
 export const spacer10 = "10px";
