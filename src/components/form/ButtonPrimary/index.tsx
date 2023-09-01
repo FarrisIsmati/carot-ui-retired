@@ -8,10 +8,13 @@ import {
 import { semanticFonts } from "@/styles/fonts";
 import {
 	Sizes,
-	buttonPaddingMap,
-	iconButtonPaddingMap,
 	minBlockSizeMap,
+	spacer10,
+	spacer12,
+	spacer16,
+	spacer18,
 	spacer2,
+	spacer24,
 	spacer8,
 } from "@/styles/sizes";
 import {
@@ -21,7 +24,7 @@ import {
 } from "@/utils/typeHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
-import { IconPosition, IconWrapper } from "./IconWrapper";
+import { IconPosition, IconWrapper } from "../IconWrapper";
 
 export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
 	Pick<PseudoClassProps, "hover" | "active" | "focus"> & {
@@ -57,6 +60,18 @@ export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
 		 */
 		iconOnly?: AsProp;
 	};
+
+export const buttonPaddingMap = {
+	[Sizes.SMALL]: `${spacer10} ${spacer16}`,
+	[Sizes.MEDIUM]: `${spacer18} ${spacer24}`,
+	[Sizes.LARGE]: `${spacer18} ${spacer24}`,
+};
+
+export const iconButtonPaddingMap = {
+	[Sizes.SMALL]: spacer8,
+	[Sizes.MEDIUM]: spacer8,
+	[Sizes.LARGE]: spacer12,
+};
 
 export const ButtonStyled = styled(
 	React.forwardRef<HTMLElement, ButtonPrimaryProps>(function Button(

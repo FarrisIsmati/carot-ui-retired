@@ -2,14 +2,15 @@ import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import {
 	Sizes,
-	badgeLabelIconPaddingMap,
 	minBlockSizeMap,
+	spacer2,
+	spacer4,
 	spacer8,
 } from "@/styles/sizes";
 import { AsProp, StyledWrapperProps } from "@/utils/typeHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
-import { IconPosition, IconWrapper } from "../ButtonPrimary/IconWrapper";
+import { IconPosition, IconWrapper } from "../IconWrapper";
 
 export enum BadgeType {
 	LABEL = "LABEL",
@@ -29,6 +30,11 @@ export type BadgeProps = StyledWrapperProps & {
 	 **/
 	component?: AsProp;
 	/**
+	 * Type of badge can be LABEL, COUNT, or DOT
+	 * @default 'LABEL'
+	 */
+	badgeType?: BadgeType;
+	/**
 	 * Place icon start of button text
 	 **/
 	iconLeading?: AsProp;
@@ -42,12 +48,14 @@ export type BadgeProps = StyledWrapperProps & {
 	iconOnly?: AsProp;
 };
 
-interface BadgeStyledProps extends BadgeProps {
-	padding: string;
-}
+export const badgePaddingMap = {
+	[BadgeType.LABEL]: spacer8,
+	[BadgeType.COUNT]: spacer2,
+	[BadgeType.DOT]: spacer2,
+};
 
 export const BadgeStyled = styled(
-	React.forwardRef<HTMLElement, BadgeStyledProps>(function Button(
+	React.forwardRef<HTMLElement, BadgeProps>(function Button(
 		{ component: Component = "button", colorSet, size, ...props },
 		ref
 	) {
@@ -61,8 +69,8 @@ export const BadgeStyled = styled(
 			min-block-size: ${minBlockSizeMap[Sizes.SMALL]};
 			border: none;
 			background-color: ${props.colorSet?.essential.default};
-			padding: ${props.padding};
-			border-radius: ${spacer8};
+			border-radius: ${spacer4};
+			padding: ${badgePaddingMap[props.badgeType!]};
 			display: flex;
 			font-size: inherit;
 			align-items: center;
@@ -79,6 +87,7 @@ export default React.forwardRef<HTMLElement, BadgeProps>(
 			iconLeading,
 			iconTrailing,
 			iconOnly,
+			badgeType,
 			children,
 			"aria-label": ariaLabel,
 			"aria-labelledby": ariaLabelledBy,
@@ -88,13 +97,13 @@ export default React.forwardRef<HTMLElement, BadgeProps>(
 	) => {
 		const renderIcon = (position: IconPosition, icon?: AsProp) =>
 			icon && (
-				<IconWrapper icon={icon} position={position} size={Sizes.LARGE} />
+				<IconWrapper
+					icon={icon}
+					position={position}
+					padding={spacer8}
+					size={Sizes.SMALL}
+				/>
 			);
-
-		let padding = "";
-		if (iconTrailing) padding = badgeLabelIconPaddingMap.TRAILING;
-		if (iconLeading) padding = badgeLabelIconPaddingMap.LEADING;
-		if (iconOnly) padding = badgeLabelIconPaddingMap.ONLY;
 
 		return (
 			<BadgeStyled
@@ -103,10 +112,10 @@ export default React.forwardRef<HTMLElement, BadgeProps>(
 				aria-label={ariaLabel}
 				aria-labelledby={ariaLabelledBy}
 				colorSet={colorSet}
+				badgeType={badgeType}
 				onClick={(e: any) => {
 					e.target.blur();
 				}}
-				padding={padding}
 				{...props}
 			>
 				{renderIcon(IconPosition.TRAILING, iconTrailing)}

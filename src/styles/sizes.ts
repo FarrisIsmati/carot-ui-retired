@@ -1,5 +1,3 @@
-import { IconPosition } from "@/components/form/ButtonPrimary/IconWrapper";
-
 // Spacers
 export const spacer2 = "2px";
 export const spacer4 = "4px";
@@ -35,28 +33,9 @@ export const minBlockSizeMap = {
 	[Sizes.LARGE]: spacer56,
 };
 
-export const buttonPaddingMap = {
-	[Sizes.SMALL]: `${spacer10} ${spacer16}`,
-	[Sizes.MEDIUM]: `${spacer18} ${spacer24}`,
-	[Sizes.LARGE]: `${spacer18} ${spacer24}`,
-};
-
 // Icon
 export const iconSizeMap = {
-	[Sizes.SMALL]: spacer24,
+	[Sizes.SMALL]: spacer16,
 	[Sizes.MEDIUM]: spacer24,
 	[Sizes.LARGE]: spacer24,
-};
-
-export const iconButtonPaddingMap = {
-	[Sizes.SMALL]: spacer8,
-	[Sizes.MEDIUM]: spacer8,
-	[Sizes.LARGE]: spacer12,
-};
-
-// Badge
-export const badgeLabelIconPaddingMap = {
-	[IconPosition.LEADING]: `${spacer2} ${spacer8} ${spacer2} ${spacer2}`,
-	[IconPosition.TRAILING]: `${spacer2} ${spacer2} ${spacer2} ${spacer8}`,
-	[IconPosition.ONLY]: spacer2,
 };

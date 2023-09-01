@@ -1,5 +1,5 @@
-import { ArrowBack } from "@material-ui/icons";
-import { default as Badge } from "./index";
+import { Lock } from "@material-ui/icons";
+import { default as Badge, BadgeType } from "./index";
 export default {
 	component: Badge,
 	title: "Badge",
@@ -7,8 +7,20 @@ export default {
 };
 
 // Large
-export const Default = () => <Badge>Label</Badge>;
+export const Default = () => <Badge>LABEL</Badge>;
 
-export const BadgeWithIconTrailing = () => (
-	<Badge iconTrailing={ArrowBack}>Button</Badge>
+export const LabelBadgeWithIconTrailing = () => (
+	<Badge iconTrailing={Lock} badgeType={BadgeType.LABEL}>
+		LABEL
+	</Badge>
+);
+
+export const LabelBadgeWithIconLeading = () => (
+	<Badge iconLeading={Lock} badgeType={BadgeType.LABEL}>
+		LABEL
+	</Badge>
+);
+
+export const LabelBadgeWithIconOnly = () => (
+	<Badge iconOnly={Lock} badgeType={BadgeType.LABEL} />
 );

@@ -1,9 +1,13 @@
 import { SemanticSetCores, getColorSet } from "@/styles/colors";
-import { Sizes, iconButtonPaddingMap } from "@/styles/sizes";
+import { Sizes } from "@/styles/sizes";
 import { AsProp } from "@/utils/typeHelpers";
 import React from "react";
-import { ButtonPrimaryProps, ButtonStyled } from "../ButtonPrimary";
-import { IconPosition, IconWrapper } from "../ButtonPrimary/IconWrapper";
+import {
+	ButtonPrimaryProps,
+	ButtonStyled,
+	iconButtonPaddingMap,
+} from "../ButtonPrimary";
+import { IconPosition, IconWrapper } from "../IconWrapper";
 
 export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 	(
