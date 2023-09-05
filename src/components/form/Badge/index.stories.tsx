@@ -7,7 +7,7 @@ export default {
 };
 
 // Large
-export const Default = () => <Badge>LABEL</Badge>;
+export const Default = () => <Badge badgeType={BadgeType.LABEL}>LABEL</Badge>;
 
 export const LabelBadgeWithIconTrailing = () => (
 	<Badge iconTrailing={Lock} badgeType={BadgeType.LABEL}>
@@ -24,3 +24,11 @@ export const LabelBadgeWithIconLeading = () => (
 export const LabelBadgeWithIconOnly = () => (
 	<Badge iconOnly={Lock} badgeType={BadgeType.LABEL} />
 );
+
+export const CountBadge = () => <Badge badgeType={BadgeType.COUNT}>3</Badge>;
+
+export const CountHundredsBadge = () => (
+	<Badge badgeType={BadgeType.COUNT}>300</Badge>
+);
+
+export const DotBadge = () => <Badge badgeType={BadgeType.DOT} />;

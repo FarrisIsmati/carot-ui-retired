@@ -27,13 +27,6 @@ export enum Sizes {
 	LARGE = "LARGE",
 }
 
-// Button
-export const minBlockSizeMap = {
-	[Sizes.SMALL]: spacer32,
-	[Sizes.MEDIUM]: spacer48,
-	[Sizes.LARGE]: spacer56,
-};
-
 // Icon
 export const iconSizeMap = {
 	[Sizes.SMALL]: spacer16,

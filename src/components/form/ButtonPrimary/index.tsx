@@ -8,7 +8,6 @@ import {
 import { semanticFonts } from "@/styles/fonts";
 import {
 	Sizes,
-	minBlockSizeMap,
 	spacer10,
 	spacer12,
 	spacer16,
@@ -79,9 +78,9 @@ const buttonIconPadding = (size: Sizes, iconPosition: IconPosition) => {
 	}
 	if (size === Sizes.SMALL) {
 		if (iconPosition === IconPosition.LEADING)
-			return `${spacer8} ${spacer12} ${spacer8} ${spacer16}`;
+			return `${spacer8} ${spacer8} ${spacer8} ${spacer12}`;
 		if (iconPosition === IconPosition.TRAILING)
-			return `${spacer8} ${spacer16} ${spacer8} ${spacer12}`;
+			return `${spacer8} ${spacer12} ${spacer8} ${spacer8}`;
 		if (iconPosition === IconPosition.ONLY) return spacer8;
 		if (iconPosition === IconPosition.NONE) return `${spacer10} ${spacer16}`;
 	}
@@ -99,7 +98,6 @@ export const ButtonStyled = styled(
 		return css`
 			${semanticFonts.labelLarge}
 			color: ${props.colorSet?.text.default};
-			min-block-size: ${minBlockSizeMap[props.size!]};
 			border: none;
 			background-color: ${props.colorSet?.essential.default};
 			padding: ${buttonIconPadding(
