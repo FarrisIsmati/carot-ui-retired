@@ -1,5 +1,8 @@
 import { Lock } from "@material-ui/icons";
-import { default as Badge, BadgeType } from "./index";
+import Dot from "./Dot";
+
+import Count from "./Count";
+import Label, { default as Badge } from "./Label";
 export default {
 	component: Badge,
 	title: "Badge",
@@ -7,28 +10,20 @@ export default {
 };
 
 // Large
-export const Default = () => <Badge badgeType={BadgeType.LABEL}>LABEL</Badge>;
+export const Default = () => <Label>LABEL</Label>;
 
 export const LabelBadgeWithIconTrailing = () => (
-	<Badge iconTrailing={Lock} badgeType={BadgeType.LABEL}>
-		LABEL
-	</Badge>
+	<Label iconTrailing={Lock}>LABEL</Label>
 );
 
 export const LabelBadgeWithIconLeading = () => (
-	<Badge iconLeading={Lock} badgeType={BadgeType.LABEL}>
-		LABEL
-	</Badge>
+	<Label iconLeading={Lock}>LABEL</Label>
 );
 
-export const LabelBadgeWithIconOnly = () => (
-	<Badge iconOnly={Lock} badgeType={BadgeType.LABEL} />
-);
+export const LabelBadgeWithIconOnly = () => <Badge iconOnly={Lock} />;
 
-export const CountBadge = () => <Badge badgeType={BadgeType.COUNT}>3</Badge>;
+export const CountBadge = () => <Count>3</Count>;
 
-export const CountHundredsBadge = () => (
-	<Badge badgeType={BadgeType.COUNT}>300</Badge>
-);
+export const CountHundredsBadge = () => <Count>300</Count>;
 
-export const DotBadge = () => <Badge badgeType={BadgeType.DOT} />;
+export const DotBadge = () => <Dot />;
