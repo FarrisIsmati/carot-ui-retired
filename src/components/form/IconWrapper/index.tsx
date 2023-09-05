@@ -1,15 +1,63 @@
 import { Sizes, iconSizeMap, spacer24 } from "@/styles/sizes";
-import { AsProp } from "@/utils/typeHelpers";
+import {
+	AsProp,
+	PseudoClassProps,
+	StyledWrapperProps,
+} from "@/utils/typeHelpers";
+import React from "react";
 import { styled } from "styled-components";
 
-interface IconWrapperProps {
-	size: Sizes;
-	icon: AsProp;
-	padding?: string;
-	position?: IconPosition;
-}
+export type IconWrapperProps = Omit<StyledWrapperProps, "size"> &
+	Pick<PseudoClassProps, "hover" | "active" | "focus"> & {
+		/**
+		 * Render the component with a custom component or HTML element
+		 * @default 'span'
+		 **/
+		component?: AsProp;
+		/**
+		 * Chose one of three button sizes
+		 **/
+		size: Sizes;
+		/**
+		 * Icon
+		 **/
+		icon: AsProp;
+		/**
+		 * Padding
+		 **/
+		padding?: string;
+		/**
+		 * Position trailing or leading
+		 **/
+		position?: IconPosition;
+		/**
+		 * Clicking on left icon
+		 */
+		onClickIconLeft?: (e: any) => void;
+		/*
+		 * Clicking on right icon
+		 */
+		onClickIconRight?: (e: any) => void;
+	};
 
-const Wrapper = styled.span<Omit<IconWrapperProps, "icon">>`
+export const Wrapper = styled(
+	React.forwardRef<HTMLElement, Omit<IconWrapperProps, "icon">>(function Span(
+		{ component: Component = "span", ...props },
+		ref
+	) {
+		return <Component {...props} ref={ref} />;
+	})
+)`
+	&:hover {
+		cursor: pointer;
+		${(props) =>
+			((props.onClickIconLeft && props.position === IconPosition.TRAILING) ||
+				(props.onClickIconRight && props.position === IconPosition.LEADING)) &&
+			"cursor: pointer"}
+	}
+	border: none;
+	padding: 0;
+	background-color: inherit;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -45,6 +93,9 @@ export const getIconPosition = ({
 };
 
 export const IconWrapper = ({
+	onClickIconLeft,
+	onClickIconRight,
+	component,
 	position,
 	padding,
 	size,
@@ -55,6 +106,14 @@ export const IconWrapper = ({
 
 	return (
 		<Wrapper
+			onClick={(e: any) => {
+				console.log("HERE");
+				if (onClickIconLeft && position === IconPosition.TRAILING)
+					onClickIconLeft(e);
+				if (onClickIconRight && position === IconPosition.LEADING)
+					onClickIconRight(e);
+			}}
+			component={onClickIconLeft || onClickIconRight ? "button" : component}
 			position={position}
 			size={size}
 			padding={padding}
