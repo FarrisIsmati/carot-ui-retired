@@ -168,6 +168,9 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 			<ButtonStyled
 				ref={ref}
 				component={!component && props.href ? "a" : component}
+				onMouseDown={(e: React.MouseEvent<any, MouseEvent>) =>
+					e.preventDefault()
+				}
 				aria-label={ariaLabel}
 				aria-labelledby={ariaLabelledBy}
 				colorSet={colorSet}

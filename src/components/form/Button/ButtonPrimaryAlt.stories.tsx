@@ -1,7 +1,7 @@
 import { Sizes } from "@/styles/sizes";
 
 import { ArrowBack, ArrowForward, ArrowUpward } from "@material-ui/icons";
-import ButtonPrimaryAlt from ".";
+import ButtonPrimaryAlt from "./ButtonPrimaryAlt";
 export default {
 	component: ButtonPrimaryAlt,
 	title: "Primary Alt Button",

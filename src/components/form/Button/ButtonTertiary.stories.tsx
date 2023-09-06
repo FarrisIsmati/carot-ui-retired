@@ -1,7 +1,7 @@
 import { Sizes } from "@/styles/sizes";
 
 import { ArrowBack, ArrowForward, ArrowUpward } from "@material-ui/icons";
-import ButtonTertiary from ".";
+import ButtonTertiary from "./ButtonTertiary";
 export default {
 	component: ButtonTertiary,
 	title: "Tertiary Button",

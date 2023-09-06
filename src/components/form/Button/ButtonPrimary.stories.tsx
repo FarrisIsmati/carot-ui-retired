@@ -1,7 +1,7 @@
 import { Sizes } from "@/styles/sizes";
 
 import { ArrowBack, ArrowForward, ArrowUpward } from "@material-ui/icons";
-import { default as ButtonPrimary } from "./index";
+import ButtonPrimary from "./ButtonPrimary";
 export default {
 	component: ButtonPrimary,
 	title: "Primary Button",
@@ -28,10 +28,6 @@ export const ButtonDisabledLarge = () => (
 );
 
 // Small
-export const ButtonDefaultSmall = () => (
-	<ButtonPrimary size={Sizes.SMALL}>Button</ButtonPrimary>
-);
-
 export const ButtonWithIconTrailingSmall = () => (
 	<ButtonPrimary iconTrailing={ArrowBack} size={Sizes.SMALL}>
 		Button

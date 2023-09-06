@@ -38,6 +38,10 @@ export type IconWrapperProps = Omit<StyledWrapperProps, "size"> &
 		 * Clicking on right icon
 		 */
 		onClickIconRight?: (e: any) => void;
+		/*
+		 * Disabled prevents onclick actions and pointer
+		 */
+		disabled?: boolean;
 	};
 
 export const Wrapper = styled(
@@ -49,11 +53,12 @@ export const Wrapper = styled(
 	})
 )`
 	&:hover {
-		cursor: pointer;
-		${(props) =>
+		cursor: ${(props) =>
+			!props.disabled &&
 			((props.onClickIconLeft && props.position === IconPosition.TRAILING) ||
-				(props.onClickIconRight && props.position === IconPosition.LEADING)) &&
-			"cursor: pointer"}
+				(props.onClickIconRight && props.position === IconPosition.LEADING))
+				? "pointer"
+				: "inherit"};
 	}
 	border: none;
 	padding: 0;
@@ -100,6 +105,7 @@ export const IconWrapper = ({
 	padding,
 	size,
 	icon,
+	disabled,
 }: IconWrapperProps) => {
 	const Icon = icon;
 	const iconSize = iconSizeMap[size];
@@ -107,17 +113,22 @@ export const IconWrapper = ({
 	return (
 		<Wrapper
 			onClick={(e: any) => {
-				console.log("HERE");
+				if (disabled) {
+					return;
+				}
 				if (onClickIconLeft && position === IconPosition.TRAILING)
 					onClickIconLeft(e);
 				if (onClickIconRight && position === IconPosition.LEADING)
 					onClickIconRight(e);
 			}}
-			component={onClickIconLeft || onClickIconRight ? "button" : component}
+			onClickIconLeft={onClickIconLeft}
+			onClickIconRight={onClickIconRight}
+			component={component}
 			position={position}
 			size={size}
 			padding={padding}
 			aria-hidden="true"
+			disabled={disabled}
 		>
 			<Icon style={{ fontSize: iconSize }} />
 		</Wrapper>

@@ -9,6 +9,7 @@ import { semanticFonts } from "@/styles/fonts";
 import {
 	Sizes,
 	spacer10,
+	spacer100,
 	spacer12,
 	spacer2,
 	spacer4,
@@ -19,7 +20,16 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { IconPosition, IconWrapper, getIconPosition } from "../IconWrapper";
 
-export type ChipProps = StyledWrapperProps & {
+export enum ChipType {
+	LABEL = "LABEL",
+	AVATAR = "AVATAR",
+}
+
+export type ChipProps = Omit<StyledWrapperProps, "size"> & {
+	/**
+	 * @default 'LABEL'
+	 */
+	chipType?: ChipType;
 	/**
 	 * Set the semantic color used by the button
 	 * @default 'brightAccent
@@ -32,7 +42,7 @@ export type ChipProps = StyledWrapperProps & {
 	component?: AsProp;
 	/**
 	 * Chose one of three button sizes
-	 * @default 'medium
+	 * @default 'LARGE'
 	 **/
 	size?: Sizes;
 	/**
@@ -57,7 +67,7 @@ export type ChipProps = StyledWrapperProps & {
 	onClickIconRight?: (e: any) => void;
 };
 
-const chipPadding = (size: Sizes, iconPosition: IconPosition) => {
+export const chipPadding = (size: Sizes, iconPosition: IconPosition) => {
 	if (size === Sizes.LARGE || size === Sizes.MEDIUM) {
 		if (iconPosition === IconPosition.LEADING)
 			return `${spacer6} ${spacer6} ${spacer6} ${spacer12}`;
@@ -86,13 +96,15 @@ export const ChipStyled = styled(
 	})
 )`
 	${(props) => {
+		const clickable =
+			props.onClick || props.onClickIconLeft || props.onClickIconRight;
 		return css`
 			${semanticFonts.bodySmall}
 			width: fit-content;
 			color: ${props.colorSet?.text.default};
 			border: none;
 			background-color: ${props.colorSet?.essential.default};
-			border-radius: ${spacer4};
+			border-radius: ${props.chipType === ChipType.LABEL ? spacer4 : spacer100};
 			padding: ${chipPadding(
 				props.size!,
 				getIconPosition({
@@ -112,7 +124,11 @@ export const ChipStyled = styled(
 			}
 
 			&:hover:not([disabled]) {
-				background-color: ${props.colorSet?.essential.hover};
+				${clickable &&
+				css`
+					background-color: ${props.colorSet?.essential.hover};
+					color: ${props.colorSet?.text.hover};
+				`}
 			}
 
 			&:focus:not([disabled]) {
@@ -121,7 +137,10 @@ export const ChipStyled = styled(
 			}
 
 			&:active:not([disabled]) {
-				background-color: ${props.colorSet?.essential.active};
+				${clickable &&
+				css`
+					background-color: ${props.colorSet?.essential.active};
+				`}
 			}
 		`;
 	}}
@@ -131,6 +150,7 @@ export default React.forwardRef<HTMLElement, ChipProps>(
 	(
 		{
 			colorSet = getColorSet(SemanticSetCores.SECONDARY),
+			chipType = ChipType.LABEL,
 			component,
 			iconLeading,
 			iconTrailing,
@@ -154,13 +174,22 @@ export default React.forwardRef<HTMLElement, ChipProps>(
 					position={position}
 					padding={spacer2}
 					size={Sizes.SMALL}
+					disabled={props.disabled}
 				/>
 			);
 
 		return (
 			<ChipStyled
 				ref={ref}
-				component={component}
+				chipType={chipType}
+				component={
+					props.onClick || onClickIconLeft || onClickIconRight
+						? "button"
+						: component
+				}
+				onMouseDown={(e: React.MouseEvent<any, MouseEvent>) =>
+					e.preventDefault()
+				}
 				aria-label={ariaLabel}
 				aria-labelledby={ariaLabelledBy}
 				colorSet={colorSet}
@@ -168,6 +197,8 @@ export default React.forwardRef<HTMLElement, ChipProps>(
 				iconLeading={iconLeading}
 				iconTrailing={iconTrailing}
 				iconOnly={iconOnly}
+				onClickIconLeft={onClickIconLeft}
+				onClickIconRight={onClickIconRight}
 				{...props}
 			>
 				{renderIcon(IconPosition.TRAILING, iconTrailing)}
