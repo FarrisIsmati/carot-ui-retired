@@ -1,3 +1,4 @@
+import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { Sizes, iconSizeMap, spacer24 } from "@/styles/sizes";
 import {
 	AsProp,
@@ -9,6 +10,11 @@ import { styled } from "styled-components";
 
 export type IconWrapperProps = Omit<StyledWrapperProps, "size"> &
 	Pick<PseudoClassProps, "hover" | "active" | "focus"> & {
+		/**
+		 * Set the semantic color used by the button
+		 * @default 'brightAccent
+		 **/
+		colorSet?: ColorSet;
 		/**
 		 * Render the component with a custom component or HTML element
 		 * @default 'span'
@@ -55,11 +61,16 @@ export const Wrapper = styled(
 	&:hover {
 		cursor: ${(props) =>
 			!props.disabled &&
-			((props.onClickIconLeft && props.position === IconPosition.TRAILING) ||
+			(props.onClick ||
+				(props.onClickIconLeft && props.position === IconPosition.TRAILING) ||
 				(props.onClickIconRight && props.position === IconPosition.LEADING))
 				? "pointer"
 				: "inherit"};
 	}
+	color: ${(props) =>
+		props.disabled
+			? props.colorSet?.text.disabled
+			: props.colorSet?.text.default};
 	border: none;
 	padding: 0;
 	background-color: inherit;
@@ -100,6 +111,8 @@ export const getIconPosition = ({
 export const IconWrapper = ({
 	onClickIconLeft,
 	onClickIconRight,
+	onClick,
+	colorSet = getColorSet(SemanticSetCores.BASE),
 	component,
 	position,
 	padding,
@@ -112,6 +125,7 @@ export const IconWrapper = ({
 
 	return (
 		<Wrapper
+			colorSet={colorSet}
 			onClick={(e: any) => {
 				if (disabled) {
 					return;
@@ -120,6 +134,7 @@ export const IconWrapper = ({
 					onClickIconLeft(e);
 				if (onClickIconRight && position === IconPosition.LEADING)
 					onClickIconRight(e);
+				if (onClick) onClick(e);
 			}}
 			onClickIconLeft={onClickIconLeft}
 			onClickIconRight={onClickIconRight}

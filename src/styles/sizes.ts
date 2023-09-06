@@ -32,6 +32,6 @@ export enum Sizes {
 // Icon
 export const iconSizeMap = {
 	[Sizes.SMALL]: spacer16,
-	[Sizes.MEDIUM]: spacer24,
+	[Sizes.MEDIUM]: spacer18,
 	[Sizes.LARGE]: spacer24,
 };

@@ -2,6 +2,7 @@ import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import { formControlBase } from "@/styles/mixins";
 import {
+	Sizes,
 	spacer10,
 	spacer12,
 	spacer14,
@@ -12,9 +13,16 @@ import {
 	spacer8,
 } from "@/styles/sizes";
 import { KeyboardDetectionContext } from "@/utils/context";
-import { PseudoClassProps, StyledWrapperProps } from "@/utils/typeHelpers";
-import React, { useContext } from "react";
+import {
+	AsProp,
+	PseudoClassProps,
+	StyledWrapperProps,
+} from "@/utils/typeHelpers";
+import { Close } from "@material-ui/icons";
+import React, { useContext, useRef } from "react";
 import { css, styled } from "styled-components";
+import Dot from "../Badge/Dot";
+import { IconWrapper } from "../IconWrapper";
 
 export type FormInputProps = StyledWrapperProps &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
@@ -31,6 +39,26 @@ export type FormInputProps = StyledWrapperProps &
 		 * Placeholder text
 		 */
 		placeholder?: string;
+		/**
+		 * Icon placed at left hand side of input ofrm
+		 */
+		icon?: AsProp;
+		/**
+		 * Show clear button
+		 */
+		showClear?: boolean;
+		/**
+		 * Perform an action when clearing out the input text
+		 * */
+		onClear?: () => void;
+		/**
+		 * Label title
+		 */
+		label?: string;
+		/**
+		 * Text to display for an error state
+		 */
+		errorText?: string;
 	};
 
 type StyledInputProps = FormInputProps & {
@@ -67,69 +95,173 @@ export const StyledInput = styled.input<StyledInputProps>`
 `;
 
 export const StyledLabel = styled.span<
-	Pick<StyledInputProps, "colorSet" | "disabled">
+	Pick<StyledInputProps, "colorSet" | "disabled" | "error">
 >`
-	${(props) => css`
-		${semanticFonts.bodySmall}
-		color: ${props.disabled
-			? props.colorSet?.text.disabled
-			: props.colorSet?.text.default};
-	`}
+	${(props) => {
+		let fontColor = props.colorSet?.text.default;
+
+		if (props.disabled) {
+			fontColor = props.colorSet?.text.disabled;
+		}
+		if (props.error && !props.disabled) {
+			fontColor = getColorSet(SemanticSetCores.NEGATIVE).essential.default;
+		}
+		return css`
+			${semanticFonts.bodySmall}
+			color: ${fontColor};
+		`;
+	}}
+`;
+
+export const StyledErrorText = styled.span`
+	${semanticFonts.bodySmall}
+	color: ${getColorSet(SemanticSetCores.NEGATIVE).essential.default};
 `;
 
 export const StyledInputContainer = styled.div<
-	Pick<StyledInputProps, "colorSet" | "disabled">
+	Pick<StyledInputProps, "colorSet" | "disabled" | "error">
 >`
-	${(props) => css`
-		/* Carot styles */
-		width: ${spacer320};
-		background-color: ${props.colorSet?.essential.default};
-		border-radius: ${spacer4};
-		padding: ${spacer10} ${spacer12} ${spacer12} ${spacer12};
+	${(props) => {
+		const highlightColor = getColorSet(SemanticSetCores.PRIMARY_ALT).essential
+			.default;
+		const errorColor = getColorSet(SemanticSetCores.NEGATIVE).essential.default;
 
-		&:disabled {
-			background-color: ${props.colorSet?.essential.disabled};
-			color: ${props.colorSet?.text.disabled};
-		}
+		return css`
+			/* Carot styles */
+			display: flex;
+			align-items: center;
+			width: ${spacer320};
+			background-color: ${props.colorSet?.essential.default};
+			border-radius: ${spacer4};
+			padding: ${spacer10} ${spacer12} ${spacer12} ${spacer12};
+			box-shadow: ${!props.disabled
+				? `0 -${spacer2} 0 0 ${props.error ? errorColor : highlightColor} inset`
+				: "none"};
 
-		&:hover:not([disabled]) {
-			background-color: ${props.colorSet?.essential.hover};
-			color: ${props.colorSet?.text.hover};
-		}
+			&:disabled {
+				background-color: ${props.colorSet?.essential.disabled};
+				color: ${props.colorSet?.text.disabled};
+			}
 
-		&:focus-within {
-			background-color: ${props.colorSet?.essential.focus};
-			box-shadow: 0 -${spacer2} 0 0 black inset;
-		}
-	`}
+			&:hover:not([disabled]) {
+				background-color: ${props.colorSet?.essential.hover};
+				color: ${props.colorSet?.text.hover};
+			}
+
+			&:focus-within {
+				background-color: ${props.colorSet?.essential.focus};
+				box-shadow: ${!props.disabled
+					? `0 -${spacer2} 0 0 ${
+							props.error ? errorColor : highlightColor
+					  } inset`
+					: "none"};
+			}
+		`;
+	}}
 `;
 
-export default React.forwardRef<HTMLElement, FormInputProps>(function FormInput(
-	{
+const IconWrapperContainer = styled.div`
+	margin-right: ${spacer12};
+`;
+
+const ClearButtonContainer = styled.div`
+	margin-left: ${spacer12};
+`;
+
+const ContentContainer = styled.div`
+	width: 100%;
+`;
+
+const BadgeDotContainer = styled.div`
+	margin-left: ${spacer12};
+`;
+
+export default React.forwardRef<HTMLElement, FormInputProps>(
+	function FormInput({
 		error,
 		disabled,
 		placeholder,
+		icon,
+		onClear,
+		label,
+		showClear,
+		errorText,
 		colorSet = getColorSet(SemanticSetCores.SECONDARY),
 		...props
-	},
-	ref
-) {
-	const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
-	return (
-		<StyledInputContainer colorSet={colorSet} disabled={disabled}>
-			<StyledLabel colorSet={colorSet} disabled={disabled}>
-				Label
-			</StyledLabel>
-			<StyledInput
-				ref={ref}
-				isUsingKeyboard={isUsingKeyboard}
-				error={error}
-				aria-invalid={error}
+	}) {
+		const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
+		const inputRef = useRef<HTMLInputElement | null>(null);
+
+		// Add error state if error text included
+		if (!error && errorText) {
+			error = true;
+		}
+
+		const renderIcon = () =>
+			icon && (
+				<IconWrapperContainer>
+					<IconWrapper
+						icon={icon}
+						padding={spacer2}
+						size={Sizes.LARGE}
+						disabled={disabled}
+					/>
+				</IconWrapperContainer>
+			);
+
+		return (
+			<StyledInputContainer
 				colorSet={colorSet}
 				disabled={disabled}
-				placeholder={placeholder}
-				{...props}
-			/>
-		</StyledInputContainer>
-	);
-});
+				error={error}
+			>
+				{renderIcon()}
+				<ContentContainer>
+					{label && (
+						<StyledLabel colorSet={colorSet} disabled={disabled} error={error}>
+							Label
+						</StyledLabel>
+					)}
+					<StyledInput
+						ref={(el: HTMLInputElement) => {
+							if (inputRef && !inputRef.current) {
+								inputRef.current = el;
+							}
+						}}
+						isUsingKeyboard={isUsingKeyboard}
+						error={error}
+						aria-invalid={error}
+						colorSet={colorSet}
+						disabled={disabled}
+						placeholder={placeholder}
+						{...props}
+					/>
+					{errorText && !disabled && (
+						<StyledErrorText>{errorText}</StyledErrorText>
+					)}
+				</ContentContainer>
+				{error && !disabled && (
+					<BadgeDotContainer>
+						<Dot />
+					</BadgeDotContainer>
+				)}
+				{showClear && (
+					<ClearButtonContainer>
+						<IconWrapper
+							onClick={() => {
+								if (inputRef.current) {
+									inputRef.current.value = "";
+								}
+								if (onClear) onClear();
+							}}
+							icon={Close}
+							padding={spacer2}
+							size={Sizes.SMALL}
+							disabled={disabled}
+						/>
+					</ClearButtonContainer>
+				)}
+			</StyledInputContainer>
+		);
+	}
+);
