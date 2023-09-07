@@ -23,6 +23,7 @@ import React, { useContext, useRef } from "react";
 import { css, styled } from "styled-components";
 import Dot from "../Badge/Dot";
 import { IconWrapper } from "../IconWrapper";
+import Type from "../Type";
 
 export type FormInputProps = StyledWrapperProps &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
@@ -94,25 +95,6 @@ export const StyledInput = styled.input<StyledInputProps>`
 	`}
 `;
 
-export const StyledLabel = styled.span<
-	Pick<StyledInputProps, "colorSet" | "disabled" | "error">
->`
-	${(props) => {
-		let fontColor = props.colorSet?.text.default;
-
-		if (props.disabled) {
-			fontColor = props.colorSet?.text.disabled;
-		}
-		if (props.error && !props.disabled) {
-			fontColor = getColorSet(SemanticSetCores.NEGATIVE).essential.default;
-		}
-		return css`
-			${semanticFonts.bodySmall}
-			color: ${fontColor};
-		`;
-	}}
-`;
-
 export const StyledErrorText = styled.span`
 	${semanticFonts.bodySmall}
 	color: ${getColorSet(SemanticSetCores.NEGATIVE).essential.default};
@@ -176,6 +158,10 @@ const BadgeDotContainer = styled.div`
 	margin-left: ${spacer12};
 `;
 
+const MarginTopType = styled(Type)`
+	margin-top: ${spacer8};
+`;
+
 export default React.forwardRef<HTMLElement, FormInputProps>(
 	function FormInput({
 		error,
@@ -218,9 +204,14 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 				{renderIcon()}
 				<ContentContainer>
 					{label && (
-						<StyledLabel colorSet={colorSet} disabled={disabled} error={error}>
+						<Type
+							colorSet={colorSet}
+							disabled={disabled}
+							error={error}
+							font={semanticFonts.bodySmall}
+						>
 							Label
-						</StyledLabel>
+						</Type>
 					)}
 					<StyledInput
 						ref={(el: HTMLInputElement) => {
@@ -237,7 +228,13 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 						{...props}
 					/>
 					{errorText && !disabled && (
-						<StyledErrorText>{errorText}</StyledErrorText>
+						<MarginTopType
+							colorSet={colorSet}
+							error={error}
+							font={semanticFonts.bodySmall}
+						>
+							{errorText}
+						</MarginTopType>
 					)}
 				</ContentContainer>
 				{error && !disabled && (

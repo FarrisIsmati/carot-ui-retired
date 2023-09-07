@@ -132,7 +132,7 @@ export enum ColorBaseCore {
 	ERROR_7 = "ERROR_7",
 }
 
-const colorBaseMap = {
+export const colorBaseMap = {
 	[ColorBaseCore.WHITE]: "#FFFFFF",
 	[ColorBaseCore.BLACK]: "#141414",
 	[ColorBaseCore.NEUTRAL_2]: "#525252",
