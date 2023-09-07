@@ -128,6 +128,10 @@ export const ChipStyled = styled(
 				css`
 					background-color: ${props.colorSet?.essential.hover};
 					color: ${props.colorSet?.text.hover};
+
+					& span {
+						color: ${props.colorSet?.text.hover};
+					}
 				`}
 			}
 
@@ -171,6 +175,7 @@ export default React.forwardRef<HTMLElement, ChipProps>(
 					onClickIconLeft={onClickIconLeft}
 					onClickIconRight={onClickIconRight}
 					icon={icon}
+					colorSet={colorSet}
 					position={position}
 					padding={spacer2}
 					size={Sizes.SMALL}

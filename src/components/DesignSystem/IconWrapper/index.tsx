@@ -111,7 +111,7 @@ export const getIconPosition = ({
 export const IconWrapper = ({
 	onClickIconLeft,
 	onClickIconRight,
-	onClick,
+	onClick: iconOnlyClick,
 	colorSet = getColorSet(SemanticSetCores.BASE),
 	component,
 	position,
@@ -123,19 +123,23 @@ export const IconWrapper = ({
 	const Icon = icon;
 	const iconSize = iconSizeMap[size];
 
+	const onClick =
+		iconOnlyClick ||
+		(onClickIconLeft && position === IconPosition.TRAILING) ||
+		(onClickIconRight && position === IconPosition.LEADING)
+			? (e: any) => {
+					if (onClickIconLeft && position === IconPosition.TRAILING)
+						onClickIconLeft(e);
+					if (onClickIconRight && position === IconPosition.LEADING)
+						onClickIconRight(e);
+					if (iconOnlyClick) iconOnlyClick(e);
+			  }
+			: undefined;
+
 	return (
 		<Wrapper
 			colorSet={colorSet}
-			onClick={(e: any) => {
-				if (disabled) {
-					return;
-				}
-				if (onClickIconLeft && position === IconPosition.TRAILING)
-					onClickIconLeft(e);
-				if (onClickIconRight && position === IconPosition.LEADING)
-					onClickIconRight(e);
-				if (onClick) onClick(e);
-			}}
+			onClick={onClick}
 			onClickIconLeft={onClickIconLeft}
 			onClickIconRight={onClickIconRight}
 			component={component}

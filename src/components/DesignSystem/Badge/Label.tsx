@@ -5,6 +5,7 @@ import { AsProp, StyledWrapperProps } from "@/utils/typeHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
 import { IconPosition, IconWrapper, getIconPosition } from "../IconWrapper";
+import Type from "../Type";
 
 export type BadgeProps = StyledWrapperProps & {
 	/**
@@ -89,12 +90,27 @@ export default React.forwardRef<HTMLElement, BadgeProps>(
 		const renderIcon = (position: IconPosition, icon?: AsProp) =>
 			icon && (
 				<IconWrapper
+					colorSet={colorSet}
 					icon={icon}
 					position={position}
 					padding={spacer2}
 					size={Sizes.SMALL}
 				/>
 			);
+
+		let content: React.ReactNode | null = null;
+		try {
+			React.Children.only(children);
+			// If react node set content to children
+			content = children;
+		} catch (e) {
+			// If string only set content to string wrapped in Type component
+			content = (
+				<Type font={semanticFonts.labelSmall} colorSet={colorSet}>
+					{children}
+				</Type>
+			);
+		}
 
 		return (
 			<LabelStyled
@@ -110,7 +126,7 @@ export default React.forwardRef<HTMLElement, BadgeProps>(
 			>
 				{renderIcon(IconPosition.TRAILING, iconTrailing)}
 				{renderIcon(IconPosition.ONLY, iconOnly)}
-				{!iconOnly && children}
+				{!iconOnly && content}
 				{renderIcon(IconPosition.LEADING, iconLeading)}
 			</LabelStyled>
 		);

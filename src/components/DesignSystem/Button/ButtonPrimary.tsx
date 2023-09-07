@@ -157,6 +157,7 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 		const renderIcon = (position: IconPosition, icon?: AsProp) =>
 			icon && (
 				<IconWrapper
+					colorSet={colorSet}
 					icon={icon}
 					position={position}
 					size={size}

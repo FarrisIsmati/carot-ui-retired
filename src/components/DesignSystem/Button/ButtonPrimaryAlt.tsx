@@ -3,7 +3,12 @@ import React from "react";
 import ButtonPrimary, { ButtonPrimaryProps } from "./ButtonPrimary";
 
 export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
-	({ colorSet = getColorSet(SemanticSetCores.PRIMARY_ALT), ...props }, ref) => {
-		return <ButtonPrimary {...props} colorSet={colorSet} ref={ref} />;
+	(
+		{ size, colorSet = getColorSet(SemanticSetCores.PRIMARY_ALT), ...props },
+		ref
+	) => {
+		return (
+			<ButtonPrimary {...props} size={size} colorSet={colorSet} ref={ref} />
+		);
 	}
 );
