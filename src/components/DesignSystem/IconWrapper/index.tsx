@@ -73,7 +73,6 @@ export const Wrapper = styled(
 			: props.colorSet?.text.default};
 	border: none;
 	padding: 0;
-	background-color: inherit;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -87,6 +86,7 @@ export const Wrapper = styled(
 `;
 
 export enum IconPosition {
+	BOTH = "BOTH",
 	LEADING = "LEADING",
 	TRAILING = "TRAILING",
 	ONLY = "ONLY",
@@ -102,6 +102,7 @@ export const getIconPosition = ({
 	iconTrailing?: AsProp;
 	iconOnly?: AsProp;
 }) => {
+	if (iconLeading && iconTrailing) return IconPosition.BOTH;
 	if (iconLeading) return IconPosition.LEADING;
 	if (iconTrailing) return IconPosition.TRAILING;
 	if (iconOnly) return IconPosition.ONLY;

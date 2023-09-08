@@ -69,6 +69,7 @@ export type ChipProps = Omit<StyledWrapperProps, "size"> & {
 
 export const chipPadding = (size: Sizes, iconPosition: IconPosition) => {
 	if (size === Sizes.LARGE || size === Sizes.MEDIUM) {
+		if (iconPosition === IconPosition.BOTH) return spacer6;
 		if (iconPosition === IconPosition.LEADING)
 			return `${spacer6} ${spacer6} ${spacer6} ${spacer12}`;
 		if (iconPosition === IconPosition.TRAILING)
@@ -78,6 +79,7 @@ export const chipPadding = (size: Sizes, iconPosition: IconPosition) => {
 	}
 
 	if (size === Sizes.SMALL) {
+		if (iconPosition === IconPosition.BOTH) return spacer2;
 		if (iconPosition === IconPosition.LEADING)
 			return `${spacer2} ${spacer4} ${spacer2} ${spacer12}`;
 		if (iconPosition === IconPosition.TRAILING)

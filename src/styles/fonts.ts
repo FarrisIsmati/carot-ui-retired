@@ -1,4 +1,13 @@
+import { Poppins } from "next/font/google";
 import { css } from "styled-components";
+
+export const poppins = Poppins({
+	style: "normal",
+	weight: ["400", "500", "600", "700", "800"],
+	variable: "--font-poppins",
+	subsets: ["latin"],
+});
+
 import {
 	spacer11,
 	spacer12,
@@ -22,7 +31,7 @@ const fontFamilyA = css`
 `;
 
 const fontFamilyB = css`
-	font-family: "poppins", sans-serif !important;
+	font-family: "Poppins";
 	font-style: normal !important;
 `;
 

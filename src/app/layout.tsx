@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Carot - Financial Vision tool",
@@ -16,11 +13,11 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
+			<body>
 				<header>
 					<p>Header</p>
 					<nav>Navigate</nav>
-					{/* Basic Sans & Poppins */}
+					{/* Basic Sans */}
 					<link rel="stylesheet" href="https://use.typekit.net/wak4qgj.css" />
 				</header>
 				{children}
