@@ -23,11 +23,16 @@ export const ErrorState = () => (
 );
 
 export const ClearButton = () => (
-	<TextField label="Label" placeholder="Placeholder" showClear />
+	<TextField label="Label" placeholder="Placeholder" onClear={() => {}} />
 );
 
 export const IconAndClearButton = () => (
-	<TextField label="Label" placeholder="Placeholder" icon={Search} showClear />
+	<TextField
+		label="Label"
+		placeholder="Placeholder"
+		icon={Search}
+		onClear={() => {}}
+	/>
 );
 
 export const IconAndClearButtonAndErrorState = () => (
@@ -35,7 +40,7 @@ export const IconAndClearButtonAndErrorState = () => (
 		label="Label"
 		placeholder="Placeholder"
 		icon={Search}
-		showClear
+		onClear={() => {}}
 		error
 	/>
 );
@@ -45,7 +50,7 @@ export const IconAndClearButtonAndErrorStateDisabled = () => (
 		label="Label"
 		placeholder="Placeholder"
 		icon={Search}
-		showClear
+		onClear={() => {}}
 		error
 		disabled
 	/>
@@ -56,7 +61,7 @@ export const IconAndClearButtonAndErrorStateWithText = () => (
 		label="Label"
 		placeholder="Placeholder"
 		icon={Search}
-		showClear
+		onClear={() => {}}
 		error
 		errorText="This is an error state"
 	/>

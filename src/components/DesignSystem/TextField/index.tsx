@@ -19,7 +19,7 @@ import {
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
 import { Close } from "@material-ui/icons";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { css, styled } from "styled-components";
 import Dot from "../Badge/Dot";
 import { IconWrapper } from "../IconWrapper";
@@ -45,10 +45,6 @@ export type FormInputProps = StyledWrapperProps &
 		 */
 		icon?: AsProp;
 		/**
-		 * Show clear button
-		 */
-		showClear?: boolean;
-		/**
 		 * Perform an action when clearing out the input text
 		 * */
 		onClear?: () => void;
@@ -62,7 +58,7 @@ export type FormInputProps = StyledWrapperProps &
 		errorText?: string;
 	};
 
-type StyledInputProps = FormInputProps & {
+export type StyledInputProps = FormInputProps & {
 	isUsingKeyboard: boolean;
 	useBrowserDefaultFocusStyle: boolean;
 };
@@ -116,8 +112,8 @@ export const StyledInputContainer = styled.div<
 			background-color: ${props.colorSet?.essential.default};
 			border-radius: ${spacer4};
 			padding: ${spacer10} ${spacer12} ${spacer12} ${spacer12};
-			box-shadow: ${!props.disabled
-				? `0 -${spacer2} 0 0 ${props.error ? errorColor : highlightColor} inset`
+			box-shadow: ${!props.disabled && props.error
+				? `0 -${spacer2} 0 0 ${errorColor} inset`
 				: "none"};
 
 			&:disabled {
@@ -142,23 +138,23 @@ export const StyledInputContainer = styled.div<
 	}}
 `;
 
-const IconWrapperContainer = styled.div`
+export const IconWrapperContainer = styled.div`
 	margin-right: ${spacer12};
 `;
 
-const ClearButtonContainer = styled.div`
+export const ClearButtonContainer = styled.div`
 	margin-left: ${spacer12};
 `;
 
-const ContentContainer = styled.div`
+export const ContentContainer = styled.div`
 	width: 100%;
 `;
 
-const BadgeDotContainer = styled.div`
+export const BadgeDotContainer = styled.div`
 	margin-left: ${spacer12};
 `;
 
-const MarginTopType = styled(Type)`
+export const MarginTopType = styled(Type)`
 	margin-top: ${spacer8};
 `;
 
@@ -170,13 +166,13 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 		icon,
 		onClear,
 		label,
-		showClear,
 		errorText,
 		colorSet = getColorSet(SemanticSetCores.SECONDARY),
 		...props
 	}) {
 		const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
 		const inputRef = useRef<HTMLInputElement | null>(null);
+		const [content, setContent] = useState("");
 
 		// Add error state if error text included
 		if (!error && errorText) {
@@ -225,6 +221,9 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 						colorSet={colorSet}
 						disabled={disabled}
 						placeholder={placeholder}
+						onChange={(e: any) => {
+							setContent(e.target.value);
+						}}
 						{...props}
 					/>
 					{errorText && !disabled && (
@@ -242,19 +241,22 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 						<Dot />
 					</BadgeDotContainer>
 				)}
-				{showClear && (
+				{onClear && (
 					<ClearButtonContainer>
 						<IconWrapper
 							onClick={() => {
-								if (inputRef.current) {
-									inputRef.current.value = "";
+								if (content && !disabled) {
+									if (inputRef.current && content) {
+										inputRef.current.value = "";
+										setContent("");
+									}
+									onClear();
 								}
-								if (onClear) onClear();
 							}}
 							icon={Close}
 							padding={spacer2}
 							size={Sizes.SMALL}
-							disabled={disabled}
+							disabled={!content || disabled}
 						/>
 					</ClearButtonContainer>
 				)}
