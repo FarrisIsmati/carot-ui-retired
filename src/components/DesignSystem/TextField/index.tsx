@@ -29,7 +29,7 @@ export type FormInputProps = StyledWrapperProps &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
 		/**
 		 * Set the semantic color used by the button
-		 * @default 'brightAccent
+		 * @default 'SECONDARY'
 		 **/
 		colorSet?: ColorSet;
 		/**

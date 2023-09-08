@@ -35,3 +35,6 @@ export const iconSizeMap = {
 	[Sizes.MEDIUM]: spacer18,
 	[Sizes.LARGE]: spacer24,
 };
+
+// Control
+export const controlPaddingBlock = { sm: spacer4, md: spacer8, lg: spacer12 };
