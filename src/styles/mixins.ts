@@ -57,9 +57,9 @@ export const formControlBaseSelect = () => css`
 		display: none;
 	}
 
-	border-radius: ${spacer4};
+	/* border-radius: ${spacer4};
 	padding-block-start: ${controlPaddingBlock.md};
 	padding-block-end: ${controlPaddingBlock.md};
 	padding-inline-start: ${spacer14};
-	padding-inline-end: ${spacer40};
+	padding-inline-end: ${spacer40}; */
 `;
