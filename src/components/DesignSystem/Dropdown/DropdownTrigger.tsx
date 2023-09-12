@@ -6,6 +6,7 @@ import {
 	spacer10,
 	spacer12,
 	spacer2,
+	spacer320,
 	spacer4,
 	spacer8,
 } from "@/styles/sizes";
@@ -56,7 +57,19 @@ export type DropdownTriggerProps = StyledWrapperProps &
 		placeholder?: string;
 	};
 
-export const DropdownContainer = styled.div<DropdownTriggerProps>`
+const StyledText = styled(Type)`
+	${semanticFonts.bodyLarge};
+
+	&:disabled {
+		color: ${(props) => props.colorSet?.text.disabled};
+	}
+
+	&:hover:not([disabled]) {
+		background-color: ${(props) => props.colorSet?.essential.hover};
+	}
+`;
+
+export const DropdownTrigger = styled.div<DropdownTriggerProps>`
 	${(props) => {
 		const highlightColor = getColorSet(SemanticSetCores.PRIMARY_ALT).essential
 			.default;
@@ -78,8 +91,17 @@ export const DropdownContainer = styled.div<DropdownTriggerProps>`
 		};
 
 		return css`
-			/* 296 subtracting the padding adding extra space  */
-			width: 296px;
+			${rootStyle()};
+			${formControlBaseSelect()};
+			display: flex;
+			flex-direction: column;
+			text-align: start;
+			overflow-wrap: break-word;
+
+			margin-top: ${spacer8};
+			border: none;
+
+			width: ${spacer320};
 			background-color: ${props.colorSet?.essential.default};
 			border-radius: ${spacer4};
 			padding: ${spacer10} ${spacer12} ${spacer12} ${spacer12};
@@ -111,34 +133,6 @@ export const ContentContainer = styled.div`
 	width: 100%;
 `;
 
-export const DropdownTrigger = styled.button<
-	DropdownTriggerProps & { isUsingKeyboard: boolean }
->`
-	${(props) => css`
-		${rootStyle()};
-		${formControlBaseSelect()};
-		display: flex;
-		flex-direction: column;
-		text-align: start;
-		overflow-wrap: break-word;
-		width: 100%;
-		background-color: transparent;
-		padding: 0;
-
-		${semanticFonts.bodyLarge};
-		margin-top: ${spacer8};
-		border: none;
-
-		&:disabled {
-			color: ${props.colorSet?.text.disabled};
-		}
-
-		&:hover:not([disabled]) {
-			color: ${props.colorSet?.text.hover};
-		}
-	`}
-`;
-
 export default ({
 	onClickMenu,
 	label,
@@ -155,10 +149,13 @@ export default ({
 	const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
 
 	return (
-		<DropdownContainer
+		<DropdownTrigger
 			colorSet={colorSet}
 			isMenuOpen={isMenuOpen}
 			error={error}
+			isUsingKeyboard={isUsingKeyboard}
+			aria-haspopup="listbox"
+			onClick={onClickMenu}
 			disabled={disabled}
 			{...props}
 		>
@@ -172,42 +169,36 @@ export default ({
 					{label}
 				</Type>
 			)}
-			<DropdownTrigger
-				isUsingKeyboard={isUsingKeyboard}
-				aria-haspopup="listbox"
-				onClick={onClickMenu}
-				disabled={disabled}
-				{...props}
-			>
-				<ContentContainer>
+			<ContentContainer>
+				<StyledText disabled={disabled} colorSet={colorSet}>
 					{!selectedItem && placeholder}
 					{selectedItem && selectedItem.value}
-					{isMenuOpen ? (
-						<IconWrapper
-							icon={KeyboardArrowUp}
-							padding={spacer2}
-							size={Sizes.MEDIUM}
-							disabled={disabled}
-						/>
-					) : (
-						<IconWrapper
-							icon={KeyboardArrowDown}
-							padding={spacer2}
-							size={Sizes.MEDIUM}
-							disabled={disabled}
-						/>
-					)}
-				</ContentContainer>
-				{errorText && !disabled && (
-					<MarginTopType
-						colorSet={colorSet}
-						error={error}
-						font={semanticFonts.bodySmall}
-					>
-						{errorText}
-					</MarginTopType>
+				</StyledText>
+				{isMenuOpen ? (
+					<IconWrapper
+						icon={KeyboardArrowUp}
+						padding={spacer2}
+						size={Sizes.MEDIUM}
+						disabled={disabled}
+					/>
+				) : (
+					<IconWrapper
+						icon={KeyboardArrowDown}
+						padding={spacer2}
+						size={Sizes.MEDIUM}
+						disabled={disabled}
+					/>
 				)}
-			</DropdownTrigger>
-		</DropdownContainer>
+			</ContentContainer>
+			{errorText && !disabled && (
+				<MarginTopType
+					colorSet={colorSet}
+					error={error}
+					font={semanticFonts.bodySmall}
+				>
+					{errorText}
+				</MarginTopType>
+			)}
+		</DropdownTrigger>
 	);
 };

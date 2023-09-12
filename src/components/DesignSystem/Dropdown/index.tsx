@@ -1,12 +1,12 @@
 import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { spacer320 } from "@/styles/sizes";
 import { PseudoClassProps, StyledWrapperProps } from "@/utils/typeHelpers";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Overlay, { OverlayDirections } from "../Overlay";
 import DropdownItem from "./DropdownItem";
 import { DropdownList } from "./DropdownList";
 import DropdownTrigger from "./DropdownTrigger";
-import useKeyPress from "./hooks/useKeyPress";
+import useKeyOnDropdown from "./hooks/useKeyOnDropdown";
 import useOffClick from "./hooks/useOffClick";
 
 export interface DropdownData {
@@ -26,7 +26,7 @@ export type DropdownProps = StyledWrapperProps &
 		label?: string;
 		/**
 		 * Set the semantic color used by the button
-		 * @default 'brightAccent
+		 * @default 'SECONDARY
 		 **/
 		colorSet?: ColorSet;
 		/**
@@ -53,46 +53,34 @@ export default ({
 	dataset,
 }: DropdownProps) => {
 	const dropdownRef = useRef(null);
+	const dropdownListRef = useRef(null);
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const [selectedItem, setSelectedItem] = useState<DropdownData | null>(null);
 
 	// Handle event when clicking off ref
 	useOffClick(dropdownRef, () => setIsMenuOpen(false));
 
+	// Allow keyboard to navigate list
+	const { cursor, cursorRef } = useKeyOnDropdown({
+		isMenuOpen,
+		dataset,
+		selectedItem,
+		parent: dropdownListRef.current,
+		setSelectedItem,
+		onEnter: () => {
+			if (isMenuOpen) {
+				setIsMenuOpen(false);
+			}
+		},
+	});
+
+	// Get active dropdown item
+	const [hoveredItem, setHoveredItem] = useState<DropdownData | null>(null);
+
 	// Add error state if error text included
 	if (!error && errorText) {
 		error = true;
 	}
-
-	// Accessibility keyboard
-	const downPress = useKeyPress("ArrowDown");
-	const upPress = useKeyPress("ArrowUp");
-	const enterPress = useKeyPress("Enter");
-	const [cursor, setCursor] = useState(0);
-	const [hovered, setHovered] = useState(undefined);
-
-	useEffect(() => {
-		if (dataset.length && downPress) {
-			setCursor((prevState) =>
-				prevState < dataset.length - 1 ? prevState + 1 : prevState
-			);
-		}
-	}, [downPress]);
-	useEffect(() => {
-		if (dataset.length && upPress) {
-			setCursor((prevState) => (prevState > 0 ? prevState - 1 : prevState));
-		}
-	}, [upPress]);
-	useEffect(() => {
-		if (dataset.length && enterPress) {
-			setSelectedItem(dataset[cursor]);
-		}
-	}, [cursor, enterPress]);
-	useEffect(() => {
-		if (dataset.length && hovered) {
-			setCursor(dataset.indexOf(hovered));
-		}
-	}, [hovered]);
 
 	return (
 		<div ref={dropdownRef}>
@@ -116,21 +104,32 @@ export default ({
 			{isMenuOpen && (
 				<Overlay placement={OverlayDirections.BOTTOM} width={spacer320}>
 					{
-						<DropdownList>
-							{dataset.map((e) => (
-								<DropdownItem
-									key={e.id}
-									onClick={() => {
-										if (disabled) {
-											return;
+						<DropdownList ref={dropdownListRef}>
+							{dataset.map((e, i) => {
+								return (
+									<DropdownItem
+										ref={(el) => (cursorRef.current[i] = el)}
+										key={e.id}
+										onClick={() => {
+											if (disabled) {
+												return;
+											}
+											setSelectedItem(e);
+											setIsMenuOpen(false);
+										}}
+										active={
+											e.id === selectedItem?.id ||
+											e.id === hoveredItem?.id ||
+											i === cursor
 										}
-										setSelectedItem(e);
-										setIsMenuOpen(false);
-									}}
-								>
-									{e.value}
-								</DropdownItem>
-							))}
+										colorSet={colorSet}
+										onMouseEnter={() => setHoveredItem(e)}
+										onMouseLeave={() => setHoveredItem(null)}
+									>
+										{e.value}
+									</DropdownItem>
+								);
+							})}
 						</DropdownList>
 					}
 				</Overlay>

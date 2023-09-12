@@ -19,6 +19,9 @@ const Dataset1 = [
 	{ value: "Option 6", id: "option6" },
 	{ value: "Option 7", id: "option7" },
 	{ value: "Option 8", id: "option8" },
+	{ value: "Option 9", id: "option9" },
+	{ value: "Option 10", id: "option10" },
+	{ value: "Option 11", id: "option11" },
 ];
 
 export const Default = () => (
