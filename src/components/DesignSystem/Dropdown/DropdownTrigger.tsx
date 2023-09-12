@@ -14,7 +14,9 @@ import { PseudoClassProps, StyledWrapperProps } from "@/utils/typeHelpers";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons";
 import { useContext } from "react";
 import { css, styled } from "styled-components";
+import { DropdownData } from ".";
 import { IconWrapper } from "../IconWrapper";
+import { MarginTopType } from "../TextField";
 import Type from "../Type";
 
 export type DropdownTriggerProps = StyledWrapperProps &
@@ -44,6 +46,14 @@ export type DropdownTriggerProps = StyledWrapperProps &
 		 * isMenuOpen
 		 */
 		isMenuOpen?: boolean;
+		/**
+		 * Selected value
+		 */
+		selectedItem: DropdownData | null;
+		/**
+		 * Placeholder text
+		 */
+		placeholder?: string;
 	};
 
 export const DropdownContainer = styled.div<DropdownTriggerProps>`
@@ -51,6 +61,21 @@ export const DropdownContainer = styled.div<DropdownTriggerProps>`
 		const highlightColor = getColorSet(SemanticSetCores.PRIMARY_ALT).essential
 			.default;
 		const errorColor = getColorSet(SemanticSetCores.NEGATIVE).essential.default;
+		const nonFocusBoxShadow = () => {
+			if (props.disabled) {
+				return "none !important";
+			}
+
+			if (!props.disabled && !props.error && props.isMenuOpen) {
+				return `0 -${spacer2} 0 0 ${highlightColor} inset !important`;
+			}
+
+			if (!props.disabled && props.error) {
+				return `0 -${spacer2} 0 0 ${errorColor} inset !important`;
+			}
+
+			return "none !important";
+		};
 
 		return css`
 			/* 296 subtracting the padding adding extra space  */
@@ -58,9 +83,7 @@ export const DropdownContainer = styled.div<DropdownTriggerProps>`
 			background-color: ${props.colorSet?.essential.default};
 			border-radius: ${spacer4};
 			padding: ${spacer10} ${spacer12} ${spacer12} ${spacer12};
-			box-shadow: ${!props.disabled && props.error
-				? `0 -${spacer2} 0 0 ${errorColor} inset`
-				: "none"};
+			box-shadow: ${nonFocusBoxShadow()};
 
 			&:disabled {
 				background-color: ${props.colorSet?.essential.disabled};
@@ -125,7 +148,8 @@ export default ({
 	children,
 	disabled,
 	isMenuOpen,
-
+	placeholder,
+	selectedItem,
 	...props
 }: DropdownTriggerProps) => {
 	const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
@@ -133,6 +157,7 @@ export default ({
 	return (
 		<DropdownContainer
 			colorSet={colorSet}
+			isMenuOpen={isMenuOpen}
 			error={error}
 			disabled={disabled}
 			{...props}
@@ -144,17 +169,19 @@ export default ({
 					error={error}
 					font={semanticFonts.bodySmall}
 				>
-					Label
+					{label}
 				</Type>
 			)}
 			<DropdownTrigger
 				isUsingKeyboard={isUsingKeyboard}
 				aria-haspopup="listbox"
 				onClick={onClickMenu}
+				disabled={disabled}
 				{...props}
 			>
 				<ContentContainer>
-					{children}
+					{!selectedItem && placeholder}
+					{selectedItem && selectedItem.value}
 					{isMenuOpen ? (
 						<IconWrapper
 							icon={KeyboardArrowUp}
@@ -171,6 +198,15 @@ export default ({
 						/>
 					)}
 				</ContentContainer>
+				{errorText && !disabled && (
+					<MarginTopType
+						colorSet={colorSet}
+						error={error}
+						font={semanticFonts.bodySmall}
+					>
+						{errorText}
+					</MarginTopType>
+				)}
 			</DropdownTrigger>
 		</DropdownContainer>
 	);

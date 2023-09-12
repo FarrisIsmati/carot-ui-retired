@@ -24,7 +24,7 @@ export type TypeListProps = StyledWrapperProps & {
 	condensedAll?: boolean;
 };
 
-const TypeListElement = styled(
+const TypeList = styled(
 	React.forwardRef<HTMLElement, TypeListProps>(function TypeList(
 		{ component: Component = "ul", ...props },
 		ref
@@ -34,8 +34,8 @@ const TypeListElement = styled(
 )`
 	${rootStyle()};
 	padding-inline-start: ${(props) => (props.condensedAll ? "0" : spacer32)};
-	padding-inline-end: 0;
 	padding-block-end: ${(props) => props.condensed && "0"};
+	padding-inline-end: 0;
 	margin-block-start: 0;
 	margin-block-end: 0;
 	overflow-wrap: break-word;
@@ -49,8 +49,6 @@ const TypeListElement = styled(
 
 export default React.forwardRef<HTMLElement, TypeListProps>(
 	({ listStyleReset = false, ...props }, ref) => {
-		return (
-			<TypeListElement {...props} ref={ref} listStyleReset={listStyleReset} />
-		);
+		return <TypeList {...props} ref={ref} listStyleReset={listStyleReset} />;
 	}
 );

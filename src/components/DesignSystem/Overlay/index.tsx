@@ -1,4 +1,4 @@
-import { spacer8 } from "@/styles/sizes";
+import { spacer320, spacer8 } from "@/styles/sizes";
 import { StyledWrapperProps } from "@/utils/typeHelpers";
 import React from "react";
 import { css, styled } from "styled-components";
@@ -21,6 +21,10 @@ export type OverlayTriggerProps = StyledWrapperProps & {
 	 * Functionality to hide overlay content
 	 */
 	closeOverlay?: (e: Event) => void;
+	/**
+	 * Width
+	 */
+	width?: string;
 };
 
 const Trigger = styled.span`
@@ -32,12 +36,11 @@ export type OverlayPlacement = {
 	placement?: OverlayDirections;
 };
 
-export const Overlay = styled.div<OverlayPlacement>`
+export const Overlay = styled.div<OverlayTriggerProps>`
 	display: flex;
-	min-width: 296px;
 	pointer-events: none;
 	position: absolute;
-	z-index: 1060;
+	width: ${(props) => (props.width ? props.width : spacer320)};
 
 	${(props) =>
 		props.placement === OverlayDirections.BOTTOM &&
@@ -51,7 +54,7 @@ export const Overlay = styled.div<OverlayPlacement>`
 
 export default React.forwardRef<HTMLElement, OverlayTriggerProps>(
 	function OverlayTriggerComponent(
-		{ children, placement, withPortal, closeOverlay, ...props },
+		{ children, placement, withPortal, closeOverlay, width, ...props },
 		ref
 	) {
 		return (
