@@ -1,12 +1,12 @@
 import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { spacer320 } from "@/styles/sizes";
 import { PseudoClassProps, StyledWrapperProps } from "@/utils/typeHelpers";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Overlay, { OverlayDirections } from "../Overlay";
 import DropdownItem from "./DropdownItem";
 import { DropdownList } from "./DropdownList";
 import DropdownTrigger from "./DropdownTrigger";
-import useKeyOnDropdown from "./hooks/useKeyOnDropdown";
+import useKeyOnDropdown, { scrollToTarget } from "./hooks/useKeyOnDropdown";
 import useOffClick from "./hooks/useOffClick";
 
 export interface DropdownData {
@@ -76,6 +76,17 @@ export default ({
 
 	// Get active dropdown item
 	const [hoveredItem, setHoveredItem] = useState<DropdownData | null>(null);
+
+	// Scroll to target if menu is open
+	useEffect(() => {
+		if (isMenuOpen) {
+			scrollToTarget({
+				parent: dropdownListRef.current,
+				cursor,
+				cursorRef,
+			});
+		}
+	}, [isMenuOpen]);
 
 	// Add error state if error text included
 	if (!error && errorText) {
