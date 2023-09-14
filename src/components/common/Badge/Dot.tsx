@@ -1,5 +1,5 @@
 import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
-import { spacer2, spacer8 } from "@/styles/sizes";
+import { spacer8 } from "@/styles/sizes";
 import { AsProp, StyledWrapperProps } from "@/utils/typeHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
@@ -34,7 +34,6 @@ export const DotStyled = styled(
 			height: ${spacer8};
 			border-radius: 50%;
 			background-color: ${props.colorSet?.essential.default};
-			padding: ${spacer2};
 			display: flex;
 			font-size: inherit;
 			align-items: center;

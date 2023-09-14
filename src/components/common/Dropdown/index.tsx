@@ -97,6 +97,21 @@ export default ({
 		}
 	}, [isMenuOpen]);
 
+	// On enter key press
+	const onEnterPress = (e: React.KeyboardEvent<any>) => {
+		if (e.key === "Enter" && e.target === document.activeElement) {
+			// Open menu if focused and hitting enter key
+			if (!isMenuOpen) {
+				setIsMenuOpen(true);
+			}
+			// Close menu if focused and hitting enter key to select item
+			if (isMenuOpen) {
+				setSelectedItem(dataset[cursor]);
+				setIsMenuOpen(false);
+			}
+		}
+	};
+
 	return (
 		<div ref={dropdownRef}>
 			{/* Button triggers dropdown to open */}
@@ -114,25 +129,7 @@ export default ({
 					}
 					setIsMenuOpen(!isMenuOpen);
 				}}
-				onKeyDown={(e) => {
-					// Open menu if focused and hitting enter key
-					if (
-						e.target === document.activeElement &&
-						!isMenuOpen &&
-						e.key === "Enter"
-					) {
-						setIsMenuOpen(true);
-					}
-					// Close menu if focused and hitting enter key to select item
-					if (
-						e.target === document.activeElement &&
-						isMenuOpen &&
-						e.key === "Enter"
-					) {
-						setSelectedItem(dataset[cursor]);
-						setIsMenuOpen(false);
-					}
-				}}
+				onKeyDown={onEnterPress}
 				selectedItem={selectedItem}
 				placeholder={placeholder}
 			/>

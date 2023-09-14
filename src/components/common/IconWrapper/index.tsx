@@ -150,7 +150,11 @@ export const IconWrapper = ({
 			aria-hidden="true"
 			disabled={disabled}
 		>
-			<Icon style={{ fontSize: iconSize }} />
+			<Icon
+				style={{ fontSize: iconSize }}
+				colorSet={colorSet}
+				disabled={disabled}
+			/>
 		</Wrapper>
 	);
 };

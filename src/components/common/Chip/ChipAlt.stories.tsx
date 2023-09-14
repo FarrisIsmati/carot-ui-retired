@@ -1,9 +1,8 @@
 import { Sizes } from "@/styles/sizes";
-import {
-	AccountCircleOutlined,
-	Close,
-	PersonOutlineOutlined,
-} from "@material-ui/icons";
+import AccountCircle from "../Icons/AccountCircle";
+import CrossSmall from "../Icons/CrossSmall";
+import Person from "../Icons/Person";
+
 import { ChipType } from ".";
 
 import ChipAlt from "./ChipAlt";
@@ -17,23 +16,23 @@ export default {
 export const Default = () => <ChipAlt>Label</ChipAlt>;
 
 export const LargeLabelChipIconLeft = () => (
-	<ChipAlt iconTrailing={PersonOutlineOutlined}>Label</ChipAlt>
+	<ChipAlt iconTrailing={Person}>Label</ChipAlt>
 );
 
 export const LargeLabelChipIconRight = () => (
-	<ChipAlt iconLeading={PersonOutlineOutlined}>Label</ChipAlt>
+	<ChipAlt iconLeading={Person}>Label</ChipAlt>
 );
 
 export const LargeLabelChipIconRightClickable = () => (
-	<ChipAlt iconLeading={Close} onClickIconRight={(e) => {}}>
+	<ChipAlt iconLeading={CrossSmall} onClickIconRight={(e) => {}}>
 		Label
 	</ChipAlt>
 );
 
 export const LargeLabelChipIconLeftAndRightClickable = () => (
 	<ChipAlt
-		iconTrailing={PersonOutlineOutlined}
-		iconLeading={Close}
+		iconTrailing={Person}
+		iconLeading={CrossSmall}
 		onClickIconRight={(e) => {}}
 	>
 		Label
@@ -41,7 +40,7 @@ export const LargeLabelChipIconLeftAndRightClickable = () => (
 );
 
 export const LargeLabelChipDisabled = () => (
-	<ChipAlt iconLeading={Close} onClickIconRight={(e) => {}} disabled>
+	<ChipAlt iconLeading={CrossSmall} onClickIconRight={(e) => {}} disabled>
 		Label
 	</ChipAlt>
 );
@@ -49,27 +48,31 @@ export const LargeLabelChipDisabled = () => (
 export const DefaultSmall = () => <ChipAlt size={Sizes.SMALL}>Label</ChipAlt>;
 
 export const SmallLabelChipIconLeft = () => (
-	<ChipAlt iconTrailing={PersonOutlineOutlined} size={Sizes.SMALL}>
+	<ChipAlt iconTrailing={Person} size={Sizes.SMALL}>
 		Label
 	</ChipAlt>
 );
 
 export const SmallLabelChipIconRight = () => (
-	<ChipAlt iconLeading={PersonOutlineOutlined} size={Sizes.SMALL}>
+	<ChipAlt iconLeading={Person} size={Sizes.SMALL}>
 		Label
 	</ChipAlt>
 );
 
 export const SmallLabelChipIconRightClickable = () => (
-	<ChipAlt iconLeading={Close} onClickIconRight={(e) => {}} size={Sizes.SMALL}>
+	<ChipAlt
+		iconLeading={CrossSmall}
+		onClickIconRight={(e) => {}}
+		size={Sizes.SMALL}
+	>
 		Label
 	</ChipAlt>
 );
 
 export const SmallLabelChipIconLeftAndRightClickable = () => (
 	<ChipAlt
-		iconTrailing={PersonOutlineOutlined}
-		iconLeading={Close}
+		iconTrailing={Person}
+		iconLeading={CrossSmall}
 		size={Sizes.SMALL}
 		onClickIconRight={(e) => {}}
 	>
@@ -79,7 +82,7 @@ export const SmallLabelChipIconLeftAndRightClickable = () => (
 
 export const SmallLabelChipDisabled = () => (
 	<ChipAlt
-		iconLeading={Close}
+		iconLeading={CrossSmall}
 		onClickIconRight={(e) => {}}
 		disabled
 		size={Sizes.SMALL}
@@ -96,13 +99,13 @@ export const DefaultLargeAvatar = () => (
 );
 
 export const LargeAvatarChipIconLeft = () => (
-	<ChipAlt chipType={ChipType.AVATAR} iconTrailing={AccountCircleOutlined}>
+	<ChipAlt chipType={ChipType.AVATAR} iconTrailing={AccountCircle}>
 		Label
 	</ChipAlt>
 );
 
 export const LargeAvatarChipIconRight = () => (
-	<ChipAlt chipType={ChipType.AVATAR} iconLeading={AccountCircleOutlined}>
+	<ChipAlt chipType={ChipType.AVATAR} iconLeading={AccountCircle}>
 		Label
 	</ChipAlt>
 );
@@ -110,7 +113,7 @@ export const LargeAvatarChipIconRight = () => (
 export const LargeAvatarChipIconRightClickable = () => (
 	<ChipAlt
 		chipType={ChipType.AVATAR}
-		iconLeading={Close}
+		iconLeading={CrossSmall}
 		onClickIconRight={(e) => {}}
 	>
 		Label
@@ -120,8 +123,8 @@ export const LargeAvatarChipIconRightClickable = () => (
 export const LargeAvatarChipIconLeftAndRightClickable = () => (
 	<ChipAlt
 		chipType={ChipType.AVATAR}
-		iconTrailing={AccountCircleOutlined}
-		iconLeading={Close}
+		iconTrailing={AccountCircle}
+		iconLeading={CrossSmall}
 		onClickIconRight={(e) => {}}
 	>
 		Label
@@ -131,7 +134,7 @@ export const LargeAvatarChipIconLeftAndRightClickable = () => (
 export const LargeAvatarChipDisabled = () => (
 	<ChipAlt
 		chipType={ChipType.AVATAR}
-		iconLeading={Close}
+		iconLeading={CrossSmall}
 		onClickIconRight={(e) => {}}
 		disabled
 	>
@@ -149,7 +152,7 @@ export const DefaultSmallAvatar = () => (
 export const SmallAvatarChipIconLeft = () => (
 	<ChipAlt
 		chipType={ChipType.AVATAR}
-		iconTrailing={AccountCircleOutlined}
+		iconTrailing={AccountCircle}
 		size={Sizes.SMALL}
 	>
 		Label
@@ -159,7 +162,7 @@ export const SmallAvatarChipIconLeft = () => (
 export const SmallAvatarChipIconRight = () => (
 	<ChipAlt
 		chipType={ChipType.AVATAR}
-		iconLeading={AccountCircleOutlined}
+		iconLeading={AccountCircle}
 		size={Sizes.SMALL}
 	>
 		Label
@@ -169,7 +172,7 @@ export const SmallAvatarChipIconRight = () => (
 export const SmallAvatarChipIconRightClickable = () => (
 	<ChipAlt
 		chipType={ChipType.AVATAR}
-		iconLeading={Close}
+		iconLeading={CrossSmall}
 		onClickIconRight={(e) => {}}
 		size={Sizes.SMALL}
 	>
@@ -180,8 +183,8 @@ export const SmallAvatarChipIconRightClickable = () => (
 export const SmallAvatarChipIconLeftAndRightClickable = () => (
 	<ChipAlt
 		chipType={ChipType.AVATAR}
-		iconTrailing={AccountCircleOutlined}
-		iconLeading={Close}
+		iconTrailing={AccountCircle}
+		iconLeading={CrossSmall}
 		onClickIconRight={(e) => {}}
 		size={Sizes.SMALL}
 	>
@@ -192,7 +195,7 @@ export const SmallAvatarChipIconLeftAndRightClickable = () => (
 export const SmallAvatarChipDisabled = () => (
 	<ChipAlt
 		chipType={ChipType.AVATAR}
-		iconLeading={Close}
+		iconLeading={CrossSmall}
 		onClickIconRight={(e) => {}}
 		disabled
 		size={Sizes.SMALL}

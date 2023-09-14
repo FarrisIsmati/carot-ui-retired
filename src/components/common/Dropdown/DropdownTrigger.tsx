@@ -9,12 +9,12 @@ import {
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons";
 import React from "react";
 import { IconWrapper } from "../IconWrapper";
-import { MarginTopType } from "../TextField";
 import Type from "../Type";
 import {
 	StyledDropdownTrigger,
 	StyledDropdownTriggerContentContainer,
 	StyledDropdownTriggerText,
+	StyledErrorTextDropdownTrigger,
 } from "./styles";
 import { DropdownData } from "./types";
 
@@ -129,13 +129,13 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 
 				{/* Error text bottom of the dropdown */}
 				{errorText && !disabled && (
-					<MarginTopType
+					<StyledErrorTextDropdownTrigger
 						colorSet={colorSet}
 						error={error}
 						font={semanticFonts.bodySmall}
 					>
 						{errorText}
-					</MarginTopType>
+					</StyledErrorTextDropdownTrigger>
 				)}
 			</StyledDropdownTrigger>
 		);

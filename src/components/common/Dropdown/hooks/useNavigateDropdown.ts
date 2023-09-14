@@ -20,7 +20,6 @@ export default ({
 	// Key press state
 	const downPress = useKeyPress("ArrowDown", isMenuOpen);
 	const upPress = useKeyPress("ArrowUp", isMenuOpen);
-	const enterPress = useKeyPress("Enter", isMenuOpen);
 
 	// Key down press
 	useEffect(() => {

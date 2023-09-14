@@ -102,3 +102,7 @@ export const StyledDropdownTriggerContentContainer = styled.div`
 	margin-top: ${spacer8};
 	width: 100%;
 `;
+
+export const StyledErrorTextDropdownTrigger = styled(Type)`
+	margin-top: ${spacer8};
+`;

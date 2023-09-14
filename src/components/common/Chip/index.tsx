@@ -133,6 +133,10 @@ export const ChipStyled = styled(
 
 					& span {
 						color: ${props.colorSet?.text.hover};
+
+						& svg {
+							fill: ${props.colorSet?.text.hover};
+						}
 					}
 				`}
 			}

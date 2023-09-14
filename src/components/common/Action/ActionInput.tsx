@@ -6,15 +6,14 @@ import { Add } from "@material-ui/icons";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Dot from "../Badge/Dot";
 import { IconWrapper } from "../IconWrapper";
+import { FormInputProps } from "../TextField";
 import {
-	BadgeDotContainer,
 	ClearButtonContainer,
 	ContentContainer,
-	FormInputProps,
 	MarginTopType,
 	StyledInput,
 	StyledInputContainer,
-} from "../TextField";
+} from "../TextField/styles";
 import useKeyPress from "../hooks/useKeyPress";
 
 export interface ActionInputProps
@@ -104,9 +103,9 @@ export default React.forwardRef<HTMLElement, ActionInputProps>(
 					)}
 				</ContentContainer>
 				{error && !disabled && (
-					<BadgeDotContainer>
+					<div>
 						<Dot />
-					</BadgeDotContainer>
+					</div>
 				)}
 				<ClearButtonContainer>
 					<IconWrapper
