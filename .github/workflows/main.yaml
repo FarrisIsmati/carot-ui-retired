@@ -20,6 +20,16 @@ jobs:
       - name: Git checkout
         uses: actions/checkout@v3
 
+      # Deploy to storybook
+      - run: yarn
+
+        #👇 Adds Chromatic as a step in the workflow
+      - uses: chromaui/action@v1
+        with:
+          #👇 Chromatic projectToken,
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          token: ${{ secrets.PAT }}
+
       # - name: Configure AWS credentials from AWS account
       #   uses: aws-actions/configure-aws-credentials@v1
       #   with:
