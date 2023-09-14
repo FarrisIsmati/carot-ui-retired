@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import Dropdown from "./";
+import Dropdown from ".";
 export default {
 	component: Dropdown,
 	title: "Dropdown",

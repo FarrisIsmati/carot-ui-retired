@@ -3,7 +3,7 @@ import { semanticFonts } from "@/styles/fonts";
 import { Sizes, spacer2 } from "@/styles/sizes";
 import { KeyboardDetectionContext } from "@/utils/context";
 import { Add } from "@material-ui/icons";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Dot from "../Badge/Dot";
 import { IconWrapper } from "../IconWrapper";
 import {
@@ -15,6 +15,7 @@ import {
 	StyledInput,
 	StyledInputContainer,
 } from "../TextField";
+import useKeyPress from "../hooks/useKeyPress";
 
 export interface ActionInputProps
 	extends Omit<FormInputProps, "label" | "onClear"> {
@@ -38,6 +39,30 @@ export default React.forwardRef<HTMLElement, ActionInputProps>(
 		const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
 		const inputRef = useRef<HTMLInputElement | null>(null);
 		const [content, setContent] = useState("");
+
+		// On submit value
+		const onEnterItem = () => {
+			if (!error && content && !disabled) {
+				onAdd();
+				if (inputRef.current) {
+					inputRef.current.value = "";
+					setContent("");
+				}
+			}
+		};
+
+		const enterPress = useKeyPress("Enter");
+
+		// On press enter submit
+		useEffect(() => {
+			if (
+				inputRef.current === document.activeElement &&
+				content !== "" &&
+				enterPress
+			) {
+				onEnterItem();
+			}
+		}, [enterPress]);
 
 		// Add error state if error text included
 		if (!error && errorText) {
@@ -86,13 +111,7 @@ export default React.forwardRef<HTMLElement, ActionInputProps>(
 				<ClearButtonContainer>
 					<IconWrapper
 						onClick={() => {
-							if (!error && content && !disabled) {
-								onAdd();
-								if (inputRef.current) {
-									inputRef.current.value = "";
-									setContent("");
-								}
-							}
+							onEnterItem();
 						}}
 						icon={Add}
 						padding={spacer2}

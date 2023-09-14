@@ -7,7 +7,7 @@ import {
 	useState,
 } from "react";
 import { DropdownData } from "..";
-import useKeyPressOnDropdown from "./useKeyPressOnDropdown";
+import useKeyPress from "../../hooks/useKeyPress";
 
 enum PressType {
 	DOWN = "DOWN",
@@ -79,9 +79,9 @@ export default ({
 	onEnter?: () => void;
 }) => {
 	// Accessibility keyboard
-	const downPress = useKeyPressOnDropdown("ArrowDown", isMenuOpen);
-	const upPress = useKeyPressOnDropdown("ArrowUp", isMenuOpen);
-	const enterPress = useKeyPressOnDropdown("Enter", isMenuOpen);
+	const downPress = useKeyPress("ArrowDown", isMenuOpen);
+	const upPress = useKeyPress("ArrowUp", isMenuOpen);
+	const enterPress = useKeyPress("Enter", isMenuOpen);
 	const [cursor, setCursor] = useState(0);
 	const cursorRef = useRef<Array<HTMLElement | null>>([]);
 
