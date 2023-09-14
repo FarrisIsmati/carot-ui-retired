@@ -16,10 +16,6 @@ export type TypeListItemProps = StyledWrapperProps &
 		 * @default 'brightAccent
 		 **/
 		colorSet?: ColorSet;
-		/**
-		 * If true sets list-style-type none on the list
-		 */
-		listStyleReset?: boolean;
 		/*
 		 * If true removes padding beneath the typelist
 		 */
@@ -37,17 +33,10 @@ const TypeListItemElement = styled(
 	list-style-type: none;
 	display: list-item;
 	padding-block-end: ${(props) => !props.condensed && `1em`};
-	${(props) => props.listStyleReset && `list-style-type: none`};
 `;
 
 export default React.forwardRef<HTMLElement, TypeListItemProps>(
-	({ listStyleReset = false, ...props }, ref) => {
-		return (
-			<TypeListItemElement
-				{...props}
-				ref={ref}
-				listStyleReset={listStyleReset}
-			/>
-		);
+	({ ...props }, ref) => {
+		return <TypeListItemElement {...props} ref={ref} />;
 	}
 );

@@ -1,5 +1,10 @@
 import { css } from "styled-components";
-import { controlPaddingBlock, spacer14, spacer4, spacer40 } from "./sizes";
+
+// Baseline styles for most components
+export const rootStyle = () => css`
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+`;
 
 // Shared styles for input, textarea, select
 export const formControlBase = (useBrowserDefualtFocusStyle?: boolean) => css`
@@ -31,12 +36,6 @@ export const formControlBase = (useBrowserDefualtFocusStyle?: boolean) => css`
 	}
 `;
 
-// Baseline styles for most components
-export const rootStyle = () => css`
-	box-sizing: border-box;
-	-webkit-tap-highlight-color: transparent;
-`;
-
 // For selects
 export const formControlBaseSelect = () => css`
 	${rootStyle()};
@@ -56,10 +55,4 @@ export const formControlBaseSelect = () => css`
 	&::-ms-expand {
 		display: none;
 	}
-
-	/* border-radius: ${spacer4};
-	padding-block-start: ${controlPaddingBlock.md};
-	padding-block-end: ${controlPaddingBlock.md};
-	padding-inline-start: ${spacer14};
-	padding-inline-end: ${spacer40}; */
 `;

@@ -7,27 +7,9 @@ import {
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
 import React from "react";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 
-export type DropdownItemProps = StyledWrapperProps &
-	Pick<PseudoClassProps, "isFocus"> & {
-		/**
-		 * Render the component with a custom component or HTML element
-		 * @default 'TypeListItem'
-		 **/
-		component?: AsProp;
-		/**
-		 * Set the semantic color used by the button
-		 * @default 'SECONDARY
-		 **/
-		colorSet?: ColorSet;
-		/**
-		 * Sets whether or not a list item is active (same as hover state)
-		 **/
-		active: boolean;
-	};
-
-export const TypeList = styled(
+export const StyledDropdownItem = styled(
 	React.forwardRef<HTMLElement, DropdownItemProps>(function TypeList(
 		{ component: Component = "TypeListItem", colorSet, ...props },
 		ref
@@ -50,11 +32,29 @@ export const TypeList = styled(
 	}
 `;
 
+export type DropdownItemProps = StyledWrapperProps &
+	Pick<PseudoClassProps, "isFocus"> & {
+		/**
+		 * Render the component with a custom component or HTML element
+		 * @default 'TypeListItem'
+		 **/
+		component?: AsProp;
+		/**
+		 * Set the semantic color used by the button
+		 * @default 'SECONDARY
+		 **/
+		colorSet?: ColorSet;
+		/**
+		 * Sets whether or not a list item is active (same as hover state)
+		 **/
+		active: boolean;
+	};
+
 export default React.forwardRef<HTMLUListElement, DropdownItemProps>(
 	function DropdownList(
 		{ colorSet = getColorSet(SemanticSetCores.SECONDARY), ...props },
 		ref
 	) {
-		return <TypeList colorSet={colorSet} {...props} ref={ref} />;
+		return <StyledDropdownItem colorSet={colorSet} {...props} ref={ref} />;
 	}
 );

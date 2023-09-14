@@ -2,7 +2,7 @@ import { rootStyle } from "@/styles/mixins";
 import { spacer32 } from "@/styles/sizes";
 import { AsProp, StyledWrapperProps } from "@/utils/typeHelpers";
 import React from "react";
-import { css, styled } from "styled-components";
+import { styled } from "styled-components";
 
 export type TypeListProps = StyledWrapperProps & {
 	/**
@@ -10,10 +10,6 @@ export type TypeListProps = StyledWrapperProps & {
 	 * @default 'ul'
 	 **/
 	component?: AsProp;
-	/**
-	 * If true sets list-style-type none on the list
-	 */
-	listStyleReset?: boolean;
 	/*
 	 * If true removes padding beneath the typelist
 	 */
@@ -39,16 +35,10 @@ const TypeList = styled(
 	margin-block-start: 0;
 	margin-block-end: 0;
 	overflow-wrap: break-word;
-
-	${(props) =>
-		props.listStyleReset !== false &&
-		css`
-			list-style-type: none;
-		`}
 `;
 
 export default React.forwardRef<HTMLElement, TypeListProps>(
-	({ listStyleReset = false, ...props }, ref) => {
-		return <TypeList {...props} ref={ref} listStyleReset={listStyleReset} />;
+	({ ...props }, ref) => {
+		return <TypeList {...props} ref={ref} />;
 	}
 );

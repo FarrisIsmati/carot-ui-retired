@@ -1,3 +1,4 @@
+import scrollToCursor from "@/components/common/Dropdown/utils/scrollToCursor";
 import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { spacer320 } from "@/styles/sizes";
 import { PseudoClassProps, StyledWrapperProps } from "@/utils/typeHelpers";
@@ -6,13 +7,9 @@ import Overlay, { OverlayDirections } from "../Overlay";
 import DropdownItem from "./DropdownItem";
 import { DropdownList } from "./DropdownList";
 import DropdownTrigger from "./DropdownTrigger";
-import useKeyOnDropdown, { scrollToTarget } from "./hooks/useKeyOnDropdown";
+import useNavigateDropdown from "./hooks/useNavigateDropdown";
 import useOffClick from "./hooks/useOffClick";
-
-export interface DropdownData {
-	value: string;
-	id: string;
-}
+import { DropdownData } from "./types";
 
 export type DropdownProps = StyledWrapperProps &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
@@ -52,50 +49,59 @@ export default ({
 	placeholder,
 	dataset,
 }: DropdownProps) => {
+	// Dropdown
 	const dropdownRef = useRef(null);
+	// Dropdown trigger
+	const dropdownTriggerRef = useRef(null);
+	// Dropdown menu
 	const dropdownListRef = useRef(null);
-	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-	const [selectedItem, setSelectedItem] = useState<DropdownData | null>(null);
-
-	// Handle event when clicking off ref
-	useOffClick(dropdownRef, () => setIsMenuOpen(false));
-
-	// Allow keyboard to navigate list
-	const { cursor, cursorRef } = useKeyOnDropdown({
-		isMenuOpen,
-		dataset,
-		selectedItem,
-		parent: dropdownListRef.current,
-		setSelectedItem,
-		onEnter: () => {
-			if (isMenuOpen) {
-				setIsMenuOpen(false);
-			}
-		},
-	});
-
-	// Get active dropdown item
-	const [hoveredItem, setHoveredItem] = useState<DropdownData | null>(null);
-
-	// Scroll to target if menu is open
-	useEffect(() => {
-		if (isMenuOpen) {
-			scrollToTarget({
-				parent: dropdownListRef.current,
-				cursor,
-				cursorRef,
-			});
-		}
-	}, [isMenuOpen]);
-
+	// State
+	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // Open/close menu
+	const [selectedItem, setSelectedItem] = useState<DropdownData | null>(null); // Actively used
+	const [hoveredItem, setHoveredItem] = useState<DropdownData | null>(null); // Mouse hover state (not key cursor state)
 	// Add error state if error text included
 	if (!error && errorText) {
 		error = true;
 	}
 
+	//
+	// Hooks
+	//
+
+	// Use keys to navigate dropdown
+	const { cursor, setCursor, cursorRef } = useNavigateDropdown({
+		isMenuOpen,
+		dataset,
+		parent: dropdownListRef.current,
+		focusEl: dropdownTriggerRef.current,
+	});
+
+	// Close menu when clicking off
+	useOffClick(dropdownRef, () => setIsMenuOpen(false));
+
+	useEffect(() => {
+		// Scroll to selected item if menu is open
+		if (isMenuOpen) {
+			scrollToCursor({
+				parent: dropdownListRef.current,
+				cursor,
+				cursorRef,
+			});
+		} else {
+			// Reset cursor when menu closed
+			if (selectedItem) {
+				setCursor(dataset.findIndex((item) => item.id === selectedItem?.id));
+			} else {
+				setCursor(0);
+			}
+		}
+	}, [isMenuOpen]);
+
 	return (
 		<div ref={dropdownRef}>
+			{/* Button triggers dropdown to open */}
 			<DropdownTrigger
+				ref={dropdownTriggerRef}
 				label={label}
 				colorSet={colorSet}
 				error={error}
@@ -108,10 +114,30 @@ export default ({
 					}
 					setIsMenuOpen(!isMenuOpen);
 				}}
+				onKeyDown={(e) => {
+					// Open menu if focused and hitting enter key
+					if (
+						e.target === document.activeElement &&
+						!isMenuOpen &&
+						e.key === "Enter"
+					) {
+						setIsMenuOpen(true);
+					}
+					// Close menu if focused and hitting enter key to select item
+					if (
+						e.target === document.activeElement &&
+						isMenuOpen &&
+						e.key === "Enter"
+					) {
+						setSelectedItem(dataset[cursor]);
+						setIsMenuOpen(false);
+					}
+				}}
 				selectedItem={selectedItem}
 				placeholder={placeholder}
 			/>
 
+			{/* Dropdown menu */}
 			{isMenuOpen && (
 				<Overlay placement={OverlayDirections.BOTTOM} width={spacer320}>
 					{

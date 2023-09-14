@@ -1,27 +1,14 @@
 import { spacer12, spacer16, spacer4, spacer8 } from "@/styles/sizes";
-import { KeyboardDetectionContext } from "@/utils/context";
 import {
 	AsProp,
 	PseudoClassProps,
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
-import React, { useContext } from "react";
+import React from "react";
 import { styled } from "styled-components";
 
-export type DropdownListProps = StyledWrapperProps &
-	Pick<PseudoClassProps, "isFocus"> & {
-		/**
-		 * Render the component with a custom component or HTML element
-		 * @default 'TypeList'
-		 **/
-		component?: AsProp;
-	};
-
-export const List = styled(
-	React.forwardRef<
-		HTMLElement,
-		DropdownListProps & { isUsingKeyboard: boolean }
-	>(function TypeList(
+export const StyledDropdownList = styled(
+	React.forwardRef<HTMLElement, DropdownListProps>(function TypeList(
 		{ component: Component = "TypeList", size, ...props },
 		ref
 	) {
@@ -41,10 +28,17 @@ export const List = styled(
 	box-shadow: 0 ${spacer8} ${spacer16} rgba(0, 0, 0, 0.08);
 `;
 
-export const DropdownList = React.forwardRef<
-	HTMLUListElement,
-	DropdownListProps
->(function DropdownList({ ...props }, ref) {
-	const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
-	return <List isUsingKeyboard={isUsingKeyboard} {...props} ref={ref} />;
-});
+export type DropdownListProps = StyledWrapperProps &
+	Pick<PseudoClassProps, "isFocus"> & {
+		/**
+		 * Render the component with a custom component or HTML element
+		 * @default 'TypeList'
+		 **/
+		component?: AsProp;
+	};
+
+export const DropdownList = React.forwardRef<HTMLElement, DropdownListProps>(
+	function DropdownList({ ...props }, ref) {
+		return <StyledDropdownList {...props} ref={ref} />;
+	}
+);

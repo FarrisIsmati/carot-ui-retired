@@ -5,6 +5,7 @@ export default function (targetKey: string, preventDefault?: boolean) {
 
 	const [keyPressed, setKeyPressed] = useState(false);
 
+	// Set state for pressing down on target key
 	function downHandler(e: KeyboardEvent) {
 		if (preventDefault) {
 			e.preventDefault();
@@ -14,6 +15,7 @@ export default function (targetKey: string, preventDefault?: boolean) {
 		}
 	}
 
+	// Set state for pressing up on target key
 	const upHandler = (e: KeyboardEvent) => {
 		if (preventDefault) {
 			e.preventDefault();
