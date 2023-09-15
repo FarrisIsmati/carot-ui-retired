@@ -21,7 +21,7 @@ export const spacer64 = "64px";
 export const spacer72 = "72px";
 export const spacer80 = "80px";
 export const spacer100 = "100px";
-export const spacer312 = "312px";
+export const spacer200 = "200px";
 export const spacer320 = "320px";
 
 export enum Sizes {

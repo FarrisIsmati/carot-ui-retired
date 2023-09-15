@@ -16,7 +16,7 @@ export type TypeProps = StyledWrapperProps & {
 	font?: RuleSet<object>;
 	/**
 	 * Set the semantic color used by the button
-	 * @default '?
+	 * @default 'BASE'
 	 **/
 	colorSet?: ColorSet;
 	/**
@@ -56,6 +56,7 @@ export const TypeStyled = styled(
 			${props.font}
 			color: ${fontColor};
 			padding-bottom: ${props.paddingBottom};
+			width: fit-content;
 			margin-block-start: 0;
 			margin-block-end: 0;
 		`;

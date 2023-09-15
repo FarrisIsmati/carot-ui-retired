@@ -1,4 +1,11 @@
-import { spacer312 } from "@/styles/sizes";
+import { semanticFonts } from "@/styles/fonts";
+import {
+	spacer12,
+	spacer16,
+	spacer24,
+	spacer320,
+	spacer8,
+} from "@/styles/sizes";
 import { elementOrStringToTypeComponent } from "@/utils/componentHelpers";
 import {
 	AsProp,
@@ -7,18 +14,10 @@ import {
 } from "@/utils/typeHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
+import ButtonText from "../Button/ButtonText";
 
-export enum ToolTipTheme {
-	LIGHT = "LIGHT",
-	DARK = "DARK",
-}
-
-export type RichToolTipProps = Omit<StyledWrapperProps, "size"> &
+export type RichTooltipProps = Omit<StyledWrapperProps, "size"> &
 	Pick<PseudoClassProps, "hover" | "active" | "focus"> & {
-		/**
-		 * Set the tool tip color scheme (outside default colorSet)
-		 **/
-		theme?: ToolTipTheme;
 		/**
 		 * Render the component with a custom component or HTML element
 		 * @default 'button'
@@ -27,7 +26,7 @@ export type RichToolTipProps = Omit<StyledWrapperProps, "size"> &
 		/**
 		 * Chose a name for the action in the first slot
 		 **/
-		firstActionName?: JSX.Element | string;
+		firstActionName?: string;
 		/**
 		 * Chose an action to perform in first slot
 		 **/
@@ -35,7 +34,7 @@ export type RichToolTipProps = Omit<StyledWrapperProps, "size"> &
 		/**
 		 * Chose a name for the action in the second slot
 		 **/
-		secondActionName?: JSX.Element | string;
+		secondActionName?: string;
 		/**
 		 * Chose an action to perform in second slot
 		 **/
@@ -50,8 +49,8 @@ export type RichToolTipProps = Omit<StyledWrapperProps, "size"> &
 		body?: JSX.Element | string;
 	};
 
-export const StyledRichToolTip = styled(
-	React.forwardRef<JSX.Element, RichToolTipProps>(function Button(
+export const StyledRichTooltip = styled(
+	React.forwardRef<JSX.Element, RichTooltipProps>(function RichTooltip(
 		{ component: Component = "div", ...props },
 		ref
 	) {
@@ -60,15 +59,31 @@ export const StyledRichToolTip = styled(
 )`
 	${(props) => {
 		return css`
-			width: ${spacer312};
+			display: flex;
+			flex-direction: column;
+			gap: ${spacer24};
+			border-radius: ${spacer8};
+			width: ${spacer320};
+			padding: ${spacer16};
+			box-shadow: 0 ${spacer8} ${spacer16} rgba(0, 0, 0, 0.08);
 		`;
 	}}
 `;
 
-export default React.forwardRef<HTMLElement, RichToolTipProps>(
+const StyledRichTooltipContentContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: ${spacer8};
+`;
+
+const StyledRichTooltipActionContainer = styled.div`
+	display: flex;
+	gap: ${spacer12};
+`;
+
+export default React.forwardRef<HTMLElement, RichTooltipProps>(
 	(
 		{
-			theme,
 			firstAction,
 			firstActionName,
 			secondAction,
@@ -83,27 +98,40 @@ export default React.forwardRef<HTMLElement, RichToolTipProps>(
 		},
 		ref
 	) => {
-		const FirstActionComponent =
-			elementOrStringToTypeComponent(firstActionName);
-		const SecondActionComponent =
-			elementOrStringToTypeComponent(secondActionName);
-		const TitleComponent = elementOrStringToTypeComponent(title);
-		const BodyComponent = elementOrStringToTypeComponent(body);
-		const ChildrenComponent = elementOrStringToTypeComponent(children);
+		const TitleComponent = elementOrStringToTypeComponent({
+			el: title,
+			font: semanticFonts.labelLarge,
+		});
+		const BodyComponent = elementOrStringToTypeComponent({
+			el: body,
+			font: semanticFonts.bodyMedium,
+		});
+		const ChildrenComponent = elementOrStringToTypeComponent({
+			el: children,
+			font: semanticFonts.bodyMedium,
+		});
 		return (
-			<StyledRichToolTip
+			<StyledRichTooltip
 				ref={ref}
 				component={!component && props.href ? "a" : component}
 				{...props}
 			>
-				{TitleComponent}
-				{BodyComponent}
-				{ChildrenComponent}
-				<>
-					{FirstActionComponent}
-					{SecondActionComponent}
-				</>
-			</StyledRichToolTip>
+				<StyledRichTooltipContentContainer>
+					{TitleComponent}
+					{BodyComponent}
+					{ChildrenComponent}
+				</StyledRichTooltipContentContainer>
+				{(firstActionName !== undefined || secondActionName !== undefined) && (
+					<StyledRichTooltipActionContainer>
+						{firstActionName !== undefined && (
+							<ButtonText onClick={firstAction}>{firstActionName}</ButtonText>
+						)}
+						{secondActionName !== undefined && (
+							<ButtonText onClick={secondAction}>{secondActionName}</ButtonText>
+						)}
+					</StyledRichTooltipActionContainer>
+				)}
+			</StyledRichTooltip>
 		);
 	}
 );

@@ -1,10 +1,22 @@
-import RichToolTip from "./RichToolTip";
+import RichTooltip from "./RichToolTip";
 export default {
-	component: RichToolTip,
-	title: "Rich Tool Tip",
+	component: RichTooltip,
+	title: "Rich Tooltip",
 	tags: ["autodocs"],
 };
 
 export const Default = () => (
-	<RichToolTip title={"Title"}>Main body text</RichToolTip>
+	<RichTooltip title={"Title"}>Main body text</RichTooltip>
+);
+
+export const Buttons = () => (
+	<RichTooltip
+		title={"Title"}
+		firstActionName="Action 1"
+		firstAction={() => {}}
+		secondActionName="Action 2"
+		secondAction={() => {}}
+	>
+		Main body text
+	</RichTooltip>
 );

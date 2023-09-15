@@ -30,7 +30,7 @@ export type ButtonPrimaryProps = Omit<StyledWrapperProps, "size"> &
 	Pick<PseudoClassProps, "hover" | "active" | "focus"> & {
 		/**
 		 * Set the semantic color used by the button
-		 * @default 'brightAccent
+		 * @default 'PRIMARY'
 		 **/
 		colorSet?: ColorSet;
 		/**
