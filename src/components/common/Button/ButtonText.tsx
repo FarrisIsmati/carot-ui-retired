@@ -6,8 +6,9 @@ import {
 	PseudoClassProps,
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
+import Link from "next/link";
 import React from "react";
-import styled, { css } from "styled-components";
+import styled, { RuleSet, css } from "styled-components";
 
 export type ButtonTextProps = Omit<StyledWrapperProps, "size"> &
 	Pick<PseudoClassProps, "hover" | "active" | "focus"> & {
@@ -21,6 +22,20 @@ export type ButtonTextProps = Omit<StyledWrapperProps, "size"> &
 		 * @default 'button'
 		 **/
 		component?: AsProp;
+		/**
+		 * Set the custom font type
+		 * @default 'labelLarge'
+		 **/
+		semanticFont?: RuleSet<object>;
+		/**
+		 * Set if clicking button will navigate you to a page
+		 **/
+		navigate?: string;
+		/**
+		 * Override color state with a generic color
+		 * 	@default 'colorSet?.text.default'
+		 **/
+		color?: string;
 	};
 
 export const StyledTextButton = styled(
@@ -33,8 +48,8 @@ export const StyledTextButton = styled(
 )`
 	${(props) => {
 		return css`
-			${semanticFonts.labelLarge}
-			color: ${props.colorSet?.text.default};
+			${props.semanticFont}
+			color: ${props.color};
 			background-color: transparent;
 			border: none;
 			padding: ${spacer10} ${spacer12};
@@ -60,6 +75,9 @@ export default React.forwardRef<HTMLElement, ButtonTextProps>(
 			colorSet = getColorSet(SemanticSetCores.BASE),
 			component,
 			children,
+			navigate,
+			color = colorSet.text.default,
+			semanticFont = semanticFonts.labelLarge,
 			"aria-label": ariaLabel,
 			"aria-labelledby": ariaLabelledBy,
 			...props
@@ -79,9 +97,20 @@ export default React.forwardRef<HTMLElement, ButtonTextProps>(
 				onClick={(e: any) => {
 					e.target.blur();
 				}}
+				color={color}
+				semanticFont={semanticFont}
 				{...props}
 			>
-				{children}
+				{navigate ? (
+					<Link
+						href={navigate}
+						style={{ textDecoration: "none", color: "inherit" }}
+					>
+						{children}
+					</Link>
+				) : (
+					children
+				)}
 			</StyledTextButton>
 		);
 	}

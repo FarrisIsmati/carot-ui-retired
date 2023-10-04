@@ -13,7 +13,7 @@ export type TypeProps = StyledWrapperProps & {
 	/**
 	 * @default 'bodyMedium'
 	 */
-	font?: RuleSet<object>;
+	semanticFont?: RuleSet<object>;
 	/**
 	 * Set the semantic color used by the button
 	 * @default 'BASE'
@@ -35,7 +35,13 @@ export type TypeProps = StyledWrapperProps & {
 
 export const TypeStyled = styled(
 	React.forwardRef<HTMLElement, TypeProps>(function Button(
-		{ component: Component = "p", colorSet, font, paddingBottom, ...props },
+		{
+			component: Component = "p",
+			colorSet,
+			semanticFont,
+			paddingBottom,
+			...props
+		},
 		ref
 	) {
 		return <Component {...props} ref={ref} />;
@@ -53,7 +59,7 @@ export const TypeStyled = styled(
 		}
 
 		return css`
-			${props.font}
+			${props.semanticFont}
 			color: ${fontColor};
 			padding-bottom: ${props.paddingBottom};
 			width: fit-content;
@@ -66,7 +72,7 @@ export const TypeStyled = styled(
 export default React.forwardRef<HTMLEmbedElement, TypeProps>(
 	function TypeComponent(
 		{
-			font = semanticFonts.bodyMedium,
+			semanticFont = semanticFonts.bodyMedium,
 			colorSet = getColorSet(SemanticSetCores.BASE),
 			paddingBottom,
 			color,
@@ -78,7 +84,7 @@ export default React.forwardRef<HTMLEmbedElement, TypeProps>(
 		return (
 			<TypeStyled
 				ref={ref}
-				font={font}
+				font={semanticFont}
 				colorSet={colorSet}
 				color={color}
 				paddingBottom={paddingBottom}

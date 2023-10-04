@@ -1,7 +1,6 @@
 html,
 body,
-body > div,
-main {
+body > div {
 	height: 100%;
 }
 

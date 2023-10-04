@@ -35,7 +35,18 @@ const fontFamilyB = css`
 	font-style: normal !important;
 `;
 
+const fontFamilyC = css`
+	font-family: "filson-pro", sans-serif !important;
+	font-style: normal !important;
+`;
+
 export const semanticFonts = {
+	logo: css`
+		${fontFamilyC}
+		font-weight: 900 !important;
+		font-size: ${spacer40} !important;
+		line-height: ${spacer48} !important;
+	`,
 	displayLarge: css`
 		${fontFamilyA}
 		font-weight: 700 !important;

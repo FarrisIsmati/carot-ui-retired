@@ -20,6 +20,7 @@ export const spacer56 = "56px";
 export const spacer64 = "64px";
 export const spacer72 = "72px";
 export const spacer80 = "80px";
+export const spacer88 = "88px";
 export const spacer100 = "100px";
 export const spacer200 = "200px";
 export const spacer320 = "320px";

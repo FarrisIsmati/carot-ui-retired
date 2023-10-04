@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -15,9 +16,8 @@ export default function RootLayout({
 		<html lang="en">
 			<body>
 				<header>
-					<p>Header</p>
-					<nav>Navigate</nav>
-					{/* Basic Sans */}
+					<Navbar />
+					{/* Basic Sans & Filson Pro */}
 					<link rel="stylesheet" href="https://use.typekit.net/wak4qgj.css" />
 				</header>
 				{children}
