@@ -6,7 +6,17 @@ export type DraftVisionFormValues = VisionFormValues;
 export default () => {
 	return (
 		<>
-			<Form<DraftVisionFormValues> />
+			<Form<DraftVisionFormValues>
+				initialValues={{}}
+				validate={() => ({})}
+				subscription={{
+					touched: true,
+					errors: true,
+					pristine: true,
+					submitting: true,
+				}}
+				onSubmit={() => {}}
+			/>
 		</>
 	);
 };
