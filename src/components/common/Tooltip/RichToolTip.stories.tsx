@@ -1,4 +1,4 @@
-import RichTooltip from "./RichToolTip";
+import RichTooltip from "./RichTooltip";
 export default {
 	component: RichTooltip,
 	title: "Rich Tooltip",

@@ -10,7 +10,7 @@ import { spacer12, spacer200, spacer4, spacer8 } from "@/styles/sizes";
 import { elementOrStringToTypeComponent } from "@/utils/componentHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
-import { RichTooltipProps } from "./RichToolTip";
+import { RichTooltipProps } from "./RichTooltip";
 
 export type PlainTooltipProps = Omit<
 	RichTooltipProps,
