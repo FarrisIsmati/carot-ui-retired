@@ -13,12 +13,12 @@ export type TypeProps = StyledWrapperProps & {
 	/**
 	 * @default 'bodyMedium'
 	 */
-	semanticFont?: RuleSet<object>;
+	semanticfont?: RuleSet<object>;
 	/**
 	 * Set the semantic color used by the button
 	 * @default 'BASE'
 	 **/
-	colorSet?: ColorSet;
+	colorset?: ColorSet;
 	/**
 	 * If the text is to show an error state
 	 */
@@ -30,16 +30,16 @@ export type TypeProps = StyledWrapperProps & {
 	/**
 	 * Padding bottom
 	 */
-	paddingBottom?: string;
+	paddingbottom?: string;
 };
 
 export const TypeStyled = styled(
 	React.forwardRef<HTMLElement, TypeProps>(function Button(
 		{
 			component: Component = "p",
-			colorSet,
-			semanticFont,
-			paddingBottom,
+			colorset,
+			semanticfont,
+			paddingbottom,
 			...props
 		},
 		ref
@@ -48,10 +48,10 @@ export const TypeStyled = styled(
 	})
 )`
 	${(props) => {
-		let fontColor = props.color ? props.color : props.colorSet?.text.default;
+		let fontColor = props.color ? props.color : props.colorset?.text.default;
 
 		if (props.disabled) {
-			fontColor = props.colorSet?.text.disabled;
+			fontColor = props.colorset?.text.disabled;
 		}
 
 		if (props.error && !props.disabled) {
@@ -59,9 +59,9 @@ export const TypeStyled = styled(
 		}
 
 		return css`
-			${props.semanticFont}
+			${props.semanticfont}
 			color: ${fontColor};
-			padding-bottom: ${props.paddingBottom};
+			padding-bottom: ${props.paddingbottom};
 			width: fit-content;
 			margin-block-start: 0;
 			margin-block-end: 0;
@@ -72,9 +72,9 @@ export const TypeStyled = styled(
 export default React.forwardRef<HTMLEmbedElement, TypeProps>(
 	function TypeComponent(
 		{
-			semanticFont = semanticFonts.bodyMedium,
-			colorSet = getColorSet(SemanticSetCores.BASE),
-			paddingBottom,
+			semanticfont = semanticFonts.bodyMedium,
+			colorset = getColorSet(SemanticSetCores.BASE),
+			paddingbottom,
 			color,
 			children,
 			...props
@@ -84,10 +84,10 @@ export default React.forwardRef<HTMLEmbedElement, TypeProps>(
 		return (
 			<TypeStyled
 				ref={ref}
-				font={semanticFont}
-				colorSet={colorSet}
+				semanticfont={semanticfont}
+				colorSet={colorset}
 				color={color}
-				paddingBottom={paddingBottom}
+				paddingBottom={paddingbottom}
 				{...props}
 			>
 				{children}

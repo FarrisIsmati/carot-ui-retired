@@ -1,3 +1,4 @@
+import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import {
 	spacer12,
@@ -13,7 +14,7 @@ import {
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
 import React from "react";
-import styled, { css } from "styled-components";
+import styled, { RuleSet, css } from "styled-components";
 import ButtonText from "../Button/ButtonText";
 
 export type RichTooltipProps = Omit<StyledWrapperProps, "size"> &
@@ -47,6 +48,15 @@ export type RichTooltipProps = Omit<StyledWrapperProps, "size"> &
 		 * Body
 		 **/
 		body?: JSX.Element | string;
+		/**
+		 * Set the semantic color used by the button
+		 * @default 'BASE'
+		 **/
+		colorset?: ColorSet;
+		/**
+		 * Semantic font
+		 **/
+		semanticfont?: RuleSet<object>;
 	};
 
 export const StyledRichTooltip = styled(
@@ -61,6 +71,8 @@ export const StyledRichTooltip = styled(
 		return css`
 			display: flex;
 			flex-direction: column;
+			color: ${props.colorset?.text.default};
+			background-color: ${props.colorset?.essential.default};
 			gap: ${spacer24};
 			border-radius: ${spacer8};
 			width: ${spacer320};
@@ -92,6 +104,8 @@ export default React.forwardRef<HTMLElement, RichTooltipProps>(
 			body,
 			component,
 			children,
+			semanticfont = semanticFonts.bodyMedium,
+			colorset = getColorSet(SemanticSetCores.DARK),
 			"aria-label": ariaLabel,
 			"aria-labelledby": ariaLabelledBy,
 			...props
@@ -104,16 +118,17 @@ export default React.forwardRef<HTMLElement, RichTooltipProps>(
 		});
 		const BodyComponent = elementOrStringToTypeComponent({
 			el: body,
-			font: semanticFonts.bodyMedium,
+			font: semanticfont,
 		});
 		const ChildrenComponent = elementOrStringToTypeComponent({
 			el: children,
-			font: semanticFonts.bodyMedium,
+			font: semanticfont,
 		});
 		return (
 			<StyledRichTooltip
 				ref={ref}
 				component={!component && props.href ? "a" : component}
+				colorset={colorset}
 				{...props}
 			>
 				<StyledRichTooltipContentContainer>

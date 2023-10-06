@@ -16,7 +16,7 @@ export type ButtonTextProps = Omit<StyledWrapperProps, "size"> &
 		 * Set the semantic color used by the button
 		 * @default 'brightAccent
 		 **/
-		colorSet?: ColorSet;
+		colorset?: ColorSet;
 		/**
 		 * Render the component with a custom component or HTML element
 		 * @default 'button'
@@ -26,7 +26,7 @@ export type ButtonTextProps = Omit<StyledWrapperProps, "size"> &
 		 * Set the custom font type
 		 * @default 'labelLarge'
 		 **/
-		semanticFont?: RuleSet<object>;
+		semanticfont?: RuleSet<object>;
 		/**
 		 * Set if clicking button will navigate you to a page
 		 **/
@@ -40,7 +40,7 @@ export type ButtonTextProps = Omit<StyledWrapperProps, "size"> &
 
 export const StyledTextButton = styled(
 	React.forwardRef<HTMLElement, ButtonTextProps>(function Button(
-		{ component: Component = "button", colorSet, ...props },
+		{ component: Component = "button", colorset, ...props },
 		ref
 	) {
 		return <Component {...props} ref={ref} />;
@@ -48,14 +48,14 @@ export const StyledTextButton = styled(
 )`
 	${(props) => {
 		return css`
-			${props.semanticFont}
+			${props.semanticfont}
 			color: ${props.color};
 			background-color: transparent;
 			border: none;
 			padding: ${spacer10} ${spacer12};
 
 			&:disabled {
-				color: ${props.colorSet?.text.disabled};
+				color: ${props.colorset?.text.disabled};
 			}
 
 			&:hover:not([disabled]) {
@@ -72,12 +72,12 @@ export const StyledTextButton = styled(
 export default React.forwardRef<HTMLElement, ButtonTextProps>(
 	(
 		{
-			colorSet = getColorSet(SemanticSetCores.BASE),
+			colorset = getColorSet(SemanticSetCores.BASE),
 			component,
 			children,
 			navigate,
-			color = colorSet.text.default,
-			semanticFont = semanticFonts.labelLarge,
+			color = colorset.text.default,
+			semanticfont = semanticFonts.labelLarge,
 			"aria-label": ariaLabel,
 			"aria-labelledby": ariaLabelledBy,
 			...props
@@ -93,12 +93,12 @@ export default React.forwardRef<HTMLElement, ButtonTextProps>(
 				}
 				aria-label={ariaLabel}
 				aria-labelledby={ariaLabelledBy}
-				colorSet={colorSet}
+				colorset={colorset}
 				onClick={(e: any) => {
 					e.target.blur();
 				}}
 				color={color}
-				semanticFont={semanticFont}
+				semanticfont={semanticfont}
 				{...props}
 			>
 				{navigate ? (

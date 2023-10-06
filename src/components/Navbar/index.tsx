@@ -10,7 +10,7 @@ export default () => {
 			{/* Logo */}
 			<ButtonText
 				navigate="/"
-				semanticFont={semanticFonts.logo}
+				semanticfont={semanticFonts.logo}
 				color={colorBaseMap[ColorBaseCore.RED_3]}
 			>
 				CAROT
@@ -18,15 +18,22 @@ export default () => {
 
 			{/* Navigation */}
 			<StyledNavbuttonsContainer>
+				{/* TOOL */}
+				<ButtonText
+					semanticfont={semanticFonts.headlineSmall}
+					navigate="/vision-free"
+				>
+					TOOL
+				</ButtonText>
 				{/* ABOUT */}
 				<ButtonText
-					semanticFont={semanticFonts.headlineSmall}
+					semanticfont={semanticFonts.headlineSmall}
 					navigate="/about"
 				>
 					ABOUT
 				</ButtonText>
 				{/* BLOG */}
-				<ButtonText semanticFont={semanticFonts.headlineSmall} navigate="/blog">
+				<ButtonText semanticfont={semanticFonts.headlineSmall} navigate="/blog">
 					BLOG
 				</ButtonText>
 			</StyledNavbuttonsContainer>

@@ -1,3 +1,4 @@
+"use client";
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
 import { Form } from "react-final-form";
 
@@ -16,6 +17,7 @@ export default () => {
 					submitting: true,
 				}}
 				onSubmit={() => {}}
+				render={(props) => <p>daform</p>}
 			/>
 		</>
 	);

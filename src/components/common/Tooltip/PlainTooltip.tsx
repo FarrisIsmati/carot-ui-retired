@@ -1,12 +1,6 @@
-import {
-	ColorBaseCore,
-	ColorSet,
-	SemanticSetCores,
-	colorBaseMap,
-	getColorSet,
-} from "@/styles/colors";
+import { SemanticSetCores, getColorSet } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
-import { spacer12, spacer200, spacer4, spacer8 } from "@/styles/sizes";
+import { spacer12, spacer4, spacer8 } from "@/styles/sizes";
 import { elementOrStringToTypeComponent } from "@/utils/componentHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
@@ -19,15 +13,9 @@ export type PlainTooltipProps = Omit<
 	| "firstActionName"
 	| "secondActionName"
 	| "title"
-> & {
-	/**
-	 * Set the semantic color used by the button
-	 * @default 'BASE'
-	 **/
-	colorSet?: ColorSet;
-};
+> & {};
 
-export const StyledRichTooltip = styled(
+export const StyledPlainTooltip = styled(
 	React.forwardRef<JSX.Element, PlainTooltipProps>(function PlainTooltip(
 		{ component: Component = "div", ...props },
 		ref
@@ -35,12 +23,13 @@ export const StyledRichTooltip = styled(
 		return <Component {...props} ref={ref} />;
 	})
 )`
-	${() => css`
+	${(props) => css`
 		border-radius: ${spacer4};
 		padding: ${spacer12};
-		background-color: ${colorBaseMap[ColorBaseCore.BLACK]};
+		color: ${props.colorset?.text.default};
+		background-color: ${props.colorset?.essential.default};
 		width: fit-content;
-		max-width: ${spacer200};
+		height: fit-content;
 	`}
 `;
 
@@ -53,9 +42,10 @@ const StyledPlainTooltipContentContainer = styled.div`
 export default React.forwardRef<HTMLElement, PlainTooltipProps>(
 	(
 		{
-			colorSet = getColorSet(SemanticSetCores.PRIMARY),
+			colorset = getColorSet(SemanticSetCores.DARK),
 			body,
 			component,
+			semanticfont = semanticFonts.bodySmall,
 			children,
 			"aria-label": ariaLabel,
 			"aria-labelledby": ariaLabelledBy,
@@ -65,25 +55,26 @@ export default React.forwardRef<HTMLElement, PlainTooltipProps>(
 	) => {
 		const BodyComponent = elementOrStringToTypeComponent({
 			el: body,
-			font: semanticFonts.bodySmall,
-			colorSet,
+			font: semanticfont,
+			colorSet: colorset,
 		});
 		const ChildrenComponent = elementOrStringToTypeComponent({
 			el: children,
-			font: semanticFonts.bodySmall,
-			colorSet,
+			font: semanticfont,
+			colorSet: colorset,
 		});
 		return (
-			<StyledRichTooltip
+			<StyledPlainTooltip
 				ref={ref}
 				component={!component && props.href ? "a" : component}
+				colorset={colorset}
 				{...props}
 			>
 				<StyledPlainTooltipContentContainer>
 					{BodyComponent}
 					{ChildrenComponent}
 				</StyledPlainTooltipContentContainer>
-			</StyledRichTooltip>
+			</StyledPlainTooltip>
 		);
 	}
 );

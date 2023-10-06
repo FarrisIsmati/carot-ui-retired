@@ -20,7 +20,10 @@ export const elementOrStringToTypeComponent = ({
 		} else {
 			// children is a string
 			return (
-				<Type font={font ?? semanticFonts.bodyMedium} colorSet={colorSet}>
+				<Type
+					semanticfont={font ?? semanticFonts.bodyMedium}
+					colorset={colorSet}
+				>
 					{el}
 				</Type>
 			);
