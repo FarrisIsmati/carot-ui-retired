@@ -13,17 +13,25 @@ import React from "react";
 import { css, styled } from "styled-components";
 import Type from "../Type";
 import { DropdownTriggerProps } from "./DropdownTrigger";
+import { DropdownData } from "./types";
 
 // Dropdown Trigger
-export const StyledDropdownTriggerText = styled(Type)`
+export const StyledDropdownTriggerText = styled(Type)<{
+	selectedItem: DropdownData | null;
+}>`
 	${semanticFonts.bodyLarge};
 
+	color: ${(props) =>
+		!props.selectedItem
+			? props.colorset?.text.disabled
+			: props.colorset?.text.default};
+
 	&:disabled {
-		color: ${(props) => props.colorSet?.text.disabled};
+		color: ${(props) => props.colorset?.text.disabled};
 	}
 
 	&:hover:not([disabled]) {
-		background-color: ${(props) => props.colorSet?.essential.hover};
+		background-color: ${(props) => props.colorset?.essential.hover};
 	}
 `;
 

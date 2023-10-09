@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import type { Metadata } from "next";
 import "./globals.css";
 import StyledComponentsRegistry from "./registry";
@@ -15,7 +16,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body>
+			<body style={{ backgroundColor: colorBaseMap[ColorBaseCore.NEUTRAL_10] }}>
 				<StyledComponentsRegistry>
 					<header>
 						<Navbar />
@@ -23,7 +24,6 @@ export default function RootLayout({
 						<link rel="stylesheet" href="https://use.typekit.net/wak4qgj.css" />
 					</header>
 					{children}
-					<footer>Footer</footer>
 				</StyledComponentsRegistry>
 			</body>
 		</html>

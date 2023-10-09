@@ -10,7 +10,7 @@ const DropdownContainer = styled.div`
 	height: 600px;
 `;
 
-const Dataset1 = [
+export const SampleDropdownDataset1 = [
 	{ value: "Option 1", id: "option1" },
 	{ value: "Option 2", id: "option2" },
 	{ value: "Option 3", id: "option3" },
@@ -26,7 +26,11 @@ const Dataset1 = [
 
 export const Default = () => (
 	<DropdownContainer>
-		<Dropdown label="Label" placeholder="Placeholder" dataset={Dataset1} />
+		<Dropdown
+			label="Label"
+			placeholder="Placeholder"
+			dataset={SampleDropdownDataset1}
+		/>
 	</DropdownContainer>
 );
 
@@ -35,7 +39,7 @@ export const Disabled = () => (
 		<Dropdown
 			label="Label"
 			placeholder="Placeholder"
-			dataset={Dataset1}
+			dataset={SampleDropdownDataset1}
 			disabled
 		/>
 	</DropdownContainer>
@@ -46,7 +50,7 @@ export const Error = () => (
 		<Dropdown
 			label="Label"
 			placeholder="Placeholder"
-			dataset={Dataset1}
+			dataset={SampleDropdownDataset1}
 			error
 		/>
 	</DropdownContainer>
@@ -57,7 +61,7 @@ export const ErrorWithText = () => (
 		<Dropdown
 			label="Label"
 			placeholder="Placeholder"
-			dataset={Dataset1}
+			dataset={SampleDropdownDataset1}
 			errorText="There is an error!"
 		/>
 	</DropdownContainer>

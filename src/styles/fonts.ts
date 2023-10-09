@@ -46,55 +46,55 @@ export const semanticFonts = {
 		${fontFamilyC}
 		font-weight: 900 !important;
 		font-size: ${spacer40} !important;
-		line-height: ${spacer48} !important;
+		/* line-height: ${spacer48} !important; */
 	`,
 	displayLarge: css`
 		${fontFamilyA}
 		font-weight: 700 !important;
 		font-size: ${spacer80} !important;
-		line-height: ${spacer80} !important;
+		/* line-height: ${spacer80} !important; */
 	`,
 	displayMedium: css`
 		${fontFamilyA}
 		font-weight: 250 !important;
 		font-size: ${spacer64} !important;
-		line-height: ${spacer72} !important;
+		/* line-height: ${spacer72} !important; */
 	`,
 	displaySmall: css`
 		${fontFamilyA}
 		font-weight: 700 !important;
 		font-size: ${spacer40} !important;
-		line-height: ${spacer48} !important;
+		/* line-height: ${spacer48} !important; */
 	`,
 	headlineLarge: css`
 		${fontFamilyA}
 		font-weight: 700 !important;
 		font-size: ${spacer32} !important;
-		line-height: ${spacer40} !important;
+		/* line-height: ${spacer40} !important; */
 	`,
 	headlineMedium: css`
 		${fontFamilyB}
 		font-weight: 400 !important;
 		font-size: ${spacer24} !important;
-		line-height: ${spacer32} !important;
+		/* line-height: ${spacer32} !important; */
 	`,
 	headlineSmall: css`
 		${fontFamilyB}
 		font-weight: 700 !important;
 		font-size: ${spacer20} !important;
-		line-height: ${spacer28} !important;
+		/* line-height: ${spacer28} !important; */
 	`,
 	labelLarge: css`
 		${fontFamilyB}
 		font-weight: 600 !important;
 		font-size: ${spacer14} !important;
-		line-height: ${spacer20} !important;
+		/* line-height: ${spacer20} !important; */
 	`,
 	labelMedium: css`
 		${fontFamilyB}
 		font-weight: 500 !important;
 		font-size: ${spacer12} !important;
-		line-height: ${spacer16} !important;
+		/* line-height: ${spacer16} !important; */
 	`,
 	labelSmall: css`
 		${fontFamilyB}
@@ -112,18 +112,18 @@ export const semanticFonts = {
 		${fontFamilyB}
 		font-weight: 400 !important;
 		font-size: ${spacer16} !important;
-		line-height: ${spacer24} !important;
+		/* line-height: ${spacer24} !important; */
 	`,
 	bodyMedium: css`
 		${fontFamilyB}
 		font-weight: 400 !important;
 		font-size: ${spacer14} !important;
-		line-height: ${spacer20} !important;
+		/* line-height: ${spacer20} !important; */
 	`,
 	bodySmall: css`
 		${fontFamilyB}
 		font-weight: 400 !important;
 		font-size: ${spacer12} !important;
-		line-height: ${spacer16} !important;
+		/* line-height: ${spacer16} !important; */
 	`,
 };

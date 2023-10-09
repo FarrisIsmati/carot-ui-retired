@@ -92,10 +92,10 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 				{/* Top label to display */}
 				{label && (
 					<Type
-						colorSet={colorSet}
+						colorset={colorSet}
 						disabled={disabled}
 						error={error}
-						font={semanticFonts.bodySmall}
+						semanticfont={semanticFonts.bodySmall}
 					>
 						{label}
 					</Type>
@@ -104,7 +104,11 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 				{/* Content inside the dropdown */}
 				<StyledDropdownTriggerContentContainer>
 					{/* Text displaying inside the dropdown */}
-					<StyledDropdownTriggerText disabled={disabled} colorSet={colorSet}>
+					<StyledDropdownTriggerText
+						disabled={disabled}
+						colorset={colorSet}
+						selectedItem={selectedItem}
+					>
 						{!selectedItem && placeholder}
 						{selectedItem && selectedItem.value}
 					</StyledDropdownTriggerText>
@@ -130,9 +134,9 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 				{/* Error text bottom of the dropdown */}
 				{errorText && !disabled && (
 					<StyledErrorTextDropdownTrigger
-						colorSet={colorSet}
+						colorset={colorSet}
 						error={error}
-						font={semanticFonts.bodySmall}
+						semanticfont={semanticFonts.bodySmall}
 					>
 						{errorText}
 					</StyledErrorTextDropdownTrigger>

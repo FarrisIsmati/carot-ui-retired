@@ -139,6 +139,7 @@ export enum ColorBaseCore {
 	NEUTRAL_7 = "NEUTRAL_7",
 	NEUTRAL_8 = "NEUTRAL_8",
 	NEUTRAL_9 = "NEUTRAL_9",
+	NEUTRAL_10 = "NEUTRAL_10",
 	RED_1 = "RED_1",
 	RED_3 = "RED_3",
 	RED_5 = "RED_5",
@@ -162,6 +163,7 @@ export enum ColorBaseCore {
 
 export const colorBaseMap = {
 	[ColorBaseCore.WHITE]: "#FFFFFF",
+	[ColorBaseCore.NEUTRAL_10]: "#FBFBFB",
 	[ColorBaseCore.BLACK]: "#141414",
 	[ColorBaseCore.NEUTRAL_2]: "#525252",
 	[ColorBaseCore.NEUTRAL_3]: "#808080",

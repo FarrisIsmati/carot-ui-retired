@@ -4,7 +4,14 @@ import Type from "@/components/common/Type";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { StyledPageContainer } from "@/styles/common";
 import { semanticFonts } from "@/styles/fonts";
-import { Sizes, spacer12, spacer16, spacer4, spacer64 } from "@/styles/sizes";
+import {
+	Sizes,
+	spacer12,
+	spacer16,
+	spacer24,
+	spacer4,
+	spacer64,
+} from "@/styles/sizes";
 import { styled } from "styled-components";
 import VisionForm from "../VisionForm";
 
@@ -25,15 +32,17 @@ const StyledTempBlurb = styled.div`
 const StyledHeaderSection = styled.section`
 	display: flex;
 	gap: ${spacer64};
+	margin-bottom: ${spacer24};
 `;
 
 export default () => {
 	return (
 		<StyledPageContainer>
+			{/* Header */}
 			<StyledHeaderSection>
 				<div>
 					<Type semanticfont={semanticFonts.displayMedium}>
-						Business projection calculator
+						Business projection calculator demo
 					</Type>
 					<Type semanticfont={semanticFonts.headlineLarge}>
 						Discover how much you need to start your business with our free
@@ -42,15 +51,14 @@ export default () => {
 				</div>
 				<StyledTempBlurb>
 					<Type semanticfont={semanticFonts.headlineSmall}>
-						Something interesting
+						Some interesting words
 					</Type>
 					<ButtonPrimary size={Sizes.SMALL}>Button</ButtonPrimary>
 				</StyledTempBlurb>
 			</StyledHeaderSection>
 
-			<div>
-				<VisionForm />
-			</div>
+			{/* Vision Form */}
+			<VisionForm />
 		</StyledPageContainer>
 	);
 };
