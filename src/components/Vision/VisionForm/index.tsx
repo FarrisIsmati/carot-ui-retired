@@ -1,20 +1,24 @@
 "use client";
-import Dropdown from "@/components/common/Dropdown";
 import { SampleDropdownDataset1 } from "@/components/common/Dropdown/index.stories";
 import Type from "@/components/common/Type";
+import FormDropdown from "@/components/form/FormDropdown";
 import { semanticFonts } from "@/styles/fonts";
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
-import { Form } from "react-final-form";
+import { Form, useFormState } from "react-final-form";
+import { visionFormDemoInitialValues } from "./values/visionFormDemoInitialValues";
 
 export type DraftVisionFormValues = VisionFormValues;
 
 const VisionFormDemo = () => {
+	const formState = useFormState();
+	console.log(formState.values);
 	return (
 		<div>
 			<Type semanticfont={semanticFonts.headlineSmall}>Business Type</Type>
-			<Dropdown
+			<FormDropdown
 				label="Industry"
 				placeholder="Select"
+				fieldName="businessIndustry"
 				dataset={SampleDropdownDataset1}
 			/>
 		</div>
@@ -24,14 +28,8 @@ const VisionFormDemo = () => {
 export default () => {
 	return (
 		<Form<DraftVisionFormValues>
-			initialValues={{}}
+			initialValues={visionFormDemoInitialValues}
 			validate={() => ({})}
-			subscription={{
-				touched: true,
-				errors: true,
-				pristine: true,
-				submitting: true,
-			}}
 			onSubmit={() => {}}
 			render={(props) => <VisionFormDemo />}
 		/>

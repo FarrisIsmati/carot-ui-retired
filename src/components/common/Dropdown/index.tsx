@@ -3,6 +3,7 @@ import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { spacer320 } from "@/styles/sizes";
 import { PseudoClassProps, StyledWrapperProps } from "@/utils/typeHelpers";
 import { useEffect, useRef, useState } from "react";
+import { FieldInputProps } from "react-final-form";
 import Overlay, { OverlayDirections } from "../Overlay";
 import DropdownItem from "./DropdownItem";
 import { DropdownList } from "./DropdownList";
@@ -38,6 +39,10 @@ export type DropdownProps = StyledWrapperProps &
 		 * Dropdown data
 		 */
 		dataset: DropdownData[];
+		/**
+		 * Field input props
+		 */
+		input?: FieldInputProps<any, HTMLElement>;
 	};
 
 export default ({
@@ -48,17 +53,22 @@ export default ({
 	disabled,
 	placeholder,
 	dataset,
+	input,
 }: DropdownProps) => {
 	// Dropdown
 	const dropdownRef = useRef(null);
+
 	// Dropdown trigger
 	const dropdownTriggerRef = useRef(null);
+
 	// Dropdown menu
 	const dropdownListRef = useRef(null);
+
 	// State
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // Open/close menu
 	const [selectedItem, setSelectedItem] = useState<DropdownData | null>(null); // Actively used
 	const [hoveredItem, setHoveredItem] = useState<DropdownData | null>(null); // Mouse hover state (not key cursor state)
+
 	// Add error state if error text included
 	if (!error && errorText) {
 		error = true;
@@ -67,7 +77,6 @@ export default ({
 	//
 	// Hooks
 	//
-
 	// Use keys to navigate dropdown
 	const { cursor, setCursor, cursorRef } = useNavigateDropdown({
 		isMenuOpen,
@@ -78,6 +87,13 @@ export default ({
 
 	// Close menu when clicking off
 	useOffClick(dropdownRef, () => setIsMenuOpen(false));
+
+	// Select item (updates local and form state if passed in)
+	const onSelect = (selectedItemDataset: DropdownData, value: string) => {
+		setSelectedItem(selectedItemDataset); // Local display state
+		input?.onChange?.(value); // Form state
+		setIsMenuOpen(false);
+	};
 
 	useEffect(() => {
 		// Scroll to selected item if menu is open
@@ -106,8 +122,7 @@ export default ({
 			}
 			// Close menu if focused and hitting enter key to select item
 			if (isMenuOpen) {
-				setSelectedItem(dataset[cursor]);
-				setIsMenuOpen(false);
+				onSelect(dataset[cursor], dataset[cursor].value);
 			}
 		}
 	};
@@ -129,6 +144,9 @@ export default ({
 					}
 					setIsMenuOpen(!isMenuOpen);
 				}}
+				onBlur={(e) => {
+					input?.onBlur(e);
+				}}
 				onKeyDown={onEnterPress}
 				selectedItem={selectedItem}
 				placeholder={placeholder}
@@ -148,8 +166,7 @@ export default ({
 											if (disabled) {
 												return;
 											}
-											setSelectedItem(e);
-											setIsMenuOpen(false);
+											onSelect(e, e.value);
 										}}
 										active={
 											e.id === selectedItem?.id ||
