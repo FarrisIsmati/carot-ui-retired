@@ -2,8 +2,10 @@ import { SemanticSetCores, getColorSet } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import { formControlBaseSelect, rootStyle } from "@/styles/mixins";
 import {
+	Sizes,
 	spacer10,
 	spacer12,
+	spacer156,
 	spacer2,
 	spacer320,
 	spacer4,
@@ -37,7 +39,7 @@ export const StyledDropdownTriggerText = styled(Type)<{
 
 export const StyledDropdownTrigger = styled(
 	React.forwardRef<HTMLElement, DropdownTriggerProps>(function Button(
-		{ component: Component = "button", colorSet, size, ...props },
+		{ component: Component = "button", colorSet, dropdownSize, ...props },
 		ref
 	) {
 		return <Component {...props} ref={ref} />;
@@ -74,7 +76,7 @@ export const StyledDropdownTrigger = styled(
 			margin-top: ${spacer8};
 			border: none;
 
-			width: ${spacer320};
+			width: ${props.dropdownSize === Sizes.LARGE ? spacer320 : spacer156};
 			background-color: ${props.colorSet?.essential.default};
 			border-radius: ${spacer4};
 			padding: ${spacer10} ${spacer12} ${spacer12} ${spacer12};

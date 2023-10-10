@@ -1,3 +1,4 @@
+import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { spacer12, spacer16, spacer4, spacer8 } from "@/styles/sizes";
 import {
 	AsProp,
@@ -15,6 +16,7 @@ export const StyledDropdownList = styled(
 		return <Component {...props} ref={ref} />;
 	})
 )`
+	background-color: ${colorBaseMap[ColorBaseCore.WHITE]};
 	width: 100%;
 	max-block-size: 273px;
 	display: flex;

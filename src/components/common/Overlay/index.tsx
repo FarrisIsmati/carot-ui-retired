@@ -64,10 +64,14 @@ export default React.forwardRef<HTMLElement, OverlayTriggerProps>(
 						overlayPosition={ref.current.getBoundingClientRect()}
 						closeOverlay={closeOverlay}
 					>
-						<Overlay placement={placement}>{children}</Overlay>
+						<Overlay placement={placement} width={width}>
+							{children}
+						</Overlay>
 					</OverlayPortal>
 				) : (
-					<Overlay placement={placement}>{children}</Overlay>
+					<Overlay placement={placement} width={width}>
+						{children}
+					</Overlay>
 				)}
 			</Trigger>
 		);

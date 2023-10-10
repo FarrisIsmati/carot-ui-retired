@@ -1,9 +1,9 @@
-import { CV, CustomFee } from "./common";
 import {
 	ScheduleTypeCompound,
 	ScheduleTypeFull,
 	ScheduleTypeMinimal,
-} from "./schedule";
+} from "../schedule";
+import { CV, CustomFee } from "./common";
 
 export enum BusinessType {
 	ONLINE = "ONLINE",

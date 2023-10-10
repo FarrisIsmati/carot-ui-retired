@@ -1,9 +1,9 @@
-import VisionPageFree from "@/components/Vision/VisionPageFree";
+import VisionPageDemo from "@/components/Vision/VisionPageDemo";
 
 export default function Page() {
 	return (
 		<main>
-			<VisionPageFree />
+			<VisionPageDemo />
 		</main>
 	);
 }

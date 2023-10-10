@@ -1,6 +1,6 @@
 // Creates a worst, average, and best-case scenario for all fields that require it
 
-import { ScheduleTypeFull } from "./schedule";
+import { ScheduleTypeFull } from "../schedule";
 
 // This allows estimates to be made of different cases and values inbetween
 export interface CV<T extends number | Date> {

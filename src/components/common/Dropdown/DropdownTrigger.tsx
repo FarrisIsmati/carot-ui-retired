@@ -58,6 +58,11 @@ export type DropdownTriggerProps = StyledWrapperProps &
 		 * Placeholder text
 		 */
 		placeholder?: string;
+		/**
+		 * Size of the field (width)
+		 * @default LARGE
+		 */
+		dropdownSize?: Sizes;
 	};
 
 export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
@@ -73,6 +78,7 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 			isMenuOpen,
 			placeholder,
 			selectedItem,
+			dropdownSize = Sizes.LARGE,
 			...props
 		},
 		ref
@@ -87,6 +93,7 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 				aria-haspopup="listbox"
 				onMouseDown={onClickMenu}
 				disabled={disabled}
+				dropdownSize={dropdownSize}
 				{...props}
 			>
 				{/* Top label to display */}

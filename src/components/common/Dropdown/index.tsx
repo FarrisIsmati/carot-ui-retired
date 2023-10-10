@@ -1,6 +1,6 @@
 import scrollToCursor from "@/components/common/Dropdown/utils/scrollToCursor";
 import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
-import { spacer320 } from "@/styles/sizes";
+import { Sizes, spacer156, spacer320 } from "@/styles/sizes";
 import { PseudoClassProps, StyledWrapperProps } from "@/utils/typeHelpers";
 import { useEffect, useRef, useState } from "react";
 import { FieldInputProps } from "react-final-form";
@@ -24,7 +24,7 @@ export type DropdownProps = StyledWrapperProps &
 		label?: string;
 		/**
 		 * Set the semantic color used by the button
-		 * @default 'SECONDARY
+		 * @default SECONDARY
 		 **/
 		colorSet?: ColorSet;
 		/**
@@ -43,6 +43,11 @@ export type DropdownProps = StyledWrapperProps &
 		 * Field input props
 		 */
 		input?: FieldInputProps<any, HTMLElement>;
+		/**
+		 * Size of the field (width)
+		 * @default LARGE
+		 */
+		dropdownSize?: Sizes;
 	};
 
 export default ({
@@ -54,6 +59,7 @@ export default ({
 	placeholder,
 	dataset,
 	input,
+	dropdownSize = Sizes.LARGE,
 }: DropdownProps) => {
 	// Dropdown
 	const dropdownRef = useRef(null);
@@ -150,11 +156,15 @@ export default ({
 				onKeyDown={onEnterPress}
 				selectedItem={selectedItem}
 				placeholder={placeholder}
+				dropdownSize={dropdownSize}
 			/>
 
 			{/* Dropdown menu */}
 			{isMenuOpen && (
-				<Overlay placement={OverlayDirections.BOTTOM} width={spacer320}>
+				<Overlay
+					placement={OverlayDirections.BOTTOM}
+					width={dropdownSize === Sizes.LARGE ? spacer320 : spacer156}
+				>
 					{
 						<DropdownList ref={dropdownListRef}>
 							{dataset.map((e, i) => {
