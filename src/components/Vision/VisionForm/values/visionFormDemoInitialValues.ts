@@ -8,13 +8,16 @@ import {
 } from "@/types/VisionForm/Schedule";
 import { CurrencyTypes } from "@/types/currency/types";
 import { DraftVisionFormValues } from "..";
+import { LocationDropdownValuesEnum } from "./visionFormDropdownValues";
 
 export const visionFormDemoInitialValues: DraftVisionFormValues = {
 	businessName: "",
 	businessCurrency: CurrencyTypes.USD,
 	businessIndustry: "",
+	businessLocation: LocationDropdownValuesEnum.UNKNOWN,
 	forecastingStartDate: "",
 	forecastingEndDate: "",
+	capitalType: undefined,
 	investorName: "",
 	investorType: InvestorType.ACTIVE,
 	investorJoinDate: "",
@@ -34,4 +37,5 @@ export const visionFormDemoInitialValues: DraftVisionFormValues = {
 	loanClosingCostPercentage: 0,
 	loanOriginationFee: 0,
 	loanDocumentationFee: 0,
+	legalStructure: "",
 };

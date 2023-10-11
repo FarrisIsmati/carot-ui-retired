@@ -8,3 +8,6 @@ export const businessLocationValidator = fieldRequired;
 
 // Business currency
 export const businessCurrencyValidator = fieldRequired;
+
+// Business currency
+export const legalStructureValidator = fieldRequired;

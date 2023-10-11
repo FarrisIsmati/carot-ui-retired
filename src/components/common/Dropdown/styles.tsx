@@ -17,6 +17,12 @@ import Type from "../Type";
 import { DropdownTriggerProps } from "./DropdownTrigger";
 import { DropdownData } from "./types";
 
+// Containing div
+export const StyledContainer = styled.div`
+	display: block;
+	width: fit-content;
+`;
+
 // Dropdown Trigger
 export const StyledDropdownTriggerText = styled(Type)<{
 	selectedItem: DropdownData | null;
@@ -73,7 +79,6 @@ export const StyledDropdownTrigger = styled(
 			text-align: start;
 			overflow-wrap: break-word;
 
-			margin-top: ${spacer8};
 			border: none;
 
 			width: ${props.dropdownSize === Sizes.LARGE ? spacer320 : spacer156};

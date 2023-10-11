@@ -1,8 +1,10 @@
+import { LocationDropdownValuesEnum } from "@/components/Vision/VisionForm/values/visionFormDropdownValues";
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
 import {
 	businessCurrencyValidator,
 	businessIndustryValidator,
 	businessLocationValidator,
+	legalStructureValidator,
 } from "./VisionFormValidators";
 
 export default (formValues: VisionFormValues) => {
@@ -16,7 +18,23 @@ export default (formValues: VisionFormValues) => {
 		formValues.businessCurrency
 	);
 
-	const errors = [businessIndustry, businessLocation, businessCurrency];
+	// Only validate if location is USA
+	const legalStructure =
+		formValues.businessLocation === LocationDropdownValuesEnum.USA
+			? legalStructureValidator(formValues.legalStructure)
+			: undefined;
 
-	return { businessIndustry, businessLocation, businessCurrency };
+	const errors = [
+		businessIndustry,
+		businessLocation,
+		businessCurrency,
+		legalStructure,
+	];
+
+	return {
+		businessIndustry,
+		businessLocation,
+		businessCurrency,
+		legalStructure,
+	};
 };

@@ -10,6 +10,7 @@ export interface FormDropdownProps {
 	fieldName: string;
 	dataset: DropdownData[];
 	dropdownSize?: Sizes;
+	defaultValue?: DropdownData;
 }
 
 export default ({
@@ -18,6 +19,7 @@ export default ({
 	fieldName,
 	dataset,
 	dropdownSize = Sizes.LARGE,
+	defaultValue,
 }: FormDropdownProps) => {
 	const field = useField(fieldName);
 	const input = field.input;
@@ -32,6 +34,7 @@ export default ({
 			error={hasVisibleErrors(field.meta)}
 			errorText={hasVisibleErrors(field.meta) && field.meta.error}
 			dropdownSize={dropdownSize}
+			defaultValue={defaultValue}
 			{...field}
 		/>
 	);

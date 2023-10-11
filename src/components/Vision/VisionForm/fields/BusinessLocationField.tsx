@@ -1,6 +1,6 @@
-import { SampleDropdownDataset1 } from "@/components/common/Dropdown/index.stories";
 import FormDropdown from "@/components/form/FormDropdown";
 import { Sizes } from "@/styles/sizes";
+import { locationDropdownValues } from "../values/visionFormDropdownValues";
 
 export default () => {
 	return (
@@ -8,8 +8,9 @@ export default () => {
 			label="LOCATION"
 			placeholder="Select"
 			fieldName="businessLocation"
-			dataset={SampleDropdownDataset1}
+			dataset={locationDropdownValues}
 			dropdownSize={Sizes.SMALL}
+			defaultValue={locationDropdownValues[0]}
 		/>
 	);
 };

@@ -5,6 +5,13 @@ import { styled } from "styled-components";
 import BusinessCurrencyField from "../../fields/BusinessCurrencyField";
 import BusinessIndustryField from "../../fields/BusinessIndustryField";
 import BusinessLocationField from "../../fields/BusinessLocationField";
+import LegalStructureField from "../../fields/LegalStructureField";
+
+const StyledContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: ${spacer8};
+`;
 
 const StyledDoubleDropdownContainer = styled.div`
 	display: flex;
@@ -13,13 +20,16 @@ const StyledDoubleDropdownContainer = styled.div`
 
 export default () => {
 	return (
-		<div>
+		<StyledContainer>
 			<Type semanticfont={semanticFonts.headlineSmall}>Business Type</Type>
 			<BusinessIndustryField />
 			<StyledDoubleDropdownContainer>
 				<BusinessLocationField />
 				<BusinessCurrencyField />
 			</StyledDoubleDropdownContainer>
-		</div>
+
+			{/* Hidden if not USA */}
+			<LegalStructureField />
+		</StyledContainer>
 	);
 };

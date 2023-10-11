@@ -10,9 +10,10 @@ import { DropdownList } from "./DropdownList";
 import DropdownTrigger from "./DropdownTrigger";
 import useNavigateDropdown from "./hooks/useNavigateDropdown";
 import useOffClick from "./hooks/useOffClick";
+import { StyledContainer } from "./styles";
 import { DropdownData } from "./types";
 
-export type DropdownProps = StyledWrapperProps &
+export type DropdownProps = Omit<StyledWrapperProps, "defaultValue"> &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
 		/**
 		 * If true adds styling to indicate error state
@@ -48,6 +49,10 @@ export type DropdownProps = StyledWrapperProps &
 		 * @default LARGE
 		 */
 		dropdownSize?: Sizes;
+		/**
+		 * Default value params
+		 */
+		defaultValue?: DropdownData;
 	};
 
 export default ({
@@ -60,6 +65,7 @@ export default ({
 	dataset,
 	input,
 	dropdownSize = Sizes.LARGE,
+	defaultValue,
 }: DropdownProps) => {
 	// Dropdown
 	const dropdownRef = useRef(null);
@@ -119,6 +125,18 @@ export default ({
 		}
 	}, [isMenuOpen]);
 
+	// If default value set it
+	useEffect(() => {
+		if (defaultValue && !selectedItem) {
+			setSelectedItem(defaultValue); // Local display state
+
+			// If form value isn't set to default value, update it also
+			if (input?.value !== defaultValue.value) {
+				input?.onChange?.(defaultValue.value); // Form state
+			}
+		}
+	}, [defaultValue]);
+
 	// On enter key press
 	const onEnterPress = (e: React.KeyboardEvent<any>) => {
 		if (e.key === "Enter" && e.target === document.activeElement) {
@@ -134,7 +152,7 @@ export default ({
 	};
 
 	return (
-		<div ref={dropdownRef}>
+		<StyledContainer ref={dropdownRef}>
 			{/* Button triggers dropdown to open */}
 			<DropdownTrigger
 				ref={dropdownTriggerRef}
@@ -195,6 +213,6 @@ export default ({
 					}
 				</Overlay>
 			)}
-		</div>
+		</StyledContainer>
 	);
 };

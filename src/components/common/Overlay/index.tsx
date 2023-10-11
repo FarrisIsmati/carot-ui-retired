@@ -29,7 +29,7 @@ export type OverlayTriggerProps = StyledWrapperProps & {
 
 const Trigger = styled.span`
 	display: inline-flex;
-	position: relative;
+	position: absolute;
 `;
 
 export type OverlayPlacement = {
