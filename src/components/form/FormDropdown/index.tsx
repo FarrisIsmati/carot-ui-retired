@@ -30,6 +30,7 @@ export default ({
 			placeholder={placeholder}
 			dataset={dataset}
 			error={hasVisibleErrors(field.meta)}
+			errorText={hasVisibleErrors(field.meta) && field.meta.error}
 			dropdownSize={dropdownSize}
 			{...field}
 		/>

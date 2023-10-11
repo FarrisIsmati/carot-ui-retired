@@ -4,7 +4,7 @@ import FormDropdown from "@/components/form/FormDropdown";
 export default () => {
 	return (
 		<FormDropdown
-			label="Industry"
+			label="INDUSTRY"
 			placeholder="Select"
 			fieldName="businessIndustry"
 			dataset={SampleDropdownDataset1}

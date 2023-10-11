@@ -3,7 +3,7 @@ import BusinessTypeSection from "./sections/BusinessTypeSection";
 
 export default () => {
 	const formState = useFormState();
-	console.log(formState.values);
+	console.log(formState.errors);
 
 	return (
 		<div>
