@@ -4,7 +4,7 @@ import { Sizes } from "@/styles/sizes";
 import { hasVisibleErrors } from "@/utils/form";
 import { useField } from "react-final-form";
 
-export interface FormDropdownProps {
+export interface FormDropdownSelectorProps {
 	label: string;
 	placeholder: string;
 	fieldName: string;
@@ -20,7 +20,7 @@ export default ({
 	dataset,
 	dropdownSize = Sizes.LARGE,
 	defaultValue,
-}: FormDropdownProps) => {
+}: FormDropdownSelectorProps) => {
 	const field = useField(fieldName);
 	const input = field.input;
 

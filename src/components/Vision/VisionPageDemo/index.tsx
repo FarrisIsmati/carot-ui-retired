@@ -13,7 +13,7 @@ import {
 	spacer64,
 } from "@/styles/sizes";
 import { styled } from "styled-components";
-import VisionForm from "../VisionForm";
+import VisionForm from "../../VisionForm";
 
 const StyledTempBlurb = styled.div`
 	border-radius: ${spacer4};

@@ -120,6 +120,7 @@ export const IconWrapper = ({
 	size,
 	icon,
 	disabled,
+	onMouseDown,
 }: IconWrapperProps) => {
 	const Icon = icon;
 	const iconSize = iconSizeMap[size];
@@ -149,6 +150,7 @@ export const IconWrapper = ({
 			padding={padding}
 			aria-hidden="true"
 			disabled={disabled}
+			onMouseDown={onMouseDown}
 		>
 			<Icon
 				style={{ fontSize: iconSize }}

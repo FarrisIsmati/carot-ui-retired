@@ -6,19 +6,17 @@ import {
 	PseudoClassProps,
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
-import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons";
+import { Add, Remove } from "@material-ui/icons";
 import React from "react";
 import { IconWrapper } from "../IconWrapper";
-import Type from "../Type";
 import {
+	StyledDropdownSelectTriggerText,
 	StyledDropdownTrigger,
 	StyledDropdownTriggerContentContainer,
-	StyledDropdownTriggerText,
 	StyledErrorTextDropdownTrigger,
 } from "./styles";
-import { DropdownData, DropdownType } from "./types";
 
-export type DropdownTriggerProps = StyledWrapperProps &
+export type DropdownTriggerProps = Omit<StyledWrapperProps, "label"> &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
 		/**
 		 * Render the component with a custom component or HTML element
@@ -34,10 +32,6 @@ export type DropdownTriggerProps = StyledWrapperProps &
 		 */
 		error?: boolean;
 		/**
-		 * Label title
-		 */
-		label?: string;
-		/**
 		 * Set the semantic color used by the button
 		 * @default 'brightAccent
 		 **/
@@ -50,10 +44,6 @@ export type DropdownTriggerProps = StyledWrapperProps &
 		 * isMenuOpen
 		 */
 		isMenuOpen?: boolean;
-		/**
-		 * Selected value
-		 */
-		selectedItem: DropdownData<any> | null;
 		/**
 		 * Placeholder text
 		 */
@@ -69,7 +59,6 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 	function DropdownTrigger(
 		{
 			onClickMenu,
-			label,
 			colorSet = getColorSet(SemanticSetCores.SECONDARY),
 			error,
 			errorText,
@@ -77,9 +66,7 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 			disabled,
 			isMenuOpen,
 			placeholder,
-			selectedItem,
 			dropdownSize = Sizes.LARGE,
-			type = DropdownType.NORMAL,
 			...props
 		},
 		ref
@@ -97,41 +84,27 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 				dropdownSize={dropdownSize}
 				{...props}
 			>
-				{/* Top label to display */}
-				{label && (
-					<Type
-						colorset={colorSet}
-						disabled={disabled}
-						error={error}
-						semanticfont={semanticFonts.bodySmall}
-					>
-						{label}
-					</Type>
-				)}
-
 				{/* Content inside the dropdown */}
 				<StyledDropdownTriggerContentContainer>
 					{/* Text displaying inside the dropdown */}
-					<StyledDropdownTriggerText
+					<StyledDropdownSelectTriggerText
 						disabled={disabled}
 						colorset={colorSet}
-						selectedItem={selectedItem}
 					>
-						{!selectedItem && placeholder}
-						{selectedItem && selectedItem.value}
-					</StyledDropdownTriggerText>
+						{placeholder}
+					</StyledDropdownSelectTriggerText>
 
 					{/* Icon arrow up or down indicating dropdown open/closed */}
 					{isMenuOpen ? (
 						<IconWrapper
-							icon={KeyboardArrowUp}
+							icon={Remove}
 							padding={spacer2}
 							size={Sizes.MEDIUM}
 							disabled={disabled}
 						/>
 					) : (
 						<IconWrapper
-							icon={KeyboardArrowDown}
+							icon={Add}
 							padding={spacer2}
 							size={Sizes.MEDIUM}
 							disabled={disabled}

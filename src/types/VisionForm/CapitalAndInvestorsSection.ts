@@ -18,9 +18,7 @@ export enum CapitalType {
 	LOAN = "LOAN",
 }
 
-export interface CapitalAndInvestorsSection extends Investor, Loan {
-	capitalType: CapitalType | undefined;
-}
+export interface CapitalAndInvestorsSection extends Investor, Loan {}
 
 export interface Investor {
 	investorName: string;

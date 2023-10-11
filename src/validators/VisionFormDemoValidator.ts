@@ -1,4 +1,4 @@
-import { LocationDropdownValuesEnum } from "@/components/Vision/VisionForm/values/visionFormDropdownValues";
+import { LocationDropdownValuesEnum } from "@/components/VisionForm/values/visionFormDropdownValues";
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
 import {
 	businessCurrencyValidator,

@@ -17,7 +17,6 @@ export const visionFormDemoInitialValues: DraftVisionFormValues = {
 	businessLocation: LocationDropdownValuesEnum.UNKNOWN,
 	forecastingStartDate: "",
 	forecastingEndDate: "",
-	capitalType: undefined,
 	investorName: "",
 	investorType: InvestorType.ACTIVE,
 	investorJoinDate: "",

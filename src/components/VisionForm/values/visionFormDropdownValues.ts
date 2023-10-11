@@ -1,4 +1,5 @@
 import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsSection";
+import { capitalize } from "lodash";
 
 export const industryDropdownValues = [
 	{ value: "Food & Services", id: "foodandservices" },
@@ -34,6 +35,6 @@ export const legalStructureDropdownValues = [
 ];
 
 export const capitalTypeDropdownValues = [
-	{ value: CapitalType.INVESTOR, id: CapitalType.INVESTOR },
-	{ value: CapitalType.LOAN, id: CapitalType.LOAN },
+	{ value: capitalize(CapitalType.INVESTOR), id: CapitalType.INVESTOR },
+	{ value: capitalize(CapitalType.LOAN), id: CapitalType.LOAN },
 ];

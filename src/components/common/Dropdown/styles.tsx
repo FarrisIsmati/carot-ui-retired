@@ -43,6 +43,21 @@ export const StyledDropdownTriggerText = styled(Type)<{
 	}
 `;
 
+// Dropdown Select Trigger
+export const StyledDropdownSelectTriggerText = styled(Type)`
+	${semanticFonts.bodyLarge};
+
+	color: ${(props) => props.colorset?.text.default};
+
+	&:disabled {
+		color: ${(props) => props.colorset?.text.disabled};
+	}
+
+	&:hover:not([disabled]) {
+		background-color: ${(props) => props.colorset?.essential.hover};
+	}
+`;
+
 export const StyledDropdownTrigger = styled(
 	React.forwardRef<HTMLElement, DropdownTriggerProps>(function Button(
 		{ component: Component = "button", colorSet, dropdownSize, ...props },

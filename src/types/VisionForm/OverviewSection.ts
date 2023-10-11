@@ -1,6 +1,6 @@
 // Overview section
 
-import { LocationDropdownValuesEnum } from "@/components/Vision/VisionForm/values/visionFormDropdownValues";
+import { LocationDropdownValuesEnum } from "@/components/VisionForm/values/visionFormDropdownValues";
 import { CurrencyTypes } from "../currency/types";
 
 export interface OverviewSection {
