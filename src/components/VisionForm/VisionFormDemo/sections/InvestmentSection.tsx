@@ -13,11 +13,6 @@ const StyledContainer = styled.div`
 	gap: ${spacer8};
 `;
 
-const StyledDoubleDropdownContainer = styled.div`
-	display: flex;
-	gap: ${spacer8};
-`;
-
 export default () => {
 	const [capitalType, setCapitalType] = useState<CapitalType | null>(null);
 	return (
@@ -25,13 +20,25 @@ export default () => {
 			<Type semanticfont={semanticFonts.headlineSmall}>Investment</Type>
 			<DropdownSelect
 				id={"capitalType"}
-				name={"Capital Type"}
+				name={"capitalType"}
 				placeholder={"Add Capital"}
 				dataset={capitalTypeDropdownValues}
 				onselect={(value) => setCapitalType(value.id)}
 			/>
 
-			{capitalType === CapitalType.INVESTOR && <p>Investor</p>}
+			{capitalType === CapitalType.INVESTOR && (
+				<div>
+					<p>Name</p>
+					{/* Locked stuck to 100% */}
+					<p>Equity</p>
+					<p>Starting investment</p>
+					{/* Note after one is added cannot add anymore */}
+					<p>Add</p>
+				</div>
+				// Need raihan to prompt how this is displayed
+				// Continue to think about how this mechanism will work
+			)}
+			{/* Show that it's locked premium */}
 			{capitalType === CapitalType.LOAN && <p>Loan</p>}
 		</StyledContainer>
 	);

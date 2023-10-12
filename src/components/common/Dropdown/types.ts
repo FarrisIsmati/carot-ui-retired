@@ -2,6 +2,7 @@
 export interface DropdownData<T> {
 	value: string;
 	id: T;
+	disabled?: boolean;
 }
 
 // Up and down press types on keyboard

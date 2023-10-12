@@ -36,5 +36,5 @@ export const legalStructureDropdownValues = [
 
 export const capitalTypeDropdownValues = [
 	{ value: capitalize(CapitalType.INVESTOR), id: CapitalType.INVESTOR },
-	{ value: capitalize(CapitalType.LOAN), id: CapitalType.LOAN },
+	{ value: capitalize(CapitalType.LOAN), id: CapitalType.LOAN, disabled: true },
 ];

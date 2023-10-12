@@ -191,7 +191,8 @@ export default ({
 										ref={(el) => (cursorRef.current[i] = el)}
 										key={e.id}
 										onClick={() => {
-											if (disabled) {
+											// Disabled entire dropdown disabled, e.disabled only row is disabled
+											if (disabled || e.disabled) {
 												return;
 											}
 											onSelect(e, e.value);
@@ -201,6 +202,7 @@ export default ({
 											e.id === hoveredItem?.id ||
 											i === cursor
 										}
+										disabled={disabled || e.disabled}
 										colorSet={colorSet}
 										onMouseEnter={() => setHoveredItem(e)}
 										onMouseLeave={() => setHoveredItem(null)}

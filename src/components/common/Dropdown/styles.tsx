@@ -6,6 +6,7 @@ import {
 	spacer10,
 	spacer12,
 	spacer156,
+	spacer16,
 	spacer2,
 	spacer320,
 	spacer4,
@@ -14,6 +15,7 @@ import {
 import React from "react";
 import { css, styled } from "styled-components";
 import Type from "../Type";
+import { DropdownItemProps } from "./DropdownItem";
 import { DropdownTriggerProps } from "./DropdownTrigger";
 import { DropdownData } from "./types";
 
@@ -25,7 +27,7 @@ export const StyledContainer = styled.div`
 
 // Dropdown Trigger
 export const StyledDropdownTriggerText = styled(Type)<{
-	selectedItem: DropdownData | null;
+	selectedItem: DropdownData<any> | null;
 }>`
 	${semanticFonts.bodyLarge};
 
@@ -124,6 +126,41 @@ export const StyledDropdownTrigger = styled(
 			}
 		`;
 	}}
+`;
+
+// Dropdown item
+export const StyledDropdownItem = styled(
+	React.forwardRef<HTMLElement, DropdownItemProps>(function TypeList(
+		{ component: Component = "TypeListItem", disabled, colorSet, ...props },
+		ref
+	) {
+		return <Component {...props} ref={ref} />;
+	})
+)`
+	${semanticFonts.bodyLarge};
+	padding-block-end: 0;
+	padding: ${spacer12} ${spacer16};
+
+	${(props) =>
+		props.active &&
+		!props.disabled &&
+		css`
+			background-color: ${props.colorSet?.essential.hover};
+		`}
+
+	${(props) =>
+		props.disabled &&
+		css`
+			color: ${props.colorSet?.text.disabled};
+			background-color: ${props.colorSet?.essential.disabled};
+		`}
+
+		
+
+
+	&:disabled {
+		background-color: ${(props) => props.colorSet?.essential.disabled};
+	}
 `;
 
 export const StyledDropdownTriggerContentContainer = styled.div`
