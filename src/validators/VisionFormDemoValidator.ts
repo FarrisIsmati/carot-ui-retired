@@ -4,10 +4,13 @@ import {
 	businessCurrencyValidator,
 	businessIndustryValidator,
 	businessLocationValidator,
+	investorNameValidator,
 	legalStructureValidator,
 } from "./VisionFormValidators";
 
 export default (formValues: VisionFormValues) => {
+	// Overview section
+	// Business
 	const businessIndustry = businessIndustryValidator(
 		formValues.businessIndustry
 	);
@@ -18,6 +21,11 @@ export default (formValues: VisionFormValues) => {
 		formValues.businessCurrency
 	);
 
+	// Capital and Investors section
+	// Investor
+	const investorName = investorNameValidator(formValues.investorName);
+
+	// Legal and Taxes section
 	// Only validate if location is USA
 	const legalStructure =
 		formValues.businessLocation === LocationDropdownValuesEnum.USA
@@ -28,6 +36,7 @@ export default (formValues: VisionFormValues) => {
 		businessIndustry,
 		businessLocation,
 		businessCurrency,
+		investorName,
 		legalStructure,
 	];
 
@@ -35,6 +44,7 @@ export default (formValues: VisionFormValues) => {
 		businessIndustry,
 		businessLocation,
 		businessCurrency,
+		investorName,
 		legalStructure,
 	};
 };

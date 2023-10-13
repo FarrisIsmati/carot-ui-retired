@@ -11,3 +11,6 @@ export const businessCurrencyValidator = fieldRequired;
 
 // Business currency
 export const legalStructureValidator = fieldRequired;
+
+// Investment investor name
+export const investorNameValidator = fieldRequired;

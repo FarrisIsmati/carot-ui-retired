@@ -1,40 +1,41 @@
-import Dropdown from "@/components/common/Dropdown";
-import { DropdownData } from "@/components/common/Dropdown/types";
-import { Sizes } from "@/styles/sizes";
+import TextField from "@/components/common/TextField";
 import { hasVisibleErrors } from "@/utils/form";
 import { useField } from "react-final-form";
 
-export interface FormDropdownSelectorProps {
+export interface FormTextfieldSelectorProps {
 	label: string;
 	placeholder: string;
 	fieldName: string;
-	dataset: DropdownData<any>[];
-	dropdownSize?: Sizes;
-	defaultValue?: DropdownData<any>;
+	prefix?: string;
+	suffix?: string;
+	disabled?: boolean;
+	defaultValue?: string;
 }
 
 export default ({
 	label,
 	placeholder,
 	fieldName,
-	dataset,
-	dropdownSize = Sizes.LARGE,
+	disabled,
 	defaultValue,
-}: FormDropdownSelectorProps) => {
+	prefix,
+	suffix,
+}: FormTextfieldSelectorProps) => {
 	const field = useField(fieldName);
 	const input = field.input;
 
 	return (
-		<Dropdown
+		<TextField
 			id={input.name}
 			name={input.name}
 			label={label}
 			placeholder={placeholder}
-			dataset={dataset}
+			defaultValue={defaultValue}
+			prefix={prefix}
+			suffix={suffix}
 			error={hasVisibleErrors(field.meta)}
 			errorText={hasVisibleErrors(field.meta) && field.meta.error}
-			dropdownSize={dropdownSize}
-			defaultValue={defaultValue}
+			disabled={disabled}
 			{...field}
 		/>
 	);

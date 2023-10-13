@@ -39,7 +39,7 @@ export type DropdownProps = Omit<StyledWrapperProps, "defaultValue"> &
 		/**
 		 * Dropdown data
 		 */
-		dataset: DropdownData[];
+		dataset: DropdownData<any>[];
 		/**
 		 * Field input props
 		 */
@@ -52,7 +52,7 @@ export type DropdownProps = Omit<StyledWrapperProps, "defaultValue"> &
 		/**
 		 * Default value params
 		 */
-		defaultValue?: DropdownData;
+		defaultValue?: DropdownData<any>;
 	};
 
 export default ({
@@ -78,8 +78,12 @@ export default ({
 
 	// State
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // Open/close menu
-	const [selectedItem, setSelectedItem] = useState<DropdownData | null>(null); // Actively used
-	const [hoveredItem, setHoveredItem] = useState<DropdownData | null>(null); // Mouse hover state (not key cursor state)
+	const [selectedItem, setSelectedItem] = useState<DropdownData<any> | null>(
+		null
+	); // Actively used
+	const [hoveredItem, setHoveredItem] = useState<DropdownData<any> | null>(
+		null
+	); // Mouse hover state (not key cursor state)
 
 	// Add error state if error text included
 	if (!error && errorText) {
@@ -101,7 +105,7 @@ export default ({
 	useOffClick(dropdownRef, () => setIsMenuOpen(false));
 
 	// Select item (updates local and form state if passed in)
-	const onSelect = (selectedItemDataset: DropdownData, value: string) => {
+	const onSelect = (selectedItemDataset: DropdownData<any>, value: string) => {
 		setSelectedItem(selectedItemDataset); // Local display state
 		input?.onChange?.(value); // Form state
 		setIsMenuOpen(false);

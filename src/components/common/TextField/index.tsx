@@ -7,7 +7,8 @@ import {
 	PseudoClassProps,
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { FieldInputProps } from "react-final-form";
 import Dot from "../Badge/Dot";
 import { IconWrapper } from "../IconWrapper";
 import CrossSmall from "../Icons/CrossSmall";
@@ -21,7 +22,7 @@ import {
 	StyledInputContainer,
 } from "./styles";
 
-export type FormInputProps = StyledWrapperProps &
+export type FormInputProps = Omit<StyledWrapperProps, "default" | "prefix"> &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
 		/**
 		 * Set the semantic color used by the button
@@ -45,6 +46,10 @@ export type FormInputProps = StyledWrapperProps &
 		 * */
 		onClear?: () => void;
 		/**
+		 * Field input props
+		 */
+		input?: FieldInputProps<any, HTMLElement>;
+		/**
 		 * Label title
 		 */
 		label?: string;
@@ -52,6 +57,18 @@ export type FormInputProps = StyledWrapperProps &
 		 * Text to display for an error state
 		 */
 		errorText?: string;
+		/**
+		 * Default value to start with
+		 */
+		defaultValue?: string;
+		/**
+		 * Prepend to input
+		 */
+		prefix?: string;
+		/**
+		 * Postpend to input
+		 */
+		suffix?: string;
 	};
 
 export type StyledInputProps = FormInputProps & {
@@ -66,8 +83,12 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 		placeholder,
 		icon,
 		onClear,
+		input,
 		label,
 		errorText,
+		defaultValue,
+		prefix = "",
+		suffix = "",
 		colorSet = getColorSet(SemanticSetCores.SECONDARY),
 		...props
 	}) {
@@ -102,6 +123,15 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 			}
 		};
 
+		// If default value set it
+		useEffect(() => {
+			// If form value isn't set to default value, update it also
+			if (!input?.value && defaultValue) {
+				setContent(defaultValue);
+				input?.onChange?.(defaultValue); // Form state
+			}
+		}, [defaultValue]);
+
 		return (
 			<StyledInputContainer
 				colorSet={colorSet}
@@ -112,12 +142,12 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 				<ContentContainer>
 					{label && (
 						<Type
-							colorSet={colorSet}
+							colorset={colorSet}
 							disabled={disabled}
 							error={error}
-							font={semanticFonts.bodySmall}
+							semanticfont={semanticFonts.bodySmall}
 						>
-							Label
+							{label}
 						</Type>
 					)}
 					<StyledInput
@@ -134,15 +164,20 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 						placeholder={placeholder}
 						onChange={(e: any) => {
 							setContent(e.target.value);
+							input?.onChange(e.target.value);
+						}}
+						value={`${prefix}${content}${suffix}`}
+						onBlur={(e: any) => {
+							input?.onBlur(e);
 						}}
 						onKeyDown={onEnterPress}
 						{...props}
 					/>
 					{errorText && !disabled && (
 						<MarginTopType
-							colorSet={colorSet}
+							colorset={colorSet}
 							error={error}
-							font={semanticFonts.bodySmall}
+							semanticfont={semanticFonts.bodySmall}
 						>
 							{errorText}
 						</MarginTopType>

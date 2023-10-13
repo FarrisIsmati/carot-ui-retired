@@ -6,6 +6,7 @@ import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsSection";
 import { useState } from "react";
 import { styled } from "styled-components";
 import { capitalTypeDropdownValues } from "../../values/visionFormDropdownValues";
+import InvestmentLoanSection from "./InvestmentLoanSection";
 
 const StyledContainer = styled.div`
 	display: flex;
@@ -27,14 +28,15 @@ export default () => {
 			/>
 
 			{capitalType === CapitalType.INVESTOR && (
-				<div>
-					<p>Name</p>
-					{/* Locked stuck to 100% */}
-					<p>Equity</p>
-					<p>Starting investment</p>
-					{/* Note after one is added cannot add anymore */}
-					<p>Add</p>
-				</div>
+				<InvestmentLoanSection />
+				// <div>
+				// 	<p>Name</p>
+				// 	{/* Locked stuck to 100% */}
+				// 	<p>Equity</p>
+				// 	<p>Starting investment</p>
+				// 	{/* Note after one is added cannot add anymore */}
+				// 	<p>Add</p>
+				// </div>
 				// Need raihan to prompt how this is displayed
 				// Continue to think about how this mechanism will work
 			)}
