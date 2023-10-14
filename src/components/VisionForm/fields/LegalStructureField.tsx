@@ -1,13 +1,13 @@
 import FormDropdown from "@/components/form/FormDropdown";
+import { VisionFormValues } from "@/types/VisionForm/VisionForm";
 import { useFormState } from "react-final-form";
-import { DraftVisionFormValues } from "..";
 import {
 	LocationDropdownValuesEnum,
 	legalStructureDropdownValues,
-} from "../values/visionFormDropdownValues";
+} from "../VisionDemo/values/VisionFormDemoDropdownValues";
 
 export default () => {
-	const formState = useFormState<DraftVisionFormValues>();
+	const formState = useFormState<VisionFormValues>();
 	const formValues = formState.values;
 
 	// No ability to choose company structure if not USA

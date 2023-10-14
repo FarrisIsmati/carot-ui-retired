@@ -1,9 +1,12 @@
+// This section is a subform
+// The values do not impact the main form's validations only the sub form
 import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
 import { spacer8 } from "@/styles/sizes";
 import { styled } from "styled-components";
 import InvestorEquity from "../../fields/InvestorEquity";
 import InvestorName from "../../fields/InvestorName";
+import InvestorStartingCash from "../../fields/InvestorStartingCash";
 
 const StyledContainer = styled.div`
 	display: flex;
@@ -11,12 +14,12 @@ const StyledContainer = styled.div`
 	gap: ${spacer8};
 `;
 
-// NOTE wrap this in it's own form component, so submit can validate a different set of error rules
 export default () => {
 	return (
 		<StyledContainer>
 			<Type semanticfont={semanticFonts.bodyMedium}>Add Investor</Type>
 			<InvestorName />
+			<InvestorStartingCash />
 			<InvestorEquity />
 		</StyledContainer>
 	);

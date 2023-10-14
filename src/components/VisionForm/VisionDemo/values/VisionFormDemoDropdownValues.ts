@@ -1,4 +1,4 @@
-import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsSection";
+import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsForm";
 import { capitalize } from "lodash";
 
 export const industryDropdownValues = [

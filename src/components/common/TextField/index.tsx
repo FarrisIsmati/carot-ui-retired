@@ -166,7 +166,7 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 							setContent(e.target.value);
 							input?.onChange(e.target.value);
 						}}
-						value={`${prefix}${content}${suffix}`}
+						value={content}
 						onBlur={(e: any) => {
 							input?.onBlur(e);
 						}}

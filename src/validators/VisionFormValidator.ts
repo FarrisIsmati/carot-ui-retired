@@ -1,10 +1,9 @@
-import { LocationDropdownValuesEnum } from "@/components/VisionForm/values/visionFormDropdownValues";
+import { LocationDropdownValuesEnum } from "@/components/VisionForm/VisionDemo/values/VisionFormDemoDropdownValues";
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
 import {
 	businessCurrencyValidator,
 	businessIndustryValidator,
 	businessLocationValidator,
-	investorNameValidator,
 	legalStructureValidator,
 } from "./VisionFormValidators";
 
@@ -21,10 +20,6 @@ export default (formValues: VisionFormValues) => {
 		formValues.businessCurrency
 	);
 
-	// Capital and Investors section
-	// Investor
-	const investorName = investorNameValidator(formValues.investorName);
-
 	// Legal and Taxes section
 	// Only validate if location is USA
 	const legalStructure =
@@ -32,19 +27,10 @@ export default (formValues: VisionFormValues) => {
 			? legalStructureValidator(formValues.legalStructure)
 			: undefined;
 
-	const errors = [
-		businessIndustry,
-		businessLocation,
-		businessCurrency,
-		investorName,
-		legalStructure,
-	];
-
 	return {
 		businessIndustry,
 		businessLocation,
 		businessCurrency,
-		investorName,
 		legalStructure,
 	};
 };

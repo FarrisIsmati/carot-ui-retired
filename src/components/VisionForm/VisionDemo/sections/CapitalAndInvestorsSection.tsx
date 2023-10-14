@@ -2,11 +2,12 @@ import DropdownSelect from "@/components/common/Dropdown/DropdownSelect";
 import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
 import { spacer8 } from "@/styles/sizes";
-import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsSection";
+import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsForm";
 import { useState } from "react";
 import { styled } from "styled-components";
-import { capitalTypeDropdownValues } from "../../values/visionFormDropdownValues";
-import InvestmentLoanSection from "./InvestmentLoanSection";
+import CapitalAndInvestorsForm from "../forms/CapitalAndInvestorsForm";
+import { capitalTypeDropdownValues } from "../values/VisionFormDemoDropdownValues";
+import InvestorSection from "./InvestorsSection";
 
 const StyledContainer = styled.div`
 	display: flex;
@@ -16,6 +17,7 @@ const StyledContainer = styled.div`
 
 export default () => {
 	const [capitalType, setCapitalType] = useState<CapitalType | null>(null);
+
 	return (
 		<StyledContainer>
 			<Type semanticfont={semanticFonts.headlineSmall}>Investment</Type>
@@ -28,20 +30,18 @@ export default () => {
 			/>
 
 			{capitalType === CapitalType.INVESTOR && (
-				<InvestmentLoanSection />
-				// <div>
-				// 	<p>Name</p>
-				// 	{/* Locked stuck to 100% */}
-				// 	<p>Equity</p>
-				// 	<p>Starting investment</p>
-				// 	{/* Note after one is added cannot add anymore */}
-				// 	<p>Add</p>
-				// </div>
+				<CapitalAndInvestorsForm>
+					<InvestorSection />
+				</CapitalAndInvestorsForm>
 				// Need raihan to prompt how this is displayed
 				// Continue to think about how this mechanism will work
 			)}
 			{/* Show that it's locked premium */}
-			{capitalType === CapitalType.LOAN && <p>Loan</p>}
+			{capitalType === CapitalType.LOAN && (
+				<CapitalAndInvestorsForm>
+					<p>loan locked</p>
+				</CapitalAndInvestorsForm>
+			)}
 		</StyledContainer>
 	);
 };

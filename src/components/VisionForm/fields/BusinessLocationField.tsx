@@ -1,6 +1,6 @@
 import FormDropdown from "@/components/form/FormDropdown";
 import { Sizes } from "@/styles/sizes";
-import { locationDropdownValues } from "../values/visionFormDropdownValues";
+import { locationDropdownValues } from "../VisionDemo/values/VisionFormDemoDropdownValues";
 
 export default () => {
 	return (

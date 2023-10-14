@@ -1,5 +1,5 @@
 // Capital & Investors section
-import { CompoundScheduleType, ScheduleType } from "./Schedule";
+import { CompoundScheduleType, ScheduleType } from "./common/Schedule";
 
 export enum InvestorType {
 	ACTIVE = "ACTIVE",
@@ -18,7 +18,7 @@ export enum CapitalType {
 	LOAN = "LOAN",
 }
 
-export interface CapitalAndInvestorsSection extends Investor, Loan {}
+export interface CapitalAndInvestorsFormValues extends Investor, Loan {}
 
 export interface Investor {
 	investorName: string;

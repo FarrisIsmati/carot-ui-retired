@@ -1,4 +1,4 @@
-import VisionPageDemo from "@/components/Vision/VisionPageDemo";
+import VisionPageDemo from "@/components/VisionPage/VisionDemoPage";
 
 export default function Page() {
 	return (

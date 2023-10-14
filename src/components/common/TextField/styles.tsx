@@ -41,6 +41,10 @@ export const StyledInput = styled.input<StyledInputProps>`
 				color: ${props.colorSet?.text.disabled};
 			}
 		}
+
+		&::after {
+			content: "nigger";
+		}
 	`}
 `;
 
