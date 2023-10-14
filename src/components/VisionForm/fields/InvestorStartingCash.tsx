@@ -1,9 +1,8 @@
-import FormTextfield from "@/components/form/FormTextfield";
+import FormTextfieldCurrency from "@/components/form/FormTextfieldCurrency";
 
 export default () => {
-	// Lock to number only
 	return (
-		<FormTextfield
+		<FormTextfieldCurrency
 			label={"Cash"}
 			fieldName={"investorStartingCash"}
 			placeholder={"Starting cash"}

@@ -1,5 +1,6 @@
 import { Search } from "@material-ui/icons";
 import TextField from ".";
+import TextFieldCurrency from "./TextFieldCurrency";
 export default {
 	component: TextField,
 	title: "Textfield",
@@ -8,6 +9,18 @@ export default {
 
 export const Default = () => (
 	<TextField label="Label" placeholder="Placeholder" />
+);
+
+export const NumbersOnly = () => (
+	<TextFieldCurrency label="Label" placeholder="Placeholder" />
+);
+
+export const PrefixNumber = () => (
+	<TextFieldCurrency label="Label" placeholder="Placeholder" prefix="$" />
+);
+
+export const SuffixNumber = () => (
+	<TextFieldCurrency label="Label" placeholder="Placeholder" suffix="%" />
 );
 
 export const Disabled = () => (

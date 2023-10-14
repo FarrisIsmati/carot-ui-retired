@@ -1,4 +1,4 @@
-import TextField from "@/components/common/TextField";
+import TextFieldCurrency from "@/components/common/TextField/TextFieldCurrency";
 import { hasVisibleErrors } from "@/utils/form";
 import { useField } from "react-final-form";
 
@@ -6,7 +6,6 @@ export interface FormTextfieldSelectorProps {
 	label: string;
 	placeholder: string;
 	fieldName: string;
-	isNumber?: boolean;
 	prefix?: string;
 	suffix?: string;
 	disabled?: boolean;
@@ -19,17 +18,21 @@ export default ({
 	fieldName,
 	disabled,
 	defaultValue,
+	prefix,
+	suffix,
 }: FormTextfieldSelectorProps) => {
 	const field = useField(fieldName);
 	const input = field.input;
 
 	return (
-		<TextField
+		<TextFieldCurrency
 			id={input.name}
 			name={input.name}
 			label={label}
 			placeholder={placeholder}
 			defaultValue={defaultValue}
+			prefix={prefix}
+			suffix={suffix}
 			error={hasVisibleErrors(field.meta)}
 			errorText={hasVisibleErrors(field.meta) && field.meta.error}
 			disabled={disabled}

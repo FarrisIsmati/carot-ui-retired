@@ -7,7 +7,7 @@ import {
 	PseudoClassProps,
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { FieldInputProps } from "react-final-form";
 import Dot from "../Badge/Dot";
 import { IconWrapper } from "../IconWrapper";
@@ -18,15 +18,19 @@ import {
 	ContentContainer,
 	IconWrapperContainer,
 	MarginTopType,
-	StyledInput,
 	StyledInputContainer,
+	StyledTextFieldCurrency,
 } from "./styles";
 
-export type FormInputProps = Omit<
+export type TextFieldCurrencyProps = Omit<
 	StyledWrapperProps,
 	"default" | "prefix" | "step"
 > &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
+		/**
+		 * Ref
+		 */
+		ref?: React.ForwardedRef<HTMLElement>;
 		/**
 		 * Set the semantic color used by the button
 		 * @default 'SECONDARY'
@@ -61,32 +65,42 @@ export type FormInputProps = Omit<
 		 */
 		errorText?: string;
 		/**
-		 * Default value to start with
+		 * Prepend to input
 		 */
-		defaultValue?: string;
+		prefix?: string;
 		/**
-		 * Render the component with a custom component or HTML element
-		 * @default 'input'
-		 **/
-		component?: AsProp;
+		 * Postpend to input
+		 */
+		suffix?: string;
+		/**
+		 * For currency input only transforms raw value removes prefix/suffix
+		 */
+		transformRawValue?: (value: string) => string;
+		/**
+		 * Step for key up/down
+		 */
+		step?: number;
 	};
 
-export type StyledInputProps = FormInputProps & {
+export type StyledTextFieldCurrencyProps = TextFieldCurrencyProps & {
 	isUsingKeyboard: boolean;
 	useBrowserDefaultFocusStyle: boolean;
 };
 
-export default React.forwardRef<HTMLElement, FormInputProps>(
+export default React.forwardRef<HTMLElement, TextFieldCurrencyProps>(
 	function FormInput({
 		error,
 		disabled,
 		placeholder,
 		icon,
+		step,
 		onClear,
 		input,
 		label,
 		errorText,
 		defaultValue,
+		prefix = "",
+		suffix = "",
 		colorSet = getColorSet(SemanticSetCores.SECONDARY),
 		...props
 	}) {
@@ -120,16 +134,7 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 				e.target.blur();
 			}
 		};
-
-		// If default value set it
-		useEffect(() => {
-			// If form value isn't set to default value, update it also
-			if (!input?.value && defaultValue) {
-				setContent(defaultValue);
-				input?.onChange?.(defaultValue); // Form state
-			}
-		}, [defaultValue]);
-
+		console.log("wooooh");
 		return (
 			<StyledInputContainer
 				colorSet={colorSet}
@@ -148,27 +153,33 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 							{label}
 						</Type>
 					)}
-					<StyledInput
+
+					<StyledTextFieldCurrency
 						ref={(el: HTMLInputElement) => {
 							if (inputRef && !inputRef.current) {
 								inputRef.current = el;
 							}
 						}}
+						step={step}
 						isUsingKeyboard={isUsingKeyboard}
 						error={error}
 						aria-invalid={error}
 						colorSet={colorSet}
 						disabled={disabled}
 						placeholder={placeholder}
-						onChange={(e: any) => {
-							setContent(e.target.value);
-							input?.onChange(e.target.value);
+						onValueChange={(value: string | undefined) => {
+							if (value) {
+								setContent(value);
+								input?.onChange(value); // WHY DO YOU REMOVE THIGNS
+							}
 						}}
-						value={content}
 						onBlur={(e: any) => {
 							input?.onBlur(e);
 						}}
+						defaultValue={defaultValue}
 						onKeyDown={onEnterPress}
+						prefix={prefix}
+						suffix={suffix}
 						{...props}
 					/>
 

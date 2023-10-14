@@ -11,11 +11,26 @@ import {
 	spacer4,
 	spacer8,
 } from "@/styles/sizes";
+import React from "react";
+import CurrencyInput from "react-currency-input-field";
 import { css, styled } from "styled-components";
 import { StyledInputProps } from ".";
 import Type from "../Type";
+import { StyledTextFieldCurrencyProps } from "./TextFieldCurrency";
 
-export const StyledInput = styled.input<StyledInputProps>`
+export const StyledInput = styled(
+	React.forwardRef<HTMLElement, StyledInputProps>(function Input(
+		{ component: Component = "input", ...props },
+		ref
+	) {
+		return (
+			<input
+				{...props}
+				ref={ref as React.LegacyRef<HTMLInputElement> | undefined}
+			/>
+		);
+	})
+)`
 	${(props) => css`
 		${formControlBase(props.useBrowserDefaultFocusStyle)}
 
@@ -41,9 +56,36 @@ export const StyledInput = styled.input<StyledInputProps>`
 				color: ${props.colorSet?.text.disabled};
 			}
 		}
+	`}
+`;
 
-		&::after {
-			content: "nigger";
+export const StyledTextFieldCurrency = styled(
+	CurrencyInput
+)<StyledTextFieldCurrencyProps>`
+	${(props) => css`
+		${formControlBase(props.useBrowserDefaultFocusStyle)}
+
+		/* Remove default margin for Safari */
+        margin-block-start: 0;
+		margin-block-end: 0;
+		border-radius: ${spacer4};
+		padding-inline-start: ${spacer14};
+		padding-inline-end: ${spacer14};
+		padding-block-start: -${spacer2};
+		padding-block-end: -${spacer2};
+		padding: 0;
+
+		/* Carot */
+		background-color: transparent;
+		${semanticFonts.bodyLarge}
+		margin-top: ${spacer8};
+		height: ${spacer24};
+		&:disabled {
+			color: ${props.colorSet?.text.disabled};
+
+			&::placeholder {
+				color: ${props.colorSet?.text.disabled};
+			}
 		}
 	`}
 `;
