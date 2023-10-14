@@ -4,6 +4,7 @@ import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
 import { spacer8 } from "@/styles/sizes";
 import { styled } from "styled-components";
+import InvestorEquity from "../../fields/InvestorEquity";
 import InvestorName from "../../fields/InvestorName";
 import InvestorStartingCash from "../../fields/InvestorStartingCash";
 
@@ -19,7 +20,7 @@ export default () => {
 			<Type semanticfont={semanticFonts.bodyMedium}>Add Investor</Type>
 			<InvestorName />
 			<InvestorStartingCash />
-			{/* <InvestorEquity /> */}
+			<InvestorEquity />
 		</StyledContainer>
 	);
 };

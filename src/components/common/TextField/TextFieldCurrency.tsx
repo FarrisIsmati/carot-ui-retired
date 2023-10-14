@@ -134,7 +134,7 @@ export default React.forwardRef<HTMLElement, TextFieldCurrencyProps>(
 				e.target.blur();
 			}
 		};
-		console.log("wooooh");
+
 		return (
 			<StyledInputContainer
 				colorSet={colorSet}
@@ -168,10 +168,8 @@ export default React.forwardRef<HTMLElement, TextFieldCurrencyProps>(
 						disabled={disabled}
 						placeholder={placeholder}
 						onValueChange={(value: string | undefined) => {
-							if (value) {
-								setContent(value);
-								input?.onChange(value); // WHY DO YOU REMOVE THIGNS
-							}
+							setContent(value ?? "");
+							input?.onChange(value);
 						}}
 						onBlur={(e: any) => {
 							input?.onBlur(e);

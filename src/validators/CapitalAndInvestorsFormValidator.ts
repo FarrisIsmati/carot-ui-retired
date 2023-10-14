@@ -12,11 +12,12 @@ export default (formValues: CapitalAndInvestorsFormValues) => {
 	// Investor
 	const investorName = investorNameValidator(formValues.investorName);
 	const investorStartingCash = investorStartingCashValidator(
-		formValues.investorStartingCash.toString()
+		formValues.investorStartingCash?.toString() ?? ""
 	);
 	const investorEquityPercentage = investorEquityValidator(
-		formValues.investorEquityPercentage.toString()
+		formValues.investorEquityPercentage?.toString()
 	);
+
 	return {
 		investorName,
 		investorStartingCash,
