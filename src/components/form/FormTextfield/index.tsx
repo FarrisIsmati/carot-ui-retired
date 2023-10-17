@@ -1,5 +1,5 @@
 import TextField from "@/components/common/TextField";
-import { hasVisibleErrors } from "@/utils/form";
+import { hasVisibleErrors } from "@/components/VisionForm/utils/form";
 import { useField } from "react-final-form";
 
 export interface FormTextfieldSelectorProps {

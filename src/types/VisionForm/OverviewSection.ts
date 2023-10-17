@@ -1,13 +1,13 @@
 // Overview section
 
-import { LocationDropdownValuesEnum } from "@/components/VisionForm/VisionDemo/values/VisionFormDemoDropdownValues";
+import { CountriesEnum } from "./common/countries";
 import { CurrencyTypes } from "./common/currency";
 
 export interface OverviewSection {
 	businessName: string;
 	businessCurrency: CurrencyTypes;
 	businessIndustry: string;
-	businessLocation: LocationDropdownValuesEnum;
+	businessLocation: CountriesEnum;
 	forecastingStartDate: string;
 	forecastingEndDate: string;
 }

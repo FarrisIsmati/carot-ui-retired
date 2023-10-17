@@ -2,6 +2,7 @@
 // The values do not impact the main form's validations only the sub form
 import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
+import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsForm";
 import CapitalAndInvestorsFormValidator from "@/validators/CapitalAndInvestorsFormValidator";
 import { Form } from "react-final-form";
 import { styled } from "styled-components";
@@ -9,17 +10,9 @@ import { CapitalAndInvestorsFormInitialValues } from "../values/CapitalAndInvest
 
 // Add Button
 
-interface AddButtonProps {
-	onSubmit: () => void;
-}
-
 const StyledAddButton = styled(ButtonPrimary)`
 	margin-top: ${spacer8};
 `;
-
-const AddButton = ({ onSubmit }: AddButtonProps) => {
-	return <StyledAddButton onClick={onSubmit}>Add</StyledAddButton>;
-};
 
 // CapitalAndInvestorsForm
 
@@ -28,13 +21,17 @@ interface CapitalAndInvestorsFormProps {
 	 * Children components
 	 */
 	children?: React.ReactNode;
+	/**
+	 * Type of form being rendered
+	 */
+	capitalType: CapitalType | null;
 }
 
 const handleSubmit = () => {
 	console.log("SUBMIT");
 };
 
-export default ({ children }: CapitalAndInvestorsFormProps) => {
+export default ({ children, capitalType }: CapitalAndInvestorsFormProps) => {
 	return (
 		<Form<any>
 			initialValues={CapitalAndInvestorsFormInitialValues}
@@ -43,7 +40,9 @@ export default ({ children }: CapitalAndInvestorsFormProps) => {
 			render={({ handleSubmit }) => (
 				<form onSubmit={handleSubmit}>
 					{children}
-					<AddButton onSubmit={handleSubmit} />
+					{!!capitalType && (
+						<StyledAddButton onClick={handleSubmit}>Add</StyledAddButton>
+					)}
 				</form>
 			)}
 		/>

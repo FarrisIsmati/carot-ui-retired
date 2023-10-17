@@ -1,5 +1,5 @@
 import TextFieldCurrency from "@/components/common/TextField/TextFieldCurrency";
-import { hasVisibleErrors } from "@/utils/form";
+import { hasVisibleErrors } from "@/components/VisionForm/utils/form";
 import { useField } from "react-final-form";
 
 export interface FormTextfieldSelectorProps {

@@ -3,9 +3,10 @@ import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
 import { spacer8 } from "@/styles/sizes";
 import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsForm";
-import { useCurrencySymbol } from "@/utils/form";
 import { useState } from "react";
 import { styled } from "styled-components";
+import { useCurrencySymbol } from "../../utils/currency";
+import { CapitalAndInvestorsFormContextProvider } from "../context";
 import CapitalAndInvestorsForm from "../forms/CapitalAndInvestorsForm";
 import { capitalTypeDropdownValues } from "../values/VisionFormDemoDropdownValues";
 import InvestorSection from "./InvestorsSection";
@@ -32,19 +33,14 @@ export default () => {
 				onselect={(value) => setCapitalType(value.id)}
 			/>
 
-			{capitalType === CapitalType.INVESTOR && (
-				<CapitalAndInvestorsForm>
-					<InvestorSection />
+			{/* Capital and Investors form */}
+
+			<CapitalAndInvestorsFormContextProvider value={{ currencySymbol }}>
+				<CapitalAndInvestorsForm capitalType={capitalType}>
+					{capitalType === CapitalType.INVESTOR && <InvestorSection />}
+					{capitalType === CapitalType.LOAN && <p>loan locked</p>}
 				</CapitalAndInvestorsForm>
-				// Need raihan to prompt how this is displayed
-				// Continue to think about how this mechanism will work
-			)}
-			{/* Show that it's locked premium */}
-			{capitalType === CapitalType.LOAN && (
-				<CapitalAndInvestorsForm>
-					<p>loan locked</p>
-				</CapitalAndInvestorsForm>
-			)}
+			</CapitalAndInvestorsFormContextProvider>
 		</StyledContainer>
 	);
 };

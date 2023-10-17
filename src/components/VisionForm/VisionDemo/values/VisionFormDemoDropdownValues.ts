@@ -1,4 +1,5 @@
 import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsForm";
+import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { capitalize } from "lodash";
 
 export const industryDropdownValues = [
@@ -11,19 +12,14 @@ export const currencyDropdownValues = [
 	{ value: "USD", id: "usd" },
 	{ value: "CND", id: "cnd" },
 	{ value: "MEX", id: "mex" },
+	{ value: "EUR", id: "eur" },
 ];
 
-export enum LocationDropdownValuesEnum {
-	USA = "USA",
-	CANADA = "Canada",
-	MEXICO = "Mexico",
-	UNKNOWN = "",
-}
-
 export const locationDropdownValues = [
-	{ value: LocationDropdownValuesEnum.USA, id: "usa" },
-	{ value: LocationDropdownValuesEnum.CANADA, id: "cnd" },
-	{ value: LocationDropdownValuesEnum.MEXICO, id: "mex" },
+	{ value: CountriesEnum.USA, id: "USA" },
+	{ value: CountriesEnum.CANADA, id: "CND" },
+	{ value: CountriesEnum.MEXICO, id: "MEX" },
+	{ value: CountriesEnum.GERMANY, id: "GER" },
 ];
 
 export enum LegalStructureDropdownValuesEnum {

@@ -1,7 +1,7 @@
+import { hasVisibleErrors } from "@/components/VisionForm/utils/form";
 import Dropdown from "@/components/common/Dropdown";
 import { DropdownData } from "@/components/common/Dropdown/types";
 import { Sizes } from "@/styles/sizes";
-import { hasVisibleErrors } from "@/utils/form";
 import { useField } from "react-final-form";
 
 export interface FormDropdownSelectorProps {

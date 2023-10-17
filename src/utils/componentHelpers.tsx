@@ -4,6 +4,7 @@ import { semanticFonts } from "@/styles/fonts";
 import React from "react";
 import { RuleSet } from "styled-components";
 
+// Converts a child that's a string to a type component, or leaves it as a JSX component
 export const elementOrStringToTypeComponent = ({
 	el,
 	font,

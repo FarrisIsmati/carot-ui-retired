@@ -4,12 +4,12 @@ import { spacer8 } from "@/styles/sizes";
 import { styled } from "styled-components";
 
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
+import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { useFormState } from "react-final-form";
 import BusinessCurrencyField from "../../fields/BusinessOverview/BusinessCurrencyField";
 import BusinessIndustryField from "../../fields/BusinessOverview/BusinessIndustryField";
 import BusinessLocationField from "../../fields/BusinessOverview/BusinessLocationField";
 import LegalStructureField from "../../fields/LegalAndTaxes/LegalStructureField";
-import { LocationDropdownValuesEnum } from "../values/VisionFormDemoDropdownValues";
 
 const StyledContainer = styled.div`
 	display: flex;
@@ -36,7 +36,7 @@ export default () => {
 			</StyledDoubleDropdownContainer>
 
 			{/* Hidden if not USA */}
-			{formValues.businessLocation === LocationDropdownValuesEnum.USA && (
+			{formValues.businessLocation === CountriesEnum.USA && (
 				<LegalStructureField />
 			)}
 		</StyledContainer>
