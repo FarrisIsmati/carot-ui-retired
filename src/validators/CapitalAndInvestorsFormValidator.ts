@@ -6,8 +6,6 @@ import {
 } from "./CapitalAndInvestorsFormValidators";
 
 export default (formValues: CapitalAndInvestorsFormValues) => {
-	console.log("starting", formValues);
-
 	// Capital and Investors form
 	// Investor
 	const investorName = investorNameValidator(formValues.investorName);

@@ -1,6 +1,7 @@
 import FormDropdown from "@/components/form/FormDropdown";
 import { Sizes } from "@/styles/sizes";
-import { locationDropdownValues } from "../VisionDemo/values/VisionFormDemoDropdownValues";
+import { useGetDropdownDefaultValue } from "@/utils/form";
+import { locationDropdownValues } from "../../VisionDemo/values/VisionFormDemoDropdownValues";
 
 export default () => {
 	return (
@@ -10,7 +11,10 @@ export default () => {
 			fieldName="businessLocation"
 			dataset={locationDropdownValues}
 			dropdownSize={Sizes.SMALL}
-			defaultValue={locationDropdownValues[0]}
+			defaultValue={useGetDropdownDefaultValue(
+				locationDropdownValues,
+				"businessLocation"
+			)}
 		/>
 	);
 };

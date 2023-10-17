@@ -1,6 +1,7 @@
 import FormDropdown from "@/components/form/FormDropdown";
 import { Sizes } from "@/styles/sizes";
-import { currencyDropdownValues } from "../VisionDemo/values/VisionFormDemoDropdownValues";
+import { useGetDropdownDefaultValue } from "@/utils/form";
+import { currencyDropdownValues } from "../../VisionDemo/values/VisionFormDemoDropdownValues";
 
 export default () => {
 	return (
@@ -9,7 +10,10 @@ export default () => {
 			placeholder="Select"
 			fieldName="businessCurrency"
 			dataset={currencyDropdownValues}
-			defaultValue={currencyDropdownValues[0]}
+			defaultValue={useGetDropdownDefaultValue(
+				currencyDropdownValues,
+				"businessCurrency"
+			)}
 			dropdownSize={Sizes.SMALL}
 		/>
 	);

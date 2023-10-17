@@ -1,4 +1,3 @@
-"use client";
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
 import VisionFormValidator from "@/validators/VisionFormValidator";
 import { Form } from "react-final-form";

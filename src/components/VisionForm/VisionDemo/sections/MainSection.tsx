@@ -1,4 +1,3 @@
-// import { useFormState } from "react-final-form";
 import BusinessTypeSection from "./BusinessTypeSection";
 import CapitalAndInvestorsSection from "./CapitalAndInvestorsSection";
 

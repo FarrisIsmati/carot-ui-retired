@@ -3,6 +3,7 @@ import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
 import { spacer8 } from "@/styles/sizes";
 import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsForm";
+import { useCurrencySymbol } from "@/utils/form";
 import { useState } from "react";
 import { styled } from "styled-components";
 import CapitalAndInvestorsForm from "../forms/CapitalAndInvestorsForm";
@@ -17,6 +18,8 @@ const StyledContainer = styled.div`
 
 export default () => {
 	const [capitalType, setCapitalType] = useState<CapitalType | null>(null);
+	// Set this to context
+	const currencySymbol = useCurrencySymbol();
 
 	return (
 		<StyledContainer>

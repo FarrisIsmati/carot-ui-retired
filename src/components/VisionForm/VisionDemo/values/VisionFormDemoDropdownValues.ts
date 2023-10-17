@@ -26,12 +26,35 @@ export const locationDropdownValues = [
 	{ value: LocationDropdownValuesEnum.MEXICO, id: "mex" },
 ];
 
+export enum LegalStructureDropdownValuesEnum {
+	SOLE_PROPRIETORSHIP = "Sole proprietorship",
+	PARTNERSHIP = "Partnership",
+	LLC = "Limited Liability Company (LLC)",
+	C_CORP = "Corporation (C corp)",
+	S_CORP = "Corporation (S corp)",
+}
+
 export const legalStructureDropdownValues = [
-	{ value: "Sole proprietorship", id: "soleproprietorship" },
-	{ value: "Partnership", id: "partnership" },
-	{ value: "Limited Liability Company (LLC)", id: "llc" },
-	{ value: "Corporation (C corp)", id: "ccorp" },
-	{ value: "Corporation (S corp)", id: "scorp" },
+	{
+		value: LegalStructureDropdownValuesEnum.SOLE_PROPRIETORSHIP,
+		id: "soleproprietorship",
+	},
+	{
+		value: LegalStructureDropdownValuesEnum.PARTNERSHIP,
+		id: "partnership",
+		disabled: true,
+	},
+	{ value: LegalStructureDropdownValuesEnum.LLC, id: "llc", disabled: true },
+	{
+		value: LegalStructureDropdownValuesEnum.C_CORP,
+		id: "ccorp",
+		disabled: true,
+	},
+	{
+		value: LegalStructureDropdownValuesEnum.S_CORP,
+		id: "scorp",
+		disabled: true,
+	},
 ];
 
 export const capitalTypeDropdownValues = [
