@@ -1,4 +1,4 @@
-import FormTextfieldCurrency from "@/components/form/FormTextfieldCurrency";
+import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { useContext } from "react";
 import CapitalAndInvestorsFormContext from "../../VisionDemo/context";
 
@@ -7,7 +7,7 @@ export default () => {
 	const prefix = formContext?.currencySymbol;
 
 	return (
-		<FormTextfieldCurrency
+		<FormTextFieldNumeric
 			label={"Cash"}
 			fieldName={"investorStartingCash"}
 			placeholder={"Starting cash"}

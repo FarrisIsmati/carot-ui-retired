@@ -6,7 +6,7 @@ import {
 import {
 	CompoundScheduleType,
 	ScheduleType,
-} from "@/types/VisionForm/common/Schedule";
+} from "@/types/VisionForm/common/schedule";
 
 export const CapitalAndInvestorsFormInitialValues: CapitalAndInvestorsFormValues =
 	{

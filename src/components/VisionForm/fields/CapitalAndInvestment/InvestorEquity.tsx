@@ -1,8 +1,8 @@
-import FormTextfieldCurrency from "@/components/form/FormTextfieldCurrency";
+import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 
 export default () => {
 	return (
-		<FormTextfieldCurrency
+		<FormTextFieldNumeric
 			label={"Equity"}
 			fieldName={"investorEquity"}
 			placeholder={"Investor equity"}

@@ -1,9 +1,9 @@
 import { Search } from "@material-ui/icons";
 import TextField from ".";
-import TextFieldCurrency from "./TextFieldCurrency";
+import TextFieldNumeric from "./TextFieldNumeric";
 export default {
 	component: TextField,
-	title: "Textfield",
+	title: "TextField",
 	tags: ["autodocs"],
 };
 
@@ -12,15 +12,15 @@ export const Default = () => (
 );
 
 export const NumbersOnly = () => (
-	<TextFieldCurrency label="Label" placeholder="Placeholder" />
+	<TextFieldNumeric label="Label" placeholder="Placeholder" />
 );
 
 export const PrefixNumber = () => (
-	<TextFieldCurrency label="Label" placeholder="Placeholder" prefix="$" />
+	<TextFieldNumeric label="Label" placeholder="Placeholder" prefix="$" />
 );
 
 export const SuffixNumber = () => (
-	<TextFieldCurrency label="Label" placeholder="Placeholder" suffix="%" />
+	<TextFieldNumeric label="Label" placeholder="Placeholder" suffix="%" />
 );
 
 export const Disabled = () => (

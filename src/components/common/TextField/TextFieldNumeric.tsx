@@ -1,6 +1,7 @@
 import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import { Sizes, spacer2 } from "@/styles/sizes";
+import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { KeyboardDetectionContext } from "@/utils/context";
 import {
 	AsProp,
@@ -19,12 +20,12 @@ import {
 	IconWrapperContainer,
 	MarginTopType,
 	StyledInputContainer,
-	StyledTextFieldCurrency,
+	StyledTextFieldNumeric,
 } from "./styles";
 
-export type TextFieldCurrencyProps = Omit<
+export type TextFieldNumericProps = Omit<
 	StyledWrapperProps,
-	"default" | "prefix" | "step"
+	"default" | "prefix" | "step" | "size"
 > &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
 		/**
@@ -80,14 +81,24 @@ export type TextFieldCurrencyProps = Omit<
 		 * Step for key up/down
 		 */
 		step?: number;
+		/**
+		 * Size for width of TextField
+		 */
+		size?: Sizes;
+		/**
+		 * Input mode whether you are entering low, average, or high estimates
+		 * This is to be used in the future to display what mode you are on
+		 * @default AVERAGE
+		 */
+		inputMode?: InputModeEnum;
 	};
 
-export type StyledTextFieldCurrencyProps = TextFieldCurrencyProps & {
+export type StyledTextFieldNumericProps = TextFieldNumericProps & {
 	isUsingKeyboard: boolean;
 	useBrowserDefaultFocusStyle: boolean;
 };
 
-export default React.forwardRef<HTMLElement, TextFieldCurrencyProps>(
+export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 	function FormInput({
 		error,
 		disabled,
@@ -102,6 +113,8 @@ export default React.forwardRef<HTMLElement, TextFieldCurrencyProps>(
 		prefix = "",
 		suffix = "",
 		colorSet = getColorSet(SemanticSetCores.SECONDARY),
+		size = Sizes.LARGE,
+		inputMode = InputModeEnum.AVERAGE,
 		...props
 	}) {
 		const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
@@ -128,7 +141,7 @@ export default React.forwardRef<HTMLElement, TextFieldCurrencyProps>(
 		// On enter key press
 		const onEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
 			if (e.key === "Enter" && e.target === document.activeElement) {
-				// Unfocus textfield if hitting enter
+				// Unfocus TextField if hitting enter
 				e.preventDefault();
 				// @ts-ignore
 				e.target.blur();
@@ -140,6 +153,7 @@ export default React.forwardRef<HTMLElement, TextFieldCurrencyProps>(
 				colorSet={colorSet}
 				disabled={disabled}
 				error={error}
+				size={size}
 			>
 				{renderIcon()}
 				<ContentContainer>
@@ -154,7 +168,7 @@ export default React.forwardRef<HTMLElement, TextFieldCurrencyProps>(
 						</Type>
 					)}
 
-					<StyledTextFieldCurrency
+					<StyledTextFieldNumeric
 						ref={(el: HTMLInputElement) => {
 							if (inputRef && !inputRef.current) {
 								inputRef.current = el;
@@ -169,7 +183,9 @@ export default React.forwardRef<HTMLElement, TextFieldCurrencyProps>(
 						placeholder={placeholder}
 						onValueChange={(value: string | undefined) => {
 							setContent(value ?? "");
-							input?.onChange(value);
+							input?.onChange(
+								value !== undefined ? parseInt(value) : undefined
+							);
 						}}
 						onBlur={(e: any) => {
 							input?.onBlur(e);

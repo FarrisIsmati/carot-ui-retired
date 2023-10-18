@@ -1,8 +1,10 @@
-import TextFieldCurrency from "@/components/common/TextField/TextFieldCurrency";
+import TextFieldNumeric from "@/components/common/TextField/TextFieldNumeric";
 import { hasVisibleErrors } from "@/components/VisionForm/utils/form";
+import { Sizes } from "@/styles/sizes";
+import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { useField } from "react-final-form";
 
-export interface FormTextfieldSelectorProps {
+export interface FormTextFieldSelectorProps {
 	label: string;
 	placeholder: string;
 	fieldName: string;
@@ -10,6 +12,12 @@ export interface FormTextfieldSelectorProps {
 	suffix?: string;
 	disabled?: boolean;
 	defaultValue?: string;
+	size?: Sizes;
+	/**
+	 * Input mode whether you are entering low, average, or high estimates
+	 * @default AVERAGE
+	 */
+	inputMode?: InputModeEnum;
 }
 
 export default ({
@@ -20,12 +28,14 @@ export default ({
 	defaultValue,
 	prefix,
 	suffix,
-}: FormTextfieldSelectorProps) => {
-	const field = useField(fieldName);
+	size = Sizes.LARGE,
+	inputMode = InputModeEnum.AVERAGE,
+}: FormTextFieldSelectorProps) => {
+	const field = useField(`${fieldName}.[${inputMode}]`); // Field must have NumericValue type
 	const input = field.input;
 
 	return (
-		<TextFieldCurrency
+		<TextFieldNumeric
 			id={input.name}
 			name={input.name}
 			label={label}
@@ -36,6 +46,7 @@ export default ({
 			error={hasVisibleErrors(field.meta)}
 			errorText={hasVisibleErrors(field.meta) && field.meta.error}
 			disabled={disabled}
+			size={size}
 			{...field}
 		/>
 	);

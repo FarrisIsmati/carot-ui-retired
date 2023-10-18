@@ -1,8 +1,9 @@
 import TextField from "@/components/common/TextField";
 import { hasVisibleErrors } from "@/components/VisionForm/utils/form";
+import { Sizes } from "@/styles/sizes";
 import { useField } from "react-final-form";
 
-export interface FormTextfieldSelectorProps {
+export interface FormTextFieldSelectorProps {
 	label: string;
 	placeholder: string;
 	fieldName: string;
@@ -11,6 +12,7 @@ export interface FormTextfieldSelectorProps {
 	suffix?: string;
 	disabled?: boolean;
 	defaultValue?: string;
+	size?: Sizes;
 }
 
 export default ({
@@ -19,7 +21,8 @@ export default ({
 	fieldName,
 	disabled,
 	defaultValue,
-}: FormTextfieldSelectorProps) => {
+	size = Sizes.LARGE,
+}: FormTextFieldSelectorProps) => {
 	const field = useField(fieldName);
 	const input = field.input;
 
@@ -33,6 +36,7 @@ export default ({
 			error={hasVisibleErrors(field.meta)}
 			errorText={hasVisibleErrors(field.meta) && field.meta.error}
 			disabled={disabled}
+			size={size}
 			{...field}
 		/>
 	);

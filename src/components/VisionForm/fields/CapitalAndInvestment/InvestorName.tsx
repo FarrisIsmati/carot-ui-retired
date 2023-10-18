@@ -1,8 +1,8 @@
-import FormTextfield from "@/components/form/FormTextfield";
+import FormTextField from "@/components/form/FormTextField";
 
 export default () => {
 	return (
-		<FormTextfield
+		<FormTextField
 			label={"Name"}
 			fieldName={"investorName"}
 			placeholder={"Investor name"}

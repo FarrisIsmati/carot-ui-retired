@@ -2,9 +2,11 @@ import { SemanticSetCores, getColorSet } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import { formControlBase } from "@/styles/mixins";
 import {
+	Sizes,
 	spacer10,
 	spacer12,
 	spacer14,
+	spacer156,
 	spacer2,
 	spacer24,
 	spacer320,
@@ -16,11 +18,11 @@ import CurrencyInput from "react-currency-input-field";
 import { css, styled } from "styled-components";
 import { StyledInputProps } from ".";
 import Type from "../Type";
-import { StyledTextFieldCurrencyProps } from "./TextFieldCurrency";
+import { StyledTextFieldNumericProps } from "./TextFieldNumeric";
 
 export const StyledInput = styled(
 	React.forwardRef<HTMLElement, StyledInputProps>(function Input(
-		{ component: Component = "input", ...props },
+		{ component: Component = "input", size, ...props },
 		ref
 	) {
 		return (
@@ -49,6 +51,8 @@ export const StyledInput = styled(
 		${semanticFonts.bodyLarge}
 		margin-top: ${spacer8};
 		height: ${spacer24};
+		width: ${props.size === Sizes.LARGE ? spacer320 : spacer156};
+
 		&:disabled {
 			color: ${props.colorSet?.text.disabled};
 
@@ -59,9 +63,9 @@ export const StyledInput = styled(
 	`}
 `;
 
-export const StyledTextFieldCurrency = styled(
+export const StyledTextFieldNumeric = styled(
 	CurrencyInput
-)<StyledTextFieldCurrencyProps>`
+)<StyledTextFieldNumericProps>`
 	${(props) => css`
 		${formControlBase(props.useBrowserDefaultFocusStyle)}
 
@@ -80,6 +84,8 @@ export const StyledTextFieldCurrency = styled(
 		${semanticFonts.bodyLarge}
 		margin-top: ${spacer8};
 		height: ${spacer24};
+		width: ${props.size === Sizes.LARGE ? spacer320 : spacer156};
+
 		&:disabled {
 			color: ${props.colorSet?.text.disabled};
 
@@ -96,7 +102,7 @@ export const StyledErrorText = styled.span`
 `;
 
 export const StyledInputContainer = styled.div<
-	Pick<StyledInputProps, "colorSet" | "disabled" | "error">
+	Pick<StyledInputProps, "colorSet" | "disabled" | "error" | "size">
 >`
 	${(props) => {
 		const highlightColor = getColorSet(SemanticSetCores.PRIMARY_ALT).essential
@@ -105,12 +111,13 @@ export const StyledInputContainer = styled.div<
 
 		return css`
 			/* Carot styles */
+			box-sizing: border-box;
 			display: flex;
 			align-items: center;
-			width: ${spacer320};
 			background-color: ${props.colorSet?.essential.default};
 			border-radius: ${spacer4};
 			padding: ${spacer10} ${spacer12} ${spacer12} ${spacer12};
+			width: ${props.size === Sizes.LARGE ? spacer320 : spacer156};
 			box-shadow: ${!props.disabled && props.error
 				? `0 -${spacer2} 0 0 ${errorColor} inset`
 				: "none"};

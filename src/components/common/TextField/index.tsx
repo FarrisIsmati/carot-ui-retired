@@ -24,7 +24,7 @@ import {
 
 export type FormInputProps = Omit<
 	StyledWrapperProps,
-	"default" | "prefix" | "step"
+	"default" | "prefix" | "step" | "size"
 > &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
 		/**
@@ -69,6 +69,10 @@ export type FormInputProps = Omit<
 		 * @default 'input'
 		 **/
 		component?: AsProp;
+		/**
+		 * Size for width of TextField
+		 */
+		size?: Sizes;
 	};
 
 export type StyledInputProps = FormInputProps & {
@@ -88,6 +92,7 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 		errorText,
 		defaultValue,
 		colorSet = getColorSet(SemanticSetCores.SECONDARY),
+		size = Sizes.LARGE,
 		...props
 	}) {
 		const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
@@ -114,7 +119,7 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 		// On enter key press
 		const onEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
 			if (e.key === "Enter" && e.target === document.activeElement) {
-				// Unfocus textfield if hitting enter
+				// Unfocus TextField if hitting enter
 				e.preventDefault();
 				// @ts-ignore
 				e.target.blur();
@@ -135,6 +140,7 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 				colorSet={colorSet}
 				disabled={disabled}
 				error={error}
+				size={size}
 			>
 				{renderIcon()}
 				<ContentContainer>
