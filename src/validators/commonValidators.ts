@@ -1,10 +1,10 @@
 import { ValidationErrors } from "final-form";
 
 export const withCustomMessage = (
-	validator: (value: string) => boolean,
+	validator: (value: string | number) => boolean,
 	message: string
 ) => {
-	return (value: string) => {
+	return (value: string | number) => {
 		if (validator(value)) {
 			return undefined;
 		} else {
@@ -13,7 +13,9 @@ export const withCustomMessage = (
 	};
 };
 
-export const required = (value: string) => !!value;
+// The validation method for both strings and values
+export const required = (value: string | number) =>
+	value !== undefined && value !== "" && value !== null;
 
 export const fieldRequired = withCustomMessage(
 	required,

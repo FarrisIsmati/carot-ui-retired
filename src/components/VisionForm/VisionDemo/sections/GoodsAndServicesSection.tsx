@@ -3,9 +3,9 @@ import { semanticFonts } from "@/styles/fonts";
 import { spacer8 } from "@/styles/sizes";
 import { styled } from "styled-components";
 
-import BusinessCurrencyField from "../../fields/BusinessOverview/BusinessCurrencyField";
-import BusinessLocationField from "../../fields/BusinessOverview/BusinessLocationField";
-import ProductPriceField from "../../fields/Revenue/ProductPriceField";
+import { VisionFormValues } from "@/types/VisionForm/VisionForm";
+import { useFormState } from "react-final-form";
+import CostToProduceField from "../../fields/Revenue/CostToProduceField";
 
 const StyledContainer = styled.div`
 	display: flex;
@@ -19,20 +19,20 @@ const StyledDoubleDropdownContainer = styled.div`
 `;
 
 export default () => {
-	// const formState = useFormState<VisionFormValues>();
-	// const formValues = formState.values;
-
+	const formState = useFormState<VisionFormValues>();
+	const formValues = formState.values;
+	console.log(formValues);
 	return (
 		<StyledContainer>
 			<Type semanticfont={semanticFonts.headlineSmall}>Goods & Services</Type>
 			<StyledDoubleDropdownContainer>
-				<ProductPriceField />
-				<BusinessCurrencyField />
+				<CostToProduceField />
+				{/* <ProfitMarginField /> */}
 			</StyledDoubleDropdownContainer>
-			<StyledDoubleDropdownContainer>
-				<BusinessLocationField />
-				<BusinessCurrencyField />
-			</StyledDoubleDropdownContainer>
+			{/* <StyledDoubleDropdownContainer>
+				<RetailPriceField />
+				<ProfitAmountField />
+			</StyledDoubleDropdownContainer> */}
 		</StyledContainer>
 	);
 };

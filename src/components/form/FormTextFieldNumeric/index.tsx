@@ -21,6 +21,10 @@ export interface FormTextFieldSelectorProps {
 	 * @default AVERAGE
 	 */
 	inputMode?: InputModeEnum;
+	/**
+	 * If there's an error on the low/average/high values need to display error
+	 */
+	inputModeError?: string;
 }
 
 export default ({
@@ -32,14 +36,13 @@ export default ({
 	prefix,
 	suffix,
 	size = Sizes.LARGE,
-	inputMode = InputModeEnum.AVERAGE,
+	inputMode = InputModeEnum.Default,
+	inputModeError,
 }: FormTextFieldSelectorProps) => {
-	// Default input mode means no low,average,high estimates on value
+	// If a field has an input mode (other than DEFAULT) then they have a low, average, and high value as well
 	const field = useField(
-		inputMode === InputModeEnum.DEFAULT
-			? fieldName
-			: `${fieldName}.[${inputMode}]`
-	); // Field must have NumericValue type
+		inputMode === InputModeEnum.Default ? fieldName : `${fieldName}${inputMode}`
+	);
 	const input = field.input;
 
 	return (
@@ -51,8 +54,10 @@ export default ({
 			defaultValue={defaultValue}
 			prefix={prefix}
 			suffix={suffix}
-			error={hasVisibleErrors(field.meta)}
-			errorText={hasVisibleErrors(field.meta) && field.meta.error}
+			error={hasVisibleErrors(field.meta) || !!inputModeError}
+			errorText={
+				(hasVisibleErrors(field.meta) && field.meta.error) || inputModeError
+			}
 			disabled={disabled}
 			size={size}
 			{...field}

@@ -118,12 +118,12 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 		suffix = "",
 		colorSet = getColorSet(SemanticSetCores.SECONDARY),
 		size = Sizes.LARGE,
-		inputMode = InputModeEnum.AVERAGE,
+		inputMode = InputModeEnum.Default,
 		...props
 	}) {
 		const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
 		const inputRef = useRef<HTMLInputElement | null>(null);
-		const [content, setContent] = useState(0);
+		const [content, setContent] = useState<number | undefined>(0);
 
 		// Add error state if error text included
 		if (!error && errorText) {
@@ -194,7 +194,8 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 						disabled={disabled}
 						placeholder={placeholder}
 						onValueChange={(value: string | undefined) => {
-							const numericValue = value !== undefined ? parseInt(value) : 0;
+							const numericValue =
+								value !== undefined ? parseInt(value) : undefined;
 							setContent(numericValue);
 							input?.onChange(numericValue);
 						}}
