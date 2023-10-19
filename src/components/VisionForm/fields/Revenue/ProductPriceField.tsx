@@ -10,7 +10,6 @@ export default () => {
 			label={"Price"}
 			fieldName={"revenueProductPrice"}
 			placeholder={"Product Price"}
-			defaultValue="0"
 			prefix={prefix}
 			size={Sizes.SMALL}
 		/>

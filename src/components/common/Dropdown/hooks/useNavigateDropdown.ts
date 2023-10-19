@@ -8,11 +8,13 @@ export default ({
 	dataset,
 	parent,
 	focusEl,
+	disabled,
 }: {
 	isMenuOpen: boolean;
-	dataset: DropdownData[];
+	dataset: DropdownData<any>[];
 	parent: HTMLElement | null;
 	focusEl: HTMLElement | null; // element you want to perform enter action on while in focus
+	disabled: boolean;
 }) => {
 	// State/ref
 	const [cursor, setCursor] = useState(0);
@@ -27,19 +29,30 @@ export default ({
 			dataset.length &&
 			focusEl === document.activeElement &&
 			isMenuOpen &&
-			downPress
+			downPress &&
+			!disabled
 		) {
+			let skip = false;
 			// Navigate cursor down
-			setCursor((prevState) =>
-				prevState < dataset.length - 1 ? prevState + 1 : prevState
-			);
-			// Scroll to current cursor
-			scrollToCursor({
-				parent,
-				cursor,
-				cursorRef,
-				press: PressType.DOWN,
+			setCursor((prevCursor) => {
+				// TODO IMPLEMENT SCAN TO LOOK AHEAD AT ALL OPTIONS
+				const nextCursor =
+					prevCursor < dataset.length - 1 ? prevCursor + 1 : prevCursor;
+				if (dataset[nextCursor].disabled) {
+					skip = true;
+					return prevCursor;
+				}
+				return nextCursor;
 			});
+			if (!skip) {
+				// Scroll to current cursor
+				scrollToCursor({
+					parent,
+					cursor,
+					cursorRef,
+					press: PressType.DOWN,
+				});
+			}
 		}
 	}, [downPress, isMenuOpen]);
 
@@ -49,12 +62,25 @@ export default ({
 			dataset.length &&
 			focusEl === document.activeElement &&
 			isMenuOpen &&
-			upPress
+			upPress &&
+			!disabled
 		) {
+			let skip = false;
+
 			// Navigate cursor up
-			setCursor((prevState) => (prevState > 0 ? prevState - 1 : prevState));
-			// Scroll to current cursor
-			scrollToCursor({ parent, cursor, cursorRef, press: PressType.UP });
+			setCursor((prevCursor) => {
+				// TODO IMPLEMENT SCAN TO LOOK AHEAD AT ALL OPTIONS
+				const nextCursor = prevCursor > 0 ? prevCursor - 1 : prevCursor;
+				if (dataset[nextCursor].disabled) {
+					skip = true;
+					return prevCursor;
+				}
+				return nextCursor;
+			});
+			if (!skip) {
+				// Scroll to current cursor
+				scrollToCursor({ parent, cursor, cursorRef, press: PressType.UP });
+			}
 		}
 	}, [upPress, isMenuOpen]);
 

@@ -11,6 +11,10 @@ export interface FormDropdownSelectorProps {
 	dataset: DropdownData<any>[];
 	dropdownSize?: Sizes;
 	defaultValue?: DropdownData<any>;
+	/**
+	 * Action to perform on change
+	 */
+	onChange?: (selectedItemDataset: DropdownData<any>) => void;
 }
 
 export default ({
@@ -18,6 +22,7 @@ export default ({
 	placeholder,
 	fieldName,
 	dataset,
+	onChange,
 	dropdownSize = Sizes.LARGE,
 	defaultValue,
 }: FormDropdownSelectorProps) => {
@@ -35,6 +40,7 @@ export default ({
 			errorText={hasVisibleErrors(field.meta) && field.meta.error}
 			dropdownSize={dropdownSize}
 			defaultValue={defaultValue}
+			onChange={onChange}
 			{...field}
 		/>
 	);

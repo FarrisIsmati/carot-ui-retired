@@ -1,6 +1,6 @@
 export enum CurrencyTypes {
 	USD = "USD",
-	CAN = "CAN",
+	CAN = "CND",
 	MEX = "MEX",
 	EUR = "EUR",
 }

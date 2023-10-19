@@ -7,6 +7,7 @@ import {
 	CompoundScheduleType,
 	ScheduleType,
 } from "@/types/VisionForm/common/schedule";
+import { InputModeEnum } from "@/types/VisionForm/common/values";
 
 export const CapitalAndInvestorsFormInitialValues: CapitalAndInvestorsFormValues =
 	{
@@ -14,19 +15,55 @@ export const CapitalAndInvestorsFormInitialValues: CapitalAndInvestorsFormValues
 		investorType: InvestorType.ACTIVE,
 		investorJoinDate: "",
 		investorEquityPercentage: 100,
-		investorStartingCash: 0,
-		investorDrawProfitPercentage: 0,
+		investorStartingCash: {
+			[InputModeEnum.LOW]: 0,
+			[InputModeEnum.AVERAGE]: 0,
+			[InputModeEnum.HIGH]: 0,
+		},
+		investorDrawProfitPercentage: {
+			[InputModeEnum.LOW]: 0,
+			[InputModeEnum.AVERAGE]: 0,
+			[InputModeEnum.HIGH]: 0,
+		},
 		investorDrawSchedule: ScheduleType.MONTHLY,
-		investorDrawTarget: 0,
+		investorDrawTarget: {
+			[InputModeEnum.LOW]: 0,
+			[InputModeEnum.AVERAGE]: 0,
+			[InputModeEnum.HIGH]: 0,
+		},
 		investorTaxBracket: "",
 		loanName: "",
 		loanType: LoanType.GENERIC,
 		loanIssueDate: "",
-		loanAmount: 0,
-		loanTermLengthYears: 0,
-		loanTermLengthMonths: 0,
+		loanAmount: {
+			[InputModeEnum.LOW]: 0,
+			[InputModeEnum.AVERAGE]: 0,
+			[InputModeEnum.HIGH]: 0,
+		},
+		loanTermLengthYears: {
+			[InputModeEnum.LOW]: 0,
+			[InputModeEnum.AVERAGE]: 0,
+			[InputModeEnum.HIGH]: 0,
+		},
+		loanTermLengthMonths: {
+			[InputModeEnum.LOW]: 0,
+			[InputModeEnum.AVERAGE]: 0,
+			[InputModeEnum.HIGH]: 0,
+		},
 		loanCompoundRate: CompoundScheduleType.ANNUALLY,
-		loanClosingCostPercentage: 0,
-		loanOriginationFee: 0,
-		loanDocumentationFee: 0,
+		loanClosingCostPercentage: {
+			[InputModeEnum.LOW]: 0,
+			[InputModeEnum.AVERAGE]: 0,
+			[InputModeEnum.HIGH]: 0,
+		},
+		loanOriginationFee: {
+			[InputModeEnum.LOW]: 0,
+			[InputModeEnum.AVERAGE]: 0,
+			[InputModeEnum.HIGH]: 0,
+		},
+		loanDocumentationFee: {
+			[InputModeEnum.LOW]: 0,
+			[InputModeEnum.AVERAGE]: 0,
+			[InputModeEnum.HIGH]: 0,
+		},
 	};

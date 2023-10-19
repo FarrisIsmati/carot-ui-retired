@@ -3,6 +3,7 @@ export enum InputModeEnum {
 	LOW = "LOW",
 	AVERAGE = "AVERAGE",
 	HIGH = "HIGH",
+	DEFAULT = "DEFAULT",
 }
 
 // Captures the value range of a numeric field

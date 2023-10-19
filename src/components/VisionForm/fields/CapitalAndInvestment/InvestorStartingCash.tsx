@@ -11,7 +11,6 @@ export default () => {
 			label={"Cash"}
 			fieldName={"investorStartingCash"}
 			placeholder={"Starting cash"}
-			defaultValue="0"
 			prefix={prefix}
 		/>
 	);

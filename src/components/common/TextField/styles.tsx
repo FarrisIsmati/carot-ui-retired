@@ -51,7 +51,6 @@ export const StyledInput = styled(
 		${semanticFonts.bodyLarge}
 		margin-top: ${spacer8};
 		height: ${spacer24};
-		width: ${props.size === Sizes.LARGE ? spacer320 : spacer156};
 
 		&:disabled {
 			color: ${props.colorSet?.text.disabled};
@@ -84,7 +83,6 @@ export const StyledTextFieldNumeric = styled(
 		${semanticFonts.bodyLarge}
 		margin-top: ${spacer8};
 		height: ${spacer24};
-		width: ${props.size === Sizes.LARGE ? spacer320 : spacer156};
 
 		&:disabled {
 			color: ${props.colorSet?.text.disabled};

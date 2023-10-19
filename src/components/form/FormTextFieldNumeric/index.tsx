@@ -11,7 +11,10 @@ export interface FormTextFieldSelectorProps {
 	prefix?: string;
 	suffix?: string;
 	disabled?: boolean;
-	defaultValue?: string;
+	/**
+	 * Default value, overrides input field default value
+	 */
+	defaultValue?: number;
 	size?: Sizes;
 	/**
 	 * Input mode whether you are entering low, average, or high estimates
@@ -25,13 +28,18 @@ export default ({
 	placeholder,
 	fieldName,
 	disabled,
-	defaultValue,
+	defaultValue = 0,
 	prefix,
 	suffix,
 	size = Sizes.LARGE,
 	inputMode = InputModeEnum.AVERAGE,
 }: FormTextFieldSelectorProps) => {
-	const field = useField(`${fieldName}.[${inputMode}]`); // Field must have NumericValue type
+	// Default input mode means no low,average,high estimates on value
+	const field = useField(
+		inputMode === InputModeEnum.DEFAULT
+			? fieldName
+			: `${fieldName}.[${inputMode}]`
+	); // Field must have NumericValue type
 	const input = field.input;
 
 	return (

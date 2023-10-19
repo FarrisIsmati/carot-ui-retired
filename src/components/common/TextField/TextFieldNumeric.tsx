@@ -8,7 +8,7 @@ import {
 	PseudoClassProps,
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FieldInputProps } from "react-final-form";
 import Dot from "../Badge/Dot";
 import { IconWrapper } from "../IconWrapper";
@@ -25,7 +25,7 @@ import {
 
 export type TextFieldNumericProps = Omit<
 	StyledWrapperProps,
-	"default" | "prefix" | "step" | "size"
+	"default" | "prefix" | "step" | "size" | "defaultValue"
 > &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
 		/**
@@ -91,6 +91,10 @@ export type TextFieldNumericProps = Omit<
 		 * @default AVERAGE
 		 */
 		inputMode?: InputModeEnum;
+		/**
+		 * Default value, overrides input field default value
+		 */
+		defaultValue?: number;
 	};
 
 export type StyledTextFieldNumericProps = TextFieldNumericProps & {
@@ -119,7 +123,7 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 	}) {
 		const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
 		const inputRef = useRef<HTMLInputElement | null>(null);
-		const [content, setContent] = useState("");
+		const [content, setContent] = useState(0);
 
 		// Add error state if error text included
 		if (!error && errorText) {
@@ -147,6 +151,14 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 				e.target.blur();
 			}
 		};
+
+		// If default value set it to input & content
+		useEffect(() => {
+			if (defaultValue) {
+				setContent(defaultValue);
+				input?.onChange?.(defaultValue); // Form state
+			}
+		}, [defaultValue]);
 
 		return (
 			<StyledInputContainer
@@ -182,10 +194,9 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 						disabled={disabled}
 						placeholder={placeholder}
 						onValueChange={(value: string | undefined) => {
-							setContent(value ?? "");
-							input?.onChange(
-								value !== undefined ? parseInt(value) : undefined
-							);
+							const numericValue = value !== undefined ? parseInt(value) : 0;
+							setContent(numericValue);
+							input?.onChange(numericValue);
 						}}
 						onBlur={(e: any) => {
 							input?.onBlur(e);
@@ -219,7 +230,7 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 								if (content && !disabled) {
 									if (inputRef.current && content) {
 										inputRef.current.value = "";
-										setContent("");
+										setContent(0);
 									}
 									onClear();
 								}

@@ -1,8 +1,15 @@
+import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { CurrencyTypes } from "@/types/VisionForm/common/currency";
 import { useField } from "react-final-form";
 
 // Map country to currency type
-export const countryToCurrency = {};
+export const countryToCurrencyTypeMap = {
+	[CountriesEnum.CANADA]: CurrencyTypes.CAN,
+	[CountriesEnum.GERMANY]: CurrencyTypes.EUR,
+	[CountriesEnum.MEXICO]: CurrencyTypes.MEX,
+	[CountriesEnum.USA]: CurrencyTypes.USD,
+	[CountriesEnum.UNKNOWN]: CurrencyTypes.USD, // If unknown set to USDß
+};
 
 // Map currency type to symbol
 export const currencyToSymbolMap = {

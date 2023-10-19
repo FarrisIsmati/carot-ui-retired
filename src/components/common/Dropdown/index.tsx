@@ -1,3 +1,7 @@
+import {
+	getDropdownIndex,
+	getDropdownValue,
+} from "@/components/VisionForm/utils/form";
 import scrollToCursor from "@/components/common/Dropdown/utils/scrollToCursor";
 import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { Sizes, spacer156, spacer320 } from "@/styles/sizes";
@@ -13,7 +17,10 @@ import useOffClick from "./hooks/useOffClick";
 import { StyledContainer } from "./styles";
 import { DropdownData } from "./types";
 
-export type DropdownProps = Omit<StyledWrapperProps, "defaultValue"> &
+export type DropdownProps = Omit<
+	StyledWrapperProps,
+	"defaultValue" | "onChange"
+> &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
 		/**
 		 * If true adds styling to indicate error state
@@ -53,6 +60,10 @@ export type DropdownProps = Omit<StyledWrapperProps, "defaultValue"> &
 		 * Default value params
 		 */
 		defaultValue?: DropdownData<any>;
+		/**
+		 * Action to perform on change
+		 */
+		onChange?: (selectedItemDataset: DropdownData<any>) => void;
 	};
 
 export default ({
@@ -66,6 +77,7 @@ export default ({
 	input,
 	dropdownSize = Sizes.LARGE,
 	defaultValue,
+	onChange,
 }: DropdownProps) => {
 	// Dropdown
 	const dropdownRef = useRef(null);
@@ -91,44 +103,8 @@ export default ({
 	}
 
 	//
-	// Hooks
+	// State management
 	//
-	// Use keys to navigate dropdown
-	const { cursor, setCursor, cursorRef } = useNavigateDropdown({
-		isMenuOpen,
-		dataset,
-		parent: dropdownListRef.current,
-		focusEl: dropdownTriggerRef.current,
-	});
-
-	// Close menu when clicking off
-	useOffClick(dropdownRef, () => setIsMenuOpen(false));
-
-	// Select item (updates local and form state if passed in)
-	const onSelect = (selectedItemDataset: DropdownData<any>, value: string) => {
-		setSelectedItem(selectedItemDataset); // Local display state
-		input?.onChange?.(value); // Form state
-		setIsMenuOpen(false);
-	};
-
-	useEffect(() => {
-		// Scroll to selected item if menu is open
-		if (isMenuOpen) {
-			scrollToCursor({
-				parent: dropdownListRef.current,
-				cursor,
-				cursorRef,
-			});
-		} else {
-			// Reset cursor when menu closed
-			if (selectedItem) {
-				setCursor(dataset.findIndex((item) => item.id === selectedItem?.id));
-			} else {
-				setCursor(0);
-			}
-		}
-	}, [isMenuOpen]);
-
 	// If default value set it
 	useEffect(() => {
 		if (defaultValue && !selectedItem) {
@@ -141,6 +117,48 @@ export default ({
 		}
 	}, [defaultValue]);
 
+	// Set selected item to anything onChange
+	useEffect(() => {
+		if (selectedItem?.value !== input?.value) {
+			const newSelectedItem = getDropdownValue(dataset, input?.value) ?? null;
+			setSelectedItem(newSelectedItem);
+			setCursor(getDropdownIndex(dataset, newSelectedItem?.id));
+		}
+	}, [input?.value]);
+
+	//
+	// Navigation
+	//
+	// Use keys to navigate dropdown
+	const { cursor, setCursor, cursorRef } = useNavigateDropdown({
+		isMenuOpen,
+		dataset,
+		parent: dropdownListRef.current,
+		focusEl: dropdownTriggerRef.current,
+		disabled: !!disabled,
+	});
+
+	useEffect(() => {
+		// Scroll to selected item if menu is open
+		if (isMenuOpen) {
+			scrollToCursor({
+				parent: dropdownListRef.current,
+				cursor,
+				cursorRef,
+			});
+		} else {
+			// Reset cursor when menu closed
+			if (selectedItem) {
+				setCursor(getDropdownIndex(dataset, selectedItem.id));
+			} else {
+				setCursor(0);
+			}
+		}
+	}, [isMenuOpen]);
+
+	//
+	// Keyboard interaction
+	//
 	// On enter key press
 	const onEnterPress = (e: React.KeyboardEvent<any>) => {
 		if (e.key === "Enter" && e.target === document.activeElement) {
@@ -154,6 +172,21 @@ export default ({
 			}
 		}
 	};
+
+	//
+	// Dropdown interaction
+	//
+	// Select item (updates local and form state if passed in)
+	const onSelect = (selectedItemDataset: DropdownData<any>, value: string) => {
+		setSelectedItem(selectedItemDataset); // Local display state
+		input?.onChange?.(value); // Form state
+		setIsMenuOpen(false);
+		// Extra changes a user wants to execute
+		onChange?.(selectedItemDataset);
+	};
+
+	// Close menu when clicking off
+	useOffClick(dropdownRef, () => setIsMenuOpen(false));
 
 	return (
 		<StyledContainer ref={dropdownRef}>

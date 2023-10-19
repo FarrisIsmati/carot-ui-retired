@@ -26,7 +26,7 @@ export interface Investor {
 	investorName: string;
 	investorType: InvestorType; // Either an active investor/owner or silent investor (hands off)
 	investorJoinDate: string; // When an investor joins the company
-	investorEquityPercentage: NumericValue; // How much equity an investor gets % (can set starting investment capital if there is a starting goal)
+	investorEquityPercentage: number; // How much equity an investor gets % (can set starting investment capital if there is a starting goal)
 	investorStartingCash: NumericValue; // How much starting cash the investor is putting into the company
 	investorDrawProfitPercentage: NumericValue; // Percentage of profits an employee can choose to pay themselves with
 	// TODO: Add field to figure out when the draw begins (When does it start, reoccuring days, etc)
