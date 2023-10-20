@@ -1,21 +1,13 @@
-import TextFieldNumeric from "@/components/common/TextField/TextFieldNumeric";
+import TextFieldNumeric, {
+	TextFieldNumericProps,
+} from "@/components/common/TextField/TextFieldNumeric";
 import { hasVisibleErrors } from "@/components/VisionForm/utils/form";
 import { Sizes } from "@/styles/sizes";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { useField } from "react-final-form";
 
-export interface FormTextFieldSelectorProps {
-	label: string;
-	placeholder: string;
+export type FormTextFieldSelectorProps = TextFieldNumericProps & {
 	fieldName: string;
-	prefix?: string;
-	suffix?: string;
-	disabled?: boolean;
-	/**
-	 * Default value, overrides input field default value
-	 */
-	defaultValue?: number;
-	size?: Sizes;
 	/**
 	 * Input mode whether you are entering low, average, or high estimates
 	 * @default AVERAGE
@@ -25,19 +17,21 @@ export interface FormTextFieldSelectorProps {
 	 * If there's an error on the low/average/high values need to display error
 	 */
 	inputModeError?: string;
-}
+};
 
 export default ({
 	label,
 	placeholder,
 	fieldName,
 	disabled,
-	defaultValue = 0,
 	prefix,
 	suffix,
+	defaultValue = 0,
 	size = Sizes.LARGE,
 	inputMode = InputModeEnum.Default,
 	inputModeError,
+	allowNegativeValue,
+	onChange,
 }: FormTextFieldSelectorProps) => {
 	// If a field has an input mode (other than DEFAULT) then they have a low, average, and high value as well
 	const field = useField(
@@ -59,7 +53,9 @@ export default ({
 				(hasVisibleErrors(field.meta) && field.meta.error) || inputModeError
 			}
 			disabled={disabled}
+			onChange={onChange}
 			size={size}
+			allowNegativeValue={allowNegativeValue}
 			{...field}
 		/>
 	);

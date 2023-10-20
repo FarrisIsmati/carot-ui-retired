@@ -170,7 +170,7 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 							setContent(e.target.value);
 							input?.onChange(e.target.value);
 						}}
-						value={content}
+						value={input?.value ?? content}
 						onBlur={(e: any) => {
 							input?.onBlur(e);
 						}}
@@ -201,6 +201,7 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 									if (inputRef.current && content) {
 										inputRef.current.value = "";
 										setContent("");
+										input?.onChange("");
 									}
 									onClear();
 								}

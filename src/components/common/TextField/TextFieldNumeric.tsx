@@ -1,7 +1,6 @@
 import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import { Sizes, spacer2 } from "@/styles/sizes";
-import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { KeyboardDetectionContext } from "@/utils/context";
 import {
 	AsProp,
@@ -9,6 +8,7 @@ import {
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { CurrencyInputProps } from "react-currency-input-field";
 import { FieldInputProps } from "react-final-form";
 import Dot from "../Badge/Dot";
 import { IconWrapper } from "../IconWrapper";
@@ -25,9 +25,16 @@ import {
 
 export type TextFieldNumericProps = Omit<
 	StyledWrapperProps,
-	"default" | "prefix" | "step" | "size" | "defaultValue"
+	| "default"
+	| "prefix"
+	| "step"
+	| "size"
+	| "defaultValue"
+	| "onChange"
+	| "inputMode"
 > &
-	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
+	Pick<PseudoClassProps, "isHover" | "isFocus"> &
+	Omit<CurrencyInputProps, "size" | "inputMode" | "onChange"> & {
 		/**
 		 * Ref
 		 */
@@ -86,15 +93,13 @@ export type TextFieldNumericProps = Omit<
 		 */
 		size?: Sizes;
 		/**
-		 * Input mode whether you are entering low, average, or high estimates
-		 * This is to be used in the future to display what mode you are on
-		 * @default AVERAGE
-		 */
-		inputMode?: InputModeEnum;
-		/**
 		 * Default value, overrides input field default value
 		 */
 		defaultValue?: number;
+		/**
+		 * Action to perform on change
+		 */
+		onChange?: (val: number | undefined) => void;
 	};
 
 export type StyledTextFieldNumericProps = TextFieldNumericProps & {
@@ -116,9 +121,10 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 		defaultValue,
 		prefix = "",
 		suffix = "",
+		allowNegativeValue,
 		colorSet = getColorSet(SemanticSetCores.SECONDARY),
 		size = Sizes.LARGE,
-		inputMode = InputModeEnum.Default,
+		onChange,
 		...props
 	}) {
 		const { isUsingKeyboard } = useContext(KeyboardDetectionContext);
@@ -181,6 +187,7 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 					)}
 
 					<StyledTextFieldNumeric
+						allowNegativeValue={allowNegativeValue}
 						ref={(el: HTMLInputElement) => {
 							if (inputRef && !inputRef.current) {
 								inputRef.current = el;
@@ -193,11 +200,13 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 						colorSet={colorSet}
 						disabled={disabled}
 						placeholder={placeholder}
+						value={input?.value ?? content}
 						onValueChange={(value: string | undefined) => {
 							const numericValue =
 								value !== undefined ? parseInt(value) : undefined;
 							setContent(numericValue);
 							input?.onChange(numericValue);
+							onChange?.(numericValue);
 						}}
 						onBlur={(e: any) => {
 							input?.onBlur(e);
@@ -232,6 +241,7 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 									if (inputRef.current && content) {
 										inputRef.current.value = "";
 										setContent(0);
+										input?.onChange(0);
 									}
 									onClear();
 								}

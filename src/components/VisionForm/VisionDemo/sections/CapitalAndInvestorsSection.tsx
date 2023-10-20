@@ -5,8 +5,6 @@ import { spacer8 } from "@/styles/sizes";
 import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsForm";
 import { useState } from "react";
 import { styled } from "styled-components";
-import { useCurrencySymbol } from "../../utils/currency";
-import { CapitalAndInvestorsFormContextProvider } from "../context";
 import CapitalAndInvestorsForm from "../forms/CapitalAndInvestorsForm";
 import { capitalTypeDropdownValues } from "../values/VisionFormDemoDropdownValues";
 import InvestorSection from "./InvestorsSection";
@@ -19,8 +17,6 @@ const StyledContainer = styled.div`
 
 export default () => {
 	const [capitalType, setCapitalType] = useState<CapitalType | null>(null);
-	// Set this to context
-	const currencySymbol = useCurrencySymbol();
 
 	return (
 		<StyledContainer>
@@ -34,13 +30,10 @@ export default () => {
 			/>
 
 			{/* Capital and Investors form */}
-
-			<CapitalAndInvestorsFormContextProvider value={{ currencySymbol }}>
-				<CapitalAndInvestorsForm capitalType={capitalType}>
-					{capitalType === CapitalType.INVESTOR && <InvestorSection />}
-					{capitalType === CapitalType.LOAN && <p>loan locked</p>}
-				</CapitalAndInvestorsForm>
-			</CapitalAndInvestorsFormContextProvider>
+			<CapitalAndInvestorsForm capitalType={capitalType}>
+				{capitalType === CapitalType.INVESTOR && <InvestorSection />}
+				{capitalType === CapitalType.LOAN && <p>loan locked</p>}
+			</CapitalAndInvestorsForm>
 		</StyledContainer>
 	);
 };

@@ -6,7 +6,9 @@ import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsForm";
 import CapitalAndInvestorsFormValidator from "@/validators/CapitalAndInvestorsFormValidator";
 import { Form } from "react-final-form";
 import { styled } from "styled-components";
+import { useCurrencySymbol } from "../../utils/currency";
 import { CapitalAndInvestorsFormInitialValues } from "../values/CapitalAndInvestorsFormInitialValues";
+import { CapitalAndInvestorsFormContextProvider } from "./CapitalAndInvestorsFormContext";
 
 // Add Button
 
@@ -32,19 +34,23 @@ const handleSubmit = () => {
 };
 
 export default ({ children, capitalType }: CapitalAndInvestorsFormProps) => {
+	// Set this to context (need to reference field in current form not Capital And Investors form)
+	const currencySymbol = useCurrencySymbol();
 	return (
-		<Form<any>
-			initialValues={CapitalAndInvestorsFormInitialValues}
-			validate={(values) => CapitalAndInvestorsFormValidator(values)}
-			onSubmit={handleSubmit}
-			render={({ handleSubmit }) => (
-				<form onSubmit={handleSubmit}>
-					{children}
-					{!!capitalType && (
-						<StyledAddButton onClick={handleSubmit}>Add</StyledAddButton>
-					)}
-				</form>
-			)}
-		/>
+		<CapitalAndInvestorsFormContextProvider value={{ currencySymbol }}>
+			<Form<any>
+				initialValues={CapitalAndInvestorsFormInitialValues}
+				validate={(values) => CapitalAndInvestorsFormValidator(values)}
+				onSubmit={handleSubmit}
+				render={({ handleSubmit }) => (
+					<form onSubmit={handleSubmit}>
+						{children}
+						{!!capitalType && (
+							<StyledAddButton onClick={handleSubmit}>Add</StyledAddButton>
+						)}
+					</form>
+				)}
+			/>
+		</CapitalAndInvestorsFormContextProvider>
 	);
 };

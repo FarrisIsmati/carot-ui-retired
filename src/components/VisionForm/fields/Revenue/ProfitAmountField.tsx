@@ -1,18 +1,21 @@
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { Sizes } from "@/styles/sizes";
-import { InputModeEnum } from "@/types/VisionForm/common/values";
+import { useContext } from "react";
+import GoodsAndServicesSectionContext from "../../VisionDemo/sections/GoodsAndServicesSectionContext";
 import { useCurrencySymbol } from "../../utils/currency";
 
 export default () => {
 	const prefix = useCurrencySymbol();
 
+	const formContext = useContext(GoodsAndServicesSectionContext);
+	const inputMode = formContext?.revenueRetailPriceInputMode;
 	return (
 		<FormTextFieldNumeric
-			label={"Profit amount"}
+			label={"Profit"}
 			fieldName={"revenueProfitAmount"}
 			defaultValue={0}
 			placeholder={"Profit amount"}
-			inputMode={InputModeEnum.Average}
+			inputMode={inputMode}
 			prefix={prefix}
 			size={Sizes.SMALL}
 		/>

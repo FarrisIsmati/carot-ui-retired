@@ -1,6 +1,6 @@
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { useContext } from "react";
-import CapitalAndInvestorsFormContext from "../../VisionDemo/context";
+import CapitalAndInvestorsFormContext from "../../VisionDemo/forms/CapitalAndInvestorsFormContext";
 
 export default () => {
 	const formContext = useContext(CapitalAndInvestorsFormContext);
