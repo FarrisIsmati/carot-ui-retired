@@ -16,7 +16,6 @@ export default () => {
 		revenueRetailPriceInputMode,
 		revenueCostToProduceField,
 		revenueProfitMarginField,
-		revenueRetailPriceField,
 		revenueProfitAmountField,
 	} = formContext!;
 
