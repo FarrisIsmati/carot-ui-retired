@@ -23,37 +23,6 @@ const StyledDoubleDropdownContainer = styled.div`
 	gap: ${spacer8};
 `;
 
-const useGetGoodsAndServicesSectionFields = ({
-	revenueCostToProduceInputMode,
-	revenueProfitMarginInputMode,
-	revenueRetailPriceInputMode,
-	revenueProfitAmountInputMode,
-}: {
-	revenueCostToProduceInputMode: InputModeEnum;
-	revenueProfitMarginInputMode: InputModeEnum;
-	revenueRetailPriceInputMode: InputModeEnum;
-	revenueProfitAmountInputMode: InputModeEnum;
-}) => {
-	const revenueCostToProduceField = useField(
-		`revenueCostToProduce${revenueCostToProduceInputMode}`
-	);
-	const revenueProfitMarginField = useField(
-		`revenueProfitMargin${revenueProfitMarginInputMode}`
-	);
-	const revenueRetailPriceField = useField(
-		`revenueRetailPrice${revenueRetailPriceInputMode}`
-	);
-	const revenueProfitAmountField = useField(
-		`revenueProfitAmount${revenueProfitAmountInputMode}`
-	);
-	return {
-		revenueCostToProduceField,
-		revenueProfitMarginField,
-		revenueRetailPriceField,
-		revenueProfitAmountField,
-	};
-};
-
 export default () => {
 	// Get all input modes
 	const [revenueCostToProduceInputMode, setRevenueCostToProduceInputMode] =
@@ -77,6 +46,8 @@ export default () => {
 	const revenueProfitAmountField = useField(
 		`revenueProfitAmount${revenueProfitAmountInputMode}`
 	);
+
+	// Context to pass in all fields/set fields values between all child components (all heavily depend on eachother)
 	return (
 		<CapitalAndInvestorsFormContextProvider
 			value={{

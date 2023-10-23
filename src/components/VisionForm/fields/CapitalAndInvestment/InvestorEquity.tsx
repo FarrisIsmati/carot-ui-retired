@@ -8,7 +8,7 @@ export default () => {
 			label={"Equity"}
 			fieldName={"investorEquityPercentage"}
 			placeholder={"Investor equity"}
-			inputMode={InputModeEnum.DEFAULT}
+			inputMode={InputModeEnum.Default}
 			defaultValue={useGetTextFieldDefaultValue("investorEquityPercentage")}
 			suffix="%"
 			disabled

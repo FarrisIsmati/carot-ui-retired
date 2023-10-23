@@ -1,3 +1,5 @@
+import BusinessTypeSection from "./BusinessTypeSection";
+import CapitalAndInvestorsSection from "./CapitalAndInvestorsSection";
 import GoodsAndServicesSection from "./GoodsAndServicesSection";
 
 interface MainSectionProps {
@@ -7,8 +9,8 @@ interface MainSectionProps {
 export default ({ onSubmit }: MainSectionProps) => {
 	return (
 		<div>
-			{/* <BusinessTypeSection />
-			<CapitalAndInvestorsSection /> */}
+			<BusinessTypeSection />
+			<CapitalAndInvestorsSection />
 			<GoodsAndServicesSection />
 		</div>
 	);
