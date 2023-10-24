@@ -1,3 +1,4 @@
+import { LocationType } from "@/types/VisionForm/BusinessLocationSection";
 import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsForm";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { capitalize } from "lodash";
@@ -56,4 +57,20 @@ export const legalStructureDropdownValues = [
 export const capitalTypeDropdownValues = [
 	{ value: capitalize(CapitalType.INVESTOR), id: CapitalType.INVESTOR },
 	{ value: capitalize(CapitalType.LOAN), id: CapitalType.LOAN, disabled: true },
+];
+
+export const locationTypeDropdownValues = [
+	{
+		value: capitalize(LocationType.RETAIL),
+		id: LocationType.RETAIL,
+	},
+	{
+		value: capitalize(LocationType.ONLINE),
+		id: LocationType.ONLINE,
+	},
+	{
+		value: capitalize(LocationType.MOBILE),
+		id: LocationType.MOBILE,
+		disabled: true,
+	},
 ];

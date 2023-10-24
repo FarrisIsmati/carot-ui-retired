@@ -1,6 +1,6 @@
 import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
-import { spacer8 } from "@/styles/sizes";
+import { spacer40, spacer8 } from "@/styles/sizes";
 import { styled } from "styled-components";
 
 import { InputModeEnum } from "@/types/VisionForm/common/values";
@@ -15,6 +15,7 @@ import { CapitalAndInvestorsFormContextProvider } from "./GoodsAndServicesSectio
 const StyledContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	margin-top: ${spacer40};
 	gap: ${spacer8};
 `;
 
