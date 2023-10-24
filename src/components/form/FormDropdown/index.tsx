@@ -2,12 +2,13 @@ import { hasVisibleErrors } from "@/components/VisionForm/utils/form";
 import Dropdown from "@/components/common/Dropdown";
 import { DropdownData } from "@/components/common/Dropdown/types";
 import { Sizes } from "@/styles/sizes";
+import { VisionFormValues } from "@/types/VisionForm/VisionForm";
 import { useField } from "react-final-form";
 
 export interface FormDropdownSelectorProps {
 	label: string;
 	placeholder: string;
-	fieldName: string;
+	fieldName: keyof VisionFormValues;
 	dataset: DropdownData<any>[];
 	dropdownSize?: Sizes;
 	defaultValue?: DropdownData<any>;

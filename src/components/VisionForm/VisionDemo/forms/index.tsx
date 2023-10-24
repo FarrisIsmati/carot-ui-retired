@@ -1,11 +1,11 @@
 import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
-import VisionFormValidator from "@/validators/VisionFormValidator";
+import VisionFormValidator from "@/validators/VisionForm/Validator";
 import { Form } from "react-final-form";
 import { styled } from "styled-components";
-import VisionFormDemo from "../sections/MainSection";
-import { visionFormDemoInitialValues } from "../values/VisonFormDemoInitialValues";
+import Sections from "../sections";
+import { visionFormDemoInitialValues } from "../values/VisionFormDemoInitialValues";
 
 // Add Button
 
@@ -25,7 +25,7 @@ export const VisionDemoForm = () => {
 			onSubmit={handleSubmit}
 			render={({ handleSubmit }) => (
 				<form onSubmit={handleSubmit}>
-					<VisionFormDemo onSubmit={handleSubmit} />
+					<Sections onSubmit={handleSubmit} />
 					<StyledAddButton onClick={handleSubmit}>Submit</StyledAddButton>
 				</form>
 			)}
