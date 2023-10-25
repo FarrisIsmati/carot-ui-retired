@@ -6,13 +6,22 @@ import {
 	getColorSet,
 } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
-import { spacer4, spacer40, spacer6 } from "@/styles/sizes";
+import { spacer2, spacer4, spacer40, spacer6 } from "@/styles/sizes";
 import { AsProp, StyledWrapperProps } from "@/utils/typeHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
-import ButtonTertiary from "../Button/ButtonTertiary";
+import ButtonSegmentedControl from "../Button/ButtonSegmentedControl";
 
-export type SegementedControlProps = Omit<StyledWrapperProps, "size"> & {
+export interface SegmentedControlOption {
+	id: string;
+	value: string | JSX.Element;
+	isActive: boolean;
+}
+
+export type SegementedControlProps = Omit<
+	StyledWrapperProps,
+	"size" | "value"
+> & {
 	/**
 	 * Set the semantic color used by the button
 	 * @default 'brightAccent
@@ -23,6 +32,14 @@ export type SegementedControlProps = Omit<StyledWrapperProps, "size"> & {
 	 * @default 'span'
 	 **/
 	component?: AsProp;
+	/**
+	 * Options
+	 */
+	options: SegmentedControlOption[];
+	/**
+	 * Change the selection
+	 */
+	onchange: (option: SegmentedControlOption, index: number) => void;
 };
 
 const Container = styled(
@@ -42,6 +59,7 @@ const Container = styled(
 			background-color: ${colorBaseMap[ColorBaseCore.NEUTRAL_9]};
 			padding: ${spacer4};
 			border-radius: ${spacer6};
+			gap: ${spacer2};
 		`;
 	}}
 `;
@@ -52,6 +70,8 @@ export default React.forwardRef<HTMLElement, SegementedControlProps>(
 			colorSet = getColorSet(SemanticSetCores.SECONDARY),
 			component,
 			children,
+			options,
+			onchange,
 			"aria-label": ariaLabel,
 			"aria-labelledby": ariaLabelledBy,
 			...props
@@ -59,9 +79,18 @@ export default React.forwardRef<HTMLElement, SegementedControlProps>(
 		ref
 	) => {
 		return (
-			<Container>
-				<ButtonTertiary>1</ButtonTertiary>
-				<ButtonTertiary>2</ButtonTertiary>
+			<Container {...props} ref={ref} role="group">
+				{options.map((option, i) => (
+					<ButtonSegmentedControl
+						onClick={() => {
+							console.log("fuck it up");
+							onchange(option, i);
+						}}
+						isActive={option.isActive}
+					>
+						{option.value}
+					</ButtonSegmentedControl>
+				))}
 			</Container>
 		);
 	}
