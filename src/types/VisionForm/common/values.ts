@@ -3,5 +3,4 @@ export enum InputModeEnum {
 	Low = "Low",
 	Average = "Average",
 	High = "High",
-	Default = "Default",
 }

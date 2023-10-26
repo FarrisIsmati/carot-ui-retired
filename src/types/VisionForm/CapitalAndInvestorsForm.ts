@@ -21,6 +21,18 @@ export enum CapitalType {
 
 export interface CapitalAndInvestorsFormValues extends Investor, Loan {}
 
+export interface CapitalAndInvestorsInputModeLess {
+	loanAmount: any;
+	loanTermLengthYears: any;
+	loanTermLengthMonths: any;
+	loanClosingCostPercentage: any;
+	loanOriginationFee: any;
+	loanDocumentationFee: any;
+	investorStartingCash: any;
+	investorDrawProfitPercentage: any;
+	investorDrawTarget: any;
+}
+
 export interface Investor {
 	investorName: string;
 	investorType: InvestorType; // Either an active investor/owner or silent investor (hands off)

@@ -6,11 +6,11 @@ import {
 	getColorSet,
 } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
-import { spacer2, spacer4, spacer40, spacer6 } from "@/styles/sizes";
+import { spacer2, spacer320, spacer4, spacer6 } from "@/styles/sizes";
 import { AsProp, StyledWrapperProps } from "@/utils/typeHelpers";
 import React from "react";
 import styled, { css } from "styled-components";
-import ButtonSegmentedControl from "../Button/ButtonSegmentedControl";
+import ButtonSegmentedControl from "./ButtonSegmentedControl";
 
 export interface SegmentedControlOption {
 	id: string;
@@ -20,7 +20,7 @@ export interface SegmentedControlOption {
 
 export type SegementedControlProps = Omit<
 	StyledWrapperProps,
-	"size" | "value"
+	"size" | "value" | "onChange"
 > & {
 	/**
 	 * Set the semantic color used by the button
@@ -39,7 +39,7 @@ export type SegementedControlProps = Omit<
 	/**
 	 * Change the selection
 	 */
-	onchange: (option: SegmentedControlOption, index: number) => void;
+	onChange: (index: number) => void;
 };
 
 const Container = styled(
@@ -54,12 +54,12 @@ const Container = styled(
 		return css`
 			${semanticFonts.bodySmall}
 			display: flex;
-			width: fit-content;
-			height: ${spacer40};
+			width: ${props.width ? spacer320 : "fit-content"};
 			background-color: ${colorBaseMap[ColorBaseCore.NEUTRAL_9]};
 			padding: ${spacer4};
 			border-radius: ${spacer6};
 			gap: ${spacer2};
+			box-sizing: border-box;
 		`;
 	}}
 `;
@@ -71,7 +71,7 @@ export default React.forwardRef<HTMLElement, SegementedControlProps>(
 			component,
 			children,
 			options,
-			onchange,
+			onChange,
 			"aria-label": ariaLabel,
 			"aria-labelledby": ariaLabelledBy,
 			...props
@@ -82,11 +82,16 @@ export default React.forwardRef<HTMLElement, SegementedControlProps>(
 			<Container {...props} ref={ref} role="group">
 				{options.map((option, i) => (
 					<ButtonSegmentedControl
-						onClick={() => {
-							console.log("fuck it up");
-							onchange(option, i);
+						onClick={(e) => {
+							e.preventDefault();
+							onChange(i);
 						}}
 						isActive={option.isActive}
+						width={
+							props.width !== undefined
+								? parseInt(props.width as string) / options.length
+								: undefined
+						}
 					>
 						{option.value}
 					</ButtonSegmentedControl>

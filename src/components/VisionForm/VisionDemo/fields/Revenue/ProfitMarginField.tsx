@@ -1,6 +1,5 @@
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { Sizes } from "@/styles/sizes";
-import { useHasInputModeError } from "@/validators/utils";
 import { useContext } from "react";
 import RevenueSectionContext from "../../sections/RevenueSection/RevenueSectionContext";
 import {
@@ -9,9 +8,7 @@ import {
 } from "../util";
 
 export default () => {
-	const fieldName = "revenueProfitMargin";
-	const inputModeError = useHasInputModeError(fieldName);
-
+	// Context
 	const formContext = useContext(RevenueSectionContext);
 	const {
 		revenueProfitMarginInputMode,
@@ -20,14 +17,14 @@ export default () => {
 		revenueCostToProduceField,
 		revenueRetailPriceField,
 	} = formContext!;
+
 	return (
 		<FormTextFieldNumeric
 			label={"Margin"}
-			fieldName={fieldName}
+			fieldNameBase={"revenueProfitMargin"}
 			defaultValue={0}
 			placeholder={"Profit margin"}
 			inputMode={revenueProfitMarginInputMode}
-			inputModeError={inputModeError}
 			suffix={"%"}
 			size={Sizes.SMALL}
 			onChange={(value) => {

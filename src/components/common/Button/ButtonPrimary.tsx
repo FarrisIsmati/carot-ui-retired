@@ -181,6 +181,7 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 				iconOnly={iconOnly}
 				fullWidth={fullWidth}
 				onClick={(e: any) => {
+					e.preventDefault();
 					e.target.blur();
 				}}
 				{...props}

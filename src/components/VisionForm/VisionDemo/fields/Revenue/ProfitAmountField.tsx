@@ -1,33 +1,31 @@
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { Sizes } from "@/styles/sizes";
-import { useHasInputModeError } from "@/validators/utils";
 import { useContext } from "react";
 import { useCurrencySymbol } from "../../../utils/currency";
 import RevenueSectionContext from "../../sections/RevenueSection/RevenueSectionContext";
 import { marginFromProfitAmount, revenueFromProfitAmount } from "../util";
 
 export default () => {
-	const fieldName = "revenueProfitAmount";
-	const prefix = useCurrencySymbol();
-	const inputModeError = useHasInputModeError(fieldName);
-
+	// Context
 	const formContext = useContext(RevenueSectionContext);
-
 	const {
-		revenueRetailPriceInputMode,
+		revenueProfitAmountInputMode,
 		revenueCostToProduceField,
 		revenueRetailPriceField,
 		revenueProfitMarginField,
 		revenueProfitAmountField,
 	} = formContext!;
+
+	// Prefix
+	const prefix = useCurrencySymbol();
+
 	return (
 		<FormTextFieldNumeric
 			label={"Profit"}
-			fieldName={fieldName}
+			fieldNameBase={"revenueProfitAmount"}
 			defaultValue={0}
 			placeholder={"Profit amount"}
-			inputMode={revenueRetailPriceInputMode}
-			inputModeError={inputModeError}
+			inputMode={revenueProfitAmountInputMode}
 			prefix={prefix}
 			size={Sizes.SMALL}
 			onChange={(value) => {

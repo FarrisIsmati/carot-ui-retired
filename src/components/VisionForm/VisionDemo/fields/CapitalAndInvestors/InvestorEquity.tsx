@@ -1,5 +1,4 @@
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
-import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { useGetTextFieldDefaultValue } from "../../../utils/form";
 
 export default () => {
@@ -8,8 +7,9 @@ export default () => {
 			label={"Equity"}
 			fieldName={"investorEquityPercentage"}
 			placeholder={"Investor equity"}
-			inputMode={InputModeEnum.Default}
-			defaultValue={useGetTextFieldDefaultValue("investorEquityPercentage")}
+			defaultValue={
+				useGetTextFieldDefaultValue("investorEquityPercentage") as number
+			}
 			suffix="%"
 			disabled
 		/>

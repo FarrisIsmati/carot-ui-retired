@@ -16,3 +16,10 @@ export interface RevenueSection {
 	revenueProfitAmountAverage: number;
 	revenueProfitAmountHigh: number;
 }
+
+export interface RevenueSectionInputModeLess {
+	revenueCostToProduce: any;
+	revenueRetailPrice: any;
+	revenueProfitMargin: any;
+	revenueProfitAmount: any;
+}

@@ -3,9 +3,9 @@ import { semanticFonts } from "@/styles/fonts";
 import { spacer40, spacer8 } from "@/styles/sizes";
 import { styled } from "styled-components";
 
+import { useVisionFormField } from "@/components/VisionForm/utils/form";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { useState } from "react";
-import { useField } from "react-final-form";
 import CostToProduceField from "../../fields/Revenue/CostToProduceField";
 import ProfitAmountField from "../../fields/Revenue/ProfitAmountField";
 import ProfitMarginField from "../../fields/Revenue/ProfitMarginField";
@@ -35,16 +35,16 @@ export default () => {
 	const [revenueProfitAmountInputMode, setRevenueProfitAmountInputMode] =
 		useState(InputModeEnum.Average);
 	// Get all fields
-	const revenueCostToProduceField = useField(
+	const revenueCostToProduceField = useVisionFormField(
 		`revenueCostToProduce${revenueCostToProduceInputMode}`
 	);
-	const revenueProfitMarginField = useField(
+	const revenueProfitMarginField = useVisionFormField(
 		`revenueProfitMargin${revenueProfitMarginInputMode}`
 	);
-	const revenueRetailPriceField = useField(
+	const revenueRetailPriceField = useVisionFormField(
 		`revenueRetailPrice${revenueRetailPriceInputMode}`
 	);
-	const revenueProfitAmountField = useField(
+	const revenueProfitAmountField = useVisionFormField(
 		`revenueProfitAmount${revenueProfitAmountInputMode}`
 	);
 

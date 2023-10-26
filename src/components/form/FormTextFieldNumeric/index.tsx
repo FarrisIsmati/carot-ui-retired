@@ -1,43 +1,73 @@
 import TextFieldNumeric, {
 	TextFieldNumericProps,
 } from "@/components/common/TextField/TextFieldNumeric";
-import { hasVisibleErrors } from "@/components/VisionForm/utils/form";
+import {
+	hasVisibleErrors,
+	useVisionFormField,
+} from "@/components/VisionForm/utils/form";
 import { Sizes } from "@/styles/sizes";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
-import { useField } from "react-final-form";
+import {
+	AllFormValues,
+	AllFormValuesInputModeLess,
+} from "@/types/VisionForm/VisionForm";
+import { useHasInputModeError } from "@/validators/utils";
+
+const getFieldName = (
+	fieldName: keyof AllFormValues | undefined,
+	fieldNameBase: keyof AllFormValuesInputModeLess | undefined,
+	inputMode: InputModeEnum | undefined
+): keyof AllFormValues => {
+	if (fieldNameBase && inputMode) {
+		return `${fieldNameBase}${inputMode}`;
+	}
+
+	if (fieldName) {
+		return fieldName;
+	}
+
+	throw new Error(
+		"Need to provide either a fieldName, or a fieldNameBase and inputMode"
+	);
+};
 
 export type FormTextFieldSelectorProps = TextFieldNumericProps & {
-	fieldName: string;
+	/**
+	 * Name of field
+	 */
+	fieldName?: keyof AllFormValues;
+	/**
+	 * Base name of fieldname without input mode
+	 */
+	fieldNameBase?: keyof AllFormValuesInputModeLess;
 	/**
 	 * Input mode whether you are entering low, average, or high estimates
 	 * @default AVERAGE
 	 */
 	inputMode?: InputModeEnum;
-	/**
-	 * If there's an error on the low/average/high values need to display error
-	 */
-	inputModeError?: string;
 };
 
 export default ({
 	label,
 	placeholder,
 	fieldName,
+	fieldNameBase,
 	disabled,
 	prefix,
 	suffix,
 	defaultValue = 0,
 	size = Sizes.LARGE,
-	inputMode = InputModeEnum.Default,
-	inputModeError,
+	inputMode,
 	allowNegativeValue,
 	onChange,
 }: FormTextFieldSelectorProps) => {
+	const fieldNameFull = getFieldName(fieldName, fieldNameBase, inputMode);
+
 	// If a field has an input mode (other than DEFAULT) then they have a low, average, and high value as well
-	const field = useField(
-		inputMode === InputModeEnum.Default ? fieldName : `${fieldName}${inputMode}`
-	);
+	const field = useVisionFormField(fieldNameFull);
 	const input = field.input;
+
+	const inputModeError = fieldNameBase && useHasInputModeError(fieldNameBase);
 
 	return (
 		<TextFieldNumeric

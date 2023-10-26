@@ -1,8 +1,13 @@
 import { DropdownData } from "@/components/common/Dropdown/types";
-import { CapitalAndInvestorsFormValues } from "@/types/VisionForm/CapitalAndInvestorsForm";
-import { VisionFormValues } from "@/types/VisionForm/VisionForm";
+import { AllFormValues } from "@/types/VisionForm/VisionForm";
 import { FieldMetaState, useField } from "react-final-form";
 
+// Get form field
+export const useVisionFormField = <K extends keyof AllFormValues>(
+	fieldKey: K
+) => useField<AllFormValues[typeof fieldKey]>(fieldKey);
+
+// Input meta has visible errors
 export const hasVisibleErrors = <T>(meta?: FieldMetaState<T>) => {
 	return !!meta?.touched && Boolean(meta?.error);
 };
@@ -18,23 +23,23 @@ export const getDropdownIndex = (
 // Gets the value of a dropdown from the dropdown values
 export const getDropdownValue = (
 	dropdownValues: DropdownData<any>[],
-	targetValue: string | undefined
+	targetValue: string | number | undefined
 ) => {
 	return dropdownValues.find((value) => value.value === targetValue);
 };
 
+// Get default value for dropdown
 export const useGetDropdownDefaultValue = (
 	dropdownValues: DropdownData<any>[],
-	fieldName: keyof VisionFormValues
+	fieldName: keyof AllFormValues
 ) => {
-	const field = useField(fieldName);
+	const field = useVisionFormField(fieldName);
 	return getDropdownValue(dropdownValues, field.input.value);
 };
 
-export const useGetTextFieldDefaultValue = (
-	fieldName: keyof VisionFormValues | keyof CapitalAndInvestorsFormValues
-) => {
-	const field = useField(fieldName);
+// Get default value for text field
+export const useGetTextFieldDefaultValue = (fieldName: keyof AllFormValues) => {
+	const field = useVisionFormField(fieldName);
 	const fieldValue = field.input.value;
 	return fieldValue;
 };

@@ -1,12 +1,15 @@
 import TextField from "@/components/common/TextField";
-import { hasVisibleErrors } from "@/components/VisionForm/utils/form";
+import {
+	hasVisibleErrors,
+	useVisionFormField,
+} from "@/components/VisionForm/utils/form";
 import { Sizes } from "@/styles/sizes";
-import { useField } from "react-final-form";
+import { AllFormValues } from "@/types/VisionForm/VisionForm";
 
 export interface FormTextFieldSelectorProps {
 	label: string;
 	placeholder: string;
-	fieldName: string;
+	fieldName: keyof AllFormValues;
 	isNumber?: boolean;
 	prefix?: string;
 	suffix?: string;
@@ -23,7 +26,7 @@ export default ({
 	defaultValue,
 	size = Sizes.LARGE,
 }: FormTextFieldSelectorProps) => {
-	const field = useField(fieldName);
+	const field = useVisionFormField(fieldName);
 	const input = field.input;
 
 	return (

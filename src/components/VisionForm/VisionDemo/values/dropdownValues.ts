@@ -3,6 +3,8 @@ import { LocationType } from "@/types/VisionForm/SpaceAndPlaceSection";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { capitalize } from "lodash";
 
+// Todo: get values from API call
+
 //
 // Overview
 //

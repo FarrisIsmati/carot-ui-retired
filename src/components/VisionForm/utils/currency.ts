@@ -1,6 +1,6 @@
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { CurrencyTypes } from "@/types/VisionForm/common/currency";
-import { useField } from "react-final-form";
+import { useVisionFormField } from "./form";
 
 // Map country to currency type
 export const countryToCurrencyTypeMap = {
@@ -21,9 +21,7 @@ export const currencyToSymbolMap = {
 
 // Get currency symbol for form
 export const useCurrencySymbol = () => {
-	const currencyField = useField("businessCurrency");
-	const currencySymbol =
-		currencyToSymbolMap[currencyField.input.value as CurrencyTypes];
-
+	const currencyField = useVisionFormField("overviewCurrency");
+	const currencySymbol = currencyToSymbolMap[currencyField.input.value];
 	return currencySymbol;
 };

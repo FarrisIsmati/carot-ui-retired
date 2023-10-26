@@ -20,7 +20,7 @@ export const Default = () => {
 	return (
 		<SegmentedControl
 			options={options}
-			onchange={(option, i) => {
+			onChange={(i) => {
 				const clonedOptions = _.cloneDeep(options);
 				clonedOptions.map((opt, x) => {
 					if (x === i) {

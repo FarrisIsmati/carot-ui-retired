@@ -1,16 +1,12 @@
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { Sizes } from "@/styles/sizes";
-import { useHasInputModeError } from "@/validators/utils";
 import { useContext } from "react";
 import { useCurrencySymbol } from "../../../utils/currency";
 import RevenueSectionContext from "../../sections/RevenueSection/RevenueSectionContext";
 import { marginCalculator, profitCalculator } from "../util";
 
 export default () => {
-	const fieldName = "revenueRetailPrice";
-	const prefix = useCurrencySymbol();
-	const inputModeError = useHasInputModeError(fieldName);
-
+	// Context
 	const formContext = useContext(RevenueSectionContext);
 	const {
 		revenueRetailPriceInputMode,
@@ -19,13 +15,15 @@ export default () => {
 		revenueProfitAmountField,
 	} = formContext!;
 
+	// Prefix
+	const prefix = useCurrencySymbol();
+
 	return (
 		<FormTextFieldNumeric
 			label={"Retail"}
-			fieldName={fieldName}
+			fieldNameBase={"revenueRetailPrice"}
 			placeholder={"Retail Price"}
 			inputMode={revenueRetailPriceInputMode}
-			inputModeError={inputModeError}
 			allowNegativeValue={false}
 			prefix={prefix}
 			onChange={(value) => {
