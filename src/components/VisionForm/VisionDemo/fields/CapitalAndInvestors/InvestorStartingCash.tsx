@@ -16,7 +16,6 @@ export default () => {
 			label={"Cash"}
 			fieldNameBase={"investorStartingCash"}
 			placeholder={"Starting cash"}
-			defaultValue={0}
 			inputMode={inputMode}
 			allowNegativeValue={false}
 			prefix={prefix}

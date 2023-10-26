@@ -23,7 +23,6 @@ export default () => {
 		<FormTextFieldNumeric
 			label={"Profit"}
 			fieldNameBase={"revenueProfitAmount"}
-			defaultValue={0}
 			placeholder={"Profit amount"}
 			inputMode={revenueProfitAmountInputMode}
 			prefix={prefix}

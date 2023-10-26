@@ -93,10 +93,6 @@ export type TextFieldNumericProps = Omit<
 		 */
 		size?: Sizes;
 		/**
-		 * Default value, overrides input field default value
-		 */
-		defaultValue?: number;
-		/**
 		 * Action to perform on change
 		 */
 		onChange?: (val: number | undefined) => void;
@@ -158,11 +154,10 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 			}
 		};
 
-		// If default value set it to input & content
+		// If default value set it to content, (not for form controlled components)
 		useEffect(() => {
-			if (defaultValue) {
-				setContent(defaultValue);
-				input?.onChange?.(defaultValue); // Form state
+			if (defaultValue !== undefined) {
+				setContent(defaultValue as number);
 			}
 		}, [defaultValue]);
 

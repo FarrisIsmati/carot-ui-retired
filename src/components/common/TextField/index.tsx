@@ -129,9 +129,8 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 		// If default value set it
 		useEffect(() => {
 			// If form value isn't set to default value, update it also
-			if (!input?.value && defaultValue) {
+			if (defaultValue) {
 				setContent(defaultValue);
-				input?.onChange?.(defaultValue); // Form state
 			}
 		}, [defaultValue]);
 

@@ -2,7 +2,7 @@
 // The values do not impact the main form's validations only the sub form
 import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
-import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsForm";
+import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsSection";
 import CapitalAndInvestorsFormValidator from "@/validators/CapitalAndInvestors/Validator";
 import { Form } from "react-final-form";
 import { styled } from "styled-components";

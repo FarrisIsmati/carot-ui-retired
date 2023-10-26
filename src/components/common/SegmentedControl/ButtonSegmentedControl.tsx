@@ -38,6 +38,11 @@ export const ButtonSegmentedControlStyled = styled(
 				color: ${colorBaseMap[ColorBaseCore.BLACK]};
 				background-color: ${colorBaseMap[ColorBaseCore.WHITE]};
 			}
+
+			&:disabled {
+				background-color: transparent;
+				color: ${colorBaseMap[ColorBaseCore.NEUTRAL_3]};
+			}
 		`;
 	}}
 `;

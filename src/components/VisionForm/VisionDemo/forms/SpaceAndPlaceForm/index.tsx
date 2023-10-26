@@ -6,7 +6,8 @@ import { LocationType } from "@/types/VisionForm/SpaceAndPlaceSection";
 import { Form } from "react-final-form";
 import { styled } from "styled-components";
 import { useCurrencySymbol } from "../../../utils/currency";
-import { CapitalAndInvestorsFormContextProvider } from "../CapitalAndInvestorsForm/CapitalAndInvestorsFormContext";
+import { SpaceAndPlaceFormInitialValues } from "../../values/SpaceAndPlaceFormInitialValues";
+import { SpaceAndPlaceFormContextProvider } from "./SpaceAndPlaceFormContext";
 
 // Add Button
 
@@ -35,9 +36,9 @@ export default ({ children, locationType }: SpaceAndPlaceFormProps) => {
 	// Set this to context (need to reference field in current form not Capital And Investors form)
 	const currencySymbol = useCurrencySymbol();
 	return (
-		<CapitalAndInvestorsFormContextProvider value={{ currencySymbol }}>
+		<SpaceAndPlaceFormContextProvider value={{ currencySymbol }}>
 			<Form<any>
-				initialValues={undefined}
+				initialValues={SpaceAndPlaceFormInitialValues}
 				validate={undefined}
 				onSubmit={handleSubmit}
 				render={({ handleSubmit }) => (
@@ -49,6 +50,6 @@ export default ({ children, locationType }: SpaceAndPlaceFormProps) => {
 					</form>
 				)}
 			/>
-		</CapitalAndInvestorsFormContextProvider>
+		</SpaceAndPlaceFormContextProvider>
 	);
 };

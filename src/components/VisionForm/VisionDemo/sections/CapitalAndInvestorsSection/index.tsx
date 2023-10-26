@@ -2,7 +2,7 @@ import DropdownSelect from "@/components/common/Dropdown/DropdownSelect";
 import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
 import { spacer40, spacer8 } from "@/styles/sizes";
-import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsForm";
+import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsSection";
 import { useState } from "react";
 import { styled } from "styled-components";
 import CapitalAndInvestorsForm from "../../forms/CapitalAndInvestorsForm";

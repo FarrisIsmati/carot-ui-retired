@@ -1,14 +1,14 @@
 import {
-	CapitalAndInvestorsFormValues,
+	CapitalAndInvestorsSection,
 	InvestorType,
 	LoanType,
-} from "@/types/VisionForm/CapitalAndInvestorsForm";
+} from "@/types/VisionForm/CapitalAndInvestorsSection";
 import {
 	CompoundScheduleType,
 	ScheduleType,
 } from "@/types/VisionForm/common/schedule";
 
-export const CapitalAndInvestorsFormInitialValues: CapitalAndInvestorsFormValues =
+export const CapitalAndInvestorsFormInitialValues: CapitalAndInvestorsSection =
 	{
 		investorName: "",
 		investorType: InvestorType.ACTIVE,

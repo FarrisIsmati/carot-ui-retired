@@ -55,7 +55,7 @@ export default ({
 	disabled,
 	prefix,
 	suffix,
-	defaultValue = 0,
+	defaultValue,
 	size = Sizes.LARGE,
 	inputMode,
 	allowNegativeValue,

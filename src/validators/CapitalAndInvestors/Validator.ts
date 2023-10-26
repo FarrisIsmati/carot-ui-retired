@@ -1,11 +1,11 @@
-import { CapitalAndInvestorsFormValues } from "@/types/VisionForm/CapitalAndInvestorsForm";
+import { CapitalAndInvestorsSection } from "@/types/VisionForm/CapitalAndInvestorsSection";
 import {
 	investorEquityValidator,
 	investorNameValidator,
 	investorStartingCashValidator,
 } from "./Validators";
 
-export default (formValues: CapitalAndInvestorsFormValues) => {
+export default (formValues: CapitalAndInvestorsSection) => {
 	// Investor
 	const investorName = investorNameValidator(formValues.investorName);
 

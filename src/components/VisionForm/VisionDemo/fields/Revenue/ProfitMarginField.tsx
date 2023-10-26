@@ -22,7 +22,6 @@ export default () => {
 		<FormTextFieldNumeric
 			label={"Margin"}
 			fieldNameBase={"revenueProfitMargin"}
-			defaultValue={0}
 			placeholder={"Profit margin"}
 			inputMode={revenueProfitMarginInputMode}
 			suffix={"%"}

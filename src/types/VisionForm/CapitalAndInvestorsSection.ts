@@ -19,7 +19,7 @@ export enum CapitalType {
 	LOAN = "LOAN",
 }
 
-export interface CapitalAndInvestorsFormValues extends Investor, Loan {}
+export interface CapitalAndInvestorsSection extends Investor, Loan {}
 
 export interface CapitalAndInvestorsInputModeLess {
 	loanAmount: any;

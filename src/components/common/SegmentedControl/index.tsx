@@ -16,6 +16,7 @@ export interface SegmentedControlOption {
 	id: string;
 	value: string | JSX.Element;
 	isActive: boolean;
+	disabled: boolean;
 }
 
 export type SegementedControlProps = Omit<
@@ -84,7 +85,9 @@ export default React.forwardRef<HTMLElement, SegementedControlProps>(
 					<ButtonSegmentedControl
 						onClick={(e) => {
 							e.preventDefault();
-							onChange(i);
+							if (!option.disabled) {
+								onChange(i);
+							}
 						}}
 						isActive={option.isActive}
 						width={
@@ -92,6 +95,7 @@ export default React.forwardRef<HTMLElement, SegementedControlProps>(
 								? parseInt(props.width as string) / options.length
 								: undefined
 						}
+						disabled={option.disabled}
 					>
 						{option.value}
 					</ButtonSegmentedControl>

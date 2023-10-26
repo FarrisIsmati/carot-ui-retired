@@ -14,7 +14,6 @@ export interface FormTextFieldSelectorProps {
 	prefix?: string;
 	suffix?: string;
 	disabled?: boolean;
-	defaultValue?: string;
 	size?: Sizes;
 }
 
@@ -23,7 +22,6 @@ export default ({
 	placeholder,
 	fieldName,
 	disabled,
-	defaultValue,
 	size = Sizes.LARGE,
 }: FormTextFieldSelectorProps) => {
 	const field = useVisionFormField(fieldName);
@@ -35,7 +33,6 @@ export default ({
 			name={input.name}
 			label={label}
 			placeholder={placeholder}
-			defaultValue={defaultValue}
 			error={hasVisibleErrors(field.meta)}
 			errorText={hasVisibleErrors(field.meta) && field.meta.error}
 			disabled={disabled}
