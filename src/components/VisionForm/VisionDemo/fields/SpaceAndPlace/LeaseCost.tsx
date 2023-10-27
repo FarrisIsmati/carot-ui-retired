@@ -1,6 +1,6 @@
 import {
 	MeasurementSystemType,
-	useGetMeasurementSystem,
+	getMeasurementSystem,
 } from "@/components/VisionForm/utils/measurement";
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
@@ -13,13 +13,12 @@ export default () => {
 
 	// Prefix
 	const formContext = useContext(SpaceAndPlaceFormContext);
-	const prefix = formContext?.currencySymbol;
 
 	// Measurement System
-	const measurementSystem = useGetMeasurementSystem();
+	const measurementSystem = getMeasurementSystem(formContext?.countryOrigin);
 
 	const measurementLabel =
-		measurementSystem === MeasurementSystemType.IMPERIAL ? "sq/ft" : "sq/m";
+		measurementSystem === MeasurementSystemType.IMPERIAL ? "ft²" : "m²";
 
 	return (
 		<FormTextFieldNumeric
@@ -27,7 +26,7 @@ export default () => {
 			fieldNameBase={"leaseCost"}
 			inputMode={inputMode}
 			placeholder={"Cost"}
-			prefix={prefix}
+			prefix={formContext?.currencySymbol}
 			allowNegativeValue={false}
 		/>
 	);

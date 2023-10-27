@@ -1,5 +1,6 @@
 // This section is a subform
 // The values do not impact the main form's validations only the sub form
+import { useVisionFormField } from "@/components/VisionForm/utils/form";
 import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
 import { LocationType } from "@/types/VisionForm/SpaceAndPlaceSection";
@@ -36,8 +37,12 @@ const handleSubmit = () => {
 export default ({ children, locationType }: SpaceAndPlaceFormProps) => {
 	// Set this to context (need to reference field in current form not Capital And Investors form)
 	const currencySymbol = useCurrencySymbol();
+
+	// Get country origin
+	const countryOrigin = useVisionFormField("overviewCountryOrigin").input.value;
+
 	return (
-		<SpaceAndPlaceFormContextProvider value={{ currencySymbol }}>
+		<SpaceAndPlaceFormContextProvider value={{ currencySymbol, countryOrigin }}>
 			<Form<any>
 				initialValues={SpaceAndPlaceFormInitialValues}
 				validate={(values) => SpaceAndPlaceFormValidator(values)}

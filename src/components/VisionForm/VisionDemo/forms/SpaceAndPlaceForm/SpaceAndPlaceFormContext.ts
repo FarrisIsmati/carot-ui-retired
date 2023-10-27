@@ -1,7 +1,9 @@
+import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import React from "react";
 
 export interface SpaceAndPlaceFormContextProps {
 	currencySymbol: string;
+	countryOrigin: CountriesEnum;
 }
 
 const SpaceAndPlaceFormContext =

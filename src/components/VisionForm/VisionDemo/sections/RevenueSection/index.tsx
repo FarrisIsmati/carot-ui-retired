@@ -1,7 +1,5 @@
 import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
-import { spacer8 } from "@/styles/sizes";
-import { styled } from "styled-components";
 
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
@@ -10,13 +8,8 @@ import CostToProduceField from "../../fields/Revenue/CostToProduceField";
 import ProfitAmountField from "../../fields/Revenue/ProfitAmountField";
 import ProfitMarginField from "../../fields/Revenue/ProfitMarginField";
 import RetailPriceField from "../../fields/Revenue/RetailPriceField";
-import { FieldsContainer } from "../styles";
+import { FieldsContainer, StyledDoubleDropdownContainer } from "../styles";
 import { RevenueSectionContextProvider } from "./RevenueSectionContext";
-
-const StyledDoubleDropdownContainer = styled.div`
-	display: flex;
-	gap: ${spacer8};
-`;
 
 export default () => {
 	// Get all input modes

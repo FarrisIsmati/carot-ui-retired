@@ -3,8 +3,10 @@ import FormSegmentedControl from "@/components/form/FormSegmentedControl";
 import { spacer320 } from "@/styles/sizes";
 import { PhysicalType } from "@/types/VisionForm/SpaceAndPlaceSection";
 import LeaseCost from "../../fields/SpaceAndPlace/LeaseCost";
+import LeaseLengthMonths from "../../fields/SpaceAndPlace/LeaseLengthMonths";
+import LeaseLengthYears from "../../fields/SpaceAndPlace/LeaseLengthYears";
 import { physicalTypeValues } from "../../values/fields/segmentedControlValues";
-import { FieldsContainer } from "../styles";
+import { FieldsContainer, StyledDoubleDropdownContainer } from "../styles";
 
 export default () => {
 	const physicalTypeField = useVisionFormField("physicalType");
@@ -19,6 +21,10 @@ export default () => {
 			/>
 			{physicalTypeValue === PhysicalType.LEASE && (
 				<>
+					<StyledDoubleDropdownContainer>
+						<LeaseLengthYears />
+						<LeaseLengthMonths />
+					</StyledDoubleDropdownContainer>
 					<LeaseCost />
 				</>
 			)}

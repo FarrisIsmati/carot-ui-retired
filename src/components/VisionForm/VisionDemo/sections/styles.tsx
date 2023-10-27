@@ -7,3 +7,8 @@ export const FieldsContainer = styled.div<{ noMargin?: boolean }>`
 	margin-top: ${(props) => (props.noMargin ? 0 : spacer40)};
 	gap: ${spacer8};
 `;
+
+export const StyledDoubleDropdownContainer = styled.div`
+	display: flex;
+	gap: ${spacer8};
+`;

@@ -1,5 +1,4 @@
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
-import { useVisionFormField } from "./form";
 
 export enum MeasurementSystemType {
 	IMPERIAL = "IMPERIAL",
@@ -11,11 +10,11 @@ const countriesThatUseImperialSet = new Set([CountriesEnum.USA]);
 
 /**
  * Gets measurement system Imperial or Metric based on country origin
+ * Returns metric if no country provided
  * @returns MeasurementSystemType
  */
-export const useGetMeasurementSystem = () => {
-	const countryField = useVisionFormField("overviewCountryOrigin");
-	if (countriesThatUseImperialSet.has(countryField.input.value)) {
+export const getMeasurementSystem = (country?: CountriesEnum) => {
+	if (country && countriesThatUseImperialSet.has(country)) {
 		return MeasurementSystemType.IMPERIAL;
 	}
 	return MeasurementSystemType.METRIC;
