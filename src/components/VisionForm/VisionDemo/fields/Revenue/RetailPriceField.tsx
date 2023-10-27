@@ -22,7 +22,7 @@ export default () => {
 		<FormTextFieldNumeric
 			label={"Retail"}
 			fieldNameBase={"revenueRetailPrice"}
-			placeholder={"Retail Price"}
+			placeholder={"Physical Price"}
 			inputMode={revenueRetailPriceInputMode}
 			allowNegativeValue={false}
 			prefix={prefix}

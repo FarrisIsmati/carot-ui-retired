@@ -1,6 +1,6 @@
 import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
-import { spacer40, spacer8 } from "@/styles/sizes";
+import { spacer8 } from "@/styles/sizes";
 import { styled } from "styled-components";
 
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
@@ -10,14 +10,8 @@ import CostToProduceField from "../../fields/Revenue/CostToProduceField";
 import ProfitAmountField from "../../fields/Revenue/ProfitAmountField";
 import ProfitMarginField from "../../fields/Revenue/ProfitMarginField";
 import RetailPriceField from "../../fields/Revenue/RetailPriceField";
-import { CapitalAndInvestorsFormContextProvider } from "./RevenueSectionContext";
-
-const StyledContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	margin-top: ${spacer40};
-	gap: ${spacer8};
-`;
+import { FieldsContainer } from "../styles";
+import { RevenueSectionContextProvider } from "./RevenueSectionContext";
 
 const StyledDoubleDropdownContainer = styled.div`
 	display: flex;
@@ -30,7 +24,7 @@ export default () => {
 		useState(InputModeEnum.Average);
 	const [revenueProfitMarginInputMode, setRevenueProfitMarginInputMode] =
 		useState(InputModeEnum.Average);
-	const [revenueRetailPriceInputMode, setRevenueRetailPriceInputMode] =
+	const [revenueRetailPriceInputMode, setRevenuePhysicalPriceInputMode] =
 		useState(InputModeEnum.Average);
 	const [revenueProfitAmountInputMode, setRevenueProfitAmountInputMode] =
 		useState(InputModeEnum.Average);
@@ -50,14 +44,14 @@ export default () => {
 
 	// Context to pass in all fields/set fields values between all child components (all heavily depend on eachother)
 	return (
-		<CapitalAndInvestorsFormContextProvider
+		<RevenueSectionContextProvider
 			value={{
 				revenueCostToProduceInputMode,
 				setRevenueCostToProduceInputMode,
 				revenueProfitMarginInputMode,
 				setRevenueProfitMarginInputMode,
 				revenueRetailPriceInputMode,
-				setRevenueRetailPriceInputMode,
+				setRevenuePhysicalPriceInputMode,
 				revenueProfitAmountInputMode,
 				setRevenueProfitAmountInputMode,
 				revenueCostToProduceField,
@@ -66,7 +60,7 @@ export default () => {
 				revenueProfitAmountField,
 			}}
 		>
-			<StyledContainer>
+			<FieldsContainer>
 				<Type semanticfont={semanticFonts.headlineSmall}>Goods & Services</Type>
 				<StyledDoubleDropdownContainer>
 					<CostToProduceField />
@@ -76,7 +70,7 @@ export default () => {
 					<RetailPriceField />
 					<ProfitAmountField />
 				</StyledDoubleDropdownContainer>
-			</StyledContainer>
-		</CapitalAndInvestorsFormContextProvider>
+			</FieldsContainer>
+		</RevenueSectionContextProvider>
 	);
 };

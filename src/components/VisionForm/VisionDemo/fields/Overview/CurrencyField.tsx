@@ -1,7 +1,7 @@
 import { useGetDropdownDefaultValue } from "@/components/VisionForm/utils/form";
 import FormDropdown from "@/components/form/FormDropdown";
 import { Sizes } from "@/styles/sizes";
-import { currencyDropdownValues } from "../../values/dropdownValues";
+import { currencyDropdownValues } from "../../values/fields/dropdownValues";
 
 export default () => {
 	return (

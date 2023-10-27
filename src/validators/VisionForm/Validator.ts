@@ -41,7 +41,7 @@ export default (formValues: VisionFormValues) => {
 		formValues.revenueCostToProduceHigh
 	);
 
-	// Retail price
+	// Physical price
 	const revenueRetailPriceLow = revenueRetailPriceValidator(
 		formValues.revenueRetailPriceLow
 	);
@@ -101,7 +101,7 @@ export default (formValues: VisionFormValues) => {
 		revenueCostToProduceAverage,
 		revenueCostToProduceHigh,
 
-		// Retail price
+		// Physical price
 		revenueRetailPriceLow,
 		revenueRetailPriceAverage,
 		revenueRetailPriceHigh,

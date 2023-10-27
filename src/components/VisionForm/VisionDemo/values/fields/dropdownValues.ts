@@ -41,8 +41,8 @@ export const capitalTypeDropdownValues = [
 //
 export const locationTypeDropdownValues = [
 	{
-		value: capitalize(LocationType.RETAIL),
-		id: LocationType.RETAIL,
+		value: capitalize(LocationType.PHYSICAL),
+		id: LocationType.PHYSICAL,
 	},
 	{
 		value: capitalize(LocationType.ONLINE),

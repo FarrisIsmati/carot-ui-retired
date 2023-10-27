@@ -48,7 +48,7 @@ export default () => {
 				);
 
 				//
-				// Retail price
+				// Physical price
 				//
 				revenueRetailPriceField.input.onChange(
 					revenueFromMarginCalculator(

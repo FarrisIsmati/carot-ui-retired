@@ -8,7 +8,7 @@ export interface RevenueSectionContextProps {
 	revenueProfitMarginInputMode: InputModeEnum;
 	setRevenueProfitMarginInputMode: Dispatch<SetStateAction<InputModeEnum>>;
 	revenueRetailPriceInputMode: InputModeEnum;
-	setRevenueRetailPriceInputMode: Dispatch<SetStateAction<InputModeEnum>>;
+	setRevenuePhysicalPriceInputMode: Dispatch<SetStateAction<InputModeEnum>>;
 	revenueProfitAmountInputMode: InputModeEnum;
 	setRevenueProfitAmountInputMode: Dispatch<SetStateAction<InputModeEnum>>;
 	revenueCostToProduceField: FieldRenderProps<any, HTMLElement, any>;
@@ -19,8 +19,6 @@ export interface RevenueSectionContextProps {
 
 const RevenueSectionContext =
 	React.createContext<RevenueSectionContextProps | null>(null);
-export const CapitalAndInvestorsFormContextProvider =
-	RevenueSectionContext.Provider;
-export const CapitalAndInvestorsFormContextConsumer =
-	RevenueSectionContext.Consumer;
+export const RevenueSectionContextProvider = RevenueSectionContext.Provider;
+export const RevenueSectionContextConsumer = RevenueSectionContext.Consumer;
 export default RevenueSectionContext;

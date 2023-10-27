@@ -10,6 +10,7 @@ import LegalStructureField from "../../fields/LegalAndTaxes/LegalStructureField"
 import CountryOriginField from "../../fields/Overview/CountryOriginField";
 import CurrencyField from "../../fields/Overview/CurrencyField";
 import IndustryField from "../../fields/Overview/IndustryField";
+import { FieldsContainer } from "../styles";
 
 const StyledContainer = styled.div`
 	display: flex;
@@ -27,7 +28,7 @@ export default () => {
 	const formValues = formState.values;
 
 	return (
-		<StyledContainer>
+		<FieldsContainer>
 			<Type semanticfont={semanticFonts.headlineSmall}>Business Type</Type>
 			<IndustryField />
 			<StyledDoubleDropdownContainer>
@@ -39,6 +40,6 @@ export default () => {
 			{formValues.overviewCountryOrigin === CountriesEnum.USA && (
 				<LegalStructureField />
 			)}
-		</StyledContainer>
+		</FieldsContainer>
 	);
 };

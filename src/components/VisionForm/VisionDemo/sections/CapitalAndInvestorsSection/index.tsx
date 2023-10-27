@@ -1,26 +1,18 @@
 import DropdownSelect from "@/components/common/Dropdown/DropdownSelect";
 import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
-import { spacer40, spacer8 } from "@/styles/sizes";
 import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsSection";
 import { useState } from "react";
-import { styled } from "styled-components";
 import CapitalAndInvestorsForm from "../../forms/CapitalAndInvestorsForm";
-import { capitalTypeDropdownValues } from "../../values/dropdownValues";
+import { capitalTypeDropdownValues } from "../../values/fields/dropdownValues";
+import { FieldsContainer } from "../styles";
 import InvestorSection from "./InvestorsSection";
-
-const StyledContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	margin-top: ${spacer40};
-	gap: ${spacer8};
-`;
 
 export default () => {
 	const [capitalType, setCapitalType] = useState<CapitalType | null>(null);
 
 	return (
-		<StyledContainer>
+		<FieldsContainer>
 			<Type semanticfont={semanticFonts.headlineSmall}>Investment</Type>
 			<DropdownSelect
 				id={"capitalType"}
@@ -35,6 +27,6 @@ export default () => {
 				{capitalType === CapitalType.INVESTOR && <InvestorSection />}
 				{capitalType === CapitalType.LOAN && <p>loan locked</p>}
 			</CapitalAndInvestorsForm>
-		</StyledContainer>
+		</FieldsContainer>
 	);
 };

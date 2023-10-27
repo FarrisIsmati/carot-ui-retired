@@ -1,27 +1,19 @@
 import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
-import { spacer40, spacer8 } from "@/styles/sizes";
-import { styled } from "styled-components";
 
 import DropdownSelect from "@/components/common/Dropdown/DropdownSelect";
 import { LocationType } from "@/types/VisionForm/SpaceAndPlaceSection";
 import { useState } from "react";
 import SpaceAndPlaceForm from "../../forms/SpaceAndPlaceForm";
-import { locationTypeDropdownValues } from "../../values/dropdownValues";
-import Retail from "./Retail";
-
-const StyledContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	margin-top: ${spacer40};
-	gap: ${spacer8};
-`;
+import { locationTypeDropdownValues } from "../../values/fields/dropdownValues";
+import { FieldsContainer } from "../styles";
+import Physical from "./Physical";
 
 export default () => {
 	const [locationType, setLocationType] = useState<LocationType | null>(null);
 
 	return (
-		<StyledContainer>
+		<FieldsContainer>
 			<Type semanticfont={semanticFonts.headlineSmall}>Business Location</Type>
 			<DropdownSelect
 				id={"locationType"}
@@ -33,9 +25,9 @@ export default () => {
 
 			{/* Space and Place form */}
 			<SpaceAndPlaceForm locationType={locationType}>
-				{locationType === LocationType.RETAIL && <Retail />}
+				{locationType === LocationType.PHYSICAL && <Physical />}
 				{locationType === LocationType.ONLINE && <p>ONLINE</p>}
 			</SpaceAndPlaceForm>
-		</StyledContainer>
+		</FieldsContainer>
 	);
 };

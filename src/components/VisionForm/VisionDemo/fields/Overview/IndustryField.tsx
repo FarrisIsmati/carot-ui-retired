@@ -1,5 +1,5 @@
 import FormDropdown from "@/components/form/FormDropdown";
-import { industryDropdownValues } from "../../values/dropdownValues";
+import { industryDropdownValues } from "../../values/fields/dropdownValues";
 
 export default () => {
 	return (

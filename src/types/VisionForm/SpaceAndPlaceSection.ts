@@ -1,10 +1,17 @@
 export enum LocationType {
 	MOBILE = "MOBILE",
 	ONLINE = "ONLINE",
-	RETAIL = "RETAIL",
+	PHYSICAL = "PHYSICAL",
 }
 
-export interface SpaceAndPlaceSection extends Lease {}
+export enum PhysicalType {
+	LEASE = "LEASE",
+	OWN = "OWN",
+}
+
+export interface SpaceAndPlaceSection extends Lease {
+	physicalType: PhysicalType;
+}
 
 export interface SpaceAndPlaceInputModeLess {
 	leaseSize: any;

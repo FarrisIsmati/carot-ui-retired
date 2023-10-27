@@ -1,6 +1,11 @@
-import { SpaceAndPlaceSection } from "@/types/VisionForm/SpaceAndPlaceSection";
+import {
+	PhysicalType,
+	SpaceAndPlaceSection,
+} from "@/types/VisionForm/SpaceAndPlaceSection";
 
 export const SpaceAndPlaceFormInitialValues: SpaceAndPlaceSection = {
+	physicalType: PhysicalType.LEASE,
+
 	// Lease length months
 	leaseLengthMonthsLow: 0,
 	leaseLengthMonthsAverage: 0,

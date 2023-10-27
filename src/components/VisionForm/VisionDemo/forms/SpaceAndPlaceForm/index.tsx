@@ -3,10 +3,11 @@
 import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
 import { LocationType } from "@/types/VisionForm/SpaceAndPlaceSection";
+import SpaceAndPlaceFormValidator from "@/validators/SpaceAndPlace/Validator";
 import { Form } from "react-final-form";
 import { styled } from "styled-components";
 import { useCurrencySymbol } from "../../../utils/currency";
-import { SpaceAndPlaceFormInitialValues } from "../../values/SpaceAndPlaceFormInitialValues";
+import { SpaceAndPlaceFormInitialValues } from "../../values/forms/SpaceAndPlaceFormInitialValues";
 import { SpaceAndPlaceFormContextProvider } from "./SpaceAndPlaceFormContext";
 
 // Add Button
@@ -39,7 +40,7 @@ export default ({ children, locationType }: SpaceAndPlaceFormProps) => {
 		<SpaceAndPlaceFormContextProvider value={{ currencySymbol }}>
 			<Form<any>
 				initialValues={SpaceAndPlaceFormInitialValues}
-				validate={undefined}
+				validate={(values) => SpaceAndPlaceFormValidator(values)}
 				onSubmit={handleSubmit}
 				render={({ handleSubmit }) => (
 					<form onSubmit={handleSubmit}>

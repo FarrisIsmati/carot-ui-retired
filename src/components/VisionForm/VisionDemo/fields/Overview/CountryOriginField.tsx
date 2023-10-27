@@ -7,7 +7,7 @@ import FormDropdown from "@/components/form/FormDropdown";
 import { Sizes } from "@/styles/sizes";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { countryToCurrencyTypeMap } from "../../../utils/currency";
-import { countryOriginDropdownValues } from "../../values/dropdownValues";
+import { countryOriginDropdownValues } from "../../values/fields/dropdownValues";
 
 export default () => {
 	const currencyField = useVisionFormField("overviewCurrency");

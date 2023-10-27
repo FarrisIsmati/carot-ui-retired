@@ -1,7 +1,7 @@
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { CurrencyTypes } from "@/types/VisionForm/common/currency";
-import { LegalStructureDropdownValuesEnum } from "./dropdownValues";
+import { LegalStructureDropdownValuesEnum } from "../fields/dropdownValues";
 
 export const visionFormDemoInitialValues: VisionFormValues = {
 	//
@@ -18,7 +18,7 @@ export const visionFormDemoInitialValues: VisionFormValues = {
 	// Revenue Section
 	//
 
-	// Retail price
+	// Physical price
 	revenueRetailPriceLow: 0,
 	revenueRetailPriceAverage: 0,
 	revenueRetailPriceHigh: 0,

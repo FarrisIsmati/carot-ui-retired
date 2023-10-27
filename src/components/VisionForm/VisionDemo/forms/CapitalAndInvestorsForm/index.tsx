@@ -7,7 +7,7 @@ import CapitalAndInvestorsFormValidator from "@/validators/CapitalAndInvestors/V
 import { Form } from "react-final-form";
 import { styled } from "styled-components";
 import { useCurrencySymbol } from "../../../utils/currency";
-import { CapitalAndInvestorsFormInitialValues } from "../../values/CapitalAndInvestorsFormInitialValues";
+import { CapitalAndInvestorsFormInitialValues } from "../../values/forms/CapitalAndInvestorsFormInitialValues";
 import { CapitalAndInvestorsFormContextProvider } from "./CapitalAndInvestorsFormContext";
 
 // Add Button
