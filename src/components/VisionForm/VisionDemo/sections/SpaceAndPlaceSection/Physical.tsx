@@ -5,6 +5,7 @@ import { PhysicalType } from "@/types/VisionForm/SpaceAndPlaceSection";
 import LeaseCost from "../../fields/SpaceAndPlace/LeaseCost";
 import LeaseLengthMonths from "../../fields/SpaceAndPlace/LeaseLengthMonths";
 import LeaseLengthYears from "../../fields/SpaceAndPlace/LeaseLengthYears";
+import LeaseSize from "../../fields/SpaceAndPlace/LeaseSize";
 import { physicalTypeValues } from "../../values/fields/segmentedControlValues";
 import { FieldsContainer, StyledDoubleDropdownContainer } from "../styles";
 
@@ -26,6 +27,7 @@ export default () => {
 						<LeaseLengthMonths />
 					</StyledDoubleDropdownContainer>
 					<LeaseCost />
+					<LeaseSize />
 				</>
 			)}
 			{physicalTypeValue === PhysicalType.OWN && <p>Own</p>}

@@ -14,6 +14,7 @@ export default () => {
 			placeholder={"Years"}
 			allowNegativeValue={false}
 			size={Sizes.SMALL}
+			disabled
 		/>
 	);
 };

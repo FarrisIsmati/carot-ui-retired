@@ -12,9 +12,9 @@ export const SpaceAndPlaceFormInitialValues: SpaceAndPlaceSection = {
 	leaseLengthMonthsHigh: 0,
 
 	// Lease length years
-	leaseLengthYearsLow: 0,
-	leaseLengthYearsAverage: 0,
-	leaseLengthYearsHigh: 0,
+	leaseLengthYearsLow: 1,
+	leaseLengthYearsAverage: 1,
+	leaseLengthYearsHigh: 1,
 
 	// Lease size
 	leaseSizeLow: 0,

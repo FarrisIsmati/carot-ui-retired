@@ -21,9 +21,9 @@ export default () => {
 			allowNegativeValue={false}
 			size={Sizes.SMALL}
 			onChange={(value) => {
-				// Value cannot be greater than 12
-				if (value && value > 12) {
-					leaseLengthField.input.onChange(12);
+				// Value cannot be greater than 11
+				if (value && value > 11) {
+					leaseLengthField.input.onChange(11);
 				}
 			}}
 		/>

@@ -3,6 +3,7 @@ import {
 	leaseCostValidator,
 	leaseLengthMonthsValidator,
 	leaseLengthYearsValidator,
+	leaseSizeValidator,
 } from "./Validators";
 
 export default (formValues: SpaceAndPlaceSection) => {
@@ -10,6 +11,11 @@ export default (formValues: SpaceAndPlaceSection) => {
 	const leaseCostLow = leaseCostValidator(formValues.leaseCostLow);
 	const leaseCostAverage = leaseCostValidator(formValues.leaseCostAverage);
 	const leaseCostHigh = leaseCostValidator(formValues.leaseCostHigh);
+
+	// Lease size
+	const leaseSizeLow = leaseSizeValidator(formValues.leaseSizeLow);
+	const leaseSizeAverage = leaseSizeValidator(formValues.leaseSizeAverage);
+	const leaseSizeHigh = leaseSizeValidator(formValues.leaseSizeHigh);
 
 	// Lease length months
 	const leaseLengthMonthsLow = leaseLengthMonthsValidator(
@@ -38,6 +44,10 @@ export default (formValues: SpaceAndPlaceSection) => {
 		leaseCostLow,
 		leaseCostAverage,
 		leaseCostHigh,
+		// Lease size
+		leaseSizeLow,
+		leaseSizeAverage,
+		leaseSizeHigh,
 		// Lease length months
 		leaseLengthMonthsLow,
 		leaseLengthMonthsAverage,
