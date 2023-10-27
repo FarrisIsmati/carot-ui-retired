@@ -36,6 +36,10 @@ export type DropdownProps = Omit<StyledWrapperProps, "label"> &
 		 * On select
 		 */
 		onselect?: (value: DropdownData<any>) => void;
+		/**
+		 * Is feature completely locked (demo purposes)
+		 */
+		islocked?: boolean;
 	};
 
 export default ({
@@ -44,6 +48,7 @@ export default ({
 	placeholder,
 	dataset,
 	onselect,
+	islocked,
 	dropdownSize = Sizes.LARGE,
 }: DropdownProps) => {
 	// Dropdown
@@ -71,6 +76,7 @@ export default ({
 	const { cursor, setCursor, cursorRef } = useNavigateDropdown({
 		isMenuOpen,
 		dataset,
+		disabled: disabled || islocked,
 		parent: dropdownListRef.current,
 		focusEl: dropdownTriggerRef.current,
 	});
@@ -105,7 +111,12 @@ export default ({
 
 	// On enter key press
 	const onEnterPress = (e: React.KeyboardEvent<any>) => {
-		if (e.key === "Enter" && e.target === document.activeElement) {
+		if (
+			!disabled &&
+			!islocked &&
+			e.key === "Enter" &&
+			e.target === document.activeElement
+		) {
 			// Open menu if focused and hitting enter key
 			if (!isMenuOpen) {
 				setIsMenuOpen(true);
@@ -123,10 +134,10 @@ export default ({
 			<DropdownTriggerSelect
 				ref={dropdownTriggerRef}
 				colorSet={colorSet}
-				disabled={disabled}
+				disabled={disabled || islocked}
 				isMenuOpen={isMenuOpen}
 				onClickMenu={() => {
-					if (disabled) {
+					if (disabled || islocked) {
 						return;
 					}
 					setIsMenuOpen(!isMenuOpen);
@@ -134,6 +145,7 @@ export default ({
 				onKeyDown={onEnterPress}
 				placeholder={placeholder}
 				dropdownSize={dropdownSize}
+				islocked={islocked}
 			/>
 
 			{/* Dropdown menu */}
@@ -151,7 +163,7 @@ export default ({
 										key={e.id}
 										onClick={() => {
 											// Disabled entire dropdown disabled, e.disabled only row is disabled
-											if (disabled || e.disabled) {
+											if (islocked || disabled || e.disabled) {
 												return;
 											}
 											onSelect(e, e.value);
@@ -161,7 +173,7 @@ export default ({
 											e.id === hoveredItem?.id ||
 											i === cursor
 										}
-										disabled={disabled || e.disabled}
+										disabled={islocked || disabled || e.disabled}
 										colorSet={colorSet}
 										onMouseEnter={() => setHoveredItem(e)}
 										onMouseLeave={() => setHoveredItem(null)}

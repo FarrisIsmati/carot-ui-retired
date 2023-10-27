@@ -1,5 +1,5 @@
 import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
-import { Sizes, iconSizeMap, spacer24 } from "@/styles/sizes";
+import { Sizes, iconSizeMap, spacer24, spacer4 } from "@/styles/sizes";
 import {
 	AsProp,
 	PseudoClassProps,
@@ -48,6 +48,10 @@ export type IconWrapperProps = Omit<StyledWrapperProps, "size"> &
 		 * Disabled prevents onclick actions and pointer
 		 */
 		disabled?: boolean;
+		/**
+		 * Enables a background color per color set
+		 */
+		hasBackground?: boolean;
 	};
 
 export const Wrapper = styled(
@@ -71,6 +75,9 @@ export const Wrapper = styled(
 		props.disabled
 			? props.colorSet?.text.disabled
 			: props.colorSet?.text.default};
+	background-color: ${(props) =>
+		props.hasBackground ? props.colorSet?.essential.default : "transparent"};
+	border-radius: ${spacer4};
 	border: none;
 	padding: 0;
 	display: flex;
@@ -120,6 +127,7 @@ export const IconWrapper = ({
 	size,
 	icon,
 	disabled,
+	hasBackground,
 	onMouseDown,
 }: IconWrapperProps) => {
 	const Icon = icon;
@@ -151,6 +159,7 @@ export const IconWrapper = ({
 			aria-hidden="true"
 			disabled={disabled}
 			onMouseDown={onMouseDown}
+			hasBackground={hasBackground}
 		>
 			<Icon
 				style={{ fontSize: iconSize }}

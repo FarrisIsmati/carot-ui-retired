@@ -49,11 +49,10 @@ export const StyledDropdownTriggerText = styled(Type)<{
 export const StyledDropdownSelectTriggerText = styled(Type)`
 	${semanticFonts.bodyLarge};
 
-	color: ${(props) => props.colorset?.text.default};
-
-	&:disabled {
-		color: ${(props) => props.colorset?.text.disabled};
-	}
+	color: ${(props) =>
+		props.disabled
+			? props.colorset?.text.disabled
+			: props.colorset?.text.default};
 
 	&:hover:not([disabled]) {
 		background-color: ${(props) => props.colorset?.essential.hover};

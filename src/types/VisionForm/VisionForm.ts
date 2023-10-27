@@ -9,12 +9,14 @@ import {
 	SpaceAndPlaceInputModeLess,
 	SpaceAndPlaceSection,
 } from "./SpaceAndPlaceSection";
+import { StaffSection } from "./StaffSection";
 
 // All form values including vision form and all other forms nested in vision form
 export interface AllFormValues
 	extends VisionFormValues,
 		CapitalAndInvestorsSection,
-		SpaceAndPlaceSection {}
+		SpaceAndPlaceSection,
+		StaffSection {}
 
 // Vision form all form values that can't be multiple (think multiple investors, multiple places, etc..)
 export interface VisionFormValues

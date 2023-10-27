@@ -14,7 +14,7 @@ export default ({
 	dataset: DropdownData<any>[];
 	parent: HTMLElement | null;
 	focusEl: HTMLElement | null; // element you want to perform enter action on while in focus
-	disabled: boolean;
+	disabled?: boolean;
 }) => {
 	// State/ref
 	const [cursor, setCursor] = useState(0);

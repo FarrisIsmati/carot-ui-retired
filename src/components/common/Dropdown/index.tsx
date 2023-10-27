@@ -161,7 +161,7 @@ export default ({
 	//
 	// On enter key press
 	const onEnterPress = (e: React.KeyboardEvent<any>) => {
-		if (e.key === "Enter" && e.target === document.activeElement) {
+		if (!disabled && e.key === "Enter" && e.target === document.activeElement) {
 			// Open menu if focused and hitting enter key
 			if (!isMenuOpen) {
 				setIsMenuOpen(true);

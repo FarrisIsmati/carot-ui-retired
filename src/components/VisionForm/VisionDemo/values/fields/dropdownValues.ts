@@ -1,5 +1,6 @@
 import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsSection";
 import { LocationType } from "@/types/VisionForm/SpaceAndPlaceSection";
+import { StaffType } from "@/types/VisionForm/StaffSection";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { capitalize } from "lodash";
 
@@ -53,6 +54,17 @@ export const locationTypeDropdownValues = [
 		value: capitalize(LocationType.MOBILE),
 		id: LocationType.MOBILE,
 		disabled: true,
+	},
+];
+
+export const staffTypeDropdownValues = [
+	{
+		value: capitalize(StaffType.EMPLOYEE),
+		id: StaffType.EMPLOYEE,
+	},
+	{
+		value: capitalize(StaffType.CONTRACTOR),
+		id: StaffType.CONTRACTOR,
 	},
 ];
 

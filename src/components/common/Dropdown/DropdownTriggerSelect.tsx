@@ -6,7 +6,7 @@ import {
 	PseudoClassProps,
 	StyledWrapperProps,
 } from "@/utils/typeHelpers";
-import { Add, Remove } from "@material-ui/icons";
+import { Add, Lock, Remove } from "@material-ui/icons";
 import React from "react";
 import { IconWrapper } from "../IconWrapper";
 import {
@@ -53,6 +53,10 @@ export type DropdownTriggerProps = Omit<StyledWrapperProps, "label"> &
 		 * @default LARGE
 		 */
 		dropdownSize?: Sizes;
+		/**
+		 * Is feature completely locked (demo purposes)
+		 */
+		islocked?: boolean;
 	};
 
 export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
@@ -66,11 +70,45 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 			disabled,
 			isMenuOpen,
 			placeholder,
+			islocked,
 			dropdownSize = Sizes.LARGE,
 			...props
 		},
 		ref
 	) {
+		const Icon = () => {
+			if (islocked) {
+				return (
+					<IconWrapper
+						icon={Lock}
+						colorSet={getColorSet(SemanticSetCores.PRIMARY)}
+						padding={spacer2}
+						size={Sizes.MEDIUM}
+						disabled={disabled}
+						hasBackground
+					/>
+				);
+			}
+			if (isMenuOpen) {
+				return (
+					<IconWrapper
+						icon={Remove}
+						padding={spacer2}
+						size={Sizes.MEDIUM}
+						disabled={disabled}
+					/>
+				);
+			}
+			return (
+				<IconWrapper
+					icon={Add}
+					padding={spacer2}
+					size={Sizes.MEDIUM}
+					disabled={disabled}
+				/>
+			);
+		};
+
 		return (
 			<StyledDropdownTrigger
 				ref={ref}
@@ -80,7 +118,7 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 				error={error}
 				aria-haspopup="listbox"
 				onMouseDown={onClickMenu}
-				disabled={disabled}
+				disabled={disabled || islocked}
 				dropdownSize={dropdownSize}
 				{...props}
 			>
@@ -88,32 +126,18 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 				<StyledDropdownTriggerContentContainer>
 					{/* Text displaying inside the dropdown */}
 					<StyledDropdownSelectTriggerText
-						disabled={disabled}
+						disabled={disabled || islocked}
 						colorset={colorSet}
 					>
 						{placeholder}
 					</StyledDropdownSelectTriggerText>
 
-					{/* Icon arrow up or down indicating dropdown open/closed */}
-					{isMenuOpen ? (
-						<IconWrapper
-							icon={Remove}
-							padding={spacer2}
-							size={Sizes.MEDIUM}
-							disabled={disabled}
-						/>
-					) : (
-						<IconWrapper
-							icon={Add}
-							padding={spacer2}
-							size={Sizes.MEDIUM}
-							disabled={disabled}
-						/>
-					)}
+					{/* Icon + or - indicating dropdown open/closed */}
+					<Icon />
 				</StyledDropdownTriggerContentContainer>
 
 				{/* Error text bottom of the dropdown */}
-				{errorText && !disabled && (
+				{errorText && !disabled && !islocked && (
 					<StyledErrorTextDropdownTrigger
 						colorset={colorSet}
 						error={error}
