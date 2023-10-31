@@ -26,6 +26,8 @@ export interface SpaceAndPlaceInputModeLess {
 	leaseLengthYears: any;
 	constructionCost: any;
 	maxOccupancy: any;
+	hoursOpenPerDayGeneric: any;
+	daysOpenPerWeekGeneric: any;
 }
 
 export interface PhysicalSpace {
@@ -38,6 +40,16 @@ export interface PhysicalSpace {
 	maxOccupancyLow: number;
 	maxOccupancyAverage: number;
 	maxOccupancyHigh: number;
+
+	// Hours open per day (Generic hours open field)
+	hoursOpenPerDayGenericLow: number;
+	hoursOpenPerDayGenericAverage: number;
+	hoursOpenPerDayGenericHigh: number;
+
+	// Days open per week (Generic days per week field)
+	daysOpenPerWeekGenericLow: number;
+	daysOpenPerWeekGenericAverage: number;
+	daysOpenPerWeekGenericHigh: number;
 }
 
 export interface Lease {

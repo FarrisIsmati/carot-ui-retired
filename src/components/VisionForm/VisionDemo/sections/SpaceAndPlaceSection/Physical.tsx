@@ -1,6 +1,8 @@
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
 import { PhysicalFinanceType } from "@/types/VisionForm/SpaceAndPlaceSection";
 import ConstructionCost from "../../fields/SpaceAndPlace/ConstructionCost";
+import DaysOpenPerWeekGeneric from "../../fields/SpaceAndPlace/DaysOpenPerWeekGeneric";
+import HoursOpenPerDayGeneric from "../../fields/SpaceAndPlace/HoursOpenPerDayGeneric";
 import LeaseCost from "../../fields/SpaceAndPlace/LeaseCost";
 import LeaseLengthMonths from "../../fields/SpaceAndPlace/LeaseLengthMonths";
 import LeaseLengthYears from "../../fields/SpaceAndPlace/LeaseLengthYears";
@@ -28,6 +30,10 @@ export default () => {
 					<LeaseSize />
 					<ConstructionCost />
 					<MaxOccupancy />
+					<StyledDoubleDropdownContainer>
+						<HoursOpenPerDayGeneric />
+						<DaysOpenPerWeekGeneric />
+					</StyledDoubleDropdownContainer>
 				</>
 			)}
 			{physicalFinanceTypeValue === PhysicalFinanceType.OWN && <p>Own</p>}

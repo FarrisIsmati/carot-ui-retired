@@ -5,13 +5,35 @@ import {
 } from "@/types/VisionForm/SpaceAndPlaceSection";
 
 export const SpaceAndPlaceFormInitialValues: SpaceAndPlaceSection = {
+	//
+	// General
+	//
+
 	physicalFinanceType: PhysicalFinanceType.LEASE,
 	physicalUseType: PhysicalUseType.RETAIL,
+
+	//
+	// Physical
+	//
+
+	// Hours open per day
+	hoursOpenPerDayGenericLow: 8,
+	hoursOpenPerDayGenericAverage: 8,
+	hoursOpenPerDayGenericHigh: 8,
+
+	// Days open per week
+	daysOpenPerWeekGenericLow: 5,
+	daysOpenPerWeekGenericAverage: 5,
+	daysOpenPerWeekGenericHigh: 5,
 
 	// Construction cost
 	constructionCostLow: 0,
 	constructionCostAverage: 0,
 	constructionCostHigh: 0,
+
+	//
+	// Lease
+	//
 
 	// Maximum occupancy
 	maxOccupancyLow: 0,
