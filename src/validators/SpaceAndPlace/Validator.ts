@@ -1,5 +1,6 @@
 import { SpaceAndPlaceSection } from "@/types/VisionForm/SpaceAndPlaceSection";
 import {
+	constructionCostValidator,
 	leaseCostValidator,
 	leaseLengthMonthsValidator,
 	leaseLengthYearsValidator,
@@ -7,6 +8,17 @@ import {
 } from "./Validators";
 
 export default (formValues: SpaceAndPlaceSection) => {
+	// Construction cost
+	const constructionCostLow = constructionCostValidator(
+		formValues.constructionCostLow
+	);
+	const constructionCostAverage = constructionCostValidator(
+		formValues.constructionCostAverage
+	);
+	const constructionCostHigh = constructionCostValidator(
+		formValues.constructionCostHigh
+	);
+
 	// Lease cost
 	const leaseCostLow = leaseCostValidator(formValues.leaseCostLow);
 	const leaseCostAverage = leaseCostValidator(formValues.leaseCostAverage);
@@ -40,6 +52,10 @@ export default (formValues: SpaceAndPlaceSection) => {
 	);
 
 	return {
+		// Construction cost
+		constructionCostLow,
+		constructionCostAverage,
+		constructionCostHigh,
 		// Lease cost
 		leaseCostLow,
 		leaseCostAverage,

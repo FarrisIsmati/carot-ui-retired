@@ -8,7 +8,11 @@ export const countryToCurrencyTypeMap = {
 	[CountriesEnum.GERMANY]: CurrencyTypes.EUR,
 	[CountriesEnum.MEXICO]: CurrencyTypes.MEX,
 	[CountriesEnum.USA]: CurrencyTypes.USD,
-	[CountriesEnum.UNKNOWN]: CurrencyTypes.USD, // If unknown set to USDß
+	[CountriesEnum.China]: CurrencyTypes.CNY,
+	[CountriesEnum.Japan]: CurrencyTypes.YEN,
+	[CountriesEnum.Korea]: CurrencyTypes.WON,
+	[CountriesEnum.Iran]: CurrencyTypes.IRR,
+	[CountriesEnum.UNKNOWN]: CurrencyTypes.USD, // If unknown set to USD
 };
 
 // Map currency type to symbol
@@ -17,6 +21,10 @@ export const currencyToSymbolMap = {
 	[CurrencyTypes.MEX]: "$",
 	[CurrencyTypes.USD]: "$",
 	[CurrencyTypes.EUR]: "€",
+	[CurrencyTypes.CNY]: "¥",
+	[CurrencyTypes.YEN]: "¥",
+	[CurrencyTypes.WON]: "₩",
+	[CurrencyTypes.IRR]: "﷼",
 };
 
 // Get currency symbol for form

@@ -1,5 +1,8 @@
 import { fieldRequired } from "../commonValidators";
 
+// Physical construction cost
+export const constructionCostValidator = fieldRequired;
+
 // Physical lease cost
 export const leaseCostValidator = fieldRequired;
 

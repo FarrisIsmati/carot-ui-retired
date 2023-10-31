@@ -1,7 +1,12 @@
+import { dateFormatMapper } from "@/components/common/DatePicker";
+import { DateFormatEnum } from "@/components/common/DatePicker/types";
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { CurrencyTypes } from "@/types/VisionForm/common/currency";
+import moment from "moment";
 import { LegalStructureDropdownValuesEnum } from "../fields/dropdownValues";
+
+const currentDate = new Date();
 
 export const visionFormDemoInitialValues: VisionFormValues = {
 	//
@@ -11,8 +16,11 @@ export const visionFormDemoInitialValues: VisionFormValues = {
 	overviewCurrency: CurrencyTypes.USD, // Need to set based on location
 	overviewIndustry: "",
 	overviewCountryOrigin: CountriesEnum.USA, // Need to ask for users location/ or default to unknown
-	overviewForecastingStartDate: "",
-	overviewForecastingEndDate: "",
+	overviewStartDate: moment().format(dateFormatMapper[DateFormatEnum.MMDDYYYY]),
+	overviewEndDate: moment()
+		.add(2, "years")
+		.subtract(1, "days")
+		.format(dateFormatMapper[DateFormatEnum.MMDDYYYY]),
 
 	//
 	// Revenue Section

@@ -8,6 +8,6 @@ export interface OverviewSection {
 	overviewCurrency: CurrencyTypes;
 	overviewIndustry: string;
 	overviewCountryOrigin: CountriesEnum;
-	overviewForecastingStartDate: string;
-	overviewForecastingEndDate: string;
+	overviewStartDate: string;
+	overviewEndDate: string;
 }

@@ -20,6 +20,8 @@ export const currencyDropdownValues = [
 	{ value: "CND", id: "cnd" },
 	{ value: "MEX", id: "mex" },
 	{ value: "EUR", id: "eur" },
+	{ value: "YEN", id: "yen" },
+	{ value: "WON", id: "won" },
 ];
 
 export const countryOriginDropdownValues = [
@@ -27,6 +29,8 @@ export const countryOriginDropdownValues = [
 	{ value: CountriesEnum.CANADA, id: "CND" },
 	{ value: CountriesEnum.MEXICO, id: "MEX" },
 	{ value: CountriesEnum.GERMANY, id: "GER" },
+	{ value: CountriesEnum.Japan, id: "JAP" },
+	{ value: CountriesEnum.Korea, id: "KOR" },
 ];
 
 //
@@ -48,11 +52,6 @@ export const locationTypeDropdownValues = [
 	{
 		value: capitalize(LocationType.ONLINE),
 		id: LocationType.ONLINE,
-		disabled: true,
-	},
-	{
-		value: capitalize(LocationType.MOBILE),
-		id: LocationType.MOBILE,
 		disabled: true,
 	},
 ];

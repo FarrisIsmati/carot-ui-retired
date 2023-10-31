@@ -4,13 +4,19 @@ export enum LocationType {
 	PHYSICAL = "PHYSICAL",
 }
 
-export enum PhysicalType {
+export enum PhysicalFinanceType {
 	LEASE = "LEASE",
 	OWN = "OWN",
 }
 
-export interface SpaceAndPlaceSection extends Lease {
-	physicalType: PhysicalType;
+export enum PhysicalUseType {
+	RETAIL = "RETAIL",
+	OFFICE = "RETAIL",
+}
+
+export interface SpaceAndPlaceSection extends Lease, PhysicalSpace {
+	physicalFinanceType: PhysicalFinanceType;
+	physicalUseType: PhysicalUseType;
 }
 
 export interface SpaceAndPlaceInputModeLess {
@@ -18,6 +24,20 @@ export interface SpaceAndPlaceInputModeLess {
 	leaseCost: any;
 	leaseLengthMonths: any;
 	leaseLengthYears: any;
+	constructionCost: any;
+	maxOccupancy: any;
+}
+
+export interface PhysicalSpace {
+	// Construction costs (Lease/mobile/own)
+	constructionCostLow: number;
+	constructionCostAverage: number;
+	constructionCostHigh: number;
+
+	// Max occupancy (Lease/mobile/own)
+	maxOccupancyLow: number;
+	maxOccupancyAverage: number;
+	maxOccupancyHigh: number;
 }
 
 export interface Lease {

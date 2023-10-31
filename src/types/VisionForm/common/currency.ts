@@ -3,4 +3,8 @@ export enum CurrencyTypes {
 	CAN = "CND",
 	MEX = "MEX",
 	EUR = "EUR",
+	CNY = "CNY",
+	YEN = "YEN",
+	WON = "WON",
+	IRR = "IRR",
 }

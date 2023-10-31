@@ -13,8 +13,8 @@ export default ({ onSubmit }: MainSectionProps) => {
 		<div>
 			<BusinessTypeSection />
 			<CapitalAndInvestorsSection />
-			<RevenueSection />
 			<SpaceAndPlaceSection />
+			<RevenueSection />
 			<Staff />
 		</div>
 	);

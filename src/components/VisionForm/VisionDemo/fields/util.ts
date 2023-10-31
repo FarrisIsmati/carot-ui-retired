@@ -1,4 +1,32 @@
+import { DateFormatEnum } from "@/components/common/DatePicker/types";
+import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import _ from "lodash";
+
+//
+// Overview Utils
+//
+export const getCountryDateFormat = (country: CountriesEnum) => {
+	if (country === CountriesEnum.USA) {
+		return DateFormatEnum.MMDDYYYY;
+	}
+
+	if (
+		[
+			CountriesEnum.China,
+			CountriesEnum.Japan,
+			CountriesEnum.Korea,
+			CountriesEnum.Iran,
+		].includes(country)
+	) {
+		return DateFormatEnum.YYYYMMDD;
+	}
+
+	return DateFormatEnum.DDMMYYYY;
+};
+
+//
+// Revenue Utils
+//
 
 // Get the % margin +/- of goods
 export const marginCalculator = (cost: number, revenue: number) => {

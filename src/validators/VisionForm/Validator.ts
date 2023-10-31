@@ -1,10 +1,11 @@
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
-import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import {
-	legalStructureValidator,
 	overviewCountryOriginValidator,
 	overviewCurrencyValidator,
+	overviewEndDateValidator,
 	overviewIndustryValidator,
+	overviewNameValidator,
+	overviewStartDateValidator,
 	revenueCostToProduceValidator,
 	revenueProfitAmountValidator,
 	revenueProfitMarginValidator,
@@ -16,15 +17,20 @@ export default (formValues: VisionFormValues) => {
 	// Overview
 	//
 
+	const overviewName = overviewNameValidator(formValues.overviewName);
 	const overviewIndustry = overviewIndustryValidator(
-		formValues.overviewIndustry ?? ""
+		formValues.overviewIndustry
 	);
 	const overviewCountryOrigin = overviewCountryOriginValidator(
-		formValues.overviewCountryOrigin ?? ""
+		formValues.overviewCountryOrigin
 	);
 	const overviewCurrency = overviewCurrencyValidator(
-		formValues.overviewCurrency ?? ""
+		formValues.overviewCurrency
 	);
+	const overviewStartDate = overviewStartDateValidator(
+		formValues.overviewStartDate
+	);
+	const overviewEndDate = overviewEndDateValidator(formValues.overviewEndDate);
 
 	//
 	// Revenue
@@ -78,19 +84,16 @@ export default (formValues: VisionFormValues) => {
 	// Legal and Taxes section
 	//
 
-	// Only validate if location is USA
-	const legalStructure =
-		formValues.overviewCountryOrigin === CountriesEnum.USA
-			? legalStructureValidator(formValues.legalStructure ?? "")
-			: undefined;
-
 	return {
 		//
 		// Overview
 		//
+		overviewName,
 		overviewIndustry,
 		overviewCountryOrigin,
 		overviewCurrency,
+		overviewStartDate,
+		overviewEndDate,
 
 		//
 		// Revenue
@@ -115,10 +118,5 @@ export default (formValues: VisionFormValues) => {
 		revenueProfitAmountLow,
 		revenueProfitAmountAverage,
 		revenueProfitAmountHigh,
-
-		//
-		// Legal
-		//
-		legalStructure,
 	};
 };

@@ -1,20 +1,26 @@
 import { fieldRequired } from "../commonValidators";
 
 //
-// Business
+// Overview
 //
 
-// Business industry
+// Overview industry
+export const overviewNameValidator = fieldRequired;
+
+// Overview industry
 export const overviewIndustryValidator = fieldRequired;
 
-// Business location
+// Overview location
 export const overviewCountryOriginValidator = fieldRequired;
 
-// Business currency
+// Overview currency
 export const overviewCurrencyValidator = fieldRequired;
 
-// Business currency
-export const legalStructureValidator = fieldRequired;
+// Overview start date
+export const overviewStartDateValidator = fieldRequired;
+
+// Overview end date
+export const overviewEndDateValidator = fieldRequired;
 
 //
 // Revenue

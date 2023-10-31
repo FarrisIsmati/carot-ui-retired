@@ -26,6 +26,7 @@ export default () => {
 					leaseLengthField.input.onChange(11);
 				}
 			}}
+			disabled
 		/>
 	);
 };

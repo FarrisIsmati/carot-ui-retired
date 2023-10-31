@@ -1,10 +1,22 @@
 import {
-	PhysicalType,
+	PhysicalFinanceType,
+	PhysicalUseType,
 	SpaceAndPlaceSection,
 } from "@/types/VisionForm/SpaceAndPlaceSection";
 
 export const SpaceAndPlaceFormInitialValues: SpaceAndPlaceSection = {
-	physicalType: PhysicalType.LEASE,
+	physicalFinanceType: PhysicalFinanceType.LEASE,
+	physicalUseType: PhysicalUseType.RETAIL,
+
+	// Construction cost
+	constructionCostLow: 0,
+	constructionCostAverage: 0,
+	constructionCostHigh: 0,
+
+	// Maximum occupancy
+	maxOccupancyLow: 0,
+	maxOccupancyAverage: 0,
+	maxOccupancyHigh: 0,
 
 	// Lease length months
 	leaseLengthMonthsLow: 0,
@@ -12,9 +24,9 @@ export const SpaceAndPlaceFormInitialValues: SpaceAndPlaceSection = {
 	leaseLengthMonthsHigh: 0,
 
 	// Lease length years
-	leaseLengthYearsLow: 1,
-	leaseLengthYearsAverage: 1,
-	leaseLengthYearsHigh: 1,
+	leaseLengthYearsLow: 2,
+	leaseLengthYearsAverage: 2,
+	leaseLengthYearsHigh: 2,
 
 	// Lease size
 	leaseSizeLow: 0,

@@ -1,45 +1,28 @@
 import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
-import { spacer8 } from "@/styles/sizes";
-import { styled } from "styled-components";
 
-import { VisionFormValues } from "@/types/VisionForm/VisionForm";
-import { CountriesEnum } from "@/types/VisionForm/common/countries";
-import { useFormState } from "react-final-form";
-import LegalStructureField from "../../fields/LegalAndTaxes/LegalStructureField";
+import CompanyNameField from "../../fields/Overview/CompanyNameField";
 import CountryOriginField from "../../fields/Overview/CountryOriginField";
 import CurrencyField from "../../fields/Overview/CurrencyField";
+import EndDate from "../../fields/Overview/EndDate";
 import IndustryField from "../../fields/Overview/IndustryField";
-import { FieldsContainer } from "../styles";
-
-const StyledContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: ${spacer8};
-`;
-
-const StyledDoubleDropdownContainer = styled.div`
-	display: flex;
-	gap: ${spacer8};
-`;
+import StartDate from "../../fields/Overview/StartDate";
+import { FieldsContainer, StyledDoubleDropdownContainer } from "../styles";
 
 export default () => {
-	const formState = useFormState<VisionFormValues>();
-	const formValues = formState.values;
-
 	return (
 		<FieldsContainer>
 			<Type semanticfont={semanticFonts.headlineSmall}>Business Type</Type>
+			<CompanyNameField />
 			<IndustryField />
 			<StyledDoubleDropdownContainer>
 				<CountryOriginField />
 				<CurrencyField />
 			</StyledDoubleDropdownContainer>
-
-			{/* Hidden if not USA */}
-			{formValues.overviewCountryOrigin === CountriesEnum.USA && (
-				<LegalStructureField />
-			)}
+			<StyledDoubleDropdownContainer>
+				<StartDate />
+				<EndDate />
+			</StyledDoubleDropdownContainer>
 		</FieldsContainer>
 	);
 };
