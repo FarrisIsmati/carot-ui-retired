@@ -22,6 +22,10 @@ export interface AllFormValues
 		SpaceAndPlaceSection,
 		StaffSection {}
 
+// All form value keys minus arrays for operations that don't expect to be taken on fields with arrays
+export interface AllFormValuesNoArrays
+	extends Omit<AllFormValues, "investors" | "loans"> {}
+
 // Used to get keyof all field names from all forms that have low, average, high in it
 export interface AllFormValuesInputModeLess
 	extends RevenueSectionInputModeLess,

@@ -1,5 +1,8 @@
 import { DropdownData } from "@/components/common/Dropdown/types";
-import { AllFormValues } from "@/types/VisionForm/VisionForm";
+import {
+	AllFormValues,
+	AllFormValuesNoArrays,
+} from "@/types/VisionForm/VisionForm";
 import { FieldMetaState, useField } from "react-final-form";
 
 // Get form field
@@ -31,7 +34,7 @@ export const getDropdownValue = (
 // Get default value for dropdown
 export const useGetDropdownDefaultValue = (
 	dropdownValues: DropdownData<any>[],
-	fieldName: keyof AllFormValues
+	fieldName: keyof AllFormValuesNoArrays
 ) => {
 	const field = useVisionFormField(fieldName);
 	return getDropdownValue(dropdownValues, field.input.value);

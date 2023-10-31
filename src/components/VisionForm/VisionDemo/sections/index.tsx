@@ -1,5 +1,5 @@
 import { useFormState } from "react-final-form";
-import LoansAndInvestorsSection from "./LoansAndInvestorsSection/index.jsx";
+import LoansAndInvestorsSection from "./LoansAndInvestorsSection";
 import BusinessTypeSection from "./OverviewSection";
 import RevenueSection from "./RevenueSection";
 import SpaceAndPlaceSection from "./SpaceAndPlaceSection";

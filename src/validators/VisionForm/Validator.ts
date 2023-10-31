@@ -32,6 +32,8 @@ export default (formValues: VisionFormValues) => {
 	);
 	const overviewEndDate = overviewEndDateValidator(formValues.overviewEndDate);
 
+	// todo: validate loans & investors here
+
 	//
 	// Revenue
 	//
