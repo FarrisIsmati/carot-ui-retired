@@ -6,8 +6,6 @@ import { CurrencyTypes } from "@/types/VisionForm/common/currency";
 import moment from "moment";
 import { LegalStructureDropdownValuesEnum } from "../fields/dropdownValues";
 
-const currentDate = new Date();
-
 export const visionFormDemoInitialValues: VisionFormValues = {
 	//
 	// Overview Section
@@ -21,6 +19,12 @@ export const visionFormDemoInitialValues: VisionFormValues = {
 		.add(2, "years")
 		.subtract(1, "days")
 		.format(dateFormatMapper[DateFormatEnum.MMDDYYYY]),
+
+	//
+	// Loans and Investors
+	//
+	investors: [],
+	loans: [],
 
 	//
 	// Revenue Section

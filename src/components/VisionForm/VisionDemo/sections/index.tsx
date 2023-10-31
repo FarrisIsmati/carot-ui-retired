@@ -1,4 +1,5 @@
-import CapitalAndInvestorsSection from "./CapitalAndInvestorsSection";
+import { useFormState } from "react-final-form";
+import LoansAndInvestorsSection from "./LoansAndInvestorsSection/index.jsx";
 import BusinessTypeSection from "./OverviewSection";
 import RevenueSection from "./RevenueSection";
 import SpaceAndPlaceSection from "./SpaceAndPlaceSection";
@@ -9,10 +10,13 @@ interface MainSectionProps {
 }
 
 export default ({ onSubmit }: MainSectionProps) => {
+	const fs = useFormState();
+
+	console.log("form values", fs.values);
 	return (
 		<div>
 			<BusinessTypeSection />
-			<CapitalAndInvestorsSection />
+			<LoansAndInvestorsSection />
 			<SpaceAndPlaceSection />
 			<RevenueSection />
 			<Staff />

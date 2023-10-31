@@ -4,9 +4,9 @@ import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
 import { spacer8 } from "@/styles/sizes";
 import { styled } from "styled-components";
-import InvestorEquity from "../../fields/CapitalAndInvestors/InvestorEquity";
-import InvestorName from "../../fields/CapitalAndInvestors/InvestorName";
-import InvestorStartingCash from "../../fields/CapitalAndInvestors/InvestorStartingCash";
+import InvestorEquity from "../../fields/LoansAndInvestors/InvestorEquity";
+import InvestorName from "../../fields/LoansAndInvestors/InvestorName";
+import InvestorStartingCash from "../../fields/LoansAndInvestors/InvestorStartingCash";
 
 const StyledContainer = styled.div`
 	display: flex;

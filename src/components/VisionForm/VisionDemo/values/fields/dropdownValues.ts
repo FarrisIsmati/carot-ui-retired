@@ -1,4 +1,4 @@
-import { CapitalType } from "@/types/VisionForm/CapitalAndInvestorsSection";
+import { CapitalType } from "@/types/VisionForm/LoansAndInvestorsSection";
 import { LocationType } from "@/types/VisionForm/SpaceAndPlaceSection";
 import { StaffType } from "@/types/VisionForm/StaffSection";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
@@ -34,7 +34,7 @@ export const countryOriginDropdownValues = [
 ];
 
 //
-// Capital and Investors
+// Loans and Investors
 //
 export const capitalTypeDropdownValues = [
 	{ value: capitalize(CapitalType.INVESTOR), id: CapitalType.INVESTOR },

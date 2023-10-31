@@ -17,7 +17,7 @@ const StyledAddButton = styled(ButtonPrimary)`
 	margin-top: ${spacer8};
 `;
 
-// CapitalAndInvestorsForm
+// Space and place form
 
 interface SpaceAndPlaceFormProps {
 	/**
@@ -35,10 +35,8 @@ const handleSubmit = () => {
 };
 
 export default ({ children, locationType }: SpaceAndPlaceFormProps) => {
-	// Set this to context (need to reference field in current form not Capital And Investors form)
+	// Get values from vision form store in context in space and place form
 	const currencySymbol = useCurrencySymbol();
-
-	// Get country origin
 	const countryOrigin = useVisionFormField("overviewCountryOrigin").input.value;
 
 	return (

@@ -1,4 +1,4 @@
-// Capital & Investors section
+// Loans and Investors section
 
 import { CompoundScheduleType, ScheduleType } from "./common/schedule";
 
@@ -19,21 +19,7 @@ export enum CapitalType {
 	LOAN = "LOAN",
 }
 
-export interface CapitalAndInvestorsSection extends Investor, Loan {}
-
-export interface CapitalAndInvestorsInputModeLess {
-	loanAmount: any;
-	loanTermLengthYears: any;
-	loanTermLengthMonths: any;
-	loanClosingCostPercentage: any;
-	loanOriginationFee: any;
-	loanDocumentationFee: any;
-	investorStartingCash: any;
-	investorDrawProfitPercentage: any;
-	investorDrawTarget: any;
-}
-
-export interface Investor {
+export interface InvestorSection {
 	investorName: string;
 	investorType: InvestorType; // Either an active investor/owner or silent investor (hands off)
 	investorJoinDate: string; // When an investor joins the company
@@ -63,7 +49,14 @@ export interface Investor {
 	investorTaxBracket: string; // TODO: Create a mapper for strings based on country and tax brackets, then create util func to convert tax percentage based on mapper
 }
 
-export interface Loan {
+// Investor keys without input modes
+export interface InvestorsInputModeLess {
+	investorStartingCash: any;
+	investorDrawProfitPercentage: any;
+	investorDrawTarget: any;
+}
+
+export interface LoanSection {
 	loanName: string;
 	loanType: LoanType; // Type of loan a user wants to take out (this can impact options/validations)
 	loanIssueDate: string; // Date when the loan is issued
@@ -101,4 +94,14 @@ export interface Loan {
 	loanDocumentationFeeLow: number;
 	loanDocumentationFeeAverage: number;
 	loanDocumentationFeeHigh: number;
+}
+
+// Loan keys without input modes
+export interface LoansInputModeLess {
+	loanAmount: any;
+	loanTermLengthYears: any;
+	loanTermLengthMonths: any;
+	loanClosingCostPercentage: any;
+	loanOriginationFee: any;
+	loanDocumentationFee: any;
 }

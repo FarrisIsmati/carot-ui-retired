@@ -24,10 +24,10 @@ export const VisionDemoForm = () => {
 			validate={(values) => VisionFormValidator(values)}
 			onSubmit={handleSubmit}
 			render={({ handleSubmit }) => (
-				<form onSubmit={handleSubmit}>
+				<div>
 					<Sections onSubmit={handleSubmit} />
 					<StyledAddButton onClick={handleSubmit}>Submit</StyledAddButton>
-				</form>
+				</div>
 			)}
 		/>
 	);
