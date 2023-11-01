@@ -1,8 +1,5 @@
 import { DropdownData } from "@/components/common/Dropdown/types";
-import {
-	AllFormValues,
-	AllFormValuesNoArrays,
-} from "@/types/VisionForm/VisionForm";
+import { AllFormValues, AllFormValuesNoArrays } from "@/types/VisionForm";
 import { FieldMetaState, useField } from "react-final-form";
 
 // Get form field

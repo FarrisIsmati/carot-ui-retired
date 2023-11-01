@@ -22,7 +22,9 @@ export enum PhysicalUseType {
 
 export interface PhysicalLeaseLocationSection
 	extends PhysicalLocationSection,
-		LeaseSection {}
+		LeaseSection {
+	id: string;
+}
 
 export interface PhysicalLocationSection {
 	// Construction costs (Lease/mobile/own)

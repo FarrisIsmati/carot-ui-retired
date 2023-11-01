@@ -1,7 +1,7 @@
 // Overview section
 
-import { CountriesEnum } from "./common/countries";
-import { CurrencyTypes } from "./common/currency";
+import { CountriesEnum } from "../common/countries";
+import { CurrencyTypes } from "../common/currency";
 
 export interface OverviewSection {
 	overviewName: string;

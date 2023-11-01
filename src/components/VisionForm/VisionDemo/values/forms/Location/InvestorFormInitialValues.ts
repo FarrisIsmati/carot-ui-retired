@@ -4,7 +4,7 @@ import {
 } from "@/types/VisionForm/CapitalSection/InvestorSection";
 import { ScheduleType } from "@/types/VisionForm/common/schedule";
 
-export const InvestorsFormInitialValues: InvestorSection = {
+export const InvestorsFormInitialValues: Omit<InvestorSection, "id"> = {
 	investorName: "",
 	investorType: InvestorType.ACTIVE,
 	investorJoinDate: "",

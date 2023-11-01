@@ -1,10 +1,11 @@
 import { useCurrencySymbol } from "@/components/VisionForm/utils/currency";
+import { VisionFormValues } from "@/types/VisionForm";
 import { LoanSection } from "@/types/VisionForm/CapitalSection/LoanSection";
-import { VisionFormValues } from "@/types/VisionForm/VisionForm";
 import loanFormValidator from "@/validators/Capital/Loan/LoanFormValidator";
 import { FormApi } from "final-form";
 import _ from "lodash";
 import { Form, useForm } from "react-final-form";
+import { v4 as uuid } from "uuid";
 import { LoanFormInitialValues } from "../../../values/forms/Location/LoanFormInitialValues";
 import { CapitalFormContextProvider } from "../CapitalFormContext";
 import { StyledAddButton } from "../InvestorForm";
@@ -24,6 +25,8 @@ export const handleSubmitLoan = ({
 	const loansValue = formValues.loans;
 	// Clone object
 	const loansCloned = _.cloneDeep(loansValue);
+	// Add an UUID
+	values.id = uuid();
 	// Append submitted investor to investors cloned object
 	loansCloned?.push(values);
 	// Update vision form state

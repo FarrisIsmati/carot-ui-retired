@@ -5,7 +5,7 @@ import {
 import Dropdown from "@/components/common/Dropdown";
 import { DropdownData } from "@/components/common/Dropdown/types";
 import { Sizes } from "@/styles/sizes";
-import { AllFormValues } from "@/types/VisionForm/VisionForm";
+import { AllFormValues } from "@/types/VisionForm";
 
 export interface FormDropdownSelectorProps {
 	label: string;

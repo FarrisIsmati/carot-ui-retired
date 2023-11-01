@@ -1,5 +1,5 @@
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
-import { AllFormValuesInputModeLess } from "@/types/VisionForm/VisionForm";
+import { AllFormValuesInputModeLess } from "@/types/VisionForm";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 
 // Checks if a field with an input mode of (low, average, high) has an error on any of the three

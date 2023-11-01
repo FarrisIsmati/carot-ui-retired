@@ -1,16 +1,13 @@
-import TextFieldNumeric, {
-	TextFieldNumericProps,
-} from "@/components/common/TextField/TextFieldNumeric";
 import {
 	hasVisibleErrors,
 	useVisionFormField,
 } from "@/components/VisionForm/utils/form";
+import TextFieldNumeric, {
+	TextFieldNumericProps,
+} from "@/components/common/TextField/TextFieldNumeric";
 import { Sizes } from "@/styles/sizes";
+import { AllFormValues, AllFormValuesInputModeLess } from "@/types/VisionForm";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
-import {
-	AllFormValues,
-	AllFormValuesInputModeLess,
-} from "@/types/VisionForm/VisionForm";
 import { useHasInputModeError } from "@/validators/utils";
 
 const getFieldName = (

@@ -1,6 +1,6 @@
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
-import { AllFormValuesInputModeLess } from "@/types/VisionForm/VisionForm";
+import { AllFormValuesInputModeLess } from "@/types/VisionForm";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 
 export default () => {

@@ -4,7 +4,7 @@ import {
 } from "@/types/VisionForm/CapitalSection/LoanSection";
 import { CompoundScheduleType } from "@/types/VisionForm/common/schedule";
 
-export const LoanFormInitialValues: LoanSection = {
+export const LoanFormInitialValues: Omit<LoanSection, "id"> = {
 	loanName: "",
 	loanType: LoanType.GENERIC,
 	loanIssueDate: "",

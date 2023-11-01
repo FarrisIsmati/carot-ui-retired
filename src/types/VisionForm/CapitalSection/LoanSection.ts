@@ -10,6 +10,8 @@ export enum LoanType {
 }
 
 export interface LoanSection {
+	id: string;
+
 	loanName: string;
 	loanType: LoanType; // Type of loan a user wants to take out (this can impact options/validations)
 	loanIssueDate: string; // Date when the loan is issued

@@ -1,4 +1,5 @@
 export interface RevenueSection {
+	id: string;
 	// Cost to produce a product
 	revenueCostToProduceLow: number;
 	revenueCostToProduceAverage: number;

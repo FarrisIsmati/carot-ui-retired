@@ -8,6 +8,8 @@ export enum InvestorType {
 }
 
 export interface InvestorSection {
+	id: string;
+
 	investorName: string;
 	investorType: InvestorType; // Either an active investor/owner or silent investor (hands off)
 	investorJoinDate: string; // When an investor joins the company

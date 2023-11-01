@@ -1,7 +1,8 @@
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { Sizes } from "@/styles/sizes";
 import { useContext } from "react";
-import RevenueSectionContext from "../../sections/RevenueSection/RevenueSectionContext";
+import RevenueFormContext from "../../forms/RevenueForm/RevenueFormContext";
+import useRevenueFields from "../../sections/RevenueSection/hooks/useRevenueFields";
 import {
 	profitFromMarginCalculator,
 	revenueFromMarginCalculator,
@@ -9,14 +10,16 @@ import {
 
 export default () => {
 	// Context
-	const formContext = useContext(RevenueSectionContext);
+	const formContext = useContext(RevenueFormContext);
+	const prefix = formContext?.currencySymbol;
+
 	const {
 		revenueProfitMarginInputMode,
-		revenueProfitMarginField,
-		revenueProfitAmountField,
 		revenueCostToProduceField,
+		revenueProfitAmountField,
 		revenueRetailPriceField,
-	} = formContext!;
+		revenueProfitMarginField,
+	} = useRevenueFields();
 
 	return (
 		<FormTextFieldNumeric

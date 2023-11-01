@@ -1,6 +1,6 @@
 import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
-import { VisionFormValues } from "@/types/VisionForm/VisionForm";
+import { VisionFormValues } from "@/types/VisionForm";
 import VisionFormValidator from "@/validators/VisionForm/Validator";
 import { Form } from "react-final-form";
 import { styled } from "styled-components";

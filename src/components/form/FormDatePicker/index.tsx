@@ -3,7 +3,7 @@ import {
 	hasVisibleErrors,
 	useVisionFormField,
 } from "@/components/VisionForm/utils/form";
-import { AllFormValues } from "@/types/VisionForm/VisionForm";
+import { AllFormValues } from "@/types/VisionForm";
 
 export interface FormDatePickerProps {
 	fieldName: keyof AllFormValues;

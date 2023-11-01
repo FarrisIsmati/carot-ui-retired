@@ -4,7 +4,7 @@ import {
 	useVisionFormField,
 } from "@/components/VisionForm/utils/form";
 import { Sizes } from "@/styles/sizes";
-import { AllFormValues } from "@/types/VisionForm/VisionForm";
+import { AllFormValues } from "@/types/VisionForm";
 
 export interface FormTextFieldSelectorProps {
 	label: string;

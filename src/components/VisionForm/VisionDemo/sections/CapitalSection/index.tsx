@@ -7,7 +7,7 @@ import InvestorForm from "../../forms/CapitalForm/InvestorForm";
 import LoanForm from "../../forms/CapitalForm/LoanForm";
 import { capitalTypeDropdownValues } from "../../values/fields/dropdownValues";
 import { FieldsContainer } from "../styles";
-import InvestorSection from "./InvestorSection/InvestorSection";
+import InvestorSection from "./InvestorSection";
 
 export default () => {
 	const [capitalType, setCapitalType] = useState<CapitalType | null>(null);
