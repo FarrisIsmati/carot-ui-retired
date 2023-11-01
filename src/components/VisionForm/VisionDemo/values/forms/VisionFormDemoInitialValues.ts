@@ -23,6 +23,7 @@ export const visionFormDemoInitialValues: VisionFormValues = {
 	//
 	// Loans and Investors
 	//
+
 	investors: [],
 	loans: [],
 
@@ -50,6 +51,17 @@ export const visionFormDemoInitialValues: VisionFormValues = {
 	revenueProfitMarginAverage: 0,
 	revenueProfitMarginHigh: 0,
 
+	//
 	// Legal Section
+	//
 	legalStructure: LegalStructureDropdownValuesEnum.SOLE_PROPRIETORSHIP,
+
+	//
+	// Taxes section
+	//
+
+	// Tax rate generic
+	taxRateGenericLow: 0,
+	taxRateGenericAverage: 0,
+	taxRateGenericHigh: 0,
 };

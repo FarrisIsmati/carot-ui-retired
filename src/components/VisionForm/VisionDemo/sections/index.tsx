@@ -4,6 +4,7 @@ import BusinessTypeSection from "./OverviewSection";
 import RevenueSection from "./RevenueSection";
 import SpaceAndPlaceSection from "./SpaceAndPlaceSection";
 import Staff from "./Staff";
+import Taxes from "./Taxes";
 
 interface MainSectionProps {
 	onSubmit: () => void;
@@ -20,6 +21,7 @@ export default ({ onSubmit }: MainSectionProps) => {
 			<SpaceAndPlaceSection />
 			<RevenueSection />
 			<Staff />
+			<Taxes />
 		</div>
 	);
 };

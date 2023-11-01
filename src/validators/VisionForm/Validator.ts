@@ -1,4 +1,5 @@
 import { VisionFormValues } from "@/types/VisionForm/VisionForm";
+import taxesValidator from "../Taxes/TaxesValidator";
 import {
 	overviewCountryOriginValidator,
 	overviewCurrencyValidator,
@@ -83,8 +84,9 @@ export default (formValues: VisionFormValues) => {
 	);
 
 	//
-	// Legal and Taxes section
+	// Taxes section
 	//
+	const taxes = taxesValidator(formValues);
 
 	return {
 		//
@@ -120,5 +122,8 @@ export default (formValues: VisionFormValues) => {
 		revenueProfitAmountLow,
 		revenueProfitAmountAverage,
 		revenueProfitAmountHigh,
+
+		// Taxes section
+		...taxes,
 	};
 };
