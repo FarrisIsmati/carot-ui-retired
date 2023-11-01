@@ -15,12 +15,21 @@ export interface SegmentedControlProps<T> {
 	 */
 	data: SegmentedControlOption[];
 	/**
+	 * onChange
+	 */
+	onChange?: (opt: SegmentedControlOption) => void;
+	/**
 	 * input
 	 */
 	input?: FieldInputProps<T, HTMLElement>;
 }
 
-export default ({ width, data, input }: SegmentedControlProps<any>) => {
+export default ({
+	width,
+	data,
+	input,
+	onChange,
+}: SegmentedControlProps<any>) => {
 	const [options, setOptions] = useState(data);
 
 	return (
@@ -32,6 +41,7 @@ export default ({ width, data, input }: SegmentedControlProps<any>) => {
 				clonedOptions.map((opt, x) => {
 					if (x === i) {
 						opt.isActive = true;
+						onChange?.(opt);
 						input?.onChange?.(opt.id);
 						return opt;
 					}

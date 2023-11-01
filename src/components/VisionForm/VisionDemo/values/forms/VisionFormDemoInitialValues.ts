@@ -26,6 +26,7 @@ export const visionFormDemoInitialValues: VisionFormValues = {
 
 	investors: [],
 	loans: [],
+	leases: [],
 
 	//
 	// Revenue Section

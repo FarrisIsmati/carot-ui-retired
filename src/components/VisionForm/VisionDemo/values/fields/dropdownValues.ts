@@ -1,5 +1,5 @@
-import { CapitalType } from "@/types/VisionForm/LoansAndInvestorsSection";
-import { LocationType } from "@/types/VisionForm/SpaceAndPlaceSection";
+import { CapitalType } from "@/types/VisionForm/CapitalSection";
+import { LocationType } from "@/types/VisionForm/LocationSection";
 import { StaffType } from "@/types/VisionForm/StaffSection";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { capitalize } from "lodash";

@@ -1,0 +1,28 @@
+import Type from "@/components/common/Type";
+import { semanticFonts } from "@/styles/fonts";
+
+import DropdownSelect from "@/components/common/Dropdown/DropdownSelect";
+import { LocationType } from "@/types/VisionForm/LocationSection";
+import { useState } from "react";
+import { locationTypeDropdownValues } from "../../values/fields/dropdownValues";
+import { FieldsContainer } from "../styles";
+import PhysicalSection from "./PhysicalSection";
+
+export default () => {
+	const [locationType, setLocationType] = useState<LocationType | null>(null);
+
+	return (
+		<FieldsContainer>
+			<Type semanticfont={semanticFonts.headlineSmall}>Business Location</Type>
+			<DropdownSelect
+				id={"locationType"}
+				name={"locationType"}
+				placeholder={"Add location"}
+				dataset={locationTypeDropdownValues}
+				onselect={(value) => setLocationType(value.id)}
+			/>
+			{locationType === LocationType.PHYSICAL && <PhysicalSection />}
+			{locationType === LocationType.ONLINE && <p>ONLINE</p>}
+		</FieldsContainer>
+	);
+};

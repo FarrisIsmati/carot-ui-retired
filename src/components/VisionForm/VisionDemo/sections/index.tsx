@@ -1,8 +1,8 @@
 import { useFormState } from "react-final-form";
-import LoansAndInvestorsSection from "./LoansAndInvestorsSection";
+import LoansAndInvestorsSection from "./CapitalSection";
+import LocationSection from "./LocationSection";
 import BusinessTypeSection from "./OverviewSection";
 import RevenueSection from "./RevenueSection";
-import SpaceAndPlaceSection from "./SpaceAndPlaceSection";
 import Staff from "./Staff";
 import Taxes from "./Taxes";
 
@@ -18,7 +18,7 @@ export default ({ onSubmit }: MainSectionProps) => {
 		<div>
 			<BusinessTypeSection />
 			<LoansAndInvestorsSection />
-			<SpaceAndPlaceSection />
+			<LocationSection />
 			<RevenueSection />
 			<Staff />
 			<Taxes />
