@@ -16,6 +16,11 @@ export enum PhysicalUseType {
 	OFFICE = "RETAIL",
 }
 
+export enum CurveType {
+	BASIC = "BASIC",
+	RAPID = "RAPID",
+}
+
 //
 // Physical
 //
@@ -46,6 +51,9 @@ export interface PhysicalLocationSection {
 	daysOpenPerWeekGenericLow: number;
 	daysOpenPerWeekGenericAverage: number;
 	daysOpenPerWeekGenericHigh: number;
+
+	// Traffic curve
+	trafficCurve: CurveType; // Todo updating the range of values will be a seperate field
 }
 
 export interface PhysicalLocationSectionInputModeLess {
@@ -53,6 +61,7 @@ export interface PhysicalLocationSectionInputModeLess {
 	maxOccupancy: any;
 	hoursOpenPerDayGeneric: any;
 	daysOpenPerWeekGeneric: any;
+	trafficCurve: any;
 }
 
 //

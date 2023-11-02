@@ -111,15 +111,15 @@ export default ({
 			setSelectedItem(defaultValue); // Local display state
 
 			// If form value isn't set to default value, update it also
-			if (input?.value !== defaultValue.value) {
-				input?.onChange?.(defaultValue.value); // Form state
+			if (input?.value !== defaultValue.id) {
+				input?.onChange?.(defaultValue.id); // Form state
 			}
 		}
 	}, [defaultValue]);
 
 	// Set selected item to anything onChange
 	useEffect(() => {
-		if (selectedItem?.value !== input?.value) {
+		if (selectedItem?.id !== input?.value) {
 			const newSelectedItem = getDropdownValue(dataset, input?.value) ?? null;
 			setSelectedItem(newSelectedItem);
 			setCursor(getDropdownIndex(dataset, newSelectedItem?.id));
@@ -168,7 +168,7 @@ export default ({
 			}
 			// Close menu if focused and hitting enter key to select item
 			if (isMenuOpen) {
-				onSelect(dataset[cursor], dataset[cursor].value);
+				onSelect(dataset[cursor], dataset[cursor].id);
 			}
 		}
 	};
@@ -232,7 +232,7 @@ export default ({
 											if (disabled || e.disabled) {
 												return;
 											}
-											onSelect(e, e.value);
+											onSelect(e, e.id);
 										}}
 										active={
 											e.id === selectedItem?.id ||

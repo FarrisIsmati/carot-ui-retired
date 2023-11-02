@@ -26,6 +26,15 @@ export const spacer156 = "156px";
 export const spacer200 = "200px";
 export const spacer320 = "320px";
 
+/**
+ * Converts a string with px in the end to a number
+ * @param size
+ * @returns number
+ */
+export const pxStringToNum = (size: string): number => {
+	return parseInt(size.slice(0, -2));
+};
+
 export enum Sizes {
 	SMALL = "SMALL",
 	MEDIUM = "MEDIUM",

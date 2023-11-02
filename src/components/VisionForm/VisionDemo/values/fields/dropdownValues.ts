@@ -1,5 +1,5 @@
 import { CapitalType } from "@/types/VisionForm/CapitalSection";
-import { LocationType } from "@/types/VisionForm/LocationSection";
+import { CurveType, LocationType } from "@/types/VisionForm/LocationSection";
 import { StaffType } from "@/types/VisionForm/StaffSection";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { capitalize } from "lodash";
@@ -10,27 +10,27 @@ import { capitalize } from "lodash";
 // Overview
 //
 export const industryDropdownValues = [
-	{ value: "Food & Services", id: "foodandservices" },
-	{ value: "Retail", id: "retail" },
-	{ value: "Wholesale", id: "wholesale" },
+	{ value: "Food & Services", id: "Food & Services" },
+	{ value: "Retail", id: "Retail" },
+	{ value: "Wholesale", id: "Wholesale" },
 ];
 
 export const currencyDropdownValues = [
-	{ value: "USD", id: "usd" },
-	{ value: "CND", id: "cnd" },
-	{ value: "MEX", id: "mex" },
-	{ value: "EUR", id: "eur" },
-	{ value: "YEN", id: "yen" },
-	{ value: "WON", id: "won" },
+	{ value: "USD", id: "USD" },
+	{ value: "CND", id: "CND" },
+	{ value: "MEX", id: "MEX" },
+	{ value: "EUR", id: "EUR" },
+	{ value: "YEN", id: "YEN" },
+	{ value: "WON", id: "WON" },
 ];
 
 export const countryOriginDropdownValues = [
-	{ value: CountriesEnum.USA, id: "USA" },
-	{ value: CountriesEnum.CANADA, id: "CND" },
-	{ value: CountriesEnum.MEXICO, id: "MEX" },
-	{ value: CountriesEnum.GERMANY, id: "GER" },
-	{ value: CountriesEnum.Japan, id: "JAP" },
-	{ value: CountriesEnum.Korea, id: "KOR" },
+	{ value: CountriesEnum.USA, id: CountriesEnum.USA },
+	{ value: CountriesEnum.CANADA, id: CountriesEnum.CANADA },
+	{ value: CountriesEnum.MEXICO, id: CountriesEnum.MEXICO },
+	{ value: CountriesEnum.GERMANY, id: CountriesEnum.GERMANY },
+	{ value: CountriesEnum.Japan, id: CountriesEnum.Japan },
+	{ value: CountriesEnum.Korea, id: CountriesEnum.Korea },
 ];
 
 //
@@ -42,7 +42,7 @@ export const capitalTypeDropdownValues = [
 ];
 
 //
-// Space and place
+// Location
 //
 export const locationTypeDropdownValues = [
 	{
@@ -55,6 +55,22 @@ export const locationTypeDropdownValues = [
 		disabled: true,
 	},
 ];
+
+export const trafficCurveDropdownValues = [
+	{
+		value: capitalize(CurveType.BASIC),
+		id: CurveType.BASIC,
+	},
+	{
+		value: capitalize(CurveType.RAPID),
+		id: CurveType.RAPID,
+		disabled: true,
+	},
+];
+
+//
+// Staff
+//
 
 export const staffTypeDropdownValues = [
 	{
@@ -81,22 +97,22 @@ export enum LegalStructureDropdownValuesEnum {
 export const legalStructureDropdownValues = [
 	{
 		value: LegalStructureDropdownValuesEnum.SOLE_PROPRIETORSHIP,
-		id: "soleproprietorship",
+		id: LegalStructureDropdownValuesEnum.SOLE_PROPRIETORSHIP,
 	},
 	{
 		value: LegalStructureDropdownValuesEnum.PARTNERSHIP,
-		id: "partnership",
+		id: LegalStructureDropdownValuesEnum.PARTNERSHIP,
 		disabled: true,
 	},
 	{ value: LegalStructureDropdownValuesEnum.LLC, id: "llc", disabled: true },
 	{
 		value: LegalStructureDropdownValuesEnum.C_CORP,
-		id: "ccorp",
+		id: LegalStructureDropdownValuesEnum.C_CORP,
 		disabled: true,
 	},
 	{
 		value: LegalStructureDropdownValuesEnum.S_CORP,
-		id: "scorp",
+		id: LegalStructureDropdownValuesEnum.S_CORP,
 		disabled: true,
 	},
 ];

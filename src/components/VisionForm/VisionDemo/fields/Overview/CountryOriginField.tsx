@@ -13,7 +13,7 @@ export default () => {
 	const currencyField = useVisionFormField("overviewCurrency");
 
 	const changeCurrency = (selectedItemDataset: DropdownData<any>) => {
-		const country = selectedItemDataset.value as CountriesEnum;
+		const country = selectedItemDataset.id as CountriesEnum;
 		const currency = countryToCurrencyTypeMap[country];
 		currencyField.input.onChange(currency);
 	};

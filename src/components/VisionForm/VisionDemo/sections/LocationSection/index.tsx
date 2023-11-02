@@ -3,13 +3,15 @@ import { semanticFonts } from "@/styles/fonts";
 
 import DropdownSelect from "@/components/common/Dropdown/DropdownSelect";
 import { LocationType } from "@/types/VisionForm/LocationSection";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import LocationFormContext from "../../forms/LocationForm/LocationFormContext";
 import { locationTypeDropdownValues } from "../../values/fields/dropdownValues";
 import { FieldsContainer } from "../styles";
 import PhysicalSection from "./PhysicalSection";
 
 export default () => {
 	const [locationType, setLocationType] = useState<LocationType | null>(null);
+	const constext = useContext(LocationFormContext);
 
 	return (
 		<FieldsContainer>

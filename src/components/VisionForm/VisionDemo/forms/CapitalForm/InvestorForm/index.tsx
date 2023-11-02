@@ -9,7 +9,7 @@ import _ from "lodash";
 import { Form, useForm } from "react-final-form";
 import styled from "styled-components";
 import { v4 as uuid } from "uuid";
-import { InvestorsFormInitialValues } from "../../../values/forms/Location/InvestorFormInitialValues";
+import { InvestorsFormInitialValues } from "../../../values/forms/Capital/InvestorFormInitialValues";
 import { CapitalFormContextProvider } from "../CapitalFormContext";
 
 export const StyledAddButton = styled(ButtonPrimary)`

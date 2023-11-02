@@ -25,7 +25,7 @@ export const getDropdownValue = (
 	dropdownValues: DropdownData<any>[],
 	targetValue: string | number | undefined
 ) => {
-	return dropdownValues.find((value) => value.value === targetValue);
+	return dropdownValues.find((value) => value.id === targetValue);
 };
 
 // Get default value for dropdown

@@ -1,4 +1,7 @@
-import { PhysicalLeaseLocationSection } from "@/types/VisionForm/LocationSection";
+import {
+	CurveType,
+	PhysicalLeaseLocationSection,
+} from "@/types/VisionForm/LocationSection";
 
 export const LeaseFormInitialValues: Omit<PhysicalLeaseLocationSection, "id"> =
 	{
@@ -20,6 +23,9 @@ export const LeaseFormInitialValues: Omit<PhysicalLeaseLocationSection, "id"> =
 		constructionCostLow: 0,
 		constructionCostAverage: 0,
 		constructionCostHigh: 0,
+
+		// Traffic curve
+		trafficCurve: CurveType.BASIC,
 
 		//
 		// Lease

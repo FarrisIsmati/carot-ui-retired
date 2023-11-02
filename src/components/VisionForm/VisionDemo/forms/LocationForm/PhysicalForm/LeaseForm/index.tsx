@@ -12,7 +12,7 @@ import { Form, useForm } from "react-final-form";
 import { styled } from "styled-components";
 import { v4 as uuid } from "uuid";
 import { useCurrencySymbol } from "../../../../../utils/currency";
-import { LeaseFormInitialValues } from "../../../../values/forms/Capital/LeaseFormInitialValues";
+import { LeaseFormInitialValues } from "../../../../values/forms/Location/LeaseFormInitialValues";
 import { LocationFormContextProvider } from "../../LocationFormContext";
 
 // Add Button
@@ -65,9 +65,13 @@ export default ({ children }: LeaseFormProps) => {
 	// Get values from vision form store in context in leases form
 	const currencySymbol = useCurrencySymbol();
 	const countryOrigin = useVisionFormField("overviewCountryOrigin").input.value;
+	const startDate = useVisionFormField("overviewStartDate").input.value;
+	const endDate = useVisionFormField("overviewEndDate").input.value;
 
 	return (
-		<LocationFormContextProvider value={{ currencySymbol, countryOrigin }}>
+		<LocationFormContextProvider
+			value={{ currencySymbol, countryOrigin, startDate, endDate }}
+		>
 			<Form<PhysicalLeaseLocationSection>
 				initialValues={LeaseFormInitialValues}
 				validate={(values) => physicalLeaseLocationValidator(values)}

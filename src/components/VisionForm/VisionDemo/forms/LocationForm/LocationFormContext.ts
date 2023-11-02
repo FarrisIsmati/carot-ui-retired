@@ -4,6 +4,8 @@ import React from "react";
 export interface LocationFormContextProps {
 	currencySymbol: string;
 	countryOrigin: CountriesEnum;
+	startDate: string;
+	endDate: string;
 }
 
 const LocationFormContext =

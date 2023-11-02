@@ -6,7 +6,7 @@ import { FormApi } from "final-form";
 import _ from "lodash";
 import { Form, useForm } from "react-final-form";
 import { v4 as uuid } from "uuid";
-import { LoanFormInitialValues } from "../../../values/forms/Location/LoanFormInitialValues";
+import { LoanFormInitialValues } from "../../../values/forms/Capital/LoanFormInitialValues";
 import { CapitalFormContextProvider } from "../CapitalFormContext";
 import { StyledAddButton } from "../InvestorForm";
 
