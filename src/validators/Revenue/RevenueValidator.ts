@@ -1,3 +1,4 @@
+import { VisionFormValues } from "@/types/VisionForm";
 import { RevenueSection } from "@/types/VisionForm/RevenueSection";
 import {
 	customerConversionRateValidator,
@@ -9,70 +10,83 @@ import {
 	revenueRetailPriceValidator,
 } from "./RevenueValidators";
 
-export const revenueValidator = (formValues: RevenueSection) => {
+export interface RevenueValidatorProps {
+	visionFormValues: VisionFormValues;
+	revenueFormValues: RevenueSection;
+}
+
+export const revenueValidator = ({
+	visionFormValues,
+	revenueFormValues,
+}: RevenueValidatorProps) => {
 	//
 	// Revenue
 	//
 
+	const locations = [...visionFormValues.leases]; // Todo add more locations when added (own/online/etc)
+
 	// Location link
-	const locationIds = locationIdsValidator(formValues.locationIds);
+	const locationIds = locationIdsValidator(
+		revenueFormValues.locationIds,
+		locations
+	);
 
 	// Product name
-	const proudctName = productNameValidator(formValues.productName);
+	const productName = productNameValidator(revenueFormValues.productName);
 
 	// Cost to produce
 	const revenueCostToProduceLow = revenueCostToProduceValidator(
-		formValues.revenueCostToProduceLow
+		revenueFormValues.revenueCostToProduceLow
 	);
 	const revenueCostToProduceAverage = revenueCostToProduceValidator(
-		formValues.revenueCostToProduceAverage
+		revenueFormValues.revenueCostToProduceAverage
 	);
 	const revenueCostToProduceHigh = revenueCostToProduceValidator(
-		formValues.revenueCostToProduceHigh
+		revenueFormValues.revenueCostToProduceHigh
 	);
 
 	// Physical price
 	const revenueRetailPriceLow = revenueRetailPriceValidator(
-		formValues.revenueRetailPriceLow
+		revenueFormValues.revenueRetailPriceLow
 	);
 	const revenueRetailPriceAverage = revenueRetailPriceValidator(
-		formValues.revenueRetailPriceAverage
+		revenueFormValues.revenueRetailPriceAverage
 	);
 	const revenueRetailPriceHigh = revenueRetailPriceValidator(
-		formValues.revenueRetailPriceHigh
+		revenueFormValues.revenueRetailPriceHigh
 	);
 
 	// Profit Margin
 	const revenueProfitMarginLow = revenueProfitMarginValidator(
-		formValues.revenueProfitMarginLow
+		revenueFormValues.revenueProfitMarginLow
 	);
 	const revenueProfitMarginAverage = revenueProfitMarginValidator(
-		formValues.revenueProfitMarginAverage
+		revenueFormValues.revenueProfitMarginAverage
 	);
 	const revenueProfitMarginHigh = revenueProfitMarginValidator(
-		formValues.revenueProfitMarginHigh
+		revenueFormValues.revenueProfitMarginHigh
 	);
 
 	// Profit amount
 	const revenueProfitAmountLow = revenueProfitAmountValidator(
-		formValues.revenueProfitAmountAverage
+		revenueFormValues.revenueProfitAmountAverage
 	);
 	const revenueProfitAmountAverage = revenueProfitAmountValidator(
-		formValues.revenueProfitAmountAverage
+		revenueFormValues.revenueProfitAmountAverage
 	);
 	const revenueProfitAmountHigh = revenueProfitAmountValidator(
-		formValues.revenueProfitAmountHigh
+		revenueFormValues.revenueProfitAmountHigh
 	);
 
 	// Customer conversion rate
 	const customerConversionRateLow = customerConversionRateValidator(
-		formValues.customerConversionRateLow
+		revenueFormValues.customerConversionRateLow
 	);
 	const customerConversionRateAverage = customerConversionRateValidator(
-		formValues.customerConversionRateAverage
+		revenueFormValues.customerConversionRateAverage
 	);
 	const customerConversionRateHigh = customerConversionRateValidator(
-		formValues.customerConversionRateHigh
+		revenueFormValues.customerConversionRateHigh
 	);
 
 	return {
@@ -84,7 +98,7 @@ export const revenueValidator = (formValues: RevenueSection) => {
 		locationIds,
 
 		// Product name
-		proudctName,
+		productName,
 
 		// Cost to produce
 		revenueCostToProduceLow,

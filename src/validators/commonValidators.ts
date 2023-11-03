@@ -38,3 +38,13 @@ export const hasError = (errors: ValidationErrors) => {
 	}
 	return false;
 };
+
+// Combines multiple calculated validators and returns the first hit
+export const combineValidators = <T>(
+	validators: (string | undefined)[]
+): string | undefined => {
+	const validator = validators.find((validator) => {
+		return !!validator;
+	});
+	return validator ? validator : undefined;
+};

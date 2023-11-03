@@ -1,11 +1,30 @@
-import { fieldRequired, fieldRequiredArray } from "../commonValidators";
+import { PhysicalLeaseLocationSection } from "@/types/VisionForm/LocationSection";
+import {
+	combineValidators,
+	fieldRequired,
+	fieldRequiredArray,
+} from "../commonValidators";
 
 //
 // Revenue
 //
 
 // Location link
-export const locationIdsValidator = fieldRequiredArray;
+const requiresBusinessLocationAddedValidator = (
+	locations: PhysicalLeaseLocationSection[]
+) => {
+	if (!locations.length) {
+		return "This field requires you add a business location first";
+	}
+};
+export const locationIdsValidator = (
+	locationIds: string[],
+	locations: PhysicalLeaseLocationSection[] // Todo add more locations when added (own/online/etc)
+) =>
+	combineValidators([
+		requiresBusinessLocationAddedValidator(locations),
+		fieldRequiredArray(locationIds),
+	]);
 
 // Product name
 export const productNameValidator = fieldRequired;

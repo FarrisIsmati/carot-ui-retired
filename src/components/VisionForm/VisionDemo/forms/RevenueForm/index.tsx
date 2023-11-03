@@ -9,7 +9,7 @@ import { RevenueSection } from "@/types/VisionForm/RevenueSection";
 import { revenueValidator } from "@/validators/Revenue/RevenueValidator";
 import { FormApi } from "final-form";
 import _ from "lodash";
-import { Form, useForm } from "react-final-form";
+import { Form, useForm, useFormState } from "react-final-form";
 import { styled } from "styled-components";
 import { v4 as uuid } from "uuid";
 import { revenueFormInitialValues } from "../../values/forms/Revenue/RevenueFormInitialValues";
@@ -58,11 +58,12 @@ export const handleSubmitLease = ({
 export default ({ children }: LeaseFormProps) => {
 	// Vision form for reference in handle submit lease
 	const visionForm = useForm<VisionFormValues>();
+	const visionFormState = useFormState<VisionFormValues>();
 
 	// Get values from vision form store in context in leases form
 	const currencySymbol = useCurrencySymbol();
 	const countryOrigin = useVisionFormField("overviewCountryOrigin").input.value;
-	// Get all locations (if own/online/etc add them)
+	// Get all locations // Todo add more locations when added (own/online/etc)
 	const leases = useVisionFormField("leases").input.value;
 	const locations = [...leases];
 
@@ -72,7 +73,12 @@ export default ({ children }: LeaseFormProps) => {
 		>
 			<Form<RevenueSection>
 				initialValues={revenueFormInitialValues}
-				validate={(values) => revenueValidator(values)}
+				validate={(values) =>
+					revenueValidator({
+						revenueFormValues: values,
+						visionFormValues: visionFormState.values,
+					})
+				}
 				onSubmit={(values, form) =>
 					handleSubmitLease({ form, values, visionForm })
 				}
