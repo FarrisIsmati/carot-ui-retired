@@ -5,6 +5,12 @@ export const revenueFormInitialValues: Omit<RevenueSection, "id"> = {
 	// Revenue Section
 	//
 
+	// Location link
+	locationIds: [],
+
+	// Product name
+	productName: "",
+
 	// Physical price
 	revenueRetailPriceLow: 0,
 	revenueRetailPriceAverage: 0,
@@ -24,4 +30,9 @@ export const revenueFormInitialValues: Omit<RevenueSection, "id"> = {
 	revenueProfitMarginLow: 0,
 	revenueProfitMarginAverage: 0,
 	revenueProfitMarginHigh: 0,
+
+	// Customer conversion rate
+	customerConversionRateLow: 100,
+	customerConversionRateAverage: 100,
+	customerConversionRateHigh: 100,
 };

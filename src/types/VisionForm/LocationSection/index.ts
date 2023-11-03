@@ -32,6 +32,9 @@ export interface PhysicalLeaseLocationSection
 }
 
 export interface PhysicalLocationSection {
+	// Name
+	locationName: string;
+
 	// Construction costs (Lease/mobile/own)
 	constructionCostLow: number;
 	constructionCostAverage: number;
@@ -54,6 +57,11 @@ export interface PhysicalLocationSection {
 
 	// Traffic curve
 	trafficCurve: CurveType; // Todo updating the range of values will be a seperate field
+
+	// Traffic turnover time
+	trafficTurnoverTimeLow: number;
+	trafficTurnoverTimeAverage: number;
+	trafficTurnoverTimeHigh: number;
 }
 
 export interface PhysicalLocationSectionInputModeLess {
@@ -62,6 +70,7 @@ export interface PhysicalLocationSectionInputModeLess {
 	hoursOpenPerDayGeneric: any;
 	daysOpenPerWeekGeneric: any;
 	trafficCurve: any;
+	trafficTurnoverTime: any;
 }
 
 //

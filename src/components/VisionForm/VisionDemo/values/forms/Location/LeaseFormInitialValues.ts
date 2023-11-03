@@ -9,6 +9,9 @@ export const LeaseFormInitialValues: Omit<PhysicalLeaseLocationSection, "id"> =
 		// Physical
 		//
 
+		// Name
+		locationName: "",
+
 		// Hours open per day
 		hoursOpenPerDayGenericLow: 8,
 		hoursOpenPerDayGenericAverage: 8,
@@ -26,6 +29,11 @@ export const LeaseFormInitialValues: Omit<PhysicalLeaseLocationSection, "id"> =
 
 		// Traffic curve
 		trafficCurve: CurveType.BASIC,
+
+		// Traffic turnover time
+		trafficTurnoverTimeLow: 0,
+		trafficTurnoverTimeAverage: 0,
+		trafficTurnoverTimeHigh: 0,
 
 		//
 		// Lease

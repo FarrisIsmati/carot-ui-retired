@@ -28,18 +28,10 @@ export type DropdownTriggerProps = Omit<StyledWrapperProps, "label"> &
 		 */
 		onClickMenu: () => void;
 		/**
-		 * If true adds styling to indicate error state
-		 */
-		error?: boolean;
-		/**
 		 * Set the semantic color used by the button
 		 * @default 'brightAccent
 		 **/
 		colorSet?: ColorSet;
-		/**
-		 * Text to display for an error state
-		 */
-		errorText?: string;
 		/**
 		 * isMenuOpen
 		 */
@@ -57,6 +49,14 @@ export type DropdownTriggerProps = Omit<StyledWrapperProps, "label"> &
 		 * Is feature completely locked (demo purposes)
 		 */
 		islocked?: boolean;
+		/**
+		 * If true adds styling to indicate error state
+		 */
+		error?: boolean;
+		/**
+		 * Text to display for an error state
+		 */
+		errorText?: string;
 	};
 
 export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
@@ -137,7 +137,7 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 				</StyledDropdownTriggerContentContainer>
 
 				{/* Error text bottom of the dropdown */}
-				{errorText && !disabled && !islocked && (
+				{errorText && (
 					<StyledErrorTextDropdownTrigger
 						colorset={colorSet}
 						error={error}

@@ -5,7 +5,7 @@ import { trafficCurveDropdownValues } from "../../../values/fields/dropdownValue
 export default () => {
 	return (
 		<FormDropdown
-			label="FOOT TRAFFIC CURVE"
+			label="Foot traffic curve"
 			placeholder="Select"
 			fieldName="trafficCurve"
 			dataset={trafficCurveDropdownValues}

@@ -5,12 +5,18 @@ import {
 import { leaseLocationValidator } from "./Lease/LeaseLocationValidator";
 import {
 	constructionCostValidator,
+	locationNameValidator,
 	maxOccupancyValidator,
+	trafficCurveValidator,
+	trafficTurnoverTimeValidator,
 } from "./PhysicalLocationValidators";
 
 export const physicalLocationValidator = (
 	formValues: PhysicalLocationSection
 ) => {
+	// Name
+	const locationName = locationNameValidator(formValues.locationName);
+
 	// Construction cost
 	const constructionCostLow = constructionCostValidator(
 		formValues.constructionCostLow
@@ -51,7 +57,24 @@ export const physicalLocationValidator = (
 		formValues.daysOpenPerWeekGenericHigh
 	);
 
+	// Traffic curve
+	const trafficCurve = trafficCurveValidator(formValues.trafficCurve);
+
+	// Traffic turnover time
+	const trafficTurnoverTimeLow = trafficTurnoverTimeValidator(
+		formValues.trafficTurnoverTimeLow
+	);
+	const trafficTurnoverTimeAverage = trafficTurnoverTimeValidator(
+		formValues.trafficTurnoverTimeAverage
+	);
+	const trafficTurnoverTimeHigh = trafficTurnoverTimeValidator(
+		formValues.trafficTurnoverTimeHigh
+	);
+
 	return {
+		// Name
+		locationName,
+
 		// Construction cost
 		constructionCostLow,
 		constructionCostAverage,
@@ -71,6 +94,14 @@ export const physicalLocationValidator = (
 		daysOpenPerWeekGenericLow,
 		daysOpenPerWeekGenericAverage,
 		daysOpenPerWeekGenericHigh,
+
+		// Traffic curve
+		trafficCurve,
+
+		// Traffic turnover time
+		trafficTurnoverTimeLow,
+		trafficTurnoverTimeAverage,
+		trafficTurnoverTimeHigh,
 	};
 };
 

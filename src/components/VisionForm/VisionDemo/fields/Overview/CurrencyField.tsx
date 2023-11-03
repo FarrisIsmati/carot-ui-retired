@@ -6,7 +6,7 @@ import { currencyDropdownValues } from "../../values/fields/dropdownValues";
 export default () => {
 	return (
 		<FormDropdown
-			label="CURRENCY"
+			label="Currency"
 			placeholder="Select"
 			fieldName="overviewCurrency"
 			dataset={currencyDropdownValues}

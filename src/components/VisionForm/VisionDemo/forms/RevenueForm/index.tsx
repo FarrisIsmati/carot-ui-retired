@@ -62,9 +62,14 @@ export default ({ children }: LeaseFormProps) => {
 	// Get values from vision form store in context in leases form
 	const currencySymbol = useCurrencySymbol();
 	const countryOrigin = useVisionFormField("overviewCountryOrigin").input.value;
+	// Get all locations (if own/online/etc add them)
+	const leases = useVisionFormField("leases").input.value;
+	const locations = [...leases];
 
 	return (
-		<RevenueFormContextProvider value={{ currencySymbol, countryOrigin }}>
+		<RevenueFormContextProvider
+			value={{ currencySymbol, countryOrigin, locations }}
+		>
 			<Form<RevenueSection>
 				initialValues={revenueFormInitialValues}
 				validate={(values) => revenueValidator(values)}

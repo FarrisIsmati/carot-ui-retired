@@ -20,7 +20,7 @@ export default () => {
 
 	return (
 		<FormDropdown
-			label="LOCATION"
+			label="Location"
 			placeholder="Select"
 			fieldName="overviewCountryOrigin"
 			dataset={countryOriginDropdownValues}

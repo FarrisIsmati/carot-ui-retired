@@ -1,5 +1,9 @@
 import { CapitalType } from "@/types/VisionForm/CapitalSection";
-import { CurveType, LocationType } from "@/types/VisionForm/LocationSection";
+import {
+	CurveType,
+	LocationType,
+	PhysicalLeaseLocationSection,
+} from "@/types/VisionForm/LocationSection";
 import { StaffType } from "@/types/VisionForm/StaffSection";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { capitalize } from "lodash";
@@ -67,6 +71,25 @@ export const trafficCurveDropdownValues = [
 		disabled: true,
 	},
 ];
+
+//
+// Revenue
+//
+
+export const getLocationIdsDropdownValues = (
+	locations: PhysicalLeaseLocationSection[] | undefined,
+	selectedLocations: string[]
+) => {
+	if (locations !== undefined) {
+		return locations.map((location) => ({
+			value: location.locationName,
+			id: location.id,
+			disabled: !!selectedLocations.find((id) => id === location.id), // Disabled if item has already been added
+		}));
+	}
+
+	return [];
+};
 
 //
 // Staff

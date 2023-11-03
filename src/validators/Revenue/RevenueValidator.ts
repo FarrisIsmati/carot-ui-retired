@@ -1,5 +1,8 @@
 import { RevenueSection } from "@/types/VisionForm/RevenueSection";
 import {
+	customerConversionRateValidator,
+	locationIdsValidator,
+	productNameValidator,
 	revenueCostToProduceValidator,
 	revenueProfitAmountValidator,
 	revenueProfitMarginValidator,
@@ -10,6 +13,12 @@ export const revenueValidator = (formValues: RevenueSection) => {
 	//
 	// Revenue
 	//
+
+	// Location link
+	const locationIds = locationIdsValidator(formValues.locationIds);
+
+	// Product name
+	const proudctName = productNameValidator(formValues.productName);
 
 	// Cost to produce
 	const revenueCostToProduceLow = revenueCostToProduceValidator(
@@ -55,10 +64,27 @@ export const revenueValidator = (formValues: RevenueSection) => {
 		formValues.revenueProfitAmountHigh
 	);
 
+	// Customer conversion rate
+	const customerConversionRateLow = customerConversionRateValidator(
+		formValues.customerConversionRateLow
+	);
+	const customerConversionRateAverage = customerConversionRateValidator(
+		formValues.customerConversionRateAverage
+	);
+	const customerConversionRateHigh = customerConversionRateValidator(
+		formValues.customerConversionRateHigh
+	);
+
 	return {
 		//
 		// Revenue
 		//
+
+		// Location link
+		locationIds,
+
+		// Product name
+		proudctName,
 
 		// Cost to produce
 		revenueCostToProduceLow,
@@ -79,5 +105,10 @@ export const revenueValidator = (formValues: RevenueSection) => {
 		revenueProfitAmountLow,
 		revenueProfitAmountAverage,
 		revenueProfitAmountHigh,
+
+		// Customer conversion rate
+		customerConversionRateLow,
+		customerConversionRateAverage,
+		customerConversionRateHigh,
 	};
 };

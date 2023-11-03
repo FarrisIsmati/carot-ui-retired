@@ -72,16 +72,16 @@ export const StyledDropdownTrigger = styled(
 			.default;
 		const errorColor = getColorSet(SemanticSetCores.NEGATIVE).essential.default;
 		const nonFocusBoxShadow = () => {
+			if (props.error) {
+				return `0 -${spacer2} 0 0 ${errorColor} inset !important`;
+			}
+
 			if (props.disabled) {
 				return "none !important";
 			}
 
 			if (!props.disabled && !props.error && props.isMenuOpen) {
 				return `0 -${spacer2} 0 0 ${highlightColor} inset !important`;
-			}
-
-			if (!props.disabled && props.error) {
-				return `0 -${spacer2} 0 0 ${errorColor} inset !important`;
 			}
 
 			return "none !important";

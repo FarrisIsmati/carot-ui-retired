@@ -12,7 +12,7 @@ import useOffClick from "./hooks/useOffClick";
 import { StyledContainer } from "./styles";
 import { DropdownData } from "./types";
 
-export type DropdownProps = Omit<StyledWrapperProps, "label"> &
+export type DropdownSelectProps = Omit<StyledWrapperProps, "label"> &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
 		/**
 		 * Set the semantic color used by the button
@@ -40,6 +40,14 @@ export type DropdownProps = Omit<StyledWrapperProps, "label"> &
 		 * Is feature completely locked (demo purposes)
 		 */
 		islocked?: boolean;
+		/**
+		 * If true adds styling to indicate error state
+		 */
+		error?: boolean;
+		/**
+		 * Text to display for an error state
+		 */
+		errorText?: string;
 	};
 
 export default ({
@@ -50,7 +58,9 @@ export default ({
 	onselect,
 	islocked,
 	dropdownSize = Sizes.LARGE,
-}: DropdownProps) => {
+	error,
+	errorText,
+}: DropdownSelectProps) => {
 	// Dropdown
 	const dropdownRef = useRef(null);
 
@@ -68,6 +78,11 @@ export default ({
 	const [hoveredItem, setHoveredItem] = useState<DropdownData<any> | null>(
 		null
 	); // Mouse hover state (not key cursor state)
+
+	// Add error state if error text included
+	if (!error && errorText) {
+		error = true;
+	}
 
 	//
 	// Hooks
@@ -93,7 +108,7 @@ export default ({
 
 	useEffect(() => {
 		// Scroll to selected item if menu is open
-		if (isMenuOpen) {
+		if (isMenuOpen && dataset.length) {
 			scrollToCursor({
 				parent: dropdownListRef.current,
 				cursor,
@@ -101,7 +116,7 @@ export default ({
 			});
 		} else {
 			// Reset cursor when menu closed
-			if (selectedItem) {
+			if (dataset.length && selectedItem) {
 				setCursor(dataset.findIndex((item) => item.id === selectedItem?.id));
 			} else {
 				setCursor(0);
@@ -134,10 +149,10 @@ export default ({
 			<DropdownTriggerSelect
 				ref={dropdownTriggerRef}
 				colorSet={colorSet}
-				disabled={disabled || islocked}
+				disabled={disabled || islocked || !dataset.length}
 				isMenuOpen={isMenuOpen}
 				onClickMenu={() => {
-					if (disabled || islocked) {
+					if (disabled || islocked || !dataset.length) {
 						return;
 					}
 					setIsMenuOpen(!isMenuOpen);
@@ -146,6 +161,8 @@ export default ({
 				placeholder={placeholder}
 				dropdownSize={dropdownSize}
 				islocked={islocked}
+				error={error}
+				errorText={errorText}
 			/>
 
 			{/* Dropdown menu */}
@@ -163,7 +180,12 @@ export default ({
 										key={e.id}
 										onClick={() => {
 											// Disabled entire dropdown disabled, e.disabled only row is disabled
-											if (islocked || disabled || e.disabled) {
+											if (
+												islocked ||
+												disabled ||
+												e.disabled ||
+												!dataset.length
+											) {
 												return;
 											}
 											onSelect(e, e.value);
@@ -173,7 +195,9 @@ export default ({
 											e.id === hoveredItem?.id ||
 											i === cursor
 										}
-										disabled={islocked || disabled || e.disabled}
+										disabled={
+											islocked || disabled || e.disabled || !dataset.length
+										}
 										colorSet={colorSet}
 										onMouseEnter={() => setHoveredItem(e)}
 										onMouseLeave={() => setHoveredItem(null)}

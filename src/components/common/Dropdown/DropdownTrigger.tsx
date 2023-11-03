@@ -140,7 +140,7 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 				</StyledDropdownTriggerContentContainer>
 
 				{/* Error text bottom of the dropdown */}
-				{errorText && !disabled && (
+				{errorText && (
 					<StyledErrorTextDropdownTrigger
 						colorset={colorSet}
 						error={error}
