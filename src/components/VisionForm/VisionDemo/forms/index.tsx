@@ -9,7 +9,7 @@ import { visionFormDemoInitialValues } from "../values/forms/VisionFormDemoIniti
 
 // Add Button
 
-const StyledAddButton = styled(ButtonPrimary)`
+const StyledSubmitButton = styled(ButtonPrimary)`
 	margin-top: ${spacer8};
 `;
 
@@ -26,7 +26,7 @@ export const VisionDemoForm = () => {
 			render={({ handleSubmit }) => (
 				<div>
 					<Sections onSubmit={handleSubmit} />
-					<StyledAddButton onClick={handleSubmit}>Submit</StyledAddButton>
+					<StyledSubmitButton onClick={handleSubmit}>Submit</StyledSubmitButton>
 				</div>
 			)}
 		/>

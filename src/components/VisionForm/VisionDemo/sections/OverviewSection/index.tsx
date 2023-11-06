@@ -11,7 +11,7 @@ import { FieldsContainer, StyledDoubleDropdownContainer } from "../styles";
 
 export default () => {
 	return (
-		<FieldsContainer>
+		<FieldsContainer noMargin>
 			<Type semanticfont={semanticFonts.headlineSmall}>Business Type</Type>
 			<CompanyNameField />
 			<IndustryField />

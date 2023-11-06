@@ -1,4 +1,5 @@
 "use client";
+import VisionDemo from "@/components/VisionForm/VisionDemo";
 import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
 import Type from "@/components/common/Type";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
@@ -13,7 +14,6 @@ import {
 	spacer64,
 } from "@/styles/sizes";
 import { styled } from "styled-components";
-import { VisionDemoForm } from "../../VisionForm/VisionDemo/forms";
 
 const StyledTempBlurb = styled.div`
 	border-radius: ${spacer4};
@@ -58,7 +58,7 @@ export default () => {
 			</StyledHeaderSection>
 
 			{/* Vision Demo Form */}
-			<VisionDemoForm />
+			<VisionDemo />
 		</StyledPageContainer>
 	);
 };
