@@ -196,12 +196,10 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 						disabled={disabled}
 						placeholder={placeholder}
 						value={input?.value ?? content}
-						onValueChange={(value: string | undefined) => {
-							const numericValue =
-								value !== undefined ? parseInt(value) : undefined;
-							setContent(numericValue);
-							input?.onChange(numericValue);
-							onChange?.(numericValue);
+						onValueChange={(value: number | undefined) => {
+							setContent(value);
+							input?.onChange(value);
+							onChange?.(value);
 						}}
 						onBlur={(e: any) => {
 							input?.onBlur(e);

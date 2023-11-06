@@ -30,6 +30,9 @@ export const getCountryDateFormat = (country: CountriesEnum) => {
 
 // Get the % margin +/- of goods
 export const marginCalculator = (cost: number, revenue: number) => {
+	if (cost === 0 && revenue === 0) {
+		return 0;
+	}
 	return _.round((revenue / cost) * 100 - 100, 2);
 };
 

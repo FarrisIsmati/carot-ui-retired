@@ -69,7 +69,6 @@ export interface PhysicalLocationSectionInputModeLess {
 	maxOccupancy: any;
 	hoursOpenPerDayGeneric: any;
 	daysOpenPerWeekGeneric: any;
-	trafficCurve: any;
 	trafficTurnoverTime: any;
 }
 

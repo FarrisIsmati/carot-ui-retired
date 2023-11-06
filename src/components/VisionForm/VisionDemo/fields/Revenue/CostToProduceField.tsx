@@ -27,6 +27,7 @@ export default () => {
 			size={Sizes.SMALL}
 			allowNegativeValue={false}
 			onChange={(value) => {
+				console.log("LE VALUE", value);
 				//
 				// Margin
 				//
