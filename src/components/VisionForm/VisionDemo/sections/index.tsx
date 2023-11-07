@@ -12,7 +12,7 @@ interface MainSectionProps {
 
 export default ({ onSubmit }: MainSectionProps) => {
 	const fs = useFormState();
-	console.log(fs.values);
+	// console.log(fs.values);
 	return (
 		<div>
 			<BusinessTypeSection />

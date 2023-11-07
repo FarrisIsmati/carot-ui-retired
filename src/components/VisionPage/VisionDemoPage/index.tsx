@@ -2,6 +2,7 @@
 import VisionDemo from "@/components/VisionForm/VisionDemo";
 import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
 import Type from "@/components/common/Type";
+import { createStore } from "@/redux/store";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { StyledPageContainer } from "@/styles/common";
 import { semanticFonts } from "@/styles/fonts";
@@ -13,6 +14,7 @@ import {
 	spacer4,
 	spacer64,
 } from "@/styles/sizes";
+import { Provider } from "react-redux";
 import { styled } from "styled-components";
 
 const StyledTempBlurb = styled.div`
@@ -36,29 +38,33 @@ const StyledHeaderSection = styled.section`
 `;
 
 export default () => {
-	return (
-		<StyledPageContainer>
-			{/* Header */}
-			<StyledHeaderSection>
-				<div>
-					<Type semanticfont={semanticFonts.displayMedium}>
-						Business projection calculator demo
-					</Type>
-					<Type semanticfont={semanticFonts.headlineLarge}>
-						Discover how much you need to start your business with our free
-						financial planning tool. Easy to use and completely free.
-					</Type>
-				</div>
-				<StyledTempBlurb>
-					<Type semanticfont={semanticFonts.headlineSmall}>
-						Some interesting words
-					</Type>
-					<ButtonPrimary size={Sizes.SMALL}>Button</ButtonPrimary>
-				</StyledTempBlurb>
-			</StyledHeaderSection>
+	const store = createStore();
 
-			{/* Vision Demo Form */}
-			<VisionDemo />
-		</StyledPageContainer>
+	return (
+		<Provider store={store}>
+			<StyledPageContainer>
+				{/* Header */}
+				<StyledHeaderSection>
+					<div>
+						<Type semanticfont={semanticFonts.displayMedium}>
+							Business projection calculator demo
+						</Type>
+						<Type semanticfont={semanticFonts.headlineLarge}>
+							Discover how much you need to start your business with our free
+							financial planning tool. Easy to use and completely free.
+						</Type>
+					</div>
+					<StyledTempBlurb>
+						<Type semanticfont={semanticFonts.headlineSmall}>
+							Some interesting words
+						</Type>
+						<ButtonPrimary size={Sizes.SMALL}>Button</ButtonPrimary>
+					</StyledTempBlurb>
+				</StyledHeaderSection>
+
+				{/* Vision Demo Form */}
+				<VisionDemo />
+			</StyledPageContainer>
+		</Provider>
 	);
 };
