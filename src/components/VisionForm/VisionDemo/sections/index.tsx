@@ -1,4 +1,3 @@
-import { useFormState } from "react-final-form";
 import LoansAndInvestorsSection from "./CapitalSection";
 import LocationSection from "./LocationSection";
 import BusinessTypeSection from "./OverviewSection";
@@ -11,8 +10,9 @@ interface MainSectionProps {
 }
 
 export default ({ onSubmit }: MainSectionProps) => {
-	const fs = useFormState();
+	// const fs = useFormState();
 	// console.log(fs.values);
+
 	return (
 		<div>
 			<BusinessTypeSection />
