@@ -12,7 +12,7 @@ export interface ResultsDay
 export interface ResultsMonth
 	extends ResultsCompanyLifetime,
 		ResultsCompanyTotal {
-	days: [];
+	days: ResultsDay[];
 	month: string;
 }
 

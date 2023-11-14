@@ -66,7 +66,7 @@ export interface ResultsCompanyLifetime {
 	lifetimeReservesHigh: number;
 
 	// Investors
-	totalInvestorsResults: InvestorResults[];
+	lifetimeInvestorsResults: InvestorResults[];
 
 	// Itemized Revenue and Expenses
 	lifetimeProductsResults: ProductResults[];
