@@ -2,7 +2,7 @@ export interface RevenueSection {
 	id: string;
 
 	// Location id (ties the product to a location)
-	locationIds: string[];
+	locationIds: Set<string>;
 
 	// Product name
 	productName: string;

@@ -1,4 +1,4 @@
-import { LeaseSection } from "./LeaseSection";
+import { LeaseSection, LeaseSectionInputModeLess } from "./LeaseSection";
 
 export enum LocationType {
 	MOBILE = "MOBILE",
@@ -30,6 +30,10 @@ export interface PhysicalLeaseLocationSection
 		LeaseSection {
 	id: string;
 }
+
+export interface PhysicalLeaseLocationSectionInputModeLess
+	extends PhysicalLocationSectionInputModeLess,
+		LeaseSectionInputModeLess {}
 
 export interface PhysicalLocationSection {
 	// Name

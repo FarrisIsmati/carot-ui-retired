@@ -23,7 +23,7 @@ export default () => {
 			)}
 			onselect={(value) => {
 				const locationIdsArr = _.cloneDeep(locationIdsField.input.value);
-				locationIdsArr.push(value.id);
+				locationIdsArr.add(value.id);
 				locationIdsField.input.onChange(locationIdsArr);
 			}}
 		/>

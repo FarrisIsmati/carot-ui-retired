@@ -6,7 +6,7 @@ export const revenueFormInitialValues: Omit<RevenueSection, "id"> = {
 	//
 
 	// Location link
-	locationIds: [],
+	locationIds: new Set<string>(),
 
 	// Product name
 	productName: "",

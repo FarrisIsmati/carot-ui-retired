@@ -13,21 +13,27 @@ export const withCustomMessage = <T>(
 	};
 };
 
-// The validation method for both strings and values
-export const required = (value: string | number) =>
+export const required = (value: any) =>
 	value !== undefined && value !== "" && value !== null;
 
-// The validation method for both strings and values
 export const requiredArray = (value: any[]) =>
 	value !== undefined && value.length > 0 && value !== null;
 
-export const fieldRequired = withCustomMessage<string | number>(
+export const requiredSet = (value: Set<any>) =>
+	value !== undefined && value.size > 0 && value !== null;
+
+export const fieldRequired = withCustomMessage<any>(
 	required,
 	"This field is required."
 );
 
 export const fieldRequiredArray = withCustomMessage<any[]>(
 	requiredArray,
+	"This field is requires at least one value."
+);
+
+export const fieldRequiredSet = withCustomMessage<Set<any>>(
+	requiredSet,
 	"This field is requires at least one value."
 );
 

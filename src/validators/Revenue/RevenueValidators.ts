@@ -2,7 +2,7 @@ import { PhysicalLeaseLocationSection } from "@/types/VisionForm/LocationSection
 import {
 	combineValidators,
 	fieldRequired,
-	fieldRequiredArray,
+	fieldRequiredSet,
 } from "../commonValidators";
 
 //
@@ -18,12 +18,12 @@ const requiresBusinessLocationAddedValidator = (
 	}
 };
 export const locationIdsValidator = (
-	locationIds: string[],
+	locationIds: Set<string>,
 	locations: PhysicalLeaseLocationSection[] // Todo add more locations when added (own/online/etc)
 ) =>
 	combineValidators([
 		requiresBusinessLocationAddedValidator(locations),
-		fieldRequiredArray(locationIds),
+		fieldRequiredSet(locationIds),
 	]);
 
 // Product name

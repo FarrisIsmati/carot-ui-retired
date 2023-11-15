@@ -78,13 +78,13 @@ export const trafficCurveDropdownValues = [
 
 export const getLocationIdsDropdownValues = (
 	locations: PhysicalLeaseLocationSection[] | undefined,
-	selectedLocations: string[]
+	selectedLocations: Set<string>
 ) => {
 	if (locations !== undefined) {
 		return locations.map((location) => ({
 			value: location.locationName,
 			id: location.id,
-			disabled: !!selectedLocations.find((id) => id === location.id), // Disabled if item has already been added
+			disabled: !!selectedLocations.has(location.id), // Disabled if item has already been added
 		}));
 	}
 
