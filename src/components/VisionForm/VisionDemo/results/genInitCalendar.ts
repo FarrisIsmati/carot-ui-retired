@@ -19,31 +19,30 @@ const calculateResultsDaysLength = (curDate: string, endDate: string) => {
 		moment(curDate).isSame(endDate, "month");
 
 	if (isCurMonthAndYearSameAsEndMonthAndYear) {
-		return Math.round(moment(endDate).diff(moment(curDate), "days", true)) + 1; // Note: array ends 1 day early (at end) need to add extra day
+		console.log(moment(endDate).date() - moment(curDate).date() + 1);
+
+		return moment(endDate).date() - moment(curDate).date() + 1;
 	}
 
-	return Math.round(
-		moment(curDate).endOf("month").diff(moment(curDate), "days", true)
-	);
+	return moment(curDate).daysInMonth() - moment(curDate).date() + 1;
 };
 
 // Months calc
 const calculateResultsMonthsLength = (curDate: string, endDate: string) => {
-	// If cur year is same as end year, use end date instead of end of year
+	// If cur year is same as end year, use end date
 	const isCurYearSameAsEndYear = moment(curDate).isSame(endDate, "year");
 
 	if (isCurYearSameAsEndYear) {
-		return Math.round(moment(endDate).diff(moment(curDate), "months", true));
+		return moment(endDate).month() - moment(curDate).month() + 1;
 	}
 
-	return Math.round(
-		moment(curDate).endOf("year").diff(moment(curDate), "months", true)
-	);
+	// If cur year is not same as end year, use end of year
+	return moment(curDate).endOf("year").month() - moment(curDate).month() + 1;
 };
 
 // Years calc
 const calculateResultsYearsLength = (startDate: string, endDate: string) => {
-	return Math.round(moment(endDate).diff(moment(startDate), "years", true)) + 1;
+	return moment(endDate).year() - moment(startDate).year() + 1;
 };
 
 //
@@ -139,10 +138,12 @@ export const generateInitResultsCalendar = (
 	startDate: string,
 	endDate: string
 ) => {
+	if (moment(endDate).isBefore(startDate)) {
+		throw new Error("Cannot have an end date starting before your start date");
+	}
 	const resultsCalendar: ResultsCalendar = {
 		years: generateInitResultsYears(startDate, endDate),
 		...initLifetimeValues,
 	};
-
 	return resultsCalendar;
 };

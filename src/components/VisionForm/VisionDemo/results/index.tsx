@@ -25,7 +25,7 @@ export default () => {
 
 	// Generate init calendar
 	const calendar = useMemo(
-		() => generateInitResultsCalendar("11/01/2023", "11/01/2025"),
+		() => generateInitResultsCalendar("11/01/2023", "12/02/2023"),
 		[startDate, endDate]
 	);
 
