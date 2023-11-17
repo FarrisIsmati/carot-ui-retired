@@ -1,3 +1,7 @@
+import { CurveType } from "@/types/VisionForm/LocationSection";
+import { CurveDataPoint } from "@/types/VisionForm/common/growthCurve";
+import { curveTypeToPointsMapper } from "../VisionDemo/values/fields/growthValues";
+
 interface Point {
 	x: number;
 	y: number;
@@ -44,7 +48,10 @@ const calculateBezierCurve = (points: Point[], t: number): Point => {
  * @param length number
  * @returns
  */
-export const createGrowthCurve = (points: Point[], length: number) => {
+export const calculateGrowthCurve = (
+	points: Point[],
+	length: number
+): CurveDataPoint[] => {
 	const dataArr = [];
 
 	// Calculate points on the Bézier curve
@@ -54,4 +61,18 @@ export const createGrowthCurve = (points: Point[], length: number) => {
 	}
 
 	return dataArr;
+};
+
+/**
+ * Return results of growth curve
+ */
+export const createGrowthCurve = (
+	curveType: CurveType | undefined,
+	length: number | undefined
+): CurveDataPoint[] => {
+	if (!curveType || !length) {
+		return [];
+	}
+	const curvePoints = curveTypeToPointsMapper[curveType];
+	return calculateGrowthCurve(curvePoints, length);
 };

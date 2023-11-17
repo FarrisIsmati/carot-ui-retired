@@ -1,6 +1,7 @@
+import { CurveDataPoint } from "../common/growthCurve";
 import { InvestorResults } from "./investor";
-import { LocationLeaseResults } from "./location";
-import { ProductResults } from "./product";
+import { LocationLeaseResults, LocationLeaseValues } from "./location";
+import { ProductResults, ProductValues } from "./product";
 
 // Current results for the given time interval
 export interface ResultsCompanyTotal {
@@ -73,3 +74,14 @@ export interface ResultsCompanyLifetime {
 	lifetimeLocationsLeaseResults: LocationLeaseResults[];
 	// Todo Staff revenue/expenses
 }
+
+// All curve data points
+export interface ResultsCompanyCurveDataPointValues {
+	leaseFootTrafficCurveDataPoints: CurveDataPoint[];
+}
+
+// All values that need to be passed into the calendar results function
+export interface ResultsCompanyValues
+	extends ProductValues,
+		LocationLeaseValues,
+		ResultsCompanyCurveDataPointValues {}

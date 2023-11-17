@@ -1,27 +1,33 @@
 import { createGrowthCurve } from "@/components/VisionForm/utils/growthCurve";
 import { pxStringToNum, spacer320 } from "@/styles/sizes";
+import { CurveType } from "@/types/VisionForm/LocationSection";
+import { useMemo } from "react";
 import { Line, LineChart } from "recharts";
-import { Point } from "recharts/types/shape/Curve";
 
 export interface GrowthCurveGraphProps {
 	/**
-	 * Data points
+	 * Type of curve
 	 */
-	data: Point[];
+	curveType: CurveType;
 	/**
 	 * Length in days
 	 */
 	length: number;
 }
 
-export default ({ data, length }: GrowthCurveGraphProps) => (
-	<LineChart
-		width={pxStringToNum(spacer320)}
-		height={pxStringToNum(spacer320)}
-		data={createGrowthCurve(data, length)}
-	>
-		<Line type="monotone" dataKey="uv" stroke="#8884d8" dot={false} />
-		{/* <XAxis dataKey="name">
+export default ({ curveType, length }: GrowthCurveGraphProps) => {
+	const curveDataPoints = useMemo(
+		() => createGrowthCurve(curveType, length),
+		[curveType, length]
+	);
+	return (
+		<LineChart
+			width={pxStringToNum(spacer320)}
+			height={pxStringToNum(spacer320)}
+			data={curveDataPoints}
+		>
+			<Line type="monotone" dataKey="uv" stroke="#8884d8" dot={false} />
+			{/* <XAxis dataKey="name">
 			<Label
 				style={{
 					textAnchor: "middle",
@@ -41,5 +47,6 @@ export default ({ data, length }: GrowthCurveGraphProps) => (
 				value={"Growth Percentage"}
 			/>
 		</YAxis> */}
-	</LineChart>
-);
+		</LineChart>
+	);
+};

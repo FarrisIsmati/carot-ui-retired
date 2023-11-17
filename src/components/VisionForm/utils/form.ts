@@ -1,5 +1,6 @@
 import { DropdownData } from "@/components/common/Dropdown/types";
 import { AllFormValues, AllFormValuesNoArrays } from "@/types/VisionForm";
+import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { FieldMetaState, useField } from "react-final-form";
 
 // Get form field
@@ -23,7 +24,7 @@ export const getDropdownIndex = (
 // Gets the value of a dropdown from the dropdown values
 export const getDropdownValue = (
 	dropdownValues: DropdownData<any>[],
-	targetValue: string | number | undefined
+	targetValue: string | number | undefined | Set<string>
 ) => {
 	return dropdownValues.find((value) => value.id === targetValue);
 };
@@ -43,3 +44,9 @@ export const useGetTextFieldDefaultValue = (fieldName: keyof AllFormValues) => {
 	const fieldValue = field.input.value;
 	return fieldValue;
 };
+
+// Takes in inputmodeless generic and full section generic
+export const getKeyInputMode = <T, P>(
+	key: keyof T,
+	inputMode: InputModeEnum
+): keyof P => `${key.toString()}${inputMode}` as keyof P;

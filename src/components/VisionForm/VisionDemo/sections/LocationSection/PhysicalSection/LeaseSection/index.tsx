@@ -10,10 +10,9 @@ import LeaseSize from "@/components/VisionForm/VisionDemo/fields/Location/Physic
 import LocationName from "@/components/VisionForm/VisionDemo/fields/Location/Physical/LocationName";
 import MaxOccupancy from "@/components/VisionForm/VisionDemo/fields/Location/Physical/MaxOccupancy";
 import LocationFormContext from "@/components/VisionForm/VisionDemo/forms/LocationForm/LocationFormContext";
-import { curveTypeToPointsMapper } from "@/components/VisionForm/VisionDemo/values/fields/growthValues";
 import { datesDifference } from "@/components/VisionForm/utils/dates";
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import {
 	FieldsContainer,
 	StyledDoubleDropdownContainer,
@@ -26,6 +25,12 @@ export default () => {
 
 	// Lease location fields
 	const trafficCurveField = useVisionFormField("trafficCurve");
+
+	// Traffic curve length in days
+	const trafficCurveLength = useMemo(
+		() => datesDifference(formContext!.startDate, formContext!.endDate, "days"),
+		[formContext!.startDate, formContext!.endDate]
+	);
 
 	return (
 		<FieldsContainer noMargin>
@@ -43,8 +48,8 @@ export default () => {
 				<DaysOpenPerWeekGeneric />
 			</StyledDoubleDropdownContainer>
 			<GrowthCurveGraph
-				data={curveTypeToPointsMapper[trafficCurveField.input.value]}
-				length={datesDifference(formContext!.startDate, formContext!.endDate)}
+				curveType={trafficCurveField.input.value}
+				length={trafficCurveLength}
 			/>
 			<FootTrafficCurve />
 			<FootTrafficTurnoverTime />
