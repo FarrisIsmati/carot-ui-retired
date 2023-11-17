@@ -39,7 +39,7 @@ const getPrevMonth = ({
 		return prevYear.months[prevYear.months.length - 1];
 	}
 
-	// If no previous month
+	// If no previous year
 	if (!!!prevYear && year.months[0].month === month.month) {
 		return null;
 	}
@@ -59,6 +59,7 @@ const updateCalendarYear = (
 ) => {
 	year.months.forEach((month, i) => {
 		const prevMonth = getPrevMonth({ year, prevYear, month, i });
+
 		const updatedMonthValues = updateCalendarMonth(
 			month,
 			prevMonth,
@@ -68,22 +69,52 @@ const updateCalendarYear = (
 	});
 };
 
+const getPrevDay = ({
+	month,
+	prevMonth,
+	day,
+	i,
+}: {
+	month: ResultsMonth;
+	prevMonth: ResultsMonth | null;
+	day: ResultsDay;
+	i: number;
+}) => {
+	// If there is a prev month and your on first day of year
+	if (!!prevMonth && month.days[0].date === day.date) {
+		return prevMonth.days[prevMonth.days.length - 1];
+	}
+
+	// If no previous month
+	if (!!!prevMonth && month.days[0].date === day.date) {
+		return null;
+	}
+
+	// If not first day of year
+	if (month.days[0].date !== day.date) {
+		return month.days[i - 1];
+	}
+
+	return null;
+};
+
 const updateCalendarMonth = (
 	month: ResultsMonth,
 	prevMonth: ResultsMonth | null,
 	companyValues: ResultsCompanyValues
 ) => {
-	month.days.forEach((day) => {
-		const updatedDayValues = updateCalendarDay(day, companyValues);
+	month.days.forEach((day, i) => {
+		const prevDay = getPrevDay({ month, prevMonth, day, i });
+
+		const updatedDayValues = updateCalendarDay(day, prevDay, companyValues);
 		// Update daily values from previous to current day
 	});
 };
 
 const updateCalendarDay = (
 	day: ResultsDay,
+	prevDay: ResultsDay | null,
 	companyValues: ResultsCompanyValues
 ) => {
-	console.log(companyValues);
-	console.log(day.date);
 	// Calculate daily values, return them
 };
