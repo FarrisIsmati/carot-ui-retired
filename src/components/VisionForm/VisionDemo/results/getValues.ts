@@ -17,16 +17,39 @@ import { getKeyInputMode } from "../../utils/form";
 
 // Returns all necessary product values given the input mode
 export const getProductValues = (product: RevenueSection): ProductValues => {
-	const revenueCostToProduceKey = getKeyInputMode<
+	const getRevenueSectionKey = getKeyInputMode<
 		RevenueSectionInputModeLess,
 		RevenueSection
-	>("revenueCostToProduce", InputModeEnum.Average);
-	const revenueRetailPriceKey = getKeyInputMode<
-		RevenueSectionInputModeLess,
-		RevenueSection
-	>("revenueRetailPrice", InputModeEnum.Average);
+	>;
+
+	// Name
+	const productName = "name";
+
+	// Location ID
+	const locationId = "locationId";
+
+	// Customer conversion rate
+	const customerConversionRateKey = getRevenueSectionKey(
+		"customerConversionRate",
+		InputModeEnum.Average
+	);
+
+	// Cost to produce
+	const revenueCostToProduceKey = getRevenueSectionKey(
+		"revenueCostToProduce",
+		InputModeEnum.Average
+	);
+
+	// Retail price
+	const revenueRetailPriceKey = getRevenueSectionKey(
+		"revenueRetailPrice",
+		InputModeEnum.Average
+	);
 
 	return {
+		name: productName,
+		locationId: locationId,
+		customerConversionRate: product[customerConversionRateKey] as number,
 		costToProduce: product[revenueCostToProduceKey] as number,
 		retailPrice: product[revenueRetailPriceKey] as number,
 	};
@@ -36,24 +59,57 @@ export const getProductValues = (product: RevenueSection): ProductValues => {
 export const getLeaseValues = (
 	lease: PhysicalLeaseLocationSection
 ): LocationLeaseValues => {
-	const maxOccupancyKey = getKeyInputMode<
+	const getPhysicalLeaseLocationKey = getKeyInputMode<
 		PhysicalLeaseLocationSectionInputModeLess,
 		PhysicalLeaseLocationSection
-	>("maxOccupancy", InputModeEnum.Average);
-	const trafficTurnoverTimeKey = getKeyInputMode<
-		PhysicalLeaseLocationSectionInputModeLess,
-		PhysicalLeaseLocationSection
-	>("trafficTurnoverTime", InputModeEnum.Average);
-	const daysOpenPerWeekGenericKey = getKeyInputMode<
-		PhysicalLeaseLocationSectionInputModeLess,
-		PhysicalLeaseLocationSection
-	>("daysOpenPerWeekGeneric", InputModeEnum.Average);
-	const hoursOpenPerDayGenericKey = getKeyInputMode<
-		PhysicalLeaseLocationSectionInputModeLess,
-		PhysicalLeaseLocationSection
-	>("hoursOpenPerDayGeneric", InputModeEnum.Average);
+	>;
+
+	// Max occupancy
+	const maxOccupancyKey = getPhysicalLeaseLocationKey(
+		"maxOccupancy",
+		InputModeEnum.Average
+	);
+
+	// Traffic turnover time
+	const trafficTurnoverTimeKey = getPhysicalLeaseLocationKey(
+		"trafficTurnoverTime",
+		InputModeEnum.Average
+	);
+
+	// Days open per week
+	const daysOpenPerWeekGenericKey = getPhysicalLeaseLocationKey(
+		"daysOpenPerWeekGeneric",
+		InputModeEnum.Average
+	);
+
+	// Hours open per day
+	const hoursOpenPerDayGenericKey = getPhysicalLeaseLocationKey(
+		"hoursOpenPerDayGeneric",
+		InputModeEnum.Average
+	);
+
+	//
+	// Calculate cost per period
+	//
+
+	// Period per unit of measurement
+	const periodCostKey = getPhysicalLeaseLocationKey(
+		"leaseCost",
+		InputModeEnum.Average
+	);
+
+	// Lease size
+	const sizeKey = getPhysicalLeaseLocationKey(
+		"leaseSize",
+		InputModeEnum.Average
+	);
+
+	// Cost per period
+	const leaseCostPerPeriod =
+		(lease[periodCostKey] as number) * (lease[sizeKey] as number);
 
 	return {
+		periodCost: leaseCostPerPeriod,
 		trafficCurve: lease.trafficCurve,
 		maxOccupancy: lease[maxOccupancyKey] as number,
 		trafficTurnoverTime: lease[trafficTurnoverTimeKey] as number,

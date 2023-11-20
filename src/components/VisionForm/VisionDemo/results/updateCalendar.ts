@@ -19,8 +19,11 @@ export const updateCalendar = (
 		const prevYear =
 			calendar.years[0].year === year.year ? null : calendar.years[i - 1];
 		const updatedYearValues = updateCalendarYear(year, prevYear, companyValues);
-		// Update yearly values from previous to current year
 	});
+
+	// Add yearly total revenue
+	calendar.lifetimeRevenue =
+		calendar.years[calendar.years.length - 1].lifetimeRevenue;
 };
 
 const getPrevMonth = ({
@@ -57,16 +60,22 @@ const updateCalendarYear = (
 	prevYear: ResultsYear | null,
 	companyValues: ResultsCompanyValues
 ) => {
+	let totalRevenue = 0;
+
 	year.months.forEach((month, i) => {
 		const prevMonth = getPrevMonth({ year, prevYear, month, i });
 
-		const updatedMonthValues = updateCalendarMonth(
-			month,
-			prevMonth,
-			companyValues
-		);
-		// Update monthly values from previous to current month
+		updateCalendarMonth(month, prevMonth, companyValues);
+
+		// Calculate annual total revenue
+		totalRevenue += month.totalRevenue;
 	});
+
+	// Add yearly total revenue
+	year.totalRevenue = totalRevenue;
+	year.lifetimeRevenue = prevYear
+		? prevYear.lifetimeRevenue + year.totalRevenue
+		: year.totalRevenue;
 };
 
 const getPrevDay = ({
@@ -103,12 +112,22 @@ const updateCalendarMonth = (
 	prevMonth: ResultsMonth | null,
 	companyValues: ResultsCompanyValues
 ) => {
+	let totalRevenue = 0;
+
 	month.days.forEach((day, i) => {
 		const prevDay = getPrevDay({ month, prevMonth, day, i });
 
-		const updatedDayValues = updateCalendarDay(day, prevDay, companyValues);
-		// Update daily values from previous to current day
+		updateCalendarDay(day, prevDay, companyValues);
+
+		// Calculate monthly total revenue
+		totalRevenue += day.totalRevenue;
 	});
+
+	// Add monthly total revenue
+	month.totalRevenue = totalRevenue;
+	month.lifetimeRevenue = prevMonth
+		? prevMonth.lifetimeRevenue + month.totalRevenue
+		: month.totalRevenue;
 };
 
 const updateCalendarDay = (
@@ -116,5 +135,39 @@ const updateCalendarDay = (
 	prevDay: ResultsDay | null,
 	companyValues: ResultsCompanyValues
 ) => {
-	// Calculate daily values, return them
+	//
+	// Physical Calculation
+	//
+
+	//
+	// Calculate # of visitors
+	//
+
+	// Hours open per day (only calculating generic not by actual hour)
+	const hoursOpen = companyValues.hoursOpenPerDayGeneric;
+	// How long on average a patron will spend within the physical store
+	const footTrafficTurnoverTime = companyValues.trafficTurnoverTime; // in minutes
+	// Maximum amount of people than can be in the store at any given time
+	const maxOccupancy = companyValues.maxOccupancy;
+	// Average amount of people in the store at any given time (multiply potential max by the curve)
+	const averageOccupancy = maxOccupancy * 1; // change to companyValues.curve
+	// Number of customers that enter the store per hour
+	const visitorsPerHour =
+		Math.round(60 / footTrafficTurnoverTime) * averageOccupancy;
+	// Number of customers per day
+	const visitorsPerDay = hoursOpen * visitorsPerHour;
+
+	//
+	// Calculate revenue
+	//
+
+	// Daily revenue earned
+	const dailyRevenue =
+		visitorsPerDay *
+		(companyValues.customerConversionRate / 100) *
+		companyValues.retailPrice;
+	day.totalRevenue = dailyRevenue;
+	day.lifetimeRevenue = prevDay
+		? prevDay.lifetimeRevenue + day.totalRevenue
+		: day.totalRevenue;
 };

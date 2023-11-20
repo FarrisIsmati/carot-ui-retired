@@ -1,28 +1,40 @@
 import { CurveType } from "../LocationSection";
+import { CurveDataPoint } from "../common/growthCurve";
 
-// Product
+// Location values for calendar
 interface LocationResults {
 	name: string;
 }
 
 interface LocationPhysicalResults {
 	// Initial Construction cost (one time expense)
-	initialConstructionCostLow: number;
-	initialConstructionCostAverage: number;
-	initialConstructionCostHigh: number;
+	initialConstructionCost: number;
 }
 
 export interface LocationLeaseResults
 	extends LocationResults,
-		LocationPhysicalResults {
+		LocationPhysicalResults,
+		LocationLeaseResultsLifetime,
+		LocationLeaseResultsTotal {
+	// Total cost of lease when fully paid out
+	leaseCost: number;
+
 	// Lease cost per payment of period (week, month, annual)
-	periodCostLow: number;
-	periodCostAverage: number;
-	periodCostHigh: number;
+	periodCost: number;
+}
+
+interface LocationLeaseResultsTotal {
+	// Lease paid
+	totalLeasePaid: number;
+}
+
+interface LocationLeaseResultsLifetime {
+	// Lease paid
+	lifetimeLeasePaid: number;
 }
 
 /**
- * Only the returned values we are getting from lease form
+ * Lease values we are calculating on
  */
 export interface LocationLeaseValues {
 	trafficCurve: CurveType;
@@ -30,4 +42,6 @@ export interface LocationLeaseValues {
 	trafficTurnoverTime: number;
 	daysOpenPerWeekGeneric: number;
 	hoursOpenPerDayGeneric: number;
+	periodCost: number;
+	leaseFootTrafficCurveDataPoints?: CurveDataPoint[]; // FIXME: TODO
 }

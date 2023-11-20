@@ -1,4 +1,3 @@
-import { CurveDataPoint } from "../common/growthCurve";
 import { InvestorResults } from "./investor";
 import { LocationLeaseResults, LocationLeaseValues } from "./location";
 import { ProductResults, ProductValues } from "./product";
@@ -6,29 +5,19 @@ import { ProductResults, ProductValues } from "./product";
 // Current results for the given time interval
 export interface ResultsCompanyTotal {
 	// Total revenue
-	totalRevenueLow: number;
-	totalRevenueAverage: number;
-	totalRevenueHigh: number;
+	totalRevenue: number;
 
 	// Total expenses
-	totalExpensesLow: number;
-	totalExpensesAverage: number;
-	totalExpensesHigh: number;
+	totalExpenses: number;
 
 	// Total taxes paid
-	totalTaxedLow: number;
-	totalTaxedAverage: number;
-	totalTaxedHigh: number;
+	totalTaxed: number;
 
 	// Total profit
-	totalProfitLow: number;
-	totalProfitAverage: number;
-	totalProfitHigh: number;
+	totalProfit: number;
 
 	// Total reserves (company treasury)
-	totalReservesLow: number;
-	totalReservesAverage: number;
-	totalReservesHigh: number;
+	totalReserves: number;
 
 	// Investors
 	totalInvestorsResults: InvestorResults[];
@@ -42,29 +31,19 @@ export interface ResultsCompanyTotal {
 // Current lifetime results at the given time interval
 export interface ResultsCompanyLifetime {
 	// Life time revenue
-	lifetimeRevenueLow: number;
-	lifetimeRevenueAverage: number;
-	lifetimeRevenueHigh: number;
+	lifetimeRevenue: number;
 
 	// Life time expenses
-	lifetimeExpensesLow: number;
-	lifetimeExpensesAverage: number;
-	lifetimeExpensesHigh: number;
+	lifetimeExpenses: number;
 
 	// Life time taxes paid
-	lifetimeTaxedLow: number;
-	lifetimeTaxedAverage: number;
-	lifetimeTaxedHigh: number;
+	lifetimeTaxed: number;
 
 	// Life time profit
-	lifetimeProfitLow: number;
-	lifetimeProfitAverage: number;
-	lifetimeProfitHigh: number;
+	lifetimeProfit: number;
 
 	// Life time reserves (company treasury)
-	lifetimeReservesLow: number;
-	lifetimeReservesAverage: number;
-	lifetimeReservesHigh: number;
+	lifetimeReserves: number;
 
 	// Investors
 	lifetimeInvestorsResults: InvestorResults[];
@@ -75,13 +54,7 @@ export interface ResultsCompanyLifetime {
 	// Todo Staff revenue/expenses
 }
 
-// All curve data points
-export interface ResultsCompanyCurveDataPointValues {
-	leaseFootTrafficCurveDataPoints: CurveDataPoint[];
-}
-
 // All values that need to be passed into the calendar results function
 export interface ResultsCompanyValues
 	extends ProductValues,
-		LocationLeaseValues,
-		ResultsCompanyCurveDataPointValues {}
+		LocationLeaseValues {}

@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { generateInitResultsCalendar } from "./genInitCalendar";
 import { getLeaseValues, getProductValues } from "./getValues";
-import { useGetAllCurveDataPoints } from "./hooks/useCurves";
+import { useGetAllLeaseCurveDataPoints } from "./hooks/useCurves";
 import { updateCalendar } from "./updateCalendar";
 
 export default () => {
@@ -14,7 +14,7 @@ export default () => {
 
 	// Generate init calendar
 	const calendar = useMemo(
-		() => generateInitResultsCalendar("11/01/2023", "01/02/2025"),
+		() => generateInitResultsCalendar(startDate, endDate),
 		[startDate, endDate]
 	);
 
@@ -37,7 +37,8 @@ export default () => {
 	// Test
 	//
 
-	const { leaseFootTrafficCurveDataPoints } = useGetAllCurveDataPoints();
+	// FIXME: Todo calculate all leases not just one
+	const { leaseFootTrafficCurveDataPoints } = useGetAllLeaseCurveDataPoints();
 
 	// Ensure product is loaded
 	if (firstProduct && firstProductLocation) {
@@ -45,11 +46,12 @@ export default () => {
 		const companyValues: ResultsCompanyValues = {
 			...getProductValues(firstProduct),
 			...getLeaseValues(firstProductLocation!),
-			leaseFootTrafficCurveDataPoints,
 		};
 
 		updateCalendar(calendar, companyValues);
 	}
+
+	console.log(calendar);
 
 	console.log("-");
 

@@ -4,7 +4,7 @@ import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
-export const useGetAllCurveDataPoints = () => {
+export const useGetAllLeaseCurveDataPoints = () => {
 	const visionFormDemoState = useSelector(getVisionFormDemoSelector);
 
 	// Get days between start date and end date
