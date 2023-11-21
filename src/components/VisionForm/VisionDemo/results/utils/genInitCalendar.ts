@@ -12,14 +12,14 @@ import moment from "moment";
 import {
 	initLifetimeValues,
 	initTotalValues,
-} from "../../../../types/VisionForm/results/values";
+} from "../../../../../types/VisionForm/results/values";
 import {
 	calculateResultsDaysLength,
 	calculateResultsMonthsLength,
 	calculateResultsYearsLength,
 	getCurrentYear,
 	getMonthFromIndex,
-} from "../../utils/dates";
+} from "../../../utils/dates";
 
 //
 // Generate results (years, months, days)

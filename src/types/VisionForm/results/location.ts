@@ -43,5 +43,5 @@ export interface LocationLeaseValues {
 	daysOpenPerWeekGeneric: number;
 	hoursOpenPerDayGeneric: number;
 	periodCost: number;
-	leaseFootTrafficCurveDataPoints?: CurveDataPoint[]; // FIXME: TODO
+	leaseFootTrafficCurveDataPoints?: CurveDataPoint[];
 }

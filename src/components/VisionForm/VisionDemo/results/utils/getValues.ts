@@ -1,3 +1,4 @@
+import { getKeyInputMode } from "@/components/VisionForm/utils/form";
 import {
 	PhysicalLeaseLocationSection,
 	PhysicalLeaseLocationSectionInputModeLess,
@@ -9,7 +10,6 @@ import {
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { LocationLeaseValues } from "@/types/VisionForm/results/location";
 import { ProductValues } from "@/types/VisionForm/results/product";
-import { getKeyInputMode } from "../../utils/form";
 
 //
 // Get Values for calendar update functions

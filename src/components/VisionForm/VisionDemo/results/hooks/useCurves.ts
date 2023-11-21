@@ -1,26 +1,53 @@
 import { datesDifference } from "@/components/VisionForm/utils/dates";
 import { createGrowthCurve } from "@/components/VisionForm/utils/growthCurve";
 import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
+import { CurveDataPointMap } from "@/types/VisionForm/results/curve";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
-export const useGetAllLeaseCurveDataPoints = () => {
+/**
+ * Get all they curve types for leases, memoize entire function
+ * Note this only handles traffic curves, if adding more curves need to modify function
+ * @returns CurveDataPointMap
+ */
+export const useCalcAllLeaseCurveDataPoints = (): CurveDataPointMap => {
 	const visionFormDemoState = useSelector(getVisionFormDemoSelector);
 
-	// Get days between start date and end date
-	const lengthDays = datesDifference(
+	return useMemo(() => {
+		const lengthDays = datesDifference(
+			visionFormDemoState.overviewStartDate,
+			visionFormDemoState.overviewEndDate,
+			"days"
+		);
+
+		// Mapper holding curve types and their respective data points
+		const curveTypeDataPointMap: CurveDataPointMap = {};
+
+		// Mapper holding the final set of data (leases and their data points)
+		const leasesIdDataPointsMap: CurveDataPointMap = {};
+
+		// Generate all possible growth curve data points
+		visionFormDemoState?.leases.forEach((lease) => {
+			const trafficCurveType = lease.trafficCurve;
+
+			// If curve type doesn't have data points generated generate them
+			if (!curveTypeDataPointMap[trafficCurveType]) {
+				curveTypeDataPointMap[trafficCurveType] = createGrowthCurve(
+					trafficCurveType,
+					lengthDays
+				);
+			}
+
+			// Associate data points with leases
+			leasesIdDataPointsMap[lease.id] = leasesIdDataPointsMap[trafficCurveType];
+		});
+
+		return leasesIdDataPointsMap;
+	}, [
 		visionFormDemoState.overviewStartDate,
 		visionFormDemoState.overviewEndDate,
-		"days"
-	);
-
-	const trafficCurveType = visionFormDemoState?.leases[0]?.trafficCurve;
-
-	// Get lease foot traffic curve data
-	const leaseFootTrafficCurveDataPoints = useMemo(
-		() => createGrowthCurve(trafficCurveType, lengthDays),
-		[trafficCurveType, lengthDays]
-	);
-
-	return { leaseFootTrafficCurveDataPoints };
+		visionFormDemoState?.leases.length,
+		// FIXME/TODO - when ability to create custom curves is added, makesure it's a top level form state
+		// Then if length changes we can recompute this function
+	]);
 };

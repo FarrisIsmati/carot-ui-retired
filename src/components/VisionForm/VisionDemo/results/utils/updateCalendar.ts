@@ -140,6 +140,10 @@ const updateCalendarDay = (
 	//
 
 	//
+	// If this is a product add product info
+	//
+
+	//
 	// Calculate # of visitors
 	//
 
