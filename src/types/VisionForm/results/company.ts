@@ -1,6 +1,10 @@
-import { InvestorResults } from "./investor";
 import { LocationLeaseResults, LocationLeaseValues } from "./location";
 import { ProductResults, ProductValues } from "./product";
+
+export interface ResultsCompany
+	extends ResultsCompanyTotal,
+		ResultsCompanyLifetime,
+		ResultsCompanyItemized {}
 
 // Current results for the given time interval
 export interface ResultsCompanyTotal {
@@ -18,14 +22,6 @@ export interface ResultsCompanyTotal {
 
 	// Total reserves (company treasury)
 	totalReserves: number;
-
-	// Investors
-	totalInvestorsResults: InvestorResults[];
-
-	// Itemized Revenue and Expenses
-	totalProductsResults: ProductResults[];
-	totalLocationsLeaseResults: LocationLeaseResults[];
-	// Todo Staff revenue/expenses
 }
 
 // Current lifetime results at the given time interval
@@ -44,14 +40,12 @@ export interface ResultsCompanyLifetime {
 
 	// Life time reserves (company treasury)
 	lifetimeReserves: number;
+}
 
-	// Investors
-	lifetimeInvestorsResults: InvestorResults[];
-
+export interface ResultsCompanyItemized {
 	// Itemized Revenue and Expenses
-	lifetimeProductsResults: ProductResults[];
-	lifetimeLocationsLeaseResults: LocationLeaseResults[];
-	// Todo Staff revenue/expenses
+	products: { [key: string]: ProductResults };
+	leases: { [key: string]: LocationLeaseResults };
 }
 
 // All values that need to be passed into the calendar results function

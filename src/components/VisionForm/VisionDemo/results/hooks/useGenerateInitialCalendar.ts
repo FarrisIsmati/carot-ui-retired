@@ -1,7 +1,7 @@
 import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { generateInitResultsCalendar } from "../utils/genInitCalendar";
+import { generateInitResultsCalendar } from "../utils/calendarInitialize";
 
 /**
  * A memoized verion of generateInitResultsCalendar

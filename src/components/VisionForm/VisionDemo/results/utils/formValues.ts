@@ -22,11 +22,14 @@ export const getProductValues = (product: RevenueSection): ProductValues => {
 		RevenueSection
 	>;
 
+	// Id
+	const productId: keyof RevenueSection = "id";
+
 	// Name
-	const productName = "name";
+	const productName: keyof RevenueSection = "productName";
 
 	// Location ID
-	const locationId = "locationId";
+	const locationIds: keyof RevenueSection = "locationIds";
 
 	// Customer conversion rate
 	const customerConversionRateKey = getRevenueSectionKey(
@@ -47,8 +50,9 @@ export const getProductValues = (product: RevenueSection): ProductValues => {
 	);
 
 	return {
-		name: productName,
-		locationId: locationId,
+		productName: product[productName],
+		productId: product[productId],
+		locationId: product[locationIds],
 		customerConversionRate: product[customerConversionRateKey] as number,
 		costToProduce: product[revenueCostToProduceKey] as number,
 		retailPrice: product[revenueRetailPriceKey] as number,

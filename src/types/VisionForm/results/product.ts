@@ -4,10 +4,11 @@
 export interface ProductResults
 	extends ProductResultsTotal,
 		ProductResultsLifetime {
+	id: string;
 	name: string;
-	locationId: string;
+	locationIds: Set<string>;
 	retailPrice: number;
-	totalCustomerConversionRate: number;
+	customerConversionRate: number;
 }
 
 interface ProductResultsTotal {
@@ -36,8 +37,9 @@ interface ProductResultsLifetime {
  * Product values we are calculating on
  */
 export interface ProductValues {
-	name: string;
-	locationId: string;
+	productName: string;
+	productId: string;
+	locationId: Set<string>;
 	customerConversionRate: number;
 	costToProduce: number;
 	retailPrice: number;

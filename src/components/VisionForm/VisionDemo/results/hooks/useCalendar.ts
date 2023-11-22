@@ -1,8 +1,8 @@
 import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
 import { ResultsCompanyValues } from "@/types/VisionForm/results/company";
 import { useSelector } from "react-redux";
-import { getLeaseValues, getProductValues } from "../utils/getValues";
-import { updateCalendar } from "../utils/updateCalendar";
+import { updateCalendar } from "../utils/calendarUpdate";
+import { getLeaseValues, getProductValues } from "../utils/formValues";
 import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
 import useGenerateInitialCalendar from "./useGenerateInitialCalendar";
 

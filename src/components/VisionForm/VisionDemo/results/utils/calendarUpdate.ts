@@ -5,6 +5,12 @@ import {
 	ResultsYear,
 } from "@/types/VisionForm/results";
 import { ResultsCompanyValues } from "@/types/VisionForm/results/company";
+import {
+	calcCustomersPerDay,
+	updateExpense,
+	updateRevenue,
+} from "./calendarCalculate";
+import { genInitResultsProduct } from "./calendarInitialize";
 
 //
 // Functions to loop through entire calendar
@@ -18,12 +24,31 @@ export const updateCalendar = (
 	calendar.years.forEach((year, i) => {
 		const prevYear =
 			calendar.years[0].year === year.year ? null : calendar.years[i - 1];
-		const updatedYearValues = updateCalendarYear(year, prevYear, companyValues);
+
+		updateCalendarYear(year, prevYear, companyValues);
 	});
 
-	// Add yearly total revenue
+	//
+	// Get Product
+	//
+	const product = genInitResultsProduct(companyValues);
+
+	//
+	// Product
+	//
+
+	// TODO
+
+	//
+	// Company
+	//
+
 	calendar.lifetimeRevenue =
 		calendar.years[calendar.years.length - 1].lifetimeRevenue;
+	calendar.lifetimeExpenses =
+		calendar.years[calendar.years.length - 1].lifetimeExpenses;
+
+	// TODO
 };
 
 const getPrevMonth = ({
@@ -60,7 +85,8 @@ const updateCalendarYear = (
 	prevYear: ResultsYear | null,
 	companyValues: ResultsCompanyValues
 ) => {
-	let totalRevenue = 0;
+	let revenue = 0;
+	let expense = 0;
 
 	year.months.forEach((month, i) => {
 		const prevMonth = getPrevMonth({ year, prevYear, month, i });
@@ -68,14 +94,36 @@ const updateCalendarYear = (
 		updateCalendarMonth(month, prevMonth, companyValues);
 
 		// Calculate annual total revenue
-		totalRevenue += month.totalRevenue;
+		revenue += month.totalRevenue;
+		// Calculate monthly total expenses
+		expense += month.totalExpenses;
 	});
 
-	// Add yearly total revenue
-	year.totalRevenue = totalRevenue;
-	year.lifetimeRevenue = prevYear
-		? prevYear.lifetimeRevenue + year.totalRevenue
-		: year.totalRevenue;
+	//
+	// Get Product
+	//
+	const product = genInitResultsProduct(companyValues);
+	const prevProduct = prevYear && prevYear.products[companyValues.productId];
+
+	//
+	// Product
+	//
+
+	// Revenue
+	updateRevenue(product, prevProduct, revenue);
+	// Expense
+	updateExpense(product, prevProduct, expense);
+	// Add product
+	year.products[product.id] = product;
+
+	//
+	// Company
+	//
+
+	// Revenue
+	updateRevenue(year, prevYear, revenue);
+	// Expense
+	updateExpense(year, prevYear, expense);
 };
 
 const getPrevDay = ({
@@ -112,7 +160,8 @@ const updateCalendarMonth = (
 	prevMonth: ResultsMonth | null,
 	companyValues: ResultsCompanyValues
 ) => {
-	let totalRevenue = 0;
+	let revenue = 0;
+	let expense = 0;
 
 	month.days.forEach((day, i) => {
 		const prevDay = getPrevDay({ month, prevMonth, day, i });
@@ -120,14 +169,36 @@ const updateCalendarMonth = (
 		updateCalendarDay(day, prevDay, companyValues);
 
 		// Calculate monthly total revenue
-		totalRevenue += day.totalRevenue;
+		revenue += day.totalRevenue;
+		// Calculate monthly total expenses
+		expense += day.totalExpenses;
 	});
 
-	// Add monthly total revenue
-	month.totalRevenue = totalRevenue;
-	month.lifetimeRevenue = prevMonth
-		? prevMonth.lifetimeRevenue + month.totalRevenue
-		: month.totalRevenue;
+	//
+	// Get Product
+	//
+	const product = genInitResultsProduct(companyValues);
+	const prevProduct = prevMonth && prevMonth.products[companyValues.productId];
+
+	//
+	// Product
+	//
+
+	// Revenue
+	updateRevenue(product, prevProduct, revenue);
+	// Expense
+	updateExpense(product, prevProduct, expense);
+	// Add product
+	month.products[product.id] = product;
+
+	//
+	// Company
+	//
+
+	// Revenue
+	updateRevenue(month, prevMonth, revenue);
+	// Expense
+	updateExpense(month, prevMonth, expense);
 };
 
 const updateCalendarDay = (
@@ -136,42 +207,39 @@ const updateCalendarDay = (
 	companyValues: ResultsCompanyValues
 ) => {
 	//
-	// Physical Calculation
+	// Core Values
 	//
+	const customersPerDay = calcCustomersPerDay(companyValues);
 
 	//
-	// If this is a product add product info
+	// Get Product
 	//
+	const product = genInitResultsProduct(companyValues);
+	const prevProduct = prevDay && prevDay.products[companyValues.productId];
 
 	//
-	// Calculate # of visitors
+	// Revenue, expense, profit, etc.
 	//
-
-	// Hours open per day (only calculating generic not by actual hour)
-	const hoursOpen = companyValues.hoursOpenPerDayGeneric;
-	// How long on average a patron will spend within the physical store
-	const footTrafficTurnoverTime = companyValues.trafficTurnoverTime; // in minutes
-	// Maximum amount of people than can be in the store at any given time
-	const maxOccupancy = companyValues.maxOccupancy;
-	// Average amount of people in the store at any given time (multiply potential max by the curve)
-	const averageOccupancy = maxOccupancy * 1; // change to companyValues.curve
-	// Number of customers that enter the store per hour
-	const visitorsPerHour =
-		Math.round(60 / footTrafficTurnoverTime) * averageOccupancy;
-	// Number of customers per day
-	const visitorsPerDay = hoursOpen * visitorsPerHour;
+	const revenue = customersPerDay * companyValues.retailPrice;
+	const expense = customersPerDay * companyValues.costToProduce;
 
 	//
-	// Calculate revenue
+	// Product
 	//
 
-	// Daily revenue earned
-	const dailyRevenue =
-		visitorsPerDay *
-		(companyValues.customerConversionRate / 100) *
-		companyValues.retailPrice;
-	day.totalRevenue = dailyRevenue;
-	day.lifetimeRevenue = prevDay
-		? prevDay.lifetimeRevenue + day.totalRevenue
-		: day.totalRevenue;
+	// Revenue
+	updateRevenue(product, prevProduct, revenue);
+	// Expense
+	updateExpense(product, prevProduct, expense);
+	// Add product
+	day.products[product.id] = product;
+
+	//
+	// Company
+	//
+
+	// Revenue
+	updateRevenue(day, prevDay, revenue);
+	// Expense
+	updateExpense(day, prevDay, expense);
 };

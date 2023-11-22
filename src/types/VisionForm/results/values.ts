@@ -1,7 +1,16 @@
 import {
+	ResultsCompanyItemized,
 	ResultsCompanyLifetime,
 	ResultsCompanyTotal,
 } from "@/types/VisionForm/results/company";
+
+/**
+ * Init itemized revenue expense objects
+ */
+export const initItemizedObjects: ResultsCompanyItemized = {
+	products: {},
+	leases: {},
+};
 
 /**
  * Starting total and lifetime values for the calendar
@@ -22,14 +31,6 @@ export const initTotalValues: ResultsCompanyTotal = {
 
 	// Total reserves (company treasury)
 	totalReserves: 0,
-
-	// Investors
-	totalInvestorsResults: [],
-
-	// Itemized Revenue and Expenses
-	totalProductsResults: [],
-	totalLocationsLeaseResults: [],
-	// Todo Staff revenue/expenses
 };
 
 export const initLifetimeValues: ResultsCompanyLifetime = {
@@ -47,11 +48,4 @@ export const initLifetimeValues: ResultsCompanyLifetime = {
 
 	// Reserves
 	lifetimeReserves: 0,
-
-	// Investors
-	lifetimeInvestorsResults: [],
-
-	// Product
-	lifetimeProductsResults: [],
-	lifetimeLocationsLeaseResults: [],
 };

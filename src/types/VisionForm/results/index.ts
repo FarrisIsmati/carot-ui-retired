@@ -1,28 +1,22 @@
 // Two separate arrays (one for company, one for investors)
 
-import { ResultsCompanyLifetime, ResultsCompanyTotal } from "./company";
+import { ResultsCompany } from "./company";
 
-export interface ResultsDay
-	extends ResultsCompanyLifetime,
-		ResultsCompanyTotal {
+export interface ResultsDay extends ResultsCompany {
 	date: string;
 	isOpen: boolean;
 }
 
-export interface ResultsMonth
-	extends ResultsCompanyLifetime,
-		ResultsCompanyTotal {
+export interface ResultsMonth extends ResultsCompany {
 	days: ResultsDay[];
 	month: string;
 }
 
-export interface ResultsYear
-	extends ResultsCompanyLifetime,
-		ResultsCompanyTotal {
+export interface ResultsYear extends ResultsCompany {
 	months: ResultsMonth[];
 	year: number;
 }
 
-export interface ResultsCalendar extends ResultsCompanyLifetime {
+export interface ResultsCalendar extends ResultsCompany {
 	years: ResultsYear[];
 }

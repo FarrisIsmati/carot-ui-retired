@@ -8,6 +8,8 @@ import {
 	ResultsMonth,
 	ResultsYear,
 } from "@/types/VisionForm/results";
+import { ResultsCompanyValues } from "@/types/VisionForm/results/company";
+import { ProductResults } from "@/types/VisionForm/results/product";
 import moment from "moment";
 import {
 	initLifetimeValues,
@@ -22,6 +24,26 @@ import {
 } from "../../../utils/dates";
 
 //
+// Generate initial product for calendar
+//
+export const genInitResultsProduct = (companyValues: ResultsCompanyValues) => {
+	const product: ProductResults = {
+		id: companyValues.productId,
+		name: companyValues.productName,
+		locationIds: companyValues.locationId,
+		retailPrice: companyValues.retailPrice,
+		customerConversionRate: companyValues.customerConversionRate,
+		totalExpenses: 0,
+		totalRevenue: 0,
+		totalProfit: 0,
+		lifetimeExpenses: 0,
+		lifetimeRevenue: 0,
+		lifetimeProfit: 0,
+	};
+	return product;
+};
+
+//
 // Generate results (years, months, days)
 //
 
@@ -33,7 +55,8 @@ const generateInitResultsDays = (curDate: string, endDate: string) => {
 		const resultsDay: ResultsDay = {
 			date: moment(curDate).add(i, "days").format("MM/DD/YYYY"),
 			isOpen: false, // default to closed
-
+			products: {},
+			leases: {},
 			...initLifetimeValues,
 			...initTotalValues,
 		};
@@ -59,7 +82,8 @@ const generateInitResultsMonths = (curDate: string, endDate: string) => {
 		const resultsMonth: ResultsMonth = {
 			days: generateInitResultsDays(startingDate, endDate),
 			month: getMonthFromIndex(i + startingMonthIndex),
-
+			products: {},
+			leases: {},
 			...initLifetimeValues,
 			...initTotalValues,
 		};
@@ -85,7 +109,8 @@ const generateInitResultsYears = (startDate: string, endDate: string) => {
 							endDate
 					  ),
 			year: getCurrentYear(startDate, i),
-
+			products: {},
+			leases: {},
 			...initLifetimeValues,
 			...initTotalValues,
 		};
@@ -104,7 +129,10 @@ export const generateInitResultsCalendar = (
 	}
 	const resultsCalendar: ResultsCalendar = {
 		years: generateInitResultsYears(startDate, endDate),
+		products: {},
+		leases: {},
 		...initLifetimeValues,
+		...initTotalValues,
 	};
 	return resultsCalendar;
 };
