@@ -31,8 +31,6 @@ export const calculateResultsDaysLength = (
 		moment(curDate).isSame(endDate, "month");
 
 	if (isCurMonthAndYearSameAsEndMonthAndYear) {
-		console.log(moment(endDate).date() - moment(curDate).date() + 1);
-
 		return moment(endDate).date() - moment(curDate).date() + 1;
 	}
 

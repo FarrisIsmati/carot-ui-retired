@@ -5,7 +5,6 @@ export default () => {
 	const calendar = useCalendar();
 
 	console.log(calendar);
-	console.log("-");
 
 	return <p>Le results</p>;
 };

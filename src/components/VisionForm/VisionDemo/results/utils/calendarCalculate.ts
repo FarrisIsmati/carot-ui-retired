@@ -5,8 +5,20 @@ import {
 } from "@/types/VisionForm/results";
 import { ResultsCompanyValues } from "@/types/VisionForm/results/company";
 import { ProductResults } from "@/types/VisionForm/results/product";
+import { round } from "lodash";
+import moment from "moment";
 
-export const calcCustomersPerDay = (companyValues: ResultsCompanyValues) => {
+/**
+ * Calculate number of customers that enter a physical location per day
+ * @param companyValues
+ * @returns
+ */
+export const calcCustomersPerDay = (
+	companyValues: ResultsCompanyValues,
+	date: string
+) => {
+	// Current day number
+	const day = moment(date).diff(companyValues.startDate, "days");
 	// Hours open per day (only calculating generic not by actual hour)
 	const hoursOpen = companyValues.hoursOpenPerDayGeneric;
 	// How long on average a patron will spend within the physical store
@@ -14,10 +26,16 @@ export const calcCustomersPerDay = (companyValues: ResultsCompanyValues) => {
 	// Maximum amount of people than can be in the store at any given time
 	const maxOccupancy = companyValues.maxOccupancy;
 	// Average amount of people in the store at any given time (multiply potential max by the curve)
-	const averageOccupancy = maxOccupancy * 1; // change to companyValues.curve
+	const averageOccupancy = round(
+		maxOccupancy *
+			(companyValues.leaseFootTrafficCurveDataPoints !== undefined
+				? companyValues.leaseFootTrafficCurveDataPoints[day].uv / 100 // must be divided by 100 to get %
+				: 1),
+		2
+	); // TODO/FIXME when other options handle not just lease curve
 	// Number of customers that enter the store per hour
 	const visitorsPerHour =
-		Math.round(60 / footTrafficTurnoverTime) * averageOccupancy;
+		round(60 / footTrafficTurnoverTime) * averageOccupancy;
 	// Number of visitors per day
 	const visitorsPerDay = hoursOpen * visitorsPerHour;
 	// Number of customers per day
@@ -40,7 +58,7 @@ export const updateRevenue = (
 ) => {
 	obj.totalRevenue = revenue;
 	obj.lifetimeRevenue = prevObj
-		? prevObj.lifetimeRevenue + obj.totalRevenue
+		? round(prevObj.lifetimeRevenue + obj.totalRevenue)
 		: obj.totalRevenue;
 };
 
@@ -57,6 +75,52 @@ export const updateExpense = (
 ) => {
 	obj.totalExpenses = expense;
 	obj.lifetimeExpenses = prevObj
-		? prevObj.lifetimeExpenses + obj.totalExpenses
+		? round(prevObj.lifetimeExpenses + obj.totalExpenses, 2)
 		: obj.totalExpenses;
+};
+
+export interface UpdateCalendarValuesProps {
+	unitOfTime: ResultsDay | ResultsMonth | ResultsYear;
+	prevUnitOfTime: ResultsDay | ResultsMonth | ResultsYear | null;
+	product: ProductResults;
+	prevProduct: ProductResults | null;
+	productRevenue: number;
+	productExpenses: number;
+	totalRevenue: number;
+	totalExpenses: number;
+}
+
+/**
+ * Update revenue, expenses, product for any unit of time (day, month, year)
+ * @param param0 UpdateCalendarValuesProps
+ */
+export const updateCalendarValues = ({
+	unitOfTime,
+	prevUnitOfTime,
+	product,
+	prevProduct,
+	productRevenue,
+	productExpenses,
+	totalRevenue,
+	totalExpenses,
+}: UpdateCalendarValuesProps) => {
+	//
+	// Product
+	//
+
+	// Revenue
+	updateRevenue(product, prevProduct, productRevenue);
+	// Expense
+	updateExpense(product, prevProduct, productExpenses);
+	// Add product
+	unitOfTime.products[product.id] = product;
+
+	//
+	// Company
+	//
+
+	// Revenue
+	updateRevenue(unitOfTime, prevUnitOfTime, totalRevenue);
+	// Expense
+	updateExpense(unitOfTime, prevUnitOfTime, totalExpenses);
 };

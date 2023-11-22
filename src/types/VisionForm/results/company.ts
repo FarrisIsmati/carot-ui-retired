@@ -51,4 +51,7 @@ export interface ResultsCompanyItemized {
 // All values that need to be passed into the calendar results function
 export interface ResultsCompanyValues
 	extends ProductValues,
-		LocationLeaseValues {}
+		LocationLeaseValues {
+	startDate: string;
+	endDate: string;
+}

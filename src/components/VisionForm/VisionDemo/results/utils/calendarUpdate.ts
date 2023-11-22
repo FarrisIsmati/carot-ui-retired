@@ -5,51 +5,12 @@ import {
 	ResultsYear,
 } from "@/types/VisionForm/results";
 import { ResultsCompanyValues } from "@/types/VisionForm/results/company";
-import {
-	calcCustomersPerDay,
-	updateExpense,
-	updateRevenue,
-} from "./calendarCalculate";
+import { calcCustomersPerDay, updateCalendarValues } from "./calendarCalculate";
 import { genInitResultsProduct } from "./calendarInitialize";
 
 //
-// Functions to loop through entire calendar
+// Calendar traversal helper methods
 //
-
-// Function to loop through calendar
-export const updateCalendar = (
-	calendar: ResultsCalendar,
-	companyValues: ResultsCompanyValues
-) => {
-	calendar.years.forEach((year, i) => {
-		const prevYear =
-			calendar.years[0].year === year.year ? null : calendar.years[i - 1];
-
-		updateCalendarYear(year, prevYear, companyValues);
-	});
-
-	//
-	// Get Product
-	//
-	const product = genInitResultsProduct(companyValues);
-
-	//
-	// Product
-	//
-
-	// TODO
-
-	//
-	// Company
-	//
-
-	calendar.lifetimeRevenue =
-		calendar.years[calendar.years.length - 1].lifetimeRevenue;
-	calendar.lifetimeExpenses =
-		calendar.years[calendar.years.length - 1].lifetimeExpenses;
-
-	// TODO
-};
 
 const getPrevMonth = ({
 	year,
@@ -78,52 +39,6 @@ const getPrevMonth = ({
 	}
 
 	return null;
-};
-
-const updateCalendarYear = (
-	year: ResultsYear,
-	prevYear: ResultsYear | null,
-	companyValues: ResultsCompanyValues
-) => {
-	let revenue = 0;
-	let expense = 0;
-
-	year.months.forEach((month, i) => {
-		const prevMonth = getPrevMonth({ year, prevYear, month, i });
-
-		updateCalendarMonth(month, prevMonth, companyValues);
-
-		// Calculate annual total revenue
-		revenue += month.totalRevenue;
-		// Calculate monthly total expenses
-		expense += month.totalExpenses;
-	});
-
-	//
-	// Get Product
-	//
-	const product = genInitResultsProduct(companyValues);
-	const prevProduct = prevYear && prevYear.products[companyValues.productId];
-
-	//
-	// Product
-	//
-
-	// Revenue
-	updateRevenue(product, prevProduct, revenue);
-	// Expense
-	updateExpense(product, prevProduct, expense);
-	// Add product
-	year.products[product.id] = product;
-
-	//
-	// Company
-	//
-
-	// Revenue
-	updateRevenue(year, prevYear, revenue);
-	// Expense
-	updateExpense(year, prevYear, expense);
 };
 
 const getPrevDay = ({
@@ -155,24 +70,95 @@ const getPrevDay = ({
 	return null;
 };
 
+//
+// Functions to loop through entire calendar
+//
+
+// Function to loop through calendar
+export const updateCalendar = (
+	calendar: ResultsCalendar,
+	companyValues: ResultsCompanyValues
+) => {
+	calendar.years.forEach((year, i) => {
+		const prevYear =
+			calendar.years[0].year === year.year ? null : calendar.years[i - 1];
+
+		updateCalendarYear(year, prevYear, companyValues);
+	});
+
+	const lastCalendarYear = calendar.years[calendar.years.length - 1];
+
+	//
+	// Get Product
+	//
+	const product = genInitResultsProduct(companyValues);
+
+	//
+	// Product
+	//
+	product.lifetimeRevenue =
+		lastCalendarYear.products[product.id].lifetimeRevenue;
+	product.lifetimeExpenses =
+		lastCalendarYear.products[product.id].lifetimeExpenses;
+	calendar.products[product.id] = product;
+
+	//
+	// Company
+	//
+	calendar.lifetimeRevenue = lastCalendarYear.lifetimeRevenue;
+	calendar.lifetimeExpenses = lastCalendarYear.lifetimeExpenses;
+};
+
+const updateCalendarYear = (
+	year: ResultsYear,
+	prevYear: ResultsYear | null,
+	companyValues: ResultsCompanyValues
+) => {
+	let productRevenue = 0;
+	let productExpenses = 0;
+	let totalRevenue = 0;
+	let totalExpenses = 0;
+
+	//
+	// Get Product
+	//
+	const product = genInitResultsProduct(companyValues);
+	const prevProduct = prevYear && prevYear.products[companyValues.productId];
+
+	year.months.forEach((month, i) => {
+		const prevMonth = getPrevMonth({ year, prevYear, month, i });
+
+		updateCalendarMonth(month, prevMonth, companyValues);
+
+		// Calculate yearly total revenue
+		productRevenue += month.products[companyValues.productId].totalRevenue;
+		productExpenses += month.products[companyValues.productId].totalExpenses;
+		totalRevenue += month.totalRevenue;
+		totalExpenses += month.totalExpenses;
+	});
+
+	// Update calendar values
+	updateCalendarValues({
+		unitOfTime: year,
+		prevUnitOfTime: prevYear,
+		product,
+		prevProduct,
+		totalRevenue: totalRevenue,
+		productRevenue: productRevenue,
+		totalExpenses: totalExpenses,
+		productExpenses: productExpenses,
+	});
+};
+
 const updateCalendarMonth = (
 	month: ResultsMonth,
 	prevMonth: ResultsMonth | null,
 	companyValues: ResultsCompanyValues
 ) => {
-	let revenue = 0;
-	let expense = 0;
-
-	month.days.forEach((day, i) => {
-		const prevDay = getPrevDay({ month, prevMonth, day, i });
-
-		updateCalendarDay(day, prevDay, companyValues);
-
-		// Calculate monthly total revenue
-		revenue += day.totalRevenue;
-		// Calculate monthly total expenses
-		expense += day.totalExpenses;
-	});
+	let productRevenue = 0;
+	let productExpenses = 0;
+	let totalRevenue = 0;
+	let totalExpenses = 0;
 
 	//
 	// Get Product
@@ -180,25 +166,29 @@ const updateCalendarMonth = (
 	const product = genInitResultsProduct(companyValues);
 	const prevProduct = prevMonth && prevMonth.products[companyValues.productId];
 
-	//
-	// Product
-	//
+	month.days.forEach((day, i) => {
+		const prevDay = getPrevDay({ month, prevMonth, day, i });
 
-	// Revenue
-	updateRevenue(product, prevProduct, revenue);
-	// Expense
-	updateExpense(product, prevProduct, expense);
-	// Add product
-	month.products[product.id] = product;
+		updateCalendarDay(day, prevDay, companyValues);
 
-	//
-	// Company
-	//
+		// Calculate monthly total revenue
+		productRevenue += day.products[companyValues.productId].totalRevenue;
+		productExpenses += day.products[companyValues.productId].totalExpenses;
+		totalRevenue += day.totalRevenue;
+		totalExpenses += day.totalExpenses;
+	});
 
-	// Revenue
-	updateRevenue(month, prevMonth, revenue);
-	// Expense
-	updateExpense(month, prevMonth, expense);
+	// Update calendar values
+	updateCalendarValues({
+		unitOfTime: month,
+		prevUnitOfTime: prevMonth,
+		product,
+		prevProduct,
+		totalRevenue: totalRevenue,
+		productRevenue: productRevenue,
+		totalExpenses: totalExpenses,
+		productExpenses: productExpenses,
+	});
 };
 
 const updateCalendarDay = (
@@ -209,7 +199,7 @@ const updateCalendarDay = (
 	//
 	// Core Values
 	//
-	const customersPerDay = calcCustomersPerDay(companyValues);
+	const customersPerDay = calcCustomersPerDay(companyValues, day.date);
 
 	//
 	// Get Product
@@ -220,26 +210,20 @@ const updateCalendarDay = (
 	//
 	// Revenue, expense, profit, etc.
 	//
-	const revenue = customersPerDay * companyValues.retailPrice;
-	const expense = customersPerDay * companyValues.costToProduce;
+	const productRevenue = customersPerDay * companyValues.retailPrice;
+	const totalRevenue = productRevenue + day.totalRevenue;
+	const productExpenses = customersPerDay * companyValues.costToProduce;
+	const totalExpenses = productExpenses + day.totalExpenses;
 
-	//
-	// Product
-	//
-
-	// Revenue
-	updateRevenue(product, prevProduct, revenue);
-	// Expense
-	updateExpense(product, prevProduct, expense);
-	// Add product
-	day.products[product.id] = product;
-
-	//
-	// Company
-	//
-
-	// Revenue
-	updateRevenue(day, prevDay, revenue);
-	// Expense
-	updateExpense(day, prevDay, expense);
+	// Update calendar values
+	updateCalendarValues({
+		unitOfTime: day,
+		prevUnitOfTime: prevDay,
+		product,
+		prevProduct,
+		totalRevenue: totalRevenue,
+		productRevenue: productRevenue,
+		totalExpenses: totalExpenses,
+		productExpenses: productExpenses,
+	});
 };

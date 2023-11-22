@@ -114,7 +114,6 @@ export const getLeaseValues = (
 
 	return {
 		periodCost: leaseCostPerPeriod,
-		trafficCurve: lease.trafficCurve,
 		maxOccupancy: lease[maxOccupancyKey] as number,
 		trafficTurnoverTime: lease[trafficTurnoverTimeKey] as number,
 		daysOpenPerWeekGeneric: lease[daysOpenPerWeekGenericKey] as number,

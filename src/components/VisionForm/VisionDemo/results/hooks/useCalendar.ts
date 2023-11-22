@@ -39,6 +39,9 @@ export default () => {
 			...getProductValues(product),
 			...getLeaseValues(location),
 
+			startDate: visionFormDemoState.overviewStartDate,
+			endDate: visionFormDemoState.overviewEndDate,
+
 			// Get all curve data points
 			leaseFootTrafficCurveDataPoints:
 				leasesFootTrafficCurveIdDataPointsMap[location.id],
@@ -47,7 +50,6 @@ export default () => {
 		/**
 		 * TODO/FIXME add investors
 		 */
-
 		updateCalendar(calendar, companyValues);
 	});
 

@@ -9,6 +9,7 @@ import type { Dispatch } from "redux";
 import { styled } from "styled-components";
 import Sections from "../sections";
 import { visionFormDemoInitialValues } from "../values/forms/VisionFormDemoInitialValues";
+import { testData1 } from "../values/forms/testData";
 
 // Add Button
 
@@ -17,6 +18,7 @@ const StyledSubmitButton = styled(ButtonPrimary)`
 `;
 
 const handleSubmit = (values: VisionFormValues, dispatch: Dispatch<any>) => {
+	console.log(values);
 	dispatch(submitVisionFormDemo(values));
 };
 
@@ -26,9 +28,9 @@ export const VisionDemoForm = () => {
 	return (
 		<Form<VisionFormValues>
 			initialValues={visionFormDemoInitialValues}
-			validate={(values) => VisionFormValidator(values)}
+			validate={(values) => VisionFormValidator(testData1)}
 			subscription={{ submitting: true, pristine: true }}
-			onSubmit={(values) => handleSubmit(values, dispatch)}
+			onSubmit={(values) => handleSubmit(testData1, dispatch)}
 			render={({ handleSubmit }) => (
 				<div>
 					<Sections onSubmit={handleSubmit} />

@@ -14,11 +14,12 @@ export const useCalcAllLeaseCurveDataPoints = (): CurveDataPointMap => {
 	const visionFormDemoState = useSelector(getVisionFormDemoSelector);
 
 	return useMemo(() => {
-		const lengthDays = datesDifference(
-			visionFormDemoState.overviewStartDate,
-			visionFormDemoState.overviewEndDate,
-			"days"
-		);
+		const lengthDays =
+			datesDifference(
+				visionFormDemoState.overviewStartDate,
+				visionFormDemoState.overviewEndDate,
+				"days"
+			) + 1;
 
 		// Mapper holding curve types and their respective data points
 		const curveTypeDataPointMap: CurveDataPointMap = {};
@@ -39,7 +40,7 @@ export const useCalcAllLeaseCurveDataPoints = (): CurveDataPointMap => {
 			}
 
 			// Associate data points with leases
-			leasesIdDataPointsMap[lease.id] = leasesIdDataPointsMap[trafficCurveType];
+			leasesIdDataPointsMap[lease.id] = curveTypeDataPointMap[trafficCurveType];
 		});
 
 		return leasesIdDataPointsMap;

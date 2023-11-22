@@ -1,4 +1,3 @@
-import { CurveType } from "../LocationSection";
 import { CurveDataPoint } from "../common/growthCurve";
 
 // Location values for calendar
@@ -37,7 +36,6 @@ interface LocationLeaseResultsLifetime {
  * Lease values we are calculating on
  */
 export interface LocationLeaseValues {
-	trafficCurve: CurveType;
 	maxOccupancy: number;
 	trafficTurnoverTime: number;
 	daysOpenPerWeekGeneric: number;
