@@ -17,8 +17,12 @@ export enum PhysicalUseType {
 }
 
 export enum CurveType {
+	NONE = "NONE",
+	LINEAR = "LINEAR",
 	BASIC = "BASIC",
 	RAPID = "RAPID",
+	STEADY = "STEADY",
+	CONSISTENT = "CONSISTENT",
 }
 
 //

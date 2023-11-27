@@ -62,13 +62,28 @@ export const locationTypeDropdownValues = [
 
 export const trafficCurveDropdownValues = [
 	{
+		value: capitalize(CurveType.NONE),
+		id: CurveType.NONE,
+	},
+	{
 		value: capitalize(CurveType.BASIC),
 		id: CurveType.BASIC,
 	},
 	{
+		value: capitalize(CurveType.LINEAR),
+		id: CurveType.LINEAR,
+	},
+	{
 		value: capitalize(CurveType.RAPID),
 		id: CurveType.RAPID,
-		disabled: true,
+	},
+	{
+		value: capitalize(CurveType.STEADY),
+		id: CurveType.STEADY,
+	},
+	{
+		value: capitalize(CurveType.CONSISTENT),
+		id: CurveType.CONSISTENT,
 	},
 ];
 

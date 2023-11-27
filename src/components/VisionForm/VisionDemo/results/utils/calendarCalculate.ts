@@ -116,7 +116,7 @@ export const updateTaxes = (
 	obj.totalTaxed = taxed;
 	obj.lifetimeTaxed = prevObj
 		? round(prevObj.lifetimeTaxed + obj.totalTaxed, 2)
-		: obj.totalProfit;
+		: obj.totalTaxed;
 };
 
 /**
@@ -168,6 +168,7 @@ export const updateCalendarValues = ({
 	// Product
 	//
 	const productProfit = productRevenue - productExpenses;
+	const productTaxes = productProfit * (taxRate / 100);
 	// Revenue
 	updateRevenue(product, prevProduct, productRevenue);
 	// Expense
@@ -175,7 +176,7 @@ export const updateCalendarValues = ({
 	// Profit
 	updateProfit(product, prevProduct, productProfit);
 	// Taxes
-	updateTaxes(product, prevProduct, productProfit * (taxRate / 100));
+	updateTaxes(product, prevProduct, productTaxes);
 	// Add product
 	unitOfTime.products[product.id] = product;
 
@@ -183,8 +184,8 @@ export const updateCalendarValues = ({
 	// Company
 	//
 	const companyProfit = totalRevenue - totalExpenses;
-	const taxes = companyProfit * (taxRate / 100);
-	const reserves = companyProfit - taxes;
+	const companyTaxes = companyProfit * (taxRate / 100);
+	const companyReserves = companyProfit - companyTaxes;
 	// Revenue
 	updateRevenue(unitOfTime, prevUnitOfTime, totalRevenue);
 	// Expense
@@ -192,7 +193,7 @@ export const updateCalendarValues = ({
 	// Profit
 	updateProfit(unitOfTime, prevUnitOfTime, companyProfit);
 	// Taxes
-	updateTaxes(unitOfTime, prevUnitOfTime, taxes); // TODO/FIXME subtract all tax deductors
+	updateTaxes(unitOfTime, prevUnitOfTime, companyTaxes); // TODO/FIXME subtract all tax deductors
 	// Reserves
-	updateReserves(unitOfTime, prevUnitOfTime, reserves); // TODO/FIXME update to only include reserves
+	updateReserves(unitOfTime, prevUnitOfTime, companyReserves); // TODO/FIXME update to only include reserves
 };
