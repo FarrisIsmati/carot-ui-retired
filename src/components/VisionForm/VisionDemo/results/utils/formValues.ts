@@ -1,4 +1,5 @@
 import { getKeyInputMode } from "@/components/VisionForm/utils/form";
+import { VisionFormValues } from "@/types/VisionForm";
 import {
 	PhysicalLeaseLocationSection,
 	PhysicalLeaseLocationSectionInputModeLess,
@@ -7,13 +8,38 @@ import {
 	RevenueSection,
 	RevenueSectionInputModeLess,
 } from "@/types/VisionForm/RevenueSection";
+import {
+	TaxesInputModeLess,
+	TaxesSection,
+} from "@/types/VisionForm/TaxesSection";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
+import { FixedCompanyValues } from "@/types/VisionForm/results/company";
+import { CurveDataPointMap } from "@/types/VisionForm/results/curve";
 import { LocationLeaseValues } from "@/types/VisionForm/results/location";
 import { ProductValues } from "@/types/VisionForm/results/product";
 
 //
 // Get Values for calendar update functions
 //
+
+// Returns all fixed company values given the input mode
+export const getFixedCompanyValues = (
+	visionFormDemoState: VisionFormValues
+): FixedCompanyValues => {
+	const getTaxesSectionKey = getKeyInputMode<TaxesInputModeLess, TaxesSection>;
+
+	// Tax rate generic
+	const taxRateKey = getTaxesSectionKey(
+		"taxRateGeneric",
+		InputModeEnum.Average
+	);
+
+	return {
+		startDate: visionFormDemoState.overviewStartDate,
+		endDate: visionFormDemoState.overviewEndDate,
+		taxRate: visionFormDemoState[taxRateKey],
+	};
+};
 
 // Returns all necessary product values given the input mode
 export const getProductValues = (product: RevenueSection): ProductValues => {
@@ -61,7 +87,8 @@ export const getProductValues = (product: RevenueSection): ProductValues => {
 
 // Returns all necessary lease values given the input mode
 export const getLeaseValues = (
-	lease: PhysicalLeaseLocationSection
+	lease: PhysicalLeaseLocationSection,
+	leasesFootTrafficCurveIdDataPointsMap: CurveDataPointMap
 ): LocationLeaseValues => {
 	const getPhysicalLeaseLocationKey = getKeyInputMode<
 		PhysicalLeaseLocationSectionInputModeLess,
@@ -118,5 +145,7 @@ export const getLeaseValues = (
 		trafficTurnoverTime: lease[trafficTurnoverTimeKey] as number,
 		daysOpenPerWeekGeneric: lease[daysOpenPerWeekGenericKey] as number,
 		hoursOpenPerDayGeneric: lease[hoursOpenPerDayGenericKey] as number,
+		leaseFootTrafficCurveDataPoints:
+			leasesFootTrafficCurveIdDataPointsMap[lease.id],
 	};
 };

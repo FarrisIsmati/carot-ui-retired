@@ -2,7 +2,11 @@ import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
 import { ResultsCompanyValues } from "@/types/VisionForm/results/company";
 import { useSelector } from "react-redux";
 import { updateCalendar } from "../utils/calendarUpdate";
-import { getLeaseValues, getProductValues } from "../utils/formValues";
+import {
+	getFixedCompanyValues,
+	getLeaseValues,
+	getProductValues,
+} from "../utils/formValues";
 import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
 import useGenerateInitialCalendar from "./useGenerateInitialCalendar";
 
@@ -37,14 +41,9 @@ export default () => {
 		 */
 		const companyValues: ResultsCompanyValues = {
 			...getProductValues(product),
-			...getLeaseValues(location),
+			...getLeaseValues(location, leasesFootTrafficCurveIdDataPointsMap),
 
-			startDate: visionFormDemoState.overviewStartDate,
-			endDate: visionFormDemoState.overviewEndDate,
-
-			// Get all curve data points
-			leaseFootTrafficCurveDataPoints:
-				leasesFootTrafficCurveIdDataPointsMap[location.id],
+			fixedCompanyValues: getFixedCompanyValues(visionFormDemoState),
 		};
 
 		/**

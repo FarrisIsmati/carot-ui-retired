@@ -20,6 +20,9 @@ interface ProductResultsTotal {
 
 	// Profit
 	totalProfit: number;
+
+	// Taxes
+	totalTaxed: number;
 }
 
 interface ProductResultsLifetime {
@@ -31,6 +34,9 @@ interface ProductResultsLifetime {
 
 	// Profit
 	lifetimeProfit: number;
+
+	// Taxes
+	lifetimeTaxed: number;
 }
 
 /**

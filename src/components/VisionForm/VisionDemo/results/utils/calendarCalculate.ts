@@ -3,7 +3,10 @@ import {
 	ResultsMonth,
 	ResultsYear,
 } from "@/types/VisionForm/results";
-import { ResultsCompanyValues } from "@/types/VisionForm/results/company";
+import {
+	FixedCompanyValues,
+	ResultsCompanyValues,
+} from "@/types/VisionForm/results/company";
 import { ProductResults } from "@/types/VisionForm/results/product";
 import { round } from "lodash";
 import moment from "moment";
@@ -18,7 +21,10 @@ export const calcCustomersPerDay = (
 	date: string
 ) => {
 	// Current day number
-	const day = moment(date).diff(companyValues.startDate, "days");
+	const day = moment(date).diff(
+		companyValues.fixedCompanyValues.startDate,
+		"days"
+	);
 	// Hours open per day (only calculating generic not by actual hour)
 	const hoursOpen = companyValues.hoursOpenPerDayGeneric;
 	// How long on average a patron will spend within the physical store
@@ -79,7 +85,59 @@ export const updateExpense = (
 		: obj.totalExpenses;
 };
 
+/**
+ * Updates object with new profits inplace
+ * @param obj
+ * @param prevObj
+ * @param revenue
+ */
+export const updateProfit = (
+	obj: ProductResults | ResultsDay | ResultsMonth | ResultsYear,
+	prevObj: ProductResults | ResultsDay | ResultsMonth | ResultsYear | null,
+	profit: number
+) => {
+	obj.totalProfit = profit;
+	obj.lifetimeProfit = prevObj
+		? round(prevObj.lifetimeProfit + obj.totalProfit, 2)
+		: obj.totalProfit;
+};
+
+/**
+ * Updates object with new profits inplace
+ * @param obj
+ * @param prevObj
+ * @param revenue
+ */
+export const updateTaxes = (
+	obj: ProductResults | ResultsDay | ResultsMonth | ResultsYear,
+	prevObj: ProductResults | ResultsDay | ResultsMonth | ResultsYear | null,
+	taxed: number
+) => {
+	obj.totalTaxed = taxed;
+	obj.lifetimeTaxed = prevObj
+		? round(prevObj.lifetimeTaxed + obj.totalTaxed, 2)
+		: obj.totalProfit;
+};
+
+/**
+ * Updates object with new company reserves inplace
+ * @param obj
+ * @param prevObj
+ * @param revenue
+ */
+export const updateReserves = (
+	obj: ResultsDay | ResultsMonth | ResultsYear,
+	prevObj: ResultsDay | ResultsMonth | ResultsYear | null,
+	reserves: number
+) => {
+	obj.totalReserves = reserves;
+	obj.lifetimeReserves = prevObj
+		? round(prevObj.lifetimeReserves + obj.totalReserves, 2)
+		: obj.totalReserves;
+};
+
 export interface UpdateCalendarValuesProps {
+	fixedValues: FixedCompanyValues;
 	unitOfTime: ResultsDay | ResultsMonth | ResultsYear;
 	prevUnitOfTime: ResultsDay | ResultsMonth | ResultsYear | null;
 	product: ProductResults;
@@ -95,6 +153,7 @@ export interface UpdateCalendarValuesProps {
  * @param param0 UpdateCalendarValuesProps
  */
 export const updateCalendarValues = ({
+	fixedValues,
 	unitOfTime,
 	prevUnitOfTime,
 	product,
@@ -104,23 +163,36 @@ export const updateCalendarValues = ({
 	totalRevenue,
 	totalExpenses,
 }: UpdateCalendarValuesProps) => {
+	const { taxRate } = fixedValues;
 	//
 	// Product
 	//
-
+	const productProfit = productRevenue - productExpenses;
 	// Revenue
 	updateRevenue(product, prevProduct, productRevenue);
 	// Expense
 	updateExpense(product, prevProduct, productExpenses);
+	// Profit
+	updateProfit(product, prevProduct, productProfit);
+	// Taxes
+	updateTaxes(product, prevProduct, productProfit * (taxRate / 100));
 	// Add product
 	unitOfTime.products[product.id] = product;
 
 	//
 	// Company
 	//
-
+	const companyProfit = totalRevenue - totalExpenses;
+	const taxes = companyProfit * (taxRate / 100);
+	const reserves = companyProfit - taxes;
 	// Revenue
 	updateRevenue(unitOfTime, prevUnitOfTime, totalRevenue);
 	// Expense
 	updateExpense(unitOfTime, prevUnitOfTime, totalExpenses);
+	// Profit
+	updateProfit(unitOfTime, prevUnitOfTime, companyProfit);
+	// Taxes
+	updateTaxes(unitOfTime, prevUnitOfTime, taxes); // TODO/FIXME subtract all tax deductors
+	// Reserves
+	updateReserves(unitOfTime, prevUnitOfTime, reserves); // TODO/FIXME update to only include reserves
 };

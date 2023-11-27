@@ -52,6 +52,12 @@ export interface ResultsCompanyItemized {
 export interface ResultsCompanyValues
 	extends ProductValues,
 		LocationLeaseValues {
+	fixedCompanyValues: FixedCompanyValues;
+}
+
+// Values getCompanyValues will return
+export interface FixedCompanyValues {
 	startDate: string;
 	endDate: string;
+	taxRate: number;
 }

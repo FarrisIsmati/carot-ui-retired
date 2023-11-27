@@ -96,17 +96,32 @@ export const updateCalendar = (
 	//
 	// Product
 	//
-	product.lifetimeRevenue =
-		lastCalendarYear.products[product.id].lifetimeRevenue;
-	product.lifetimeExpenses =
-		lastCalendarYear.products[product.id].lifetimeExpenses;
+	const lastProduct = lastCalendarYear.products[product.id];
+
+	// Revenue
+	product.lifetimeRevenue = lastProduct.lifetimeRevenue;
+	// Expenses
+	product.lifetimeExpenses = lastProduct.lifetimeExpenses;
+	// Profit
+	product.lifetimeProfit = lastProduct.lifetimeProfit;
+	// Taxes
+	product.lifetimeTaxed = lastProduct.lifetimeTaxed;
 	calendar.products[product.id] = product;
 
 	//
 	// Company
 	//
+
+	// Revenue
 	calendar.lifetimeRevenue = lastCalendarYear.lifetimeRevenue;
+	// Expenses
 	calendar.lifetimeExpenses = lastCalendarYear.lifetimeExpenses;
+	// Profit
+	calendar.lifetimeProfit = lastCalendarYear.lifetimeProfit;
+	// Taxes
+	calendar.lifetimeTaxed = lastCalendarYear.lifetimeTaxed;
+	// Reserves
+	calendar.lifetimeReserves = lastCalendarYear.lifetimeReserves;
 };
 
 const updateCalendarYear = (
@@ -139,6 +154,7 @@ const updateCalendarYear = (
 
 	// Update calendar values
 	updateCalendarValues({
+		fixedValues: companyValues.fixedCompanyValues,
 		unitOfTime: year,
 		prevUnitOfTime: prevYear,
 		product,
@@ -180,6 +196,7 @@ const updateCalendarMonth = (
 
 	// Update calendar values
 	updateCalendarValues({
+		fixedValues: companyValues.fixedCompanyValues,
 		unitOfTime: month,
 		prevUnitOfTime: prevMonth,
 		product,
@@ -210,13 +227,17 @@ const updateCalendarDay = (
 	//
 	// Revenue, expense, profit, etc.
 	//
+
+	// Revenue
 	const productRevenue = customersPerDay * companyValues.retailPrice;
 	const totalRevenue = productRevenue + day.totalRevenue;
+	// Expenses
 	const productExpenses = customersPerDay * companyValues.costToProduce;
 	const totalExpenses = productExpenses + day.totalExpenses;
 
 	// Update calendar values
 	updateCalendarValues({
+		fixedValues: companyValues.fixedCompanyValues,
 		unitOfTime: day,
 		prevUnitOfTime: prevDay,
 		product,

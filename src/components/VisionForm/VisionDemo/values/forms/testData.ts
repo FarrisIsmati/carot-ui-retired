@@ -9,8 +9,8 @@ export const testData1: VisionFormValues = {
 	overviewCurrency: CurrencyTypes.USD,
 	overviewIndustry: "Food & Services",
 	overviewCountryOrigin: CountriesEnum.USA,
-	overviewStartDate: "11/22/2023",
-	overviewEndDate: "11/21/2025",
+	overviewStartDate: "11/27/2023",
+	overviewEndDate: "11/26/2025",
 	investors: [
 		{
 			investorName: "Toni",
@@ -89,8 +89,8 @@ export const testData1: VisionFormValues = {
 		},
 	],
 	legalStructure: "Sole proprietorship",
-	taxRateGenericLow: 0,
-	taxRateGenericAverage: 0,
-	taxRateGenericHigh: 0,
+	taxRateGenericLow: 5,
+	taxRateGenericAverage: 5,
+	taxRateGenericHigh: 5,
 	overviewName: "Eclairon",
 };
