@@ -1,7 +1,7 @@
 import {
 	InvestorSection,
 	InvestorType,
-} from "@/types/VisionForm/CapitalSection/InvestorSection";
+} from "@/types/VisionForm/capitalSection/InvestorSection";
 import { ScheduleType } from "@/types/VisionForm/common/schedule";
 
 export const InvestorsFormInitialValues: Omit<InvestorSection, "id"> = {

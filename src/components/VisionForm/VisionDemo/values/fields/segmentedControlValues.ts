@@ -2,7 +2,7 @@ import { SegmentedControlOption } from "@/components/common/SegmentedControl";
 import {
 	PhysicalFinanceType,
 	PhysicalUseType,
-} from "@/types/VisionForm/LocationSection";
+} from "@/types/VisionForm/locationSection";
 
 //
 // Space and place values

@@ -1,5 +1,5 @@
-import { PhysicalLeaseLocationSection } from "@/types/VisionForm/LocationSection";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
+import { PhysicalLeaseLocationSection } from "@/types/VisionForm/locationSection";
 import React from "react";
 
 export interface RevenueFormContextProps {

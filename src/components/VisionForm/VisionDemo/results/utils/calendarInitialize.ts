@@ -1,33 +1,36 @@
 //
-// Calculate length of days/months/years
+// This file generates the starting/blank calendar within the full set date range passed into it (startDate/endDate)
 //
-
 import {
-	ResultsCalendar,
-	ResultsDay,
-	ResultsMonth,
-	ResultsYear,
-} from "@/types/VisionForm/results";
-import { ResultsCompanyValues } from "@/types/VisionForm/results/company";
-import { ProductResults } from "@/types/VisionForm/results/product";
+	Calendar,
+	DayCalendar,
+	MonthCalendar,
+	YearCalendar,
+} from "@/types/VisionForm/calendar";
+import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
+import { ProductCalendar } from "@/types/VisionForm/calendar/company/productCalendar";
+import { InvestorCalendar } from "@/types/VisionForm/calendar/investor/investorCalendar";
+import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import moment from "moment";
 import {
-	initLifetimeValues,
-	initTotalValues,
-} from "../../../../../types/VisionForm/results/values";
-import {
-	calculateResultsDaysLength,
-	calculateResultsMonthsLength,
-	calculateResultsYearsLength,
+	calculateDayCalendarsLength,
+	calculateMonthCalendarsLength,
+	calculateYearCalendarsLength,
 	getCurrentYear,
 	getMonthFromIndex,
 } from "../../../utils/dates";
+import {
+	initLifetimeValues,
+	initTotalValues,
+} from "../../values/calendar/initValues";
 
 //
 // Generate initial product for calendar
 //
-export const genInitResultsProduct = (companyValues: ResultsCompanyValues) => {
-	const product: ProductResults = {
+export const genInitResultsProduct = (
+	companyValues: CompanyCalendarValues
+): ProductCalendar => {
+	const product: ProductCalendar = {
 		id: companyValues.productId,
 		name: companyValues.productName,
 		locationIds: companyValues.locationId,
@@ -36,11 +39,31 @@ export const genInitResultsProduct = (companyValues: ResultsCompanyValues) => {
 		totalExpenses: 0,
 		totalRevenue: 0,
 		totalProfit: 0,
+		totalTaxed: 0,
 		lifetimeExpenses: 0,
 		lifetimeRevenue: 0,
 		lifetimeProfit: 0,
+		lifetimeTaxed: 0,
 	};
 	return product;
+};
+
+//
+// Generate initial investor for calendar
+//
+export const genInitInvestorCalendar = (
+	investor: InvestorCalendarValues
+): InvestorCalendar => {
+	return {
+		id: investor.id,
+		name: investor.name,
+		initialInvestment: investor.initialInvestment,
+		equity: investor.equity,
+		totalEarned: 0,
+		totalPercentageInitialInvestmentRecouped: 0,
+		lifetimeEarned: 0,
+		lifetimePercentageInitialInvestmentRecouped: 0,
+	};
 };
 
 //
@@ -48,15 +71,16 @@ export const genInitResultsProduct = (companyValues: ResultsCompanyValues) => {
 //
 
 // Create init months results
-const generateInitResultsDays = (curDate: string, endDate: string) => {
-	const length = calculateResultsDaysLength(curDate, endDate);
+const generateInitDayCalendars = (curDate: string, endDate: string) => {
+	const length = calculateDayCalendarsLength(curDate, endDate);
 	const days = new Array(length).fill({});
 	return days.map((_, i) => {
-		const resultsDay: ResultsDay = {
+		const resultsDay: DayCalendar = {
 			date: moment(curDate).add(i, "days").format("MM/DD/YYYY"),
 			isOpen: false, // default to closed
 			products: {},
 			leases: {},
+			investors: {},
 			...initLifetimeValues,
 			...initTotalValues,
 		};
@@ -66,8 +90,8 @@ const generateInitResultsDays = (curDate: string, endDate: string) => {
 };
 
 // Create init months results
-const generateInitResultsMonths = (curDate: string, endDate: string) => {
-	const length = calculateResultsMonthsLength(curDate, endDate);
+const generateInitMonthCalendars = (curDate: string, endDate: string) => {
+	const length = calculateMonthCalendarsLength(curDate, endDate);
 	const months = new Array(length).fill({});
 
 	// Incase starting month is not january need to offset month index by starting month index
@@ -79,11 +103,12 @@ const generateInitResultsMonths = (curDate: string, endDate: string) => {
 			i === 0
 				? curDate
 				: moment(curDate).startOf("month").add(i, "month").format("MM/DD/YYYY");
-		const resultsMonth: ResultsMonth = {
-			days: generateInitResultsDays(startingDate, endDate),
+		const resultsMonth: MonthCalendar = {
+			days: generateInitDayCalendars(startingDate, endDate),
 			month: getMonthFromIndex(i + startingMonthIndex),
 			products: {},
 			leases: {},
+			investors: {},
 			...initLifetimeValues,
 			...initTotalValues,
 		};
@@ -93,15 +118,15 @@ const generateInitResultsMonths = (curDate: string, endDate: string) => {
 };
 
 // Create inital years results
-const generateInitResultsYears = (startDate: string, endDate: string) => {
-	const length = calculateResultsYearsLength(startDate, endDate);
+const generateInitYearCalendars = (startDate: string, endDate: string) => {
+	const length = calculateYearCalendarsLength(startDate, endDate);
 	const years = new Array(length).fill({});
 	return years.map((_, i) => {
-		const resultsYear: ResultsYear = {
+		const resultsYear: YearCalendar = {
 			months:
 				i === 0
-					? generateInitResultsMonths(startDate, endDate)
-					: generateInitResultsMonths(
+					? generateInitMonthCalendars(startDate, endDate)
+					: generateInitMonthCalendars(
 							moment()
 								.year(getCurrentYear(startDate, i))
 								.startOf("year")
@@ -111,6 +136,7 @@ const generateInitResultsYears = (startDate: string, endDate: string) => {
 			year: getCurrentYear(startDate, i),
 			products: {},
 			leases: {},
+			investors: {},
 			...initLifetimeValues,
 			...initTotalValues,
 		};
@@ -120,17 +146,15 @@ const generateInitResultsYears = (startDate: string, endDate: string) => {
 };
 
 // Create inital calendar results
-export const generateInitResultsCalendar = (
-	startDate: string,
-	endDate: string
-) => {
+export const generateInitCalendar = (startDate: string, endDate: string) => {
 	if (moment(endDate).isBefore(startDate)) {
 		throw new Error("Cannot have an end date starting before your start date");
 	}
-	const resultsCalendar: ResultsCalendar = {
-		years: generateInitResultsYears(startDate, endDate),
+	const resultsCalendar: Calendar = {
+		years: generateInitYearCalendars(startDate, endDate),
 		products: {},
 		leases: {},
+		investors: {},
 		...initLifetimeValues,
 		...initTotalValues,
 	};

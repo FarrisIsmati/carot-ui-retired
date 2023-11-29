@@ -1,4 +1,4 @@
-import { InvestorSection } from "@/types/VisionForm/CapitalSection/InvestorSection";
+import { InvestorSection } from "@/types/VisionForm/capitalSection/InvestorSection";
 import {
 	investorEquityValidator,
 	investorNameValidator,

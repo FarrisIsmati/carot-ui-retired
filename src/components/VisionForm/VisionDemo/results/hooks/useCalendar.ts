@@ -1,20 +1,22 @@
 import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
-import { ResultsCompanyValues } from "@/types/VisionForm/results/company";
+import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 import { useSelector } from "react-redux";
 import { updateCalendar } from "../utils/calendarUpdate";
 import {
-	getFixedCompanyValues,
+	getCompanyCalendarValuesFixed,
 	getLeaseValues,
 	getProductValues,
-} from "../utils/formValues";
+} from "../utils/calendarValues";
 import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
 import useGenerateInitialCalendar from "./useGenerateInitialCalendar";
+import useGenerateInitialInvestorsValues from "./useGenerateInitialInvestorsValues";
 
 /**
  * Generates initial calendar
  * Updates calendar based on all form values
  * Continues to update calendar if form values change (need to resubmit form)
  */
+
 export default () => {
 	const visionFormDemoState = useSelector(getVisionFormDemoSelector);
 
@@ -24,6 +26,11 @@ export default () => {
 	// Memoized way to calculate all lease traffic curve data points
 	const leasesFootTrafficCurveIdDataPointsMap =
 		useCalcAllLeaseCurveDataPoints();
+
+	// Memoized way to getInvestorCalendarValues
+	const investorValues = useGenerateInitialInvestorsValues(
+		visionFormDemoState.investors
+	);
 
 	// Loop through all products
 	visionFormDemoState.products.forEach((product) => {
@@ -39,17 +46,13 @@ export default () => {
 		 * Get values for current product and lease association
 		 * Update calendar for that specific product
 		 */
-		const companyValues: ResultsCompanyValues = {
+		const companyValues: CompanyCalendarValues = {
 			...getProductValues(product),
 			...getLeaseValues(location, leasesFootTrafficCurveIdDataPointsMap),
-
-			fixedCompanyValues: getFixedCompanyValues(visionFormDemoState),
+			fixedCompanyValues: getCompanyCalendarValuesFixed(visionFormDemoState),
 		};
 
-		/**
-		 * TODO/FIXME add investors
-		 */
-		updateCalendar(calendar, companyValues);
+		updateCalendar({ calendar, companyValues, investorValues });
 	});
 
 	return calendar;

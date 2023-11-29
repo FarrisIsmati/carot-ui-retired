@@ -4,7 +4,7 @@ import { useVisionFormField } from "@/components/VisionForm/utils/form";
 import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
 import { VisionFormValues } from "@/types/VisionForm";
-import { PhysicalLeaseLocationSection } from "@/types/VisionForm/LocationSection";
+import { PhysicalLeaseLocationSection } from "@/types/VisionForm/locationSection";
 import { physicalLeaseLocationValidator } from "@/validators/Location/Physical/PhysicalLocationValidator";
 import { FormApi } from "final-form";
 import _ from "lodash";

@@ -1,10 +1,10 @@
 import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { generateInitResultsCalendar } from "../utils/calendarInitialize";
+import { generateInitCalendar } from "../utils/calendarInitialize";
 
 /**
- * A memoized verion of generateInitResultsCalendar
+ * A memoized verion of generateInitCalendar
  * Values already passed in
  */
 export default () => {
@@ -14,7 +14,7 @@ export default () => {
 
 	// Generate init calendar
 	return useMemo(
-		() => generateInitResultsCalendar(startDate, endDate),
+		() => generateInitCalendar(startDate, endDate),
 		[startDate, endDate]
 	);
 };

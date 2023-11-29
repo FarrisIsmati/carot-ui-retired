@@ -2,7 +2,7 @@ import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
 
 import DropdownSelect from "@/components/common/Dropdown/DropdownSelect";
-import { LocationType } from "@/types/VisionForm/LocationSection";
+import { LocationType } from "@/types/VisionForm/locationSection";
 import { useContext, useState } from "react";
 import LocationFormContext from "../../forms/LocationForm/LocationFormContext";
 import { locationTypeDropdownValues } from "../../values/fields/dropdownValues";

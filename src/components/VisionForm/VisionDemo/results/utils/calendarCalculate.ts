@@ -1,15 +1,19 @@
 import {
-	ResultsDay,
-	ResultsMonth,
-	ResultsYear,
-} from "@/types/VisionForm/results";
+	DayCalendar,
+	MonthCalendar,
+	YearCalendar,
+} from "@/types/VisionForm/calendar";
+
 import {
-	FixedCompanyValues,
-	ResultsCompanyValues,
-} from "@/types/VisionForm/results/company";
-import { ProductResults } from "@/types/VisionForm/results/product";
+	CompanyCalendarValues,
+	CompanyCalendarValuesFixed,
+} from "@/types/VisionForm/calendar/company/companyCalendarValues";
+import { ProductCalendar } from "@/types/VisionForm/calendar/company/productCalendar";
+import { InvestorCalendar } from "@/types/VisionForm/calendar/investor/investorCalendar";
+import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { round } from "lodash";
 import moment from "moment";
+import { genInitInvestorCalendar } from "./calendarInitialize";
 
 /**
  * Calculate number of customers that enter a physical location per day
@@ -17,7 +21,7 @@ import moment from "moment";
  * @returns
  */
 export const calcCustomersPerDay = (
-	companyValues: ResultsCompanyValues,
+	companyValues: CompanyCalendarValues,
 	date: string
 ) => {
 	// Current day number
@@ -58,8 +62,8 @@ export const calcCustomersPerDay = (
  * @param revenue
  */
 export const updateRevenue = (
-	obj: ProductResults | ResultsDay | ResultsMonth | ResultsYear,
-	prevObj: ProductResults | ResultsDay | ResultsMonth | ResultsYear | null,
+	obj: ProductCalendar | DayCalendar | MonthCalendar | YearCalendar,
+	prevObj: ProductCalendar | DayCalendar | MonthCalendar | YearCalendar | null,
 	revenue: number
 ) => {
 	obj.totalRevenue = revenue;
@@ -75,8 +79,8 @@ export const updateRevenue = (
  * @param revenue
  */
 export const updateExpense = (
-	obj: ProductResults | ResultsDay | ResultsMonth | ResultsYear,
-	prevObj: ProductResults | ResultsDay | ResultsMonth | ResultsYear | null,
+	obj: ProductCalendar | DayCalendar | MonthCalendar | YearCalendar,
+	prevObj: ProductCalendar | DayCalendar | MonthCalendar | YearCalendar | null,
 	expense: number
 ) => {
 	obj.totalExpenses = expense;
@@ -92,8 +96,8 @@ export const updateExpense = (
  * @param revenue
  */
 export const updateProfit = (
-	obj: ProductResults | ResultsDay | ResultsMonth | ResultsYear,
-	prevObj: ProductResults | ResultsDay | ResultsMonth | ResultsYear | null,
+	obj: ProductCalendar | DayCalendar | MonthCalendar | YearCalendar,
+	prevObj: ProductCalendar | DayCalendar | MonthCalendar | YearCalendar | null,
 	profit: number
 ) => {
 	obj.totalProfit = profit;
@@ -109,8 +113,8 @@ export const updateProfit = (
  * @param revenue
  */
 export const updateTaxes = (
-	obj: ProductResults | ResultsDay | ResultsMonth | ResultsYear,
-	prevObj: ProductResults | ResultsDay | ResultsMonth | ResultsYear | null,
+	obj: ProductCalendar | DayCalendar | MonthCalendar | YearCalendar,
+	prevObj: ProductCalendar | DayCalendar | MonthCalendar | YearCalendar | null,
 	taxed: number
 ) => {
 	obj.totalTaxed = taxed;
@@ -126,8 +130,8 @@ export const updateTaxes = (
  * @param revenue
  */
 export const updateReserves = (
-	obj: ResultsDay | ResultsMonth | ResultsYear,
-	prevObj: ResultsDay | ResultsMonth | ResultsYear | null,
+	obj: DayCalendar | MonthCalendar | YearCalendar,
+	prevObj: DayCalendar | MonthCalendar | YearCalendar | null,
 	reserves: number
 ) => {
 	obj.totalReserves = reserves;
@@ -137,11 +141,62 @@ export const updateReserves = (
 };
 
 export interface UpdateCalendarValuesProps {
-	fixedValues: FixedCompanyValues;
-	unitOfTime: ResultsDay | ResultsMonth | ResultsYear;
-	prevUnitOfTime: ResultsDay | ResultsMonth | ResultsYear | null;
-	product: ProductResults;
-	prevProduct: ProductResults | null;
+	fixedValues: CompanyCalendarValuesFixed;
+	unitOfTime: DayCalendar | MonthCalendar | YearCalendar;
+	prevUnitOfTime: DayCalendar | MonthCalendar | YearCalendar | null;
+	product: ProductCalendar;
+	prevProduct: ProductCalendar | null;
+	productRevenue: number;
+	productExpenses: number;
+	totalRevenue: number;
+	totalExpenses: number;
+}
+
+/**
+ * Updates investor object with new company reserves inplace
+ * @param obj
+ * @param prevObj
+ * @param revenue
+ */
+export const updateEarned = (
+	obj: InvestorCalendar,
+	prevObj: InvestorCalendar | null,
+	earned: number
+) => {
+	obj.totalEarned = earned;
+	obj.lifetimeEarned = prevObj
+		? round(prevObj.lifetimeEarned + obj.totalEarned, 2)
+		: obj.totalEarned;
+};
+
+/**
+ * Updates investor object with percentage of initial investment recouped
+ * @param obj
+ * @param prevObj
+ * @param revenue
+ */
+export const updatePercentageOfInitialInvestmentRecouped = (
+	obj: InvestorCalendar,
+	prevObj: InvestorCalendar | null,
+	percent: number
+) => {
+	obj.totalPercentageInitialInvestmentRecouped = percent;
+	obj.lifetimePercentageInitialInvestmentRecouped = prevObj
+		? round(
+				prevObj.lifetimePercentageInitialInvestmentRecouped +
+					obj.totalPercentageInitialInvestmentRecouped,
+				2
+		  )
+		: obj.totalPercentageInitialInvestmentRecouped;
+};
+
+export interface UpdateCalendarValuesProps {
+	investors: InvestorCalendarValues[];
+	fixedValues: CompanyCalendarValuesFixed;
+	unitOfTime: DayCalendar | MonthCalendar | YearCalendar;
+	prevUnitOfTime: DayCalendar | MonthCalendar | YearCalendar | null;
+	product: ProductCalendar;
+	prevProduct: ProductCalendar | null;
 	productRevenue: number;
 	productExpenses: number;
 	totalRevenue: number;
@@ -153,6 +208,7 @@ export interface UpdateCalendarValuesProps {
  * @param param0 UpdateCalendarValuesProps
  */
 export const updateCalendarValues = ({
+	investors,
 	fixedValues,
 	unitOfTime,
 	prevUnitOfTime,
@@ -196,4 +252,31 @@ export const updateCalendarValues = ({
 	updateTaxes(unitOfTime, prevUnitOfTime, companyTaxes); // TODO/FIXME subtract all tax deductors
 	// Reserves
 	updateReserves(unitOfTime, prevUnitOfTime, companyReserves); // TODO/FIXME update to only include reserves
+
+	//
+	// Investors
+	//
+	investors.forEach((i) => {
+		if (!(i.id in unitOfTime.investors)) {
+			unitOfTime.investors[i.id] = genInitInvestorCalendar(i);
+		}
+		const investor = unitOfTime.investors[i.id];
+		const prevInvestor = prevUnitOfTime?.investors[i.id] ?? null;
+
+		const equity = round(100 / i.equity, 2);
+		const earned = round(companyReserves * equity, 2);
+		const percentageInvestmentRecouped = round(
+			100 * (earned / investor.initialInvestment),
+			4
+		);
+
+		// Earned
+		updateEarned(investor, prevInvestor, earned);
+		// Percentage of initial investment recouped
+		updatePercentageOfInitialInvestmentRecouped(
+			investor,
+			prevInvestor,
+			percentageInvestmentRecouped
+		);
+	});
 };

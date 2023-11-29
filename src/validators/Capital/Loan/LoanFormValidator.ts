@@ -1,4 +1,4 @@
-import { LoanSection } from "@/types/VisionForm/CapitalSection/LoanSection";
+import { LoanSection } from "@/types/VisionForm/capitalSection/LoanSection";
 
 export default (formValues: LoanSection) => {
 	return {};

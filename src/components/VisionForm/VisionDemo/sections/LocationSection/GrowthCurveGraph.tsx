@@ -1,6 +1,6 @@
 import { createGrowthCurve } from "@/components/VisionForm/utils/growthCurve";
 import { pxStringToNum, spacer320 } from "@/styles/sizes";
-import { CurveType } from "@/types/VisionForm/LocationSection";
+import { CurveType } from "@/types/VisionForm/locationSection";
 import { useMemo } from "react";
 import { Line, LineChart } from "recharts";
 

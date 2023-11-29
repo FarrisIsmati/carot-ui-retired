@@ -1,31 +1,36 @@
 import { getKeyInputMode } from "@/components/VisionForm/utils/form";
 import { VisionFormValues } from "@/types/VisionForm";
+import { CompanyCalendarValuesFixed } from "@/types/VisionForm/calendar/company/companyCalendarValues";
+import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/company/locationCalendarValues";
+import { ProductValues } from "@/types/VisionForm/calendar/company/productCalendarValues";
+import { CurveDataPointMap } from "@/types/VisionForm/calendar/curve";
+import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
+import {
+	InvestorSection,
+	InvestorsInputModeLess,
+} from "@/types/VisionForm/capitalSection/InvestorSection";
+import { InputModeEnum } from "@/types/VisionForm/common/values";
 import {
 	PhysicalLeaseLocationSection,
 	PhysicalLeaseLocationSectionInputModeLess,
-} from "@/types/VisionForm/LocationSection";
+} from "@/types/VisionForm/locationSection";
 import {
 	RevenueSection,
 	RevenueSectionInputModeLess,
-} from "@/types/VisionForm/RevenueSection";
+} from "@/types/VisionForm/revenueSection";
 import {
 	TaxesInputModeLess,
 	TaxesSection,
-} from "@/types/VisionForm/TaxesSection";
-import { InputModeEnum } from "@/types/VisionForm/common/values";
-import { FixedCompanyValues } from "@/types/VisionForm/results/company";
-import { CurveDataPointMap } from "@/types/VisionForm/results/curve";
-import { LocationLeaseValues } from "@/types/VisionForm/results/location";
-import { ProductValues } from "@/types/VisionForm/results/product";
+} from "@/types/VisionForm/taxesSection";
 
 //
 // Get Values for calendar update functions
 //
 
 // Returns all fixed company values given the input mode
-export const getFixedCompanyValues = (
+export const getCompanyCalendarValuesFixed = (
 	visionFormDemoState: VisionFormValues
-): FixedCompanyValues => {
+): CompanyCalendarValuesFixed => {
 	const getTaxesSectionKey = getKeyInputMode<TaxesInputModeLess, TaxesSection>;
 
 	// Tax rate generic
@@ -38,6 +43,38 @@ export const getFixedCompanyValues = (
 		startDate: visionFormDemoState.overviewStartDate,
 		endDate: visionFormDemoState.overviewEndDate,
 		taxRate: visionFormDemoState[taxRateKey],
+	};
+};
+
+// Returns all necessary investor values given the input mode
+export const getInvestorCalendarValues = (
+	investor: InvestorSection
+): InvestorCalendarValues => {
+	const getRevenueSectionKey = getKeyInputMode<
+		InvestorsInputModeLess,
+		InvestorSection
+	>;
+
+	// Id
+	const id: keyof InvestorSection = "id";
+
+	// Name
+	const name: keyof InvestorSection = "investorName";
+
+	// Equity
+	const equity: keyof InvestorSection = "investorEquityPercentage";
+
+	// Initial investment
+	const initialInvestment = getRevenueSectionKey(
+		"investorStartingCash",
+		InputModeEnum.Average
+	);
+
+	return {
+		name: investor[name],
+		id: investor[id],
+		equity: investor[equity],
+		initialInvestment: investor[initialInvestment] as number,
 	};
 };
 
@@ -89,7 +126,7 @@ export const getProductValues = (product: RevenueSection): ProductValues => {
 export const getLeaseValues = (
 	lease: PhysicalLeaseLocationSection,
 	leasesFootTrafficCurveIdDataPointsMap: CurveDataPointMap
-): LocationLeaseValues => {
+): LocationLeaseCalendarValues => {
 	const getPhysicalLeaseLocationKey = getKeyInputMode<
 		PhysicalLeaseLocationSectionInputModeLess,
 		PhysicalLeaseLocationSection

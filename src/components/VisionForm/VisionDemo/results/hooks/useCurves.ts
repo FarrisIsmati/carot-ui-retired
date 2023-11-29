@@ -1,7 +1,7 @@
 import { datesDifference } from "@/components/VisionForm/utils/dates";
 import { createGrowthCurve } from "@/components/VisionForm/utils/growthCurve";
 import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
-import { CurveDataPointMap } from "@/types/VisionForm/results/curve";
+import { CurveDataPointMap } from "@/types/VisionForm/calendar/curve";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 

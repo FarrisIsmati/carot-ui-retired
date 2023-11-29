@@ -1,4 +1,4 @@
-import { CurveType } from "@/types/VisionForm/LocationSection";
+import { CurveType } from "@/types/VisionForm/locationSection";
 import { Point } from "recharts/types/shape/Curve";
 
 // Define an array of control points

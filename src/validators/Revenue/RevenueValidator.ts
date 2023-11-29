@@ -1,5 +1,5 @@
 import { VisionFormValues } from "@/types/VisionForm";
-import { RevenueSection } from "@/types/VisionForm/RevenueSection";
+import { RevenueSection } from "@/types/VisionForm/revenueSection";
 import {
 	customerConversionRateValidator,
 	locationIdsValidator,

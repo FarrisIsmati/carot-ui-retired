@@ -1,6 +1,6 @@
 import { useCurrencySymbol } from "@/components/VisionForm/utils/currency";
 import { VisionFormValues } from "@/types/VisionForm";
-import { LoanSection } from "@/types/VisionForm/CapitalSection/LoanSection";
+import { LoanSection } from "@/types/VisionForm/capitalSection/LoanSection";
 import loanFormValidator from "@/validators/Capital/Loan/LoanFormValidator";
 import { FormApi } from "final-form";
 import _ from "lodash";

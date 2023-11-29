@@ -1,13 +1,13 @@
 import {
-	ResultsCompanyItemized,
-	ResultsCompanyLifetime,
-	ResultsCompanyTotal,
-} from "@/types/VisionForm/results/company";
+	CompanyCalendarItemized,
+	CompanyCalendarLifetime,
+	CompanyCalendarTotal,
+} from "@/types/VisionForm/calendar/company/companyCalendar";
 
 /**
  * Init itemized revenue expense objects
  */
-export const initItemizedObjects: ResultsCompanyItemized = {
+export const initItemizedObjects: CompanyCalendarItemized = {
 	products: {},
 	leases: {},
 };
@@ -16,7 +16,7 @@ export const initItemizedObjects: ResultsCompanyItemized = {
  * Starting total and lifetime values for the calendar
  */
 
-export const initTotalValues: ResultsCompanyTotal = {
+export const initTotalValues: CompanyCalendarTotal = {
 	// Total revenue
 	totalRevenue: 0,
 
@@ -33,7 +33,7 @@ export const initTotalValues: ResultsCompanyTotal = {
 	totalReserves: 0,
 };
 
-export const initLifetimeValues: ResultsCompanyLifetime = {
+export const initLifetimeValues: CompanyCalendarLifetime = {
 	// Revenue
 	lifetimeRevenue: 0,
 

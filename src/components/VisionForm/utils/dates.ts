@@ -21,7 +21,7 @@ export const datesDifference = (
  * @param endDate
  * @returns
  */
-export const calculateResultsDaysLength = (
+export const calculateDayCalendarsLength = (
 	curDate: string,
 	endDate: string
 ) => {
@@ -43,7 +43,7 @@ export const calculateResultsDaysLength = (
  * @param endDate
  * @returns
  */
-export const calculateResultsMonthsLength = (
+export const calculateMonthCalendarsLength = (
 	curDate: string,
 	endDate: string
 ) => {
@@ -64,7 +64,7 @@ export const calculateResultsMonthsLength = (
  * @param endDate
  * @returns
  */
-export const calculateResultsYearsLength = (
+export const calculateYearCalendarsLength = (
 	startDate: string,
 	endDate: string
 ) => {

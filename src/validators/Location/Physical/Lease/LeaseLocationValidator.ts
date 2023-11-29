@@ -1,4 +1,4 @@
-import { LeaseSection } from "@/types/VisionForm/LocationSection/LeaseSection";
+import { LeaseSection } from "@/types/VisionForm/locationSection/LeaseSection";
 import {
 	leaseCostValidator,
 	leaseLengthMonthsValidator,

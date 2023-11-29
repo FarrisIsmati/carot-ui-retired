@@ -1,4 +1,4 @@
-import { TaxesSection } from "@/types/VisionForm/TaxesSection";
+import { TaxesSection } from "@/types/VisionForm/taxesSection";
 import { taxRateGenericValidator } from "./TaxesValidators";
 
 export default (formValues: TaxesSection) => {

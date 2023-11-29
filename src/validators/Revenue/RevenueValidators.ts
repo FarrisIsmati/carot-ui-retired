@@ -1,4 +1,4 @@
-import { PhysicalLeaseLocationSection } from "@/types/VisionForm/LocationSection";
+import { PhysicalLeaseLocationSection } from "@/types/VisionForm/locationSection";
 import {
 	combineValidators,
 	fieldRequired,

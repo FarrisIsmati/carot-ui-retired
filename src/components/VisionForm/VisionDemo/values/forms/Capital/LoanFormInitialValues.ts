@@ -1,7 +1,7 @@
 import {
 	LoanSection,
 	LoanType,
-} from "@/types/VisionForm/CapitalSection/LoanSection";
+} from "@/types/VisionForm/capitalSection/LoanSection";
 import { CompoundScheduleType } from "@/types/VisionForm/common/schedule";
 
 export const LoanFormInitialValues: Omit<LoanSection, "id"> = {

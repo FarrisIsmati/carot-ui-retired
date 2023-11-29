@@ -1,7 +1,7 @@
 import DropdownSelect from "@/components/common/Dropdown/DropdownSelect";
 import Type from "@/components/common/Type";
 import { semanticFonts } from "@/styles/fonts";
-import { CapitalType } from "@/types/VisionForm/CapitalSection";
+import { CapitalType } from "@/types/VisionForm/capitalSection";
 import { useState } from "react";
 import InvestorForm from "../../forms/CapitalForm/InvestorForm";
 import LoanForm from "../../forms/CapitalForm/LoanForm";

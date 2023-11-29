@@ -5,7 +5,7 @@ import { useVisionFormField } from "@/components/VisionForm/utils/form";
 import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
 import { VisionFormValues } from "@/types/VisionForm";
-import { RevenueSection } from "@/types/VisionForm/RevenueSection";
+import { RevenueSection } from "@/types/VisionForm/revenueSection";
 import { revenueValidator } from "@/validators/Revenue/RevenueValidator";
 import { FormApi } from "final-form";
 import _ from "lodash";

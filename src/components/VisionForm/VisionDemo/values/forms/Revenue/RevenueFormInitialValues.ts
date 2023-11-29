@@ -1,4 +1,4 @@
-import { RevenueSection } from "@/types/VisionForm/RevenueSection";
+import { RevenueSection } from "@/types/VisionForm/revenueSection";
 
 export const revenueFormInitialValues: Omit<RevenueSection, "id"> = {
 	//

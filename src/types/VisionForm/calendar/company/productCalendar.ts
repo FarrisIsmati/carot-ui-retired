@@ -1,9 +1,9 @@
 /**
  * Product results for calendar
  */
-export interface ProductResults
-	extends ProductResultsTotal,
-		ProductResultsLifetime {
+export interface ProductCalendar
+	extends ProductCalendarTotal,
+		ProductCalendarLifetime {
 	id: string;
 	name: string;
 	locationIds: Set<string>;
@@ -11,7 +11,7 @@ export interface ProductResults
 	customerConversionRate: number;
 }
 
-interface ProductResultsTotal {
+interface ProductCalendarTotal {
 	// Expenses
 	totalExpenses: number;
 
@@ -25,7 +25,7 @@ interface ProductResultsTotal {
 	totalTaxed: number;
 }
 
-interface ProductResultsLifetime {
+interface ProductCalendarLifetime {
 	// Expenses
 	lifetimeExpenses: number;
 
@@ -37,16 +37,4 @@ interface ProductResultsLifetime {
 
 	// Taxes
 	lifetimeTaxed: number;
-}
-
-/**
- * Product values we are calculating on
- */
-export interface ProductValues {
-	productName: string;
-	productId: string;
-	locationId: Set<string>;
-	customerConversionRate: number;
-	costToProduce: number;
-	retailPrice: number;
 }

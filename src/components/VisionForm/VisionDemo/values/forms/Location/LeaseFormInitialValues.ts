@@ -1,7 +1,7 @@
 import {
 	CurveType,
 	PhysicalLeaseLocationSection,
-} from "@/types/VisionForm/LocationSection";
+} from "@/types/VisionForm/locationSection";
 
 export const LeaseFormInitialValues: Omit<PhysicalLeaseLocationSection, "id"> =
 	{

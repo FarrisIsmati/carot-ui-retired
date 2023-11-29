@@ -1,5 +1,5 @@
-import { CurveType } from "@/types/VisionForm/LocationSection";
 import { CurveDataPoint } from "@/types/VisionForm/common/growthCurve";
+import { CurveType } from "@/types/VisionForm/locationSection";
 import { curveTypeToPointsMapper } from "../VisionDemo/values/fields/growthValues";
 
 interface Point {

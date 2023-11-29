@@ -1,7 +1,7 @@
 import {
 	PhysicalLeaseLocationSection,
 	PhysicalLocationSection,
-} from "@/types/VisionForm/LocationSection";
+} from "@/types/VisionForm/locationSection";
 import { leaseLocationValidator } from "./Lease/LeaseLocationValidator";
 import {
 	constructionCostValidator,

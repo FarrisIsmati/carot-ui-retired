@@ -1,11 +1,11 @@
-import { CapitalType } from "@/types/VisionForm/CapitalSection";
+import { CapitalType } from "@/types/VisionForm/capitalSection";
+import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import {
 	CurveType,
 	LocationType,
 	PhysicalLeaseLocationSection,
-} from "@/types/VisionForm/LocationSection";
-import { StaffType } from "@/types/VisionForm/StaffSection";
-import { CountriesEnum } from "@/types/VisionForm/common/countries";
+} from "@/types/VisionForm/locationSection";
+import { StaffType } from "@/types/VisionForm/staffSection";
 import { capitalize } from "lodash";
 
 // Todo: get values from API call

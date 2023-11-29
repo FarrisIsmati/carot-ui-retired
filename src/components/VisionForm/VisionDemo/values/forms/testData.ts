@@ -1,16 +1,16 @@
 import { VisionFormValues } from "@/types/VisionForm";
-import { InvestorType } from "@/types/VisionForm/CapitalSection/InvestorSection";
-import { CurveType } from "@/types/VisionForm/LocationSection";
+import { InvestorType } from "@/types/VisionForm/capitalSection/InvestorSection";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { CurrencyTypes } from "@/types/VisionForm/common/currency";
 import { ScheduleType } from "@/types/VisionForm/common/schedule";
+import { CurveType } from "@/types/VisionForm/locationSection";
 
 export const testData1: VisionFormValues = {
 	overviewCurrency: CurrencyTypes.USD,
 	overviewIndustry: "Food & Services",
 	overviewCountryOrigin: CountriesEnum.USA,
-	overviewStartDate: "11/27/2023",
-	overviewEndDate: "11/26/2025",
+	overviewStartDate: "11/29/2023",
+	overviewEndDate: "11/28/2025",
 	investors: [
 		{
 			investorName: "Toni",

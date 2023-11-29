@@ -2,7 +2,7 @@ import { useCurrencySymbol } from "@/components/VisionForm/utils/currency";
 import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
 import { VisionFormValues } from "@/types/VisionForm";
-import { InvestorSection } from "@/types/VisionForm/CapitalSection/InvestorSection";
+import { InvestorSection } from "@/types/VisionForm/capitalSection/InvestorSection";
 import investorFormValidator from "@/validators/Capital/Investor/InvestorFormValidator";
 import { FormApi } from "final-form";
 import _ from "lodash";

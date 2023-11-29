@@ -1,7 +1,7 @@
 import {
 	PhysicalFinanceType,
 	PhysicalUseType,
-} from "@/types/VisionForm/LocationSection";
+} from "@/types/VisionForm/locationSection";
 import { useState } from "react";
 
 import PhysicalFinanceTypeControl from "../../../fields/Location/Physical/PhysicalFinanceTypeControl";
