@@ -1,6 +1,9 @@
 import { getKeyInputMode } from "@/components/VisionForm/utils/form";
 import { VisionFormValues } from "@/types/VisionForm";
-import { CompanyCalendarValuesFixed } from "@/types/VisionForm/calendar/company/companyCalendarValues";
+import {
+	CompanyCalendarValues,
+	CompanyCalendarValuesCore,
+} from "@/types/VisionForm/calendar/company/companyCalendarValues";
 import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/company/locationCalendarValues";
 import { ProductValues } from "@/types/VisionForm/calendar/company/productCalendarValues";
 import { CurveDataPointMap } from "@/types/VisionForm/calendar/curve";
@@ -30,7 +33,7 @@ import {
 // Returns all fixed company values given the input mode
 export const getCompanyCalendarValuesFixed = (
 	visionFormDemoState: VisionFormValues
-): CompanyCalendarValuesFixed => {
+): CompanyCalendarValuesCore => {
 	const getTaxesSectionKey = getKeyInputMode<TaxesInputModeLess, TaxesSection>;
 
 	// Tax rate generic
@@ -75,6 +78,36 @@ export const getInvestorCalendarValues = (
 		id: investor[id],
 		equity: investor[equity],
 		initialInvestment: investor[initialInvestment] as number,
+	};
+};
+
+export const getCompanyValues = ({
+	state,
+	companyValuesCore,
+	product,
+	leasesFootTrafficCurveIdDataPointsMap,
+}: {
+	state: VisionFormValues;
+	companyValuesCore: CompanyCalendarValuesCore;
+	product: RevenueSection;
+	leasesFootTrafficCurveIdDataPointsMap: CurveDataPointMap;
+}): CompanyCalendarValues => {
+	const location = state.leases.find((lease) =>
+		product.locationIds.has(lease.id)
+	);
+
+	if (!location) {
+		throw new Error("No location found for product");
+	}
+
+	/**
+	 * Get values for current product and lease association
+	 * Update calendar for that specific product
+	 */
+	return {
+		coreValues: companyValuesCore,
+		...getProductValues(product),
+		...getLeaseValues(location, leasesFootTrafficCurveIdDataPointsMap),
 	};
 };
 

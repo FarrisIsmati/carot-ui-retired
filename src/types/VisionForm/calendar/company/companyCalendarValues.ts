@@ -8,12 +8,12 @@ import { ProductValues } from "./productCalendarValues";
 export interface CompanyCalendarValues
 	extends ProductValues,
 		LocationLeaseCalendarValues {
-	fixedCompanyValues: CompanyCalendarValuesFixed;
+	coreValues: CompanyCalendarValuesCore;
 }
 
 // Values that don't include product or location
 // It's nested in a new object rather than being destructured (easier to access these props than omit arrays)
-export interface CompanyCalendarValuesFixed {
+export interface CompanyCalendarValuesCore {
 	startDate: string;
 	endDate: string;
 	taxRate: number;

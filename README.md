@@ -66,8 +66,14 @@ An initial calendar is generated and memoized. It is generated within range that
 
 All curve arrays generate their data memozied as well. Currently only tracking curve generation for leases specifically footTraffic, if more are needed update this function. Otherwise create more `usCalcAll___CurveDataPoints` functions and find a new way to organize them.
 
-Investor values are generated with `useGenerateInitialInvestorsValues` then memozied before being passed into `updateCalendar`. **Note** this is memozied by length of investors, if you grant the ability to edit investor data you must remove the memo, or pop/remove the investor array everytime you edit it for changes to take effect. (Don't memozie should remove and place a todo for memoziation in future based on edit field)
+We start to update revenue and expenses of company through a series of loops through the calendar, updating different parts of the calendar each time.
 
-Product values are generated (TODO SETUP MEMOIZATION THEN FINISH DOCUMENTATION) (setup into it's own func)
+1. Product loop, for each product calculate revenue/expenses brought onto the company, update company revenue/expenses as well as the product's revenue/expenses
 
-Now all of these values are the final values the calendar calculation functions are going to generate data on.
+**If you add to product values that's being calculated update the `calendarUpdateProduct` file**
+
+2. TODO Lease loop
+
+3. Investor loop, for each investor calculate the earned income/percentage recovered based on revenue/expenes from previous 2 calendar loops (product/location revenue/expenses)
+
+**If you add to investor values that's being calculated update the `calenduarUpdateInvestors` file**

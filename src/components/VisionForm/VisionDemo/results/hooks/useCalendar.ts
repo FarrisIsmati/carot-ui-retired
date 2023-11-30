@@ -1,15 +1,16 @@
 import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
 import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
+import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { useSelector } from "react-redux";
-import { updateCalendar } from "../utils/calendarUpdate";
+import { updateCalendarInvestor } from "../utils/calendarUpdateInvestors";
+import { updateCalendarProduct } from "../utils/calendarUpdateProduct";
 import {
-	getCompanyCalendarValuesFixed,
-	getLeaseValues,
-	getProductValues,
+	getCompanyValues,
+	getInvestorCalendarValues,
 } from "../utils/calendarValues";
 import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
+import useGenerateCompanyValues from "./useGenerateCompanyValues";
 import useGenerateInitialCalendar from "./useGenerateInitialCalendar";
-import useGenerateInitialInvestorsValues from "./useGenerateInitialInvestorsValues";
 
 /**
  * Generates initial calendar
@@ -19,40 +20,41 @@ import useGenerateInitialInvestorsValues from "./useGenerateInitialInvestorsValu
 
 export default () => {
 	const visionFormDemoState = useSelector(getVisionFormDemoSelector);
+	const { products, investors, leases } = visionFormDemoState;
 
-	// A memoized way to generate the initial calendar
+	// Memoized: generate the initial calendar
 	const calendar = useGenerateInitialCalendar();
 
-	// Memoized way to calculate all lease traffic curve data points
+	// TODO: Memoize: get company values
+	const companyValuesCore = useGenerateCompanyValues(visionFormDemoState);
+
+	// Memoized: calculate all lease traffic curve data points
 	const leasesFootTrafficCurveIdDataPointsMap =
 		useCalcAllLeaseCurveDataPoints();
 
-	// Memoized way to getInvestorCalendarValues
-	const investorValues = useGenerateInitialInvestorsValues(
-		visionFormDemoState.investors
-	);
+	// Update all company and product revenue/expenses
+	// + Product Revenue
+	// - Product expenses
+	products.forEach((product) => {
+		// Company values (takes product/location/staff/etc) values to gether (all revenue/expenses)
+		const companyValues: CompanyCalendarValues = getCompanyValues({
+			state: visionFormDemoState,
+			companyValuesCore,
+			product,
+			leasesFootTrafficCurveIdDataPointsMap,
+		});
 
-	// Loop through all products
-	visionFormDemoState.products.forEach((product) => {
-		const location = visionFormDemoState.leases.find((lease) =>
-			product.locationIds.has(lease.id)
-		);
+		updateCalendarProduct({ calendar, companyValues });
+	});
 
-		if (!location) {
-			throw new Error("No location found for product");
-		}
+	// TODO: LEASES
 
-		/**
-		 * Get values for current product and lease association
-		 * Update calendar for that specific product
-		 */
-		const companyValues: CompanyCalendarValues = {
-			...getProductValues(product),
-			...getLeaseValues(location, leasesFootTrafficCurveIdDataPointsMap),
-			fixedCompanyValues: getCompanyCalendarValuesFixed(visionFormDemoState),
-		};
+	// Update all investors based on earned revenue calculated from products
+	// No modifiers values except investors alone
+	investors.forEach((i) => {
+		const investor: InvestorCalendarValues = getInvestorCalendarValues(i);
 
-		updateCalendar({ calendar, companyValues, investorValues });
+		updateCalendarInvestor({ calendar, companyValuesCore, investor });
 	});
 
 	return calendar;
