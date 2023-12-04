@@ -44,7 +44,7 @@ export const updateCalendarLease = ({
 	const lastLease = lastCalendarYear.leases[lease.id];
 
 	// lease paid
-	lease.lifetimeLeasePaid = lastLease.lifetimeRevenue;
+	lease.lifetimeLeasePaid = lastLease.lifetimeLeasePaid;
 	calendar.leases[lease.id] = lease;
 
 	//
@@ -90,7 +90,7 @@ const updateCalendarYear = ({
 
 	// Update calendar values
 	updateCalendarValuesLease({
-		fixedValues: companyValues.coreValues,
+		companyValues,
 		unitOfTime: year,
 		prevUnitOfTime: prevYear,
 		lease,
@@ -122,7 +122,7 @@ const updateCalendarMonth = ({
 
 	// Update calendar values
 	updateCalendarValuesLease({
-		fixedValues: companyValues.coreValues,
+		companyValues,
 		unitOfTime: month,
 		prevUnitOfTime: prevMonth,
 		lease,

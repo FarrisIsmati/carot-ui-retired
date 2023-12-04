@@ -1,13 +1,13 @@
 import { getKeyInputMode } from "@/components/VisionForm/utils/form";
 import { VisionFormValues } from "@/types/VisionForm";
 import {
+	AllCalendarValues,
 	CompanyCalendarValues,
-	CompanyCalendarValuesCore,
 } from "@/types/VisionForm/calendar/company/companyCalendarValues";
-import { ProductValues } from "@/types/VisionForm/calendar/company/productCalendarValues";
 import { CurveDataPointMap } from "@/types/VisionForm/calendar/curve";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
+import { ProductValues } from "@/types/VisionForm/calendar/product/productCalendarValues";
 import {
 	InvestorSection,
 	InvestorsInputModeLess,
@@ -27,13 +27,37 @@ import {
 } from "@/types/VisionForm/taxesSection";
 
 //
-// Get Values for calendar update functions
+// Get all values for calendar update functions
 //
+export const getAllCalendarValues = ({
+	formState,
+	productState,
+	leaseState,
+	leasesFootTrafficCurveIdDataPointsMap,
+}: {
+	formState: VisionFormValues;
+	productState: RevenueSection;
+	leaseState: PhysicalLeaseLocationSection;
+	leasesFootTrafficCurveIdDataPointsMap: CurveDataPointMap;
+}): AllCalendarValues => {
+	/**
+	 * Get values for current product and lease association
+	 * Update calendar for that specific product
+	 */
+	return {
+		...getCompanyCalendarValues(formState), // TODO START HERE (GET COMPANY VALUES BUILD ALL VALUES THIS IS ONLY USED FOR PRODUCT SECTION RN)
+		...getProductCalendarValues(productState),
+		...getLeaseCalendarValues({
+			lease: leaseState,
+			leasesFootTrafficCurveIdDataPointsMap,
+		}),
+	};
+};
 
 // Returns all fixed company values given the input mode
-export const getCompanyCalendarValuesFixed = (
+export const getCompanyCalendarValues = (
 	visionFormDemoState: VisionFormValues
-): CompanyCalendarValuesCore => {
+): CompanyCalendarValues => {
 	const getTaxesSectionKey = getKeyInputMode<TaxesInputModeLess, TaxesSection>;
 
 	// Tax rate generic
@@ -81,33 +105,10 @@ export const getInvestorCalendarValues = (
 	};
 };
 
-export const getCompanyValues = ({
-	companyValuesCore,
-	product,
-	lease,
-	leasesFootTrafficCurveIdDataPointsMap,
-}: {
-	companyValuesCore: CompanyCalendarValuesCore;
-	product: RevenueSection;
-	lease: PhysicalLeaseLocationSection;
-	leasesFootTrafficCurveIdDataPointsMap: CurveDataPointMap;
-}): CompanyCalendarValues => {
-	/**
-	 * Get values for current product and lease association
-	 * Update calendar for that specific product
-	 */
-	return {
-		coreValues: companyValuesCore,
-		...getProductValues(product),
-		...getLeaseValues({
-			lease,
-			leasesFootTrafficCurveIdDataPointsMap,
-		}),
-	};
-};
-
 // Returns all necessary product values given the input mode
-export const getProductValues = (product: RevenueSection): ProductValues => {
+export const getProductCalendarValues = (
+	product: RevenueSection
+): ProductValues => {
 	const getRevenueSectionKey = getKeyInputMode<
 		RevenueSectionInputModeLess,
 		RevenueSection
@@ -151,7 +152,7 @@ export const getProductValues = (product: RevenueSection): ProductValues => {
 };
 
 // Returns all necessary lease values given the input mode
-export const getLeaseValues = ({
+export const getLeaseCalendarValues = ({
 	lease,
 	leasesFootTrafficCurveIdDataPointsMap,
 }: {
@@ -162,6 +163,12 @@ export const getLeaseValues = ({
 		PhysicalLeaseLocationSectionInputModeLess,
 		PhysicalLeaseLocationSection
 	>;
+
+	// Name
+	const name: keyof PhysicalLeaseLocationSection = "locationName";
+
+	// Id
+	const id: keyof PhysicalLeaseLocationSection = "id";
 
 	// Max occupancy
 	const maxOccupancyKey = getPhysicalLeaseLocationKey(
@@ -187,12 +194,18 @@ export const getLeaseValues = ({
 		InputModeEnum.Average
 	);
 
+	// Initial construction cost
+	const initialConstructionCostKey = getPhysicalLeaseLocationKey(
+		"constructionCost",
+		InputModeEnum.Average
+	);
+
 	//
 	// Calculate cost per period
 	//
 
 	// Period per unit of measurement
-	const periodCostKey = getPhysicalLeaseLocationKey(
+	const costPerUnitKey = getPhysicalLeaseLocationKey(
 		"leaseCost",
 		InputModeEnum.Average
 	);
@@ -203,12 +216,12 @@ export const getLeaseValues = ({
 		InputModeEnum.Average
 	);
 
-	// Cost per period
-	const leaseCostPerPeriod =
-		(lease[periodCostKey] as number) * (lease[sizeKey] as number);
-
 	return {
-		periodCost: leaseCostPerPeriod,
+		name: lease[name],
+		id: lease[id],
+		costPerUnit: lease[costPerUnitKey] as number,
+		initialConstructionCost: lease[initialConstructionCostKey] as number,
+		size: lease[sizeKey] as number,
 		maxOccupancy: lease[maxOccupancyKey] as number,
 		trafficTurnoverTime: lease[trafficTurnoverTimeKey] as number,
 		daysOpenPerWeekGeneric: lease[daysOpenPerWeekGenericKey] as number,

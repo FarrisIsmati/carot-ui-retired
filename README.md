@@ -50,6 +50,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 Within this folder it contains data for two things first `DayCalendar MonthCalendar YearCalendar Calendar` all of these intefaces define the shape of the massive calendar object that ends up becoming the source of truth for all data, calendar/graph.
 
+After that there are Company/Investor/Location/Product Calendar/Values files, the calendar form of that file belongs in the calendar data structure talked about in the paragraph above.
+
 All value types `CalenderValues` define the structure of the data that we are passing into the calendar calculation function. It takes form data, transforms it into the values we need to calculate on for the calendar function. Then turns that data into calendar data.
 
 **If a new value must be calculated on and the data doesn't already exist, you must pass in a new value in the value section which comes from the form data. Then you must update the calendar itself if you are tracking a new metric. If you are adding a new type of data (e.g. new physical location, digitial location, staff, benefits, etc) create a new file then add the [] to company or investors.**
@@ -68,12 +70,19 @@ All curve arrays generate their data memozied as well. Currently only tracking c
 
 We start to update revenue and expenses of company through a series of loops through the calendar, updating different parts of the calendar each time.
 
-1. Product loop, for each product calculate revenue/expenses brought onto the company, update company revenue/expenses as well as the product's revenue/expenses
+1. Product loop, for each product calculate revenue/expenses brought onto the company, update company revenue/expenses as well as the product's revenue/expenses. Every product is associated with a location, currently only handling leases.
 
+**If expanding locations need to add them here**
 **If you add to product values that's being calculated update the `calendarUpdateProduct` file**
 
-2. TODO Lease loop
+2. Location (currently only lease) loop, for each lease calculate the lease cost and update the company expenses, profit, taxes paid after including the lease values.
+
+**If expanding locations, add a new loop, also update product loop above**
 
 3. Investor loop, for each investor calculate the earned income/percentage recovered based on revenue/expenes from previous 2 calendar loops (product/location revenue/expenses)
 
 **If you add to investor values that's being calculated update the `calenduarUpdateInvestors` file**
+
+Each loop runs their own specific update function, where first they need to get the values required to update the data. Update all sets of data from year, month, day. Here is where actual calculations are made.
+
+If updating the form, updating results some or all of these above steps need to be updated to get it to work.

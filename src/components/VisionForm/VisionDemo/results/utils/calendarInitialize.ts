@@ -7,12 +7,12 @@ import {
 	MonthCalendar,
 	YearCalendar,
 } from "@/types/VisionForm/calendar";
-import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
-import { ProductCalendar } from "@/types/VisionForm/calendar/company/productCalendar";
+import { AllCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 import { InvestorCalendar } from "@/types/VisionForm/calendar/investor/investorCalendar";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { LocationLeaseCalendar } from "@/types/VisionForm/calendar/location/leaseCalendar";
 import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
+import { ProductCalendar } from "@/types/VisionForm/calendar/product/productCalendar";
 import moment from "moment";
 import {
 	calculateDayCalendarsLength,
@@ -30,14 +30,14 @@ import {
 // Generate initial product for calendar
 //
 export const genInitProductCalendar = (
-	companyValues: CompanyCalendarValues
+	values: AllCalendarValues
 ): ProductCalendar => {
 	const product: ProductCalendar = {
-		id: companyValues.productId,
-		name: companyValues.productName,
-		locationIds: companyValues.locationId,
-		retailPrice: companyValues.retailPrice,
-		customerConversionRate: companyValues.customerConversionRate,
+		id: values.productId,
+		name: values.productName,
+		locationIds: values.locationId,
+		retailPrice: values.retailPrice,
+		customerConversionRate: values.customerConversionRate,
 		totalExpenses: 0,
 		totalRevenue: 0,
 		totalProfit: 0,
@@ -77,7 +77,7 @@ export const genInitLeaseCalendar = (
 	return {
 		id: lease.id,
 		name: lease.name,
-		periodCost: lease.periodCost,
+		periodCost: lease.costPerUnit * lease.size,
 		initialConstructionCost: lease.initialConstructionCost,
 		totalLeasePaid: 0,
 		lifetimeLeasePaid: 0,

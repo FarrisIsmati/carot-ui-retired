@@ -4,10 +4,10 @@ import {
 	MonthCalendar,
 	YearCalendar,
 } from "@/types/VisionForm/calendar";
-import { CompanyCalendarValuesCore } from "@/types/VisionForm/calendar/company/companyCalendarValues";
+import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { cloneDeep } from "lodash";
-import { updateCalendarValuesInvestor } from "./calendarCalculate";
+import { updateCalendarValuesInvestor } from "../calendarCalculate/calendarCalculate";
 import { getPrevDay, getPrevMonth } from "./helpers";
 
 //
@@ -17,17 +17,17 @@ import { getPrevDay, getPrevMonth } from "./helpers";
 // Function to loop through calendar
 export const updateCalendarInvestor = ({
 	calendar,
-	companyValuesCore,
+	companyValues,
 	investor,
 }: {
 	calendar: Calendar;
-	companyValuesCore: CompanyCalendarValuesCore;
+	companyValues: CompanyCalendarValues;
 	investor: InvestorCalendarValues;
 }) => {
 	calendar.years.forEach((year, i) => {
 		const prevYear =
 			calendar.years[0].year === year.year ? null : calendar.years[i - 1];
-		updateCalendarYear({ year, prevYear, companyValuesCore, investor });
+		updateCalendarYear({ year, prevYear, companyValues, investor });
 	});
 
 	const lastCalendarYear = calendar.years[calendar.years.length - 1];
@@ -42,23 +42,23 @@ export const updateCalendarInvestor = ({
 const updateCalendarYear = ({
 	year,
 	prevYear,
-	companyValuesCore,
+	companyValues,
 	investor,
 }: {
 	year: YearCalendar;
 	prevYear: YearCalendar | null;
-	companyValuesCore: CompanyCalendarValuesCore;
+	companyValues: CompanyCalendarValues;
 	investor: InvestorCalendarValues;
 }) => {
 	year.months.forEach((month, i) => {
 		const prevMonth = getPrevMonth({ year, prevYear, month, i });
-		updateCalendarMonth({ month, prevMonth, companyValuesCore, investor });
+		updateCalendarMonth({ month, prevMonth, companyValues, investor });
 	});
 
 	// Update calendar values
 	updateCalendarValuesInvestor({
 		investor,
-		companyValuesCore,
+		companyValues,
 		unitOfTime: year,
 		prevUnitOfTime: prevYear,
 		totalRevenue: year.totalRevenue,
@@ -69,23 +69,23 @@ const updateCalendarYear = ({
 const updateCalendarMonth = ({
 	month,
 	prevMonth,
-	companyValuesCore,
+	companyValues,
 	investor,
 }: {
 	month: MonthCalendar;
 	prevMonth: MonthCalendar | null;
-	companyValuesCore: CompanyCalendarValuesCore;
+	companyValues: CompanyCalendarValues;
 	investor: InvestorCalendarValues;
 }) => {
 	month.days.forEach((day, i) => {
 		const prevDay = getPrevDay({ month, prevMonth, day, i });
-		updateCalendarDay({ day, prevDay, companyValuesCore, investor });
+		updateCalendarDay({ day, prevDay, companyValues, investor });
 	});
 
 	// Update calendar values
 	updateCalendarValuesInvestor({
 		investor,
-		companyValuesCore,
+		companyValues,
 		unitOfTime: month,
 		prevUnitOfTime: prevMonth,
 		totalRevenue: month.totalRevenue,
@@ -96,18 +96,18 @@ const updateCalendarMonth = ({
 const updateCalendarDay = ({
 	day,
 	prevDay,
-	companyValuesCore,
+	companyValues,
 	investor,
 }: {
 	day: DayCalendar;
 	prevDay: DayCalendar | null;
-	companyValuesCore: CompanyCalendarValuesCore;
+	companyValues: CompanyCalendarValues;
 	investor: InvestorCalendarValues;
 }) => {
 	// Update calendar values
 	updateCalendarValuesInvestor({
 		investor,
-		companyValuesCore,
+		companyValues,
 		unitOfTime: day,
 		prevUnitOfTime: prevDay,
 		totalRevenue: day.totalRevenue,

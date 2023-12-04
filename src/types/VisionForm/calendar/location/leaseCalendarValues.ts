@@ -11,6 +11,7 @@ export interface LocationLeaseCalendarValues {
 	trafficTurnoverTime: number;
 	daysOpenPerWeekGeneric: number;
 	hoursOpenPerDayGeneric: number;
-	periodCost: number;
+	costPerUnit: number;
+	size: number;
 	leaseFootTrafficCurveDataPoints?: CurveDataPoint[];
 }

@@ -5,16 +5,17 @@ import {
 } from "@/types/VisionForm/calendar";
 
 import {
+	AllCalendarValues,
 	CompanyCalendarValues,
-	CompanyCalendarValuesCore,
 } from "@/types/VisionForm/calendar/company/companyCalendarValues";
-import { ProductCalendar } from "@/types/VisionForm/calendar/company/productCalendar";
 import { InvestorCalendar } from "@/types/VisionForm/calendar/investor/investorCalendar";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { LocationLeaseCalendar } from "@/types/VisionForm/calendar/location/leaseCalendar";
+import { ProductCalendar } from "@/types/VisionForm/calendar/product/productCalendar";
 import { round } from "lodash";
 import moment from "moment";
 import { genInitInvestorCalendar } from "../calendarInitialize";
+import { calculateTaxes } from "./helpers";
 import { updateLeasePaid } from "./lease";
 
 /**
@@ -23,22 +24,22 @@ import { updateLeasePaid } from "./lease";
  * @returns
  */
 export const calcCustomersPerDay = (
-	companyValues: CompanyCalendarValues,
+	values: AllCalendarValues,
 	date: string
 ) => {
 	// Current day number
-	const day = moment(date).diff(companyValues.coreValues.startDate, "days");
+	const day = moment(date).diff(values.startDate, "days");
 	// Hours open per day (only calculating generic not by actual hour)
-	const hoursOpen = companyValues.hoursOpenPerDayGeneric;
+	const hoursOpen = values.hoursOpenPerDayGeneric;
 	// How long on average a patron will spend within the physical store
-	const footTrafficTurnoverTime = companyValues.trafficTurnoverTime; // in minutes
+	const footTrafficTurnoverTime = values.trafficTurnoverTime; // in minutes
 	// Maximum amount of people than can be in the store at any given time
-	const maxOccupancy = companyValues.maxOccupancy;
+	const maxOccupancy = values.maxOccupancy;
 	// Average amount of people in the store at any given time (multiply potential max by the curve)
 	const averageOccupancy = round(
 		maxOccupancy *
-			(companyValues.leaseFootTrafficCurveDataPoints !== undefined
-				? companyValues.leaseFootTrafficCurveDataPoints[day].uv / 100 // must be divided by 100 to get %
+			(values.leaseFootTrafficCurveDataPoints !== undefined
+				? values.leaseFootTrafficCurveDataPoints[day].uv / 100 // must be divided by 100 to get %
 				: 1),
 		2
 	); // TODO/FIXME when other options handle not just lease curve
@@ -49,7 +50,7 @@ export const calcCustomersPerDay = (
 	const visitorsPerDay = hoursOpen * visitorsPerHour;
 	// Number of customers per day
 	const customersPerDay =
-		visitorsPerDay * (companyValues.customerConversionRate / 100);
+		visitorsPerDay * (values.customerConversionRate / 100);
 
 	return customersPerDay;
 };
@@ -140,7 +141,7 @@ export const updateReserves = (
 };
 
 export interface UpdateCalendarValuesProps {
-	fixedValues: CompanyCalendarValuesCore;
+	companyValues: CompanyCalendarValues;
 	unitOfTime: DayCalendar | MonthCalendar | YearCalendar;
 	prevUnitOfTime: DayCalendar | MonthCalendar | YearCalendar | null;
 	product: ProductCalendar;
@@ -190,7 +191,7 @@ export const updatePercentageOfInitialInvestmentRecouped = (
 };
 
 export interface UpdateCalendarValuesProductProps {
-	fixedValues: CompanyCalendarValuesCore;
+	values: AllCalendarValues;
 	unitOfTime: DayCalendar | MonthCalendar | YearCalendar;
 	prevUnitOfTime: DayCalendar | MonthCalendar | YearCalendar | null;
 	product: ProductCalendar;
@@ -206,7 +207,7 @@ export interface UpdateCalendarValuesProductProps {
  * @param param0 UpdateCalendarValuesProps
  */
 export const updateCalendarValuesProduct = ({
-	fixedValues,
+	values,
 	unitOfTime,
 	prevUnitOfTime,
 	product,
@@ -216,12 +217,12 @@ export const updateCalendarValuesProduct = ({
 	totalRevenue,
 	totalExpenses,
 }: UpdateCalendarValuesProductProps) => {
-	const { taxRate } = fixedValues;
+	const { taxRate } = values;
 	//
 	// Product
 	//
 	const productProfit = productRevenue - productExpenses;
-	const productTaxes = productProfit * (taxRate / 100);
+	const productTaxes = calculateTaxes(productProfit, taxRate);
 	// Revenue
 	updateRevenue(product, prevProduct, productRevenue);
 	// Expense
@@ -237,7 +238,7 @@ export const updateCalendarValuesProduct = ({
 	// Company
 	//
 	const companyProfit = totalRevenue - totalExpenses;
-	const companyTaxes = companyProfit * (taxRate / 100);
+	const companyTaxes = calculateTaxes(companyProfit, taxRate);
 	const companyReserves = companyProfit - companyTaxes;
 	// Revenue
 	updateRevenue(unitOfTime, prevUnitOfTime, totalRevenue);
@@ -253,7 +254,7 @@ export const updateCalendarValuesProduct = ({
 
 export interface UpdateCalendarValuesInvestorsProps {
 	investor: InvestorCalendarValues;
-	companyValuesCore: CompanyCalendarValuesCore;
+	companyValues: CompanyCalendarValues;
 	unitOfTime: DayCalendar | MonthCalendar | YearCalendar;
 	prevUnitOfTime: DayCalendar | MonthCalendar | YearCalendar | null;
 	totalRevenue: number;
@@ -266,15 +267,15 @@ export interface UpdateCalendarValuesInvestorsProps {
  */
 export const updateCalendarValuesInvestor = ({
 	investor: i,
-	companyValuesCore,
+	companyValues,
 	unitOfTime,
 	prevUnitOfTime,
 	totalRevenue,
 	totalExpenses,
 }: UpdateCalendarValuesInvestorsProps) => {
-	const { taxRate } = companyValuesCore;
+	const { taxRate } = companyValues;
 	const companyProfit = totalRevenue - totalExpenses;
-	const companyTaxes = companyProfit * (taxRate / 100);
+	const companyTaxes = calculateTaxes(companyProfit, taxRate);
 	const companyReserves = companyProfit - companyTaxes;
 
 	//
@@ -304,7 +305,7 @@ export const updateCalendarValuesInvestor = ({
 };
 
 export interface UpdateCalendarValuesLeaseProps {
-	fixedValues: CompanyCalendarValuesCore;
+	companyValues: CompanyCalendarValues;
 	unitOfTime: DayCalendar | MonthCalendar | YearCalendar;
 	prevUnitOfTime: DayCalendar | MonthCalendar | YearCalendar | null;
 	lease: LocationLeaseCalendar;
@@ -317,14 +318,14 @@ export interface UpdateCalendarValuesLeaseProps {
  * @param param0 UpdateCalendarValuesProps
  */
 export const updateCalendarValuesLease = ({
-	fixedValues,
+	companyValues,
 	unitOfTime,
 	prevUnitOfTime,
 	lease,
 	prevLease,
 	leaseCost,
 }: UpdateCalendarValuesLeaseProps) => {
-	const { taxRate } = fixedValues;
+	const { taxRate } = companyValues;
 	//
 	// Lease
 	//
@@ -338,7 +339,7 @@ export const updateCalendarValuesLease = ({
 	//
 	const companyExpenses = unitOfTime.totalExpenses + leaseCost;
 	const companyProfit = unitOfTime.totalProfit - leaseCost;
-	const companyTaxes = companyProfit * (taxRate / 100);
+	const companyTaxes = calculateTaxes(companyProfit, taxRate);
 	const companyReserves = companyProfit - companyTaxes;
 
 	// Expense

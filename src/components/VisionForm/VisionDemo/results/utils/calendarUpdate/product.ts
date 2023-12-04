@@ -4,10 +4,8 @@ import {
 	MonthCalendar,
 	YearCalendar,
 } from "@/types/VisionForm/calendar";
-import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
+import { AllCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 
-import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
-import { ProductValues } from "@/types/VisionForm/calendar/product/productCalendarValues";
 import {
 	calcCustomersPerDay,
 	updateCalendarValuesProduct,
@@ -25,13 +23,13 @@ export const updateCalendarProduct = ({
 	values,
 }: {
 	calendar: Calendar;
-	values: CompanyCalendarValues & ProductValues & LocationLeaseCalendarValues;
+	values: AllCalendarValues;
 }) => {
 	calendar.years.forEach((year, i) => {
 		const prevYear =
 			calendar.years[0].year === year.year ? null : calendar.years[i - 1];
 
-		updateCalendarYear({ year, prevYear, companyValues });
+		updateCalendarYear({ year, prevYear, values });
 	});
 
 	const lastCalendarYear = calendar.years[calendar.years.length - 1];
@@ -39,7 +37,7 @@ export const updateCalendarProduct = ({
 	//
 	// Get Product
 	//
-	const product = genInitProductCalendar(companyValues);
+	const product = genInitProductCalendar(values);
 
 	//
 	// Product
@@ -74,11 +72,11 @@ export const updateCalendarProduct = ({
 const updateCalendarYear = ({
 	year,
 	prevYear,
-	companyValues,
+	values,
 }: {
 	year: YearCalendar;
 	prevYear: YearCalendar | null;
-	companyValues: CompanyCalendarValues;
+	values: AllCalendarValues;
 }) => {
 	let productRevenue = 0;
 	let productExpenses = 0;
@@ -88,24 +86,24 @@ const updateCalendarYear = ({
 	//
 	// Get Product
 	//
-	const product = genInitProductCalendar(companyValues);
-	const prevProduct = prevYear && prevYear.products[companyValues.productId];
+	const product = genInitProductCalendar(values);
+	const prevProduct = prevYear && prevYear.products[values.productId];
 
 	year.months.forEach((month, i) => {
 		const prevMonth = getPrevMonth({ year, prevYear, month, i });
 
-		updateCalendarMonth({ month, prevMonth, companyValues });
+		updateCalendarMonth({ month, prevMonth, values });
 
 		// Calculate yearly total revenue
-		productRevenue += month.products[companyValues.productId].totalRevenue;
-		productExpenses += month.products[companyValues.productId].totalExpenses;
+		productRevenue += month.products[values.productId].totalRevenue;
+		productExpenses += month.products[values.productId].totalExpenses;
 		totalRevenue += month.totalRevenue;
 		totalExpenses += month.totalExpenses;
 	});
 
 	// Update calendar values
 	updateCalendarValuesProduct({
-		fixedValues: companyValues.coreValues,
+		values,
 		unitOfTime: year,
 		prevUnitOfTime: prevYear,
 		product,
@@ -120,11 +118,11 @@ const updateCalendarYear = ({
 const updateCalendarMonth = ({
 	month,
 	prevMonth,
-	companyValues,
+	values,
 }: {
 	month: MonthCalendar;
 	prevMonth: MonthCalendar | null;
-	companyValues: CompanyCalendarValues;
+	values: AllCalendarValues;
 }) => {
 	let productRevenue = 0;
 	let productExpenses = 0;
@@ -134,24 +132,24 @@ const updateCalendarMonth = ({
 	//
 	// Get Product
 	//
-	const product = genInitProductCalendar(companyValues);
-	const prevProduct = prevMonth && prevMonth.products[companyValues.productId];
+	const product = genInitProductCalendar(values);
+	const prevProduct = prevMonth && prevMonth.products[values.productId];
 
 	month.days.forEach((day, i) => {
 		const prevDay = getPrevDay({ month, prevMonth, day, i });
 
-		updateCalendarDay({ day, prevDay, companyValues });
+		updateCalendarDay({ day, prevDay, values });
 
 		// Calculate monthly total revenue
-		productRevenue += day.products[companyValues.productId].totalRevenue;
-		productExpenses += day.products[companyValues.productId].totalExpenses;
+		productRevenue += day.products[values.productId].totalRevenue;
+		productExpenses += day.products[values.productId].totalExpenses;
 		totalRevenue += day.totalRevenue;
 		totalExpenses += day.totalExpenses;
 	});
 
 	// Update calendar values
 	updateCalendarValuesProduct({
-		fixedValues: companyValues.coreValues,
+		values,
 		unitOfTime: month,
 		prevUnitOfTime: prevMonth,
 		product,
@@ -166,37 +164,37 @@ const updateCalendarMonth = ({
 const updateCalendarDay = ({
 	day,
 	prevDay,
-	companyValues,
+	values,
 }: {
 	day: DayCalendar;
 	prevDay: DayCalendar | null;
-	companyValues: CompanyCalendarValues;
+	values: AllCalendarValues;
 }) => {
 	//
 	// Core Values
 	//
-	const customersPerDay = calcCustomersPerDay(companyValues, day.date);
+	const customersPerDay = calcCustomersPerDay(values, day.date);
 
 	//
 	// Get Product
 	//
-	const product = genInitProductCalendar(companyValues);
-	const prevProduct = prevDay && prevDay.products[companyValues.productId];
+	const product = genInitProductCalendar(values);
+	const prevProduct = prevDay && prevDay.products[values.productId];
 
 	//
 	// Revenue, expense, profit, etc.
 	//
 
 	// Revenue
-	const productRevenue = customersPerDay * companyValues.retailPrice;
+	const productRevenue = customersPerDay * values.retailPrice;
 	const totalRevenue = productRevenue + day.totalRevenue;
 	// Expenses
-	const productExpenses = customersPerDay * companyValues.costToProduce;
+	const productExpenses = customersPerDay * values.costToProduce;
 	const totalExpenses = productExpenses + day.totalExpenses;
 
 	// Update calendar values
 	updateCalendarValuesProduct({
-		fixedValues: companyValues.coreValues,
+		values,
 		unitOfTime: day,
 		prevUnitOfTime: prevDay,
 		product,

@@ -1,5 +1,4 @@
 import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
-import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { useSelector } from "react-redux";
 import { updateCalendarLease } from "../utils/calendarUpdate/lease";
@@ -8,12 +7,12 @@ import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/locatio
 import { updateCalendarInvestor } from "../utils/calendarUpdate/investors";
 import { updateCalendarProduct } from "../utils/calendarUpdate/product";
 import {
-	getCompanyValues,
+	getAllCalendarValues,
+	getCompanyCalendarValues,
 	getInvestorCalendarValues,
-	getLeaseValues,
+	getLeaseCalendarValues,
 } from "../utils/calendarValues";
 import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
-import useGenerateCompanyValues from "./useGenerateCompanyValues";
 import useGenerateInitialCalendar from "./useGenerateInitialCalendar";
 
 /**
@@ -28,9 +27,6 @@ export default () => {
 
 	// Memoized: generate the initial calendar
 	const calendar = useGenerateInitialCalendar();
-
-	// TODO: Memoize: get company values
-	const companyValuesCore = useGenerateCompanyValues(visionFormDemoState);
 
 	// Memoized: calculate all lease traffic curve data points
 	const leasesFootTrafficCurveIdDataPointsMap =
@@ -50,31 +46,32 @@ export default () => {
 		//
 		leases.forEach((lease) => {
 			// Company values to be processed on
-			const companyValues: CompanyCalendarValues = getCompanyValues({
-				companyValuesCore,
-				product,
-				lease,
+			const values = getAllCalendarValues({
+				formState: visionFormDemoState,
+				productState: product,
+				leaseState: lease,
 				leasesFootTrafficCurveIdDataPointsMap,
 			});
 			updateCalendarProduct({
 				calendar,
-				companyValues,
-				productValues,
-				leaseValues,
-				leasesFootTrafficCurveIdDataPointsMap,
+				values,
 			});
 		});
 	});
 
 	//
-	// TODO: LEASES
+	// Update lease and company expenses/profits/taxes
 	//
 	leases.forEach((lease) => {
-		const leaseValues: LocationLeaseCalendarValues = getLeaseValues({
+		const leaseValues: LocationLeaseCalendarValues = getLeaseCalendarValues({
 			lease,
 			leasesFootTrafficCurveIdDataPointsMap,
 		});
-		updateCalendarLease({ calendar, companyValuesCore, leaseValues });
+		updateCalendarLease({
+			calendar,
+			companyValues: getCompanyCalendarValues(visionFormDemoState),
+			leaseValues,
+		});
 	});
 
 	//
@@ -83,7 +80,11 @@ export default () => {
 	investors.forEach((i) => {
 		// Investor values to be processed on
 		const investor: InvestorCalendarValues = getInvestorCalendarValues(i);
-		updateCalendarInvestor({ calendar, companyValuesCore, investor });
+		updateCalendarInvestor({
+			calendar,
+			companyValues: getCompanyCalendarValues(visionFormDemoState),
+			investor,
+		});
 	});
 
 	return calendar;
