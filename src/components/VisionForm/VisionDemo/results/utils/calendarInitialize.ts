@@ -11,6 +11,8 @@ import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/compa
 import { ProductCalendar } from "@/types/VisionForm/calendar/company/productCalendar";
 import { InvestorCalendar } from "@/types/VisionForm/calendar/investor/investorCalendar";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
+import { LocationLeaseCalendar } from "@/types/VisionForm/calendar/location/leaseCalendar";
+import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
 import moment from "moment";
 import {
 	calculateDayCalendarsLength,
@@ -27,7 +29,7 @@ import {
 //
 // Generate initial product for calendar
 //
-export const genInitResultsProduct = (
+export const genInitProductCalendar = (
 	companyValues: CompanyCalendarValues
 ): ProductCalendar => {
 	const product: ProductCalendar = {
@@ -63,6 +65,22 @@ export const genInitInvestorCalendar = (
 		totalPercentageInitialInvestmentRecouped: 0,
 		lifetimeEarned: 0,
 		lifetimePercentageInitialInvestmentRecouped: 0,
+	};
+};
+
+//
+// Generate initial lease for calendar
+//
+export const genInitLeaseCalendar = (
+	lease: LocationLeaseCalendarValues
+): LocationLeaseCalendar => {
+	return {
+		id: lease.id,
+		name: lease.name,
+		periodCost: lease.periodCost,
+		initialConstructionCost: lease.initialConstructionCost,
+		totalLeasePaid: 0,
+		lifetimeLeasePaid: 0,
 	};
 };
 

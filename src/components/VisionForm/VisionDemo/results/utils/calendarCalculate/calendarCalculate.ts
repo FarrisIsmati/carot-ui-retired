@@ -11,9 +11,11 @@ import {
 import { ProductCalendar } from "@/types/VisionForm/calendar/company/productCalendar";
 import { InvestorCalendar } from "@/types/VisionForm/calendar/investor/investorCalendar";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
+import { LocationLeaseCalendar } from "@/types/VisionForm/calendar/location/leaseCalendar";
 import { round } from "lodash";
 import moment from "moment";
-import { genInitInvestorCalendar } from "./calendarInitialize";
+import { genInitInvestorCalendar } from "../calendarInitialize";
+import { updateLeasePaid } from "./lease";
 
 /**
  * Calculate number of customers that enter a physical location per day
@@ -187,101 +189,6 @@ export const updatePercentageOfInitialInvestmentRecouped = (
 		: obj.totalPercentageInitialInvestmentRecouped;
 };
 
-export interface UpdateCalendarValuesProps {
-	investors: InvestorCalendarValues[];
-	fixedValues: CompanyCalendarValuesCore;
-	unitOfTime: DayCalendar | MonthCalendar | YearCalendar;
-	prevUnitOfTime: DayCalendar | MonthCalendar | YearCalendar | null;
-	product: ProductCalendar;
-	prevProduct: ProductCalendar | null;
-	productRevenue: number;
-	productExpenses: number;
-	totalRevenue: number;
-	totalExpenses: number;
-}
-
-//
-// TODO REMOVE THIS
-//
-
-/**
- * Update revenue, expenses, product for any unit of time (day, month, year)
- * @param param0 UpdateCalendarValuesProps
- */
-export const updateCalendarValues = ({
-	investors,
-	fixedValues,
-	unitOfTime,
-	prevUnitOfTime,
-	product,
-	prevProduct,
-	productRevenue,
-	productExpenses,
-	totalRevenue,
-	totalExpenses,
-}: UpdateCalendarValuesProps) => {
-	const { taxRate } = fixedValues;
-	//
-	// Product
-	//
-	const productProfit = productRevenue - productExpenses;
-	const productTaxes = productProfit * (taxRate / 100);
-	// Revenue
-	updateRevenue(product, prevProduct, productRevenue);
-	// Expense
-	updateExpense(product, prevProduct, productExpenses);
-	// Profit
-	updateProfit(product, prevProduct, productProfit);
-	// Taxes
-	updateTaxes(product, prevProduct, productTaxes);
-	// Add product
-	unitOfTime.products[product.id] = product;
-
-	//
-	// Company
-	//
-	const companyProfit = totalRevenue - totalExpenses;
-	const companyTaxes = companyProfit * (taxRate / 100);
-	const companyReserves = companyProfit - companyTaxes;
-	// Revenue
-	updateRevenue(unitOfTime, prevUnitOfTime, totalRevenue);
-	// Expense
-	updateExpense(unitOfTime, prevUnitOfTime, totalExpenses);
-	// Profit
-	updateProfit(unitOfTime, prevUnitOfTime, companyProfit);
-	// Taxes
-	updateTaxes(unitOfTime, prevUnitOfTime, companyTaxes); // TODO/FIXME subtract all tax deductors
-	// Reserves
-	updateReserves(unitOfTime, prevUnitOfTime, companyReserves); // TODO/FIXME update to only include reserves
-
-	//
-	// Investors
-	//
-	investors.forEach((i) => {
-		if (!(i.id in unitOfTime.investors)) {
-			unitOfTime.investors[i.id] = genInitInvestorCalendar(i);
-		}
-		const investor = unitOfTime.investors[i.id];
-		const prevInvestor = prevUnitOfTime?.investors[i.id] ?? null;
-
-		const equity = round(100 / i.equity, 2);
-		const earned = round(companyReserves * equity, 2);
-		const percentageInvestmentRecouped = round(
-			100 * (earned / investor.initialInvestment),
-			4
-		);
-
-		// Earned
-		updateEarned(investor, prevInvestor, earned);
-		// Percentage of initial investment recouped
-		updatePercentageOfInitialInvestmentRecouped(
-			investor,
-			prevInvestor,
-			percentageInvestmentRecouped
-		);
-	});
-};
-
 export interface UpdateCalendarValuesProductProps {
 	fixedValues: CompanyCalendarValuesCore;
 	unitOfTime: DayCalendar | MonthCalendar | YearCalendar;
@@ -341,7 +248,7 @@ export const updateCalendarValuesProduct = ({
 	// Taxes
 	updateTaxes(unitOfTime, prevUnitOfTime, companyTaxes); // TODO/FIXME subtract all tax deductors
 	// Reserves
-	updateReserves(unitOfTime, prevUnitOfTime, companyReserves); // TODO/FIXME update to only include reserves
+	updateReserves(unitOfTime, prevUnitOfTime, companyReserves);
 };
 
 export interface UpdateCalendarValuesInvestorsProps {
@@ -394,4 +301,52 @@ export const updateCalendarValuesInvestor = ({
 		prevInvestor,
 		percentageInvestmentRecouped
 	);
+};
+
+export interface UpdateCalendarValuesLeaseProps {
+	fixedValues: CompanyCalendarValuesCore;
+	unitOfTime: DayCalendar | MonthCalendar | YearCalendar;
+	prevUnitOfTime: DayCalendar | MonthCalendar | YearCalendar | null;
+	lease: LocationLeaseCalendar;
+	prevLease: LocationLeaseCalendar | null;
+	leaseCost: number;
+}
+
+/**
+ * Update revenue, expenses, lease for any unit of time (day, month, year)
+ * @param param0 UpdateCalendarValuesProps
+ */
+export const updateCalendarValuesLease = ({
+	fixedValues,
+	unitOfTime,
+	prevUnitOfTime,
+	lease,
+	prevLease,
+	leaseCost,
+}: UpdateCalendarValuesLeaseProps) => {
+	const { taxRate } = fixedValues;
+	//
+	// Lease
+	//
+	// Total amount of lease paid
+	updateLeasePaid(lease, prevLease, leaseCost);
+	// Add product
+	unitOfTime.leases[lease.id] = lease;
+
+	//
+	// Company
+	//
+	const companyExpenses = unitOfTime.totalExpenses + leaseCost;
+	const companyProfit = unitOfTime.totalProfit - leaseCost;
+	const companyTaxes = companyProfit * (taxRate / 100);
+	const companyReserves = companyProfit - companyTaxes;
+
+	// Expense
+	updateExpense(unitOfTime, prevUnitOfTime, companyExpenses);
+	// Profit
+	updateProfit(unitOfTime, prevUnitOfTime, companyProfit);
+	// Taxes
+	updateTaxes(unitOfTime, prevUnitOfTime, companyTaxes); // TODO/FIXME subtract all tax deductors
+	// Reserves
+	updateReserves(unitOfTime, prevUnitOfTime, companyReserves);
 };

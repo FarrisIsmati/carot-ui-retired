@@ -8,7 +8,7 @@ import { CompanyCalendarValuesCore } from "@/types/VisionForm/calendar/company/c
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { cloneDeep } from "lodash";
 import { updateCalendarValuesInvestor } from "./calendarCalculate";
-import { getPrevDay, getPrevMonth } from "./calendarUpdateHelpers";
+import { getPrevDay, getPrevMonth } from "./helpers";
 
 //
 // Functions to loop through entire calendar

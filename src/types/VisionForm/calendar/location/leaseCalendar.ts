@@ -10,14 +10,13 @@ export interface LocationLeaseCalendar
 		LocationPhysicalCalendar,
 		LocationLeaseCalendarLifetime,
 		LocationLeaseCalendarTotal {
-	// Total cost of lease when fully paid out
-	leaseCost: number;
 	// Lease cost per payment of period (week, month, annual)
 	periodCost: number;
 }
 
 // Location values for calendar
 interface LocationCalendar {
+	id: string;
 	name: string;
 }
 

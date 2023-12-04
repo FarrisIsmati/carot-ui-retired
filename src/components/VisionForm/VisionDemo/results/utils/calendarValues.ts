@@ -4,10 +4,10 @@ import {
 	CompanyCalendarValues,
 	CompanyCalendarValuesCore,
 } from "@/types/VisionForm/calendar/company/companyCalendarValues";
-import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/company/locationCalendarValues";
 import { ProductValues } from "@/types/VisionForm/calendar/company/productCalendarValues";
 import { CurveDataPointMap } from "@/types/VisionForm/calendar/curve";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
+import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
 import {
 	InvestorSection,
 	InvestorsInputModeLess,
@@ -82,24 +82,16 @@ export const getInvestorCalendarValues = (
 };
 
 export const getCompanyValues = ({
-	state,
 	companyValuesCore,
 	product,
+	lease,
 	leasesFootTrafficCurveIdDataPointsMap,
 }: {
-	state: VisionFormValues;
 	companyValuesCore: CompanyCalendarValuesCore;
 	product: RevenueSection;
+	lease: PhysicalLeaseLocationSection;
 	leasesFootTrafficCurveIdDataPointsMap: CurveDataPointMap;
 }): CompanyCalendarValues => {
-	const location = state.leases.find((lease) =>
-		product.locationIds.has(lease.id)
-	);
-
-	if (!location) {
-		throw new Error("No location found for product");
-	}
-
 	/**
 	 * Get values for current product and lease association
 	 * Update calendar for that specific product
@@ -107,7 +99,10 @@ export const getCompanyValues = ({
 	return {
 		coreValues: companyValuesCore,
 		...getProductValues(product),
-		...getLeaseValues(location, leasesFootTrafficCurveIdDataPointsMap),
+		...getLeaseValues({
+			lease,
+			leasesFootTrafficCurveIdDataPointsMap,
+		}),
 	};
 };
 
@@ -156,10 +151,13 @@ export const getProductValues = (product: RevenueSection): ProductValues => {
 };
 
 // Returns all necessary lease values given the input mode
-export const getLeaseValues = (
-	lease: PhysicalLeaseLocationSection,
-	leasesFootTrafficCurveIdDataPointsMap: CurveDataPointMap
-): LocationLeaseCalendarValues => {
+export const getLeaseValues = ({
+	lease,
+	leasesFootTrafficCurveIdDataPointsMap,
+}: {
+	lease: PhysicalLeaseLocationSection;
+	leasesFootTrafficCurveIdDataPointsMap: CurveDataPointMap;
+}): LocationLeaseCalendarValues => {
 	const getPhysicalLeaseLocationKey = getKeyInputMode<
 		PhysicalLeaseLocationSectionInputModeLess,
 		PhysicalLeaseLocationSection

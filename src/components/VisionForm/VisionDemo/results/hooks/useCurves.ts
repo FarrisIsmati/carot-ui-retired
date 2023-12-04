@@ -48,7 +48,7 @@ export const useCalcAllLeaseCurveDataPoints = (): CurveDataPointMap => {
 		visionFormDemoState.overviewStartDate,
 		visionFormDemoState.overviewEndDate,
 		visionFormDemoState?.leases.length,
-		// FIXME/TODO - when ability to create custom curves is added, makesure it's a top level form state
+		// FIXME/TODO - when ability to create custom curves is added, make sure it's a top level form state
 		// Then if length changes we can recompute this function
 	]);
 };

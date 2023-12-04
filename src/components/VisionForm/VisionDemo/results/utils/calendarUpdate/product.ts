@@ -5,12 +5,15 @@ import {
 	YearCalendar,
 } from "@/types/VisionForm/calendar";
 import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
+
+import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
+import { ProductValues } from "@/types/VisionForm/calendar/product/productCalendarValues";
 import {
 	calcCustomersPerDay,
 	updateCalendarValuesProduct,
-} from "./calendarCalculate";
-import { genInitResultsProduct } from "./calendarInitialize";
-import { getPrevDay, getPrevMonth } from "./calendarUpdateHelpers";
+} from "../calendarCalculate/calendarCalculate";
+import { genInitProductCalendar } from "../calendarInitialize";
+import { getPrevDay, getPrevMonth } from "./helpers";
 
 //
 // Functions to loop through entire calendar
@@ -19,10 +22,10 @@ import { getPrevDay, getPrevMonth } from "./calendarUpdateHelpers";
 // Function to loop through calendar
 export const updateCalendarProduct = ({
 	calendar,
-	companyValues,
+	values,
 }: {
 	calendar: Calendar;
-	companyValues: CompanyCalendarValues;
+	values: CompanyCalendarValues & ProductValues & LocationLeaseCalendarValues;
 }) => {
 	calendar.years.forEach((year, i) => {
 		const prevYear =
@@ -36,7 +39,7 @@ export const updateCalendarProduct = ({
 	//
 	// Get Product
 	//
-	const product = genInitResultsProduct(companyValues);
+	const product = genInitProductCalendar(companyValues);
 
 	//
 	// Product
@@ -85,7 +88,7 @@ const updateCalendarYear = ({
 	//
 	// Get Product
 	//
-	const product = genInitResultsProduct(companyValues);
+	const product = genInitProductCalendar(companyValues);
 	const prevProduct = prevYear && prevYear.products[companyValues.productId];
 
 	year.months.forEach((month, i) => {
@@ -131,7 +134,7 @@ const updateCalendarMonth = ({
 	//
 	// Get Product
 	//
-	const product = genInitResultsProduct(companyValues);
+	const product = genInitProductCalendar(companyValues);
 	const prevProduct = prevMonth && prevMonth.products[companyValues.productId];
 
 	month.days.forEach((day, i) => {
@@ -177,7 +180,7 @@ const updateCalendarDay = ({
 	//
 	// Get Product
 	//
-	const product = genInitResultsProduct(companyValues);
+	const product = genInitProductCalendar(companyValues);
 	const prevProduct = prevDay && prevDay.products[companyValues.productId];
 
 	//

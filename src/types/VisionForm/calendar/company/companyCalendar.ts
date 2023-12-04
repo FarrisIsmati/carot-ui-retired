@@ -1,5 +1,5 @@
-import { LocationLeaseCalendar } from "./locationCalendar";
-import { ProductCalendar } from "./productCalendar";
+import { LocationLeaseCalendar } from "../location/leaseCalendar";
+import { ProductCalendar } from "../product/productCalendar";
 
 //
 // Formatted calendar interface for all company values

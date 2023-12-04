@@ -2,11 +2,15 @@ import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
 import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { useSelector } from "react-redux";
-import { updateCalendarInvestor } from "../utils/calendarUpdateInvestors";
-import { updateCalendarProduct } from "../utils/calendarUpdateProduct";
+import { updateCalendarLease } from "../utils/calendarUpdate/lease";
+
+import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
+import { updateCalendarInvestor } from "../utils/calendarUpdate/investors";
+import { updateCalendarProduct } from "../utils/calendarUpdate/product";
 import {
 	getCompanyValues,
 	getInvestorCalendarValues,
+	getLeaseValues,
 } from "../utils/calendarValues";
 import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
 import useGenerateCompanyValues from "./useGenerateCompanyValues";
@@ -32,28 +36,53 @@ export default () => {
 	const leasesFootTrafficCurveIdDataPointsMap =
 		useCalcAllLeaseCurveDataPoints();
 
+	//
 	// Update all company and product revenue/expenses
-	// + Product Revenue
-	// - Product expenses
+	//
 	products.forEach((product) => {
-		// Company values (takes product/location/staff/etc) values to gether (all revenue/expenses)
-		const companyValues: CompanyCalendarValues = getCompanyValues({
-			state: visionFormDemoState,
-			companyValuesCore,
-			product,
-			leasesFootTrafficCurveIdDataPointsMap,
-		});
+		// Lease locations the product is being sold in
+		const leases = visionFormDemoState.leases.filter((lease) =>
+			product.locationIds.has(lease.id)
+		);
 
-		updateCalendarProduct({ calendar, companyValues });
+		//
+		// Loop through all leases product is associated with
+		//
+		leases.forEach((lease) => {
+			// Company values to be processed on
+			const companyValues: CompanyCalendarValues = getCompanyValues({
+				companyValuesCore,
+				product,
+				lease,
+				leasesFootTrafficCurveIdDataPointsMap,
+			});
+			updateCalendarProduct({
+				calendar,
+				companyValues,
+				productValues,
+				leaseValues,
+				leasesFootTrafficCurveIdDataPointsMap,
+			});
+		});
 	});
 
+	//
 	// TODO: LEASES
+	//
+	leases.forEach((lease) => {
+		const leaseValues: LocationLeaseCalendarValues = getLeaseValues({
+			lease,
+			leasesFootTrafficCurveIdDataPointsMap,
+		});
+		updateCalendarLease({ calendar, companyValuesCore, leaseValues });
+	});
 
+	//
 	// Update all investors based on earned revenue calculated from products
-	// No modifiers values except investors alone
+	//
 	investors.forEach((i) => {
+		// Investor values to be processed on
 		const investor: InvestorCalendarValues = getInvestorCalendarValues(i);
-
 		updateCalendarInvestor({ calendar, companyValuesCore, investor });
 	});
 
