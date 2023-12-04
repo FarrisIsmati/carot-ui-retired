@@ -304,28 +304,46 @@ export const updateCalendarValuesInvestor = ({
 	);
 };
 
+export type CalendarType = DayCalendar | MonthCalendar | YearCalendar;
+
 export interface UpdateCalendarValuesLeaseProps {
+	date?: string;
 	companyValues: CompanyCalendarValues;
-	unitOfTime: DayCalendar | MonthCalendar | YearCalendar;
-	prevUnitOfTime: DayCalendar | MonthCalendar | YearCalendar | null;
+	unitOfTime: CalendarType;
+	prevUnitOfTime: CalendarType | null;
 	lease: LocationLeaseCalendar;
 	prevLease: LocationLeaseCalendar | null;
 	leaseCost: number;
+	totalRevenue: number;
+	totalExpenses: number;
 }
 
 /**
  * Update revenue, expenses, lease for any unit of time (day, month, year)
  * @param param0 UpdateCalendarValuesProps
  */
-export const updateCalendarValuesLease = ({
+export const updateCalendarValuesLease = <T>({
 	companyValues,
 	unitOfTime,
 	prevUnitOfTime,
 	lease,
 	prevLease,
 	leaseCost,
+	totalRevenue,
+	totalExpenses,
 }: UpdateCalendarValuesLeaseProps) => {
 	const { taxRate } = companyValues;
+	//
+	// Initial Values
+	// For anything that needs to be run once do it in this if block (here it's only initial construction cost)
+	// If date is first date
+	if (
+		(unitOfTime as DayCalendar).date &&
+		moment((unitOfTime as DayCalendar).date).isSame(companyValues.startDate)
+	) {
+		totalExpenses = totalExpenses + lease.initialConstructionCost;
+	}
+
 	//
 	// Lease
 	//
@@ -337,17 +355,15 @@ export const updateCalendarValuesLease = ({
 	//
 	// Company
 	//
-	const companyExpenses = unitOfTime.totalExpenses + leaseCost;
-	const companyProfit = unitOfTime.totalProfit - leaseCost;
+	const companyProfit = totalRevenue - totalExpenses;
 	const companyTaxes = calculateTaxes(companyProfit, taxRate);
 	const companyReserves = companyProfit - companyTaxes;
-
 	// Expense
-	updateExpense(unitOfTime, prevUnitOfTime, companyExpenses);
+	updateExpense(unitOfTime, prevUnitOfTime, totalExpenses);
 	// Profit
 	updateProfit(unitOfTime, prevUnitOfTime, companyProfit);
 	// Taxes
-	updateTaxes(unitOfTime, prevUnitOfTime, companyTaxes); // TODO/FIXME subtract all tax deductors
+	updateTaxes(unitOfTime, prevUnitOfTime, companyTaxes);
 	// Reserves
 	updateReserves(unitOfTime, prevUnitOfTime, companyReserves);
 };

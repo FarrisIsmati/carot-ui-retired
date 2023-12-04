@@ -1,14 +1,17 @@
 import {
 	Calendar,
+	DayCalendar,
 	MonthCalendar,
 	YearCalendar,
 } from "@/types/VisionForm/calendar";
 import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 
 import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
+import { round } from "lodash";
+import moment from "moment";
 import { updateCalendarValuesLease } from "../calendarCalculate/calendarCalculate";
 import { genInitLeaseCalendar } from "../calendarInitialize";
-import { getPrevMonth } from "./helpers";
+import { getPrevDay, getPrevMonth } from "./helpers";
 
 //
 // Functions to loop through entire calendar
@@ -72,6 +75,8 @@ const updateCalendarYear = ({
 	leaseValues: LocationLeaseCalendarValues;
 }) => {
 	let leaseCost = 0;
+	let totalRevenue = 0;
+	let totalExpenses = 0;
 
 	//
 	// Get Lease
@@ -86,6 +91,10 @@ const updateCalendarYear = ({
 
 		// Calculate yearly total lease costs
 		leaseCost += month.leases[leaseValues.id].periodCost;
+
+		// Update monthly company values
+		totalRevenue += month.totalRevenue;
+		totalExpenses += month.totalExpenses;
 	});
 
 	// Update calendar values
@@ -96,6 +105,8 @@ const updateCalendarYear = ({
 		lease,
 		prevLease,
 		leaseCost,
+		totalRevenue,
+		totalExpenses,
 	});
 };
 
@@ -114,11 +125,30 @@ const updateCalendarMonth = ({
 	companyValues: CompanyCalendarValues;
 	leaseValues: LocationLeaseCalendarValues;
 }) => {
+	let leaseCost = 0;
+	let totalRevenue = 0;
+	let totalExpenses = 0;
+
 	const lease = genInitLeaseCalendar(leaseValues);
 	const prevLease = prevMonth && prevMonth.leases[leaseValues.id];
 
-	// Const lease cost
-	const leaseCost = lease.periodCost;
+	month.days.forEach((day, i) => {
+		const prevDay = getPrevDay({ month, prevMonth, day, i });
+
+		updateCalendarDay({
+			day,
+			prevDay,
+			companyValues,
+			leaseValues,
+		});
+
+		// Calculate monthly total revenue
+		leaseCost += day.leases[leaseValues.id].totalLeasePaid;
+
+		// Update monthly company values
+		totalRevenue += day.totalRevenue;
+		totalExpenses += day.totalExpenses;
+	});
 
 	// Update calendar values
 	updateCalendarValuesLease({
@@ -128,5 +158,38 @@ const updateCalendarMonth = ({
 		lease,
 		prevLease,
 		leaseCost,
+		totalRevenue,
+		totalExpenses,
+	});
+};
+
+const updateCalendarDay = ({
+	day,
+	prevDay,
+	companyValues,
+	leaseValues,
+}: {
+	day: DayCalendar;
+	prevDay: DayCalendar | null;
+	companyValues: CompanyCalendarValues;
+	leaseValues: LocationLeaseCalendarValues;
+}) => {
+	//
+	// Get Product
+	//
+	const lease = genInitLeaseCalendar(leaseValues);
+	const prevLease = prevDay && prevDay.leases[leaseValues.id];
+	const leaseCost = round(lease.periodCost / moment(day.date).daysInMonth(), 2); // Estimating a daily cost will cost the monthly divided by days in month
+
+	// Update calendar values
+	updateCalendarValuesLease({
+		companyValues,
+		unitOfTime: day,
+		prevUnitOfTime: prevDay,
+		lease,
+		prevLease,
+		leaseCost,
+		totalRevenue: day.totalRevenue,
+		totalExpenses: day.totalExpenses + leaseCost,
 	});
 };
