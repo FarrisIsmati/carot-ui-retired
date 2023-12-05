@@ -21,3 +21,5 @@ export interface YearCalendar extends CompanyCalendar, InvestorsCalendar {
 export interface Calendar extends CompanyCalendar, InvestorsCalendar {
 	years: YearCalendar[];
 }
+
+export type CalendarType = DayCalendar | MonthCalendar | YearCalendar;

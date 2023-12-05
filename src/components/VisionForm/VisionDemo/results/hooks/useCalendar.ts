@@ -1,11 +1,13 @@
 import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
-import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { useSelector } from "react-redux";
 import { updateCalendarLease } from "../utils/calendarUpdate/lease";
 
+import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
+import { updateCalendarCapital } from "../utils/calendarUpdate/capital";
 import { updateCalendarInvestor } from "../utils/calendarUpdate/investors";
 import { updateCalendarProduct } from "../utils/calendarUpdate/product";
+import { updateCalendarTaxes } from "../utils/calendarUpdate/taxes";
 import {
 	getAllCalendarValues,
 	getCompanyCalendarValues,
@@ -33,7 +35,20 @@ export default () => {
 		useCalcAllLeaseCurveDataPoints();
 
 	//
-	// Update all company and product revenue/expenses
+	// 0. Capital: Updates company reserve with starting capital
+	//
+	investors.forEach((i) => {
+		// Update starting reserve of the company
+		const investor: InvestorCalendarValues = getInvestorCalendarValues(i);
+		updateCalendarCapital({
+			calendar,
+			companyValues: getCompanyCalendarValues(visionFormDemoState),
+			investor,
+		});
+	});
+
+	//
+	// 1. Products: update all company and product revenue/expenses
 	//
 	products.forEach((product) => {
 		// Lease locations the product is being sold in
@@ -60,7 +75,7 @@ export default () => {
 	});
 
 	//
-	// Update lease and company expenses/profits/taxes
+	// 2. Leases: update lease and company expenses/profits
 	//
 	leases.forEach((lease) => {
 		const leaseValues: LocationLeaseCalendarValues = getLeaseCalendarValues({
@@ -75,7 +90,16 @@ export default () => {
 	});
 
 	//
-	// Update all investors based on earned revenue calculated from products
+	// 3. Taxes
+	//
+	updateCalendarTaxes({
+		calendar,
+		companyValues: getCompanyCalendarValues(visionFormDemoState),
+	});
+
+	//
+	// 4. Investors: update all investors based on earned revenue calculated from products
+	// Right now investors only get money after taxes (assuming the only investor owns the whole company)
 	//
 	investors.forEach((i) => {
 		// Investor values to be processed on

@@ -9,7 +9,7 @@ import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/compa
 import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
 import { round } from "lodash";
 import moment from "moment";
-import { updateCalendarValuesLease } from "../calendarCalculate/calendarCalculate";
+import { updateCalendarValuesLease } from "../calendarCalculate/lease";
 import { genInitLeaseCalendar } from "../calendarInitialize";
 import { getPrevDay, getPrevMonth } from "./helpers";
 

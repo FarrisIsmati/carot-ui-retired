@@ -6,10 +6,9 @@ import {
 } from "@/types/VisionForm/calendar";
 import { AllCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 
-import {
-	calcCustomersPerDay,
-	updateCalendarValuesProduct,
-} from "../calendarCalculate/calendarCalculate";
+import {} from "../calendarCalculate/company";
+import { calcCustomersPerDay } from "../calendarCalculate/helpers";
+import { updateCalendarValuesProduct } from "../calendarCalculate/product";
 import { genInitProductCalendar } from "../calendarInitialize";
 import { getPrevDay, getPrevMonth } from "./helpers";
 

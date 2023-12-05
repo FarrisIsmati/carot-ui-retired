@@ -5,64 +5,79 @@ import {
 	YearCalendar,
 } from "@/types/VisionForm/calendar";
 import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
-import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
-import { cloneDeep } from "lodash";
-import { updateCalendarValuesInvestor } from "../calendarCalculate/investor";
+
+import {} from "../calendarCalculate/company";
+import { updateCalendarValuesTaxes } from "../calendarCalculate/taxes";
 import { getPrevDay, getPrevMonth } from "./helpers";
+
+interface TotalYear {
+	profit: number;
+}
 
 //
 // Functions to loop through entire calendar
 //
 
 // Function to loop through calendar
-export const updateCalendarInvestor = ({
+export const updateCalendarTaxes = ({
 	calendar,
 	companyValues,
-	investor,
 }: {
 	calendar: Calendar;
 	companyValues: CompanyCalendarValues;
-	investor: InvestorCalendarValues;
 }) => {
 	calendar.years.forEach((year, i) => {
+		// Captures the total values for the current year (so we know profits for the given year tax purposes)
+		const totalYear = {
+			profit: 0,
+		};
+
 		const prevYear =
 			calendar.years[0].year === year.year ? null : calendar.years[i - 1];
-		updateCalendarYear({ year, prevYear, companyValues, investor });
+
+		updateCalendarYear({ year, prevYear, companyValues, totalYear });
 	});
 
 	const lastCalendarYear = calendar.years[calendar.years.length - 1];
 
-	calendar.investors[investor.id] = cloneDeep(
-		lastCalendarYear.investors[investor.id]
-	);
-	calendar.investors[investor.id].totalEarned = 0;
-	calendar.investors[investor.id].totalPercentageInitialInvestmentRecouped = 0;
+	//
+	// Company
+	//
+	// Taxes
+	calendar.lifetimeTaxed = lastCalendarYear.lifetimeTaxed;
+	// Reserves
+	calendar.lifetimeReserves = lastCalendarYear.lifetimeReserves;
 };
 
 const updateCalendarYear = ({
 	year,
 	prevYear,
 	companyValues,
-	investor,
+	totalYear,
 }: {
 	year: YearCalendar;
 	prevYear: YearCalendar | null;
 	companyValues: CompanyCalendarValues;
-	investor: InvestorCalendarValues;
+	totalYear: TotalYear;
 }) => {
+	let totalRevenue = 0;
+	let totalExpenses = 0;
+
 	year.months.forEach((month, i) => {
 		const prevMonth = getPrevMonth({ year, prevYear, month, i });
-		updateCalendarMonth({ month, prevMonth, companyValues, investor });
+
+		updateCalendarMonth({ month, prevMonth, companyValues, totalYear });
+		// Calculate yearly total revenue
+		totalRevenue += month.totalRevenue;
+		totalExpenses += month.totalExpenses;
 	});
 
 	// Update calendar values
-	updateCalendarValuesInvestor({
-		investor,
+	updateCalendarValuesTaxes({
 		companyValues,
 		unitOfTime: year,
 		prevUnitOfTime: prevYear,
-		totalRevenue: year.totalRevenue,
-		totalExpenses: year.totalExpenses,
+		totalYearProfit: totalYear.profit,
 	});
 };
 
@@ -70,26 +85,32 @@ const updateCalendarMonth = ({
 	month,
 	prevMonth,
 	companyValues,
-	investor,
+	totalYear,
 }: {
 	month: MonthCalendar;
 	prevMonth: MonthCalendar | null;
 	companyValues: CompanyCalendarValues;
-	investor: InvestorCalendarValues;
+	totalYear: TotalYear;
 }) => {
+	let totalRevenue = 0;
+	let totalExpenses = 0;
+
 	month.days.forEach((day, i) => {
 		const prevDay = getPrevDay({ month, prevMonth, day, i });
-		updateCalendarDay({ day, prevDay, companyValues, investor });
+
+		updateCalendarDay({ day, prevDay, companyValues, totalYear });
+
+		// Calculate monthly total revenue
+		totalRevenue += day.totalRevenue;
+		totalExpenses += day.totalExpenses;
 	});
 
 	// Update calendar values
-	updateCalendarValuesInvestor({
-		investor,
+	updateCalendarValuesTaxes({
 		companyValues,
 		unitOfTime: month,
 		prevUnitOfTime: prevMonth,
-		totalRevenue: month.totalRevenue,
-		totalExpenses: month.totalExpenses,
+		totalYearProfit: totalYear.profit,
 	});
 };
 
@@ -97,20 +118,27 @@ const updateCalendarDay = ({
 	day,
 	prevDay,
 	companyValues,
-	investor,
+	totalYear,
 }: {
 	day: DayCalendar;
 	prevDay: DayCalendar | null;
 	companyValues: CompanyCalendarValues;
-	investor: InvestorCalendarValues;
+	totalYear: TotalYear;
 }) => {
+	//
+	// Revenue, expense, profit, etc.
+	//
+	// Revenue
+	const totalRevenue = day.totalRevenue;
+	// Expenses
+	const totalExpenses = day.totalExpenses;
+	// Yearly profit
+	totalYear.profit = totalYear.profit + totalRevenue - totalExpenses;
 	// Update calendar values
-	updateCalendarValuesInvestor({
-		investor,
+	updateCalendarValuesTaxes({
 		companyValues,
 		unitOfTime: day,
 		prevUnitOfTime: prevDay,
-		totalRevenue: day.totalRevenue,
-		totalExpenses: day.totalExpenses,
+		totalYearProfit: totalYear.profit,
 	});
 };

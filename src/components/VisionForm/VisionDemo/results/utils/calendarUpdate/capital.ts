@@ -6,16 +6,16 @@ import {
 } from "@/types/VisionForm/calendar";
 import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
-import { cloneDeep } from "lodash";
-import { updateCalendarValuesInvestor } from "../calendarCalculate/investor";
+import { updateCalendarValuesCapital } from "../calendarCalculate/capital";
 import { getPrevDay, getPrevMonth } from "./helpers";
 
 //
 // Functions to loop through entire calendar
 //
 
-// Function to loop through calendar
-export const updateCalendarInvestor = ({
+// Despite only being used to update starting capital we loop through entire calendar
+// This is for when additional capital is unlocked at certain dates
+export const updateCalendarCapital = ({
 	calendar,
 	companyValues,
 	investor,
@@ -32,11 +32,8 @@ export const updateCalendarInvestor = ({
 
 	const lastCalendarYear = calendar.years[calendar.years.length - 1];
 
-	calendar.investors[investor.id] = cloneDeep(
-		lastCalendarYear.investors[investor.id]
-	);
-	calendar.investors[investor.id].totalEarned = 0;
-	calendar.investors[investor.id].totalPercentageInitialInvestmentRecouped = 0;
+	// Reserves
+	calendar.lifetimeReserves = lastCalendarYear.lifetimeReserves;
 };
 
 const updateCalendarYear = ({
@@ -56,13 +53,12 @@ const updateCalendarYear = ({
 	});
 
 	// Update calendar values
-	updateCalendarValuesInvestor({
+	updateCalendarValuesCapital({
 		investor,
 		companyValues,
 		unitOfTime: year,
 		prevUnitOfTime: prevYear,
-		totalRevenue: year.totalRevenue,
-		totalExpenses: year.totalExpenses,
+		totalReserves: year.totalReserves,
 	});
 };
 
@@ -83,13 +79,12 @@ const updateCalendarMonth = ({
 	});
 
 	// Update calendar values
-	updateCalendarValuesInvestor({
+	updateCalendarValuesCapital({
 		investor,
 		companyValues,
 		unitOfTime: month,
 		prevUnitOfTime: prevMonth,
-		totalRevenue: month.totalRevenue,
-		totalExpenses: month.totalExpenses,
+		totalReserves: month.totalReserves,
 	});
 };
 
@@ -105,12 +100,11 @@ const updateCalendarDay = ({
 	investor: InvestorCalendarValues;
 }) => {
 	// Update calendar values
-	updateCalendarValuesInvestor({
+	updateCalendarValuesCapital({
 		investor,
 		companyValues,
 		unitOfTime: day,
 		prevUnitOfTime: prevDay,
-		totalRevenue: day.totalRevenue,
-		totalExpenses: day.totalExpenses,
+		totalReserves: day.totalReserves,
 	});
 };
