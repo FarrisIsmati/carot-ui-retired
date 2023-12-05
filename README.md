@@ -70,6 +70,11 @@ All curve arrays generate their data memozied as well. Currently only tracking c
 
 We start to update revenue and expenses of company through a series of loops through the calendar, updating different parts of the calendar each time.
 
+0. Capital loop, for all souces of starting capital we add them here, they can either go to revenue or reserves based on tax status. Right now we only are taking in equity financing which isn't taxed so it goes to reserves.
+
+**If adding new starting capital put it here**
+**If any of this capital needs to be taxed need to think how to set it up**
+
 1. Product loop, for each product calculate revenue/expenses brought onto the company, update company revenue/expenses as well as the product's revenue/expenses. Every product is associated with a location, currently only handling leases.
 
 **If expanding locations need to add them here**
@@ -81,8 +86,10 @@ We start to update revenue and expenses of company through a series of loops thr
 
 3. Investor loop, for each investor calculate the earned income/percentage recovered based on revenue/expenes from previous 2 calendar loops (product/location revenue/expenses)
 
+4. Taxes loop, for all existing values calculate the required taxes. Within its `calendarUpdate` function we are tracking the profits for the current year and it resets after each year. Tax rate will be caluclated from each day to month to year.
+
 **If you add to investor values that's being calculated update the `calenduarUpdateInvestors` file**
 
-Each loop runs their own specific update function, where first they need to get the values required to update the data. Update all sets of data from year, month, day. Here is where actual calculations are made.
+For each loop (capital, product, location, investor, taxes) we traverse the calendar, if any date specific values need to be set, we will catch the date in the `calendarUpdate` functions. Also all values will be set from the `calendarUpdate` functions and passed into the `calendarCalculate` functions. Every `calendarUpdate` loop (day, month, year) will return the values that's being passed into `calendarCalculate` functions because we are only adding those values to the main calendar object so we want what we changed and not the full value because if we pass that in then we are doubling the value.
 
 If updating the form, updating results some or all of these above steps need to be updated to get it to work.
