@@ -77,10 +77,13 @@ const updateCalendarYear = ({
 	prevYear: YearCalendar | null;
 	values: AllCalendarValues;
 }) => {
-	let productRevenue = 0;
-	let productExpenses = 0;
 	let totalRevenue = 0;
 	let totalExpenses = 0;
+	let totalProfit = 0;
+	let totalReserves = 0;
+	let productRevenue = 0;
+	let productExpenses = 0;
+	let productProfit = 0;
 
 	//
 	// Get Product
@@ -91,13 +94,24 @@ const updateCalendarYear = ({
 	year.months.forEach((month, i) => {
 		const prevMonth = getPrevMonth({ year, prevYear, month, i });
 
-		updateCalendarMonth({ month, prevMonth, values });
+		const {
+			monthTotalRevenue,
+			monthTotalExpenses,
+			monthTotalProfit,
+			monthTotalReserves,
+			monthProductRevenue,
+			monthProductExpenses,
+			monthProductProfit,
+		} = updateCalendarMonth({ month, prevMonth, values });
 
 		// Calculate yearly total revenue
-		productRevenue += month.products[values.productId].totalRevenue;
-		productExpenses += month.products[values.productId].totalExpenses;
-		totalRevenue += month.totalRevenue;
-		totalExpenses += month.totalExpenses;
+		totalRevenue += monthTotalRevenue;
+		totalExpenses += monthTotalExpenses;
+		totalProfit += monthTotalProfit;
+		totalReserves += monthTotalReserves;
+		productRevenue += monthProductRevenue;
+		productExpenses += monthProductExpenses;
+		productProfit += monthProductProfit;
 	});
 
 	// Update calendar values
@@ -107,10 +121,13 @@ const updateCalendarYear = ({
 		prevUnitOfTime: prevYear,
 		product,
 		prevProduct,
-		totalRevenue: totalRevenue,
-		productRevenue: productRevenue,
-		totalExpenses: totalExpenses,
-		productExpenses: productExpenses,
+		totalRevenue,
+		totalExpenses,
+		totalProfit,
+		totalReserves,
+		productRevenue,
+		productExpenses,
+		productProfit,
 	});
 };
 
@@ -123,10 +140,13 @@ const updateCalendarMonth = ({
 	prevMonth: MonthCalendar | null;
 	values: AllCalendarValues;
 }) => {
-	let productRevenue = 0;
-	let productExpenses = 0;
 	let totalRevenue = 0;
 	let totalExpenses = 0;
+	let totalProfit = 0;
+	let totalReserves = 0;
+	let productRevenue = 0;
+	let productExpenses = 0;
+	let productProfit = 0;
 
 	//
 	// Get Product
@@ -137,13 +157,24 @@ const updateCalendarMonth = ({
 	month.days.forEach((day, i) => {
 		const prevDay = getPrevDay({ month, prevMonth, day, i });
 
-		updateCalendarDay({ day, prevDay, values });
+		const {
+			dayTotalRevenue,
+			dayTotalExpenses,
+			dayTotalProfit,
+			dayTotalReserves,
+			dayProductRevenue,
+			dayProductExpenses,
+			dayProductProfit,
+		} = updateCalendarDay({ day, prevDay, values });
 
 		// Calculate monthly total revenue
-		productRevenue += day.products[values.productId].totalRevenue;
-		productExpenses += day.products[values.productId].totalExpenses;
-		totalRevenue += day.totalRevenue;
-		totalExpenses += day.totalExpenses;
+		totalRevenue += dayTotalRevenue;
+		totalExpenses += dayTotalExpenses;
+		totalProfit += dayTotalProfit;
+		totalReserves += dayTotalReserves;
+		productRevenue += dayProductRevenue;
+		productExpenses += dayProductExpenses;
+		productProfit += dayProductProfit;
 	});
 
 	// Update calendar values
@@ -153,11 +184,24 @@ const updateCalendarMonth = ({
 		prevUnitOfTime: prevMonth,
 		product,
 		prevProduct,
-		totalRevenue: totalRevenue,
-		productRevenue: productRevenue,
-		totalExpenses: totalExpenses,
-		productExpenses: productExpenses,
+		totalRevenue,
+		totalExpenses,
+		totalProfit,
+		totalReserves,
+		productRevenue,
+		productExpenses,
+		productProfit,
 	});
+
+	return {
+		monthProductRevenue: productRevenue,
+		monthTotalRevenue: totalRevenue,
+		monthProductExpenses: productExpenses,
+		monthTotalExpenses: totalExpenses,
+		monthProductProfit: productProfit,
+		monthTotalProfit: totalProfit,
+		monthTotalReserves: totalReserves,
+	};
 };
 
 const updateCalendarDay = ({
@@ -190,6 +234,11 @@ const updateCalendarDay = ({
 	// Expenses
 	const productExpenses = customersPerDay * values.costToProduce;
 	const totalExpenses = productExpenses + day.totalExpenses;
+	// Profit
+	const productProfit = productRevenue - productExpenses;
+	const totalProfit = totalRevenue - totalExpenses;
+	// Reserves
+	const totalReserves = totalProfit;
 
 	// Update calendar values
 	updateCalendarValuesProduct({
@@ -198,9 +247,22 @@ const updateCalendarDay = ({
 		prevUnitOfTime: prevDay,
 		product,
 		prevProduct,
-		totalRevenue: totalRevenue,
-		productRevenue: productRevenue,
-		totalExpenses: totalExpenses,
-		productExpenses: productExpenses,
+		totalRevenue,
+		totalExpenses,
+		totalProfit,
+		totalReserves,
+		productRevenue,
+		productExpenses,
+		productProfit,
 	});
+
+	return {
+		dayProductRevenue: productRevenue,
+		dayTotalRevenue: totalRevenue,
+		dayProductExpenses: productExpenses,
+		dayTotalExpenses: totalExpenses,
+		dayProductProfit: productProfit,
+		dayTotalProfit: totalProfit,
+		dayTotalReserves: totalReserves,
+	};
 };

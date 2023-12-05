@@ -14,10 +14,11 @@ export const updateRevenue = (
 	prevObj: ProductCalendar | CalendarType | null,
 	revenue: number
 ) => {
-	obj.totalRevenue = revenue;
-	obj.lifetimeRevenue = prevObj
-		? round(prevObj.lifetimeRevenue + obj.totalRevenue)
-		: obj.totalRevenue;
+	obj.totalRevenue = round(obj.totalRevenue + revenue, 2);
+	obj.lifetimeRevenue = round(
+		prevObj ? prevObj.lifetimeRevenue + obj.totalRevenue : obj.totalRevenue,
+		2
+	);
 };
 
 /**
@@ -31,10 +32,11 @@ export const updateExpense = (
 	prevObj: ProductCalendar | CalendarType | null,
 	expense: number
 ) => {
-	obj.totalExpenses = expense;
-	obj.lifetimeExpenses = prevObj
-		? round(prevObj.lifetimeExpenses + obj.totalExpenses, 2)
-		: obj.totalExpenses;
+	obj.totalExpenses = round(obj.totalExpenses + expense, 2);
+	obj.lifetimeExpenses = round(
+		prevObj ? prevObj.lifetimeExpenses + obj.totalExpenses : obj.totalExpenses,
+		2
+	);
 };
 
 /**
@@ -48,10 +50,11 @@ export const updateProfit = (
 	prevObj: ProductCalendar | CalendarType | null,
 	profit: number
 ) => {
-	obj.totalProfit = profit;
-	obj.lifetimeProfit = prevObj
-		? round(prevObj.lifetimeProfit + obj.totalProfit, 2)
-		: obj.totalProfit;
+	obj.totalProfit = round(obj.totalProfit + profit, 2);
+	obj.lifetimeProfit = round(
+		prevObj ? prevObj.lifetimeProfit + obj.totalProfit : obj.totalProfit,
+		2
+	);
 };
 
 /**
@@ -65,8 +68,9 @@ export const updateReserves = (
 	prevObj: CalendarType | null,
 	reserves: number
 ) => {
-	obj.totalReserves = obj.totalReserves + reserves;
-	obj.lifetimeReserves = prevObj
-		? round(prevObj.lifetimeReserves + obj.totalReserves, 2)
-		: obj.totalReserves;
+	obj.totalReserves = round(obj.totalReserves + reserves, 2);
+	obj.lifetimeReserves = round(
+		prevObj ? prevObj.lifetimeReserves + obj.totalReserves : obj.totalReserves,
+		2
+	);
 };

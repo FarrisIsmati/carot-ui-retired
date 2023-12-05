@@ -57,8 +57,6 @@ export const updateCalendarLease = ({
 	calendar.lifetimeExpenses = lastCalendarYear.lifetimeExpenses;
 	// Profit
 	calendar.lifetimeProfit = lastCalendarYear.lifetimeProfit;
-	// Taxes
-	calendar.lifetimeTaxed = lastCalendarYear.lifetimeTaxed;
 	// Reserves
 	calendar.lifetimeReserves = lastCalendarYear.lifetimeReserves;
 };
@@ -75,8 +73,9 @@ const updateCalendarYear = ({
 	leaseValues: LocationLeaseCalendarValues;
 }) => {
 	let leaseCost = 0;
-	let totalRevenue = 0;
 	let totalExpenses = 0;
+	let totalProfit = 0;
+	let totalReserves = 0;
 
 	//
 	// Get Lease
@@ -87,26 +86,32 @@ const updateCalendarYear = ({
 	year.months.forEach((month, i) => {
 		const prevMonth = getPrevMonth({ year, prevYear, month, i });
 
-		updateCalendarMonth({ month, prevMonth, companyValues, leaseValues });
+		const {
+			monthLeaseCost,
+			monthTotalExpenses,
+			monthTotalProfit,
+			monthTotalReserves,
+		} = updateCalendarMonth({ month, prevMonth, companyValues, leaseValues });
 
 		// Calculate yearly total lease costs
-		leaseCost += month.leases[leaseValues.id].periodCost;
+		leaseCost += monthLeaseCost;
 
 		// Update monthly company values
-		totalRevenue += month.totalRevenue;
-		totalExpenses += month.totalExpenses;
+		totalExpenses += monthTotalExpenses;
+		totalProfit += monthTotalProfit;
+		totalReserves += monthTotalReserves;
 	});
 
 	// Update calendar values
 	updateCalendarValuesLease({
-		companyValues,
 		unitOfTime: year,
 		prevUnitOfTime: prevYear,
 		lease,
 		prevLease,
 		leaseCost,
-		totalRevenue,
 		totalExpenses,
+		totalProfit,
+		totalReserves,
 	});
 };
 
@@ -126,8 +131,9 @@ const updateCalendarMonth = ({
 	leaseValues: LocationLeaseCalendarValues;
 }) => {
 	let leaseCost = 0;
-	let totalRevenue = 0;
 	let totalExpenses = 0;
+	let totalProfit = 0;
+	let totalReserves = 0;
 
 	const lease = genInitLeaseCalendar(leaseValues);
 	const prevLease = prevMonth && prevMonth.leases[leaseValues.id];
@@ -135,32 +141,41 @@ const updateCalendarMonth = ({
 	month.days.forEach((day, i) => {
 		const prevDay = getPrevDay({ month, prevMonth, day, i });
 
-		updateCalendarDay({
-			day,
-			prevDay,
-			companyValues,
-			leaseValues,
-		});
+		const { dayLeastCost, dayTotalExpenses, dayTotalProfit, dayTotalReserves } =
+			updateCalendarDay({
+				day,
+				prevDay,
+				companyValues,
+				leaseValues,
+			});
 
 		// Calculate monthly total revenue
-		leaseCost += day.leases[leaseValues.id].totalLeasePaid;
+		leaseCost += dayLeastCost;
 
 		// Update monthly company values
-		totalRevenue += day.totalRevenue;
-		totalExpenses += day.totalExpenses;
+		totalExpenses += dayTotalExpenses;
+		totalProfit += dayTotalProfit;
+		totalReserves += dayTotalReserves;
 	});
 
 	// Update calendar values
 	updateCalendarValuesLease({
-		companyValues,
 		unitOfTime: month,
 		prevUnitOfTime: prevMonth,
 		lease,
 		prevLease,
 		leaseCost,
-		totalRevenue,
 		totalExpenses,
+		totalProfit,
+		totalReserves,
 	});
+
+	return {
+		monthLeaseCost: leaseCost,
+		monthTotalExpenses: totalExpenses,
+		monthTotalProfit: totalProfit,
+		monthTotalReserves: totalReserves,
+	};
 };
 
 const updateCalendarDay = ({
@@ -174,22 +189,44 @@ const updateCalendarDay = ({
 	companyValues: CompanyCalendarValues;
 	leaseValues: LocationLeaseCalendarValues;
 }) => {
+	let totalExpenses = 0;
 	//
-	// Get Product
+	// Add initial construction costs to first day
+	//
+	if (day.date && moment(day.date).isSame(companyValues.startDate)) {
+		totalExpenses += leaseValues.initialConstructionCost;
+	}
+
+	//
+	// Lease
 	//
 	const lease = genInitLeaseCalendar(leaseValues);
 	const prevLease = prevDay && prevDay.leases[leaseValues.id];
 	const leaseCost = round(lease.periodCost / moment(day.date).daysInMonth(), 2); // Estimating a daily cost will cost the monthly divided by days in month
+	totalExpenses += leaseCost;
+
+	//
+	// Company
+	//
+	const totalProfit = -1 * totalExpenses; // profit is equal to only expenses incurred here, no revenue to offset it
+	const totalReserves = totalProfit;
 
 	// Update calendar values
 	updateCalendarValuesLease({
-		companyValues,
 		unitOfTime: day,
 		prevUnitOfTime: prevDay,
 		lease,
 		prevLease,
 		leaseCost,
-		totalRevenue: day.totalRevenue,
-		totalExpenses: day.totalExpenses + leaseCost,
+		totalExpenses,
+		totalProfit,
+		totalReserves,
 	});
+
+	return {
+		dayLeastCost: leaseCost,
+		dayTotalExpenses: totalExpenses,
+		dayTotalProfit: totalProfit,
+		dayTotalReserves: totalReserves,
+	};
 };

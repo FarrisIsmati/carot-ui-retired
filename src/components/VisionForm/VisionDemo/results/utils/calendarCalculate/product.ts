@@ -14,10 +14,13 @@ export interface UpdateCalendarValuesProductProps {
 	prevUnitOfTime: CalendarType | null;
 	product: ProductCalendar;
 	prevProduct: ProductCalendar | null;
-	productRevenue: number;
-	productExpenses: number;
 	totalRevenue: number;
 	totalExpenses: number;
+	totalProfit: number;
+	totalReserves: number;
+	productRevenue: number;
+	productExpenses: number;
+	productProfit: number;
 }
 
 /**
@@ -25,21 +28,21 @@ export interface UpdateCalendarValuesProductProps {
  * @param param0
  */
 export const updateCalendarValuesProduct = ({
-	values,
 	unitOfTime,
 	prevUnitOfTime,
 	product,
 	prevProduct,
-	productRevenue,
-	productExpenses,
 	totalRevenue,
 	totalExpenses,
+	totalProfit,
+	totalReserves,
+	productRevenue,
+	productExpenses,
+	productProfit,
 }: UpdateCalendarValuesProductProps) => {
-	const { taxRate } = values;
 	//
 	// Product
 	//
-	const productProfit = productRevenue - productExpenses;
 	// Revenue
 	updateRevenue(product, prevProduct, productRevenue);
 	// Expense
@@ -52,14 +55,12 @@ export const updateCalendarValuesProduct = ({
 	//
 	// Company
 	//
-	const companyProfit = totalRevenue - totalExpenses;
-	const companyReserves = companyProfit;
 	// Revenue
 	updateRevenue(unitOfTime, prevUnitOfTime, totalRevenue);
 	// Expense
 	updateExpense(unitOfTime, prevUnitOfTime, totalExpenses);
 	// Profit
-	updateProfit(unitOfTime, prevUnitOfTime, companyProfit);
+	updateProfit(unitOfTime, prevUnitOfTime, totalProfit);
 	// Reserves
-	updateReserves(unitOfTime, prevUnitOfTime, companyReserves);
+	updateReserves(unitOfTime, prevUnitOfTime, totalReserves);
 };

@@ -6,6 +6,7 @@ import {
 } from "@/types/VisionForm/calendar";
 import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
+import moment from "moment";
 import { updateCalendarValuesCapital } from "../calendarCalculate/capital";
 import { getPrevDay, getPrevMonth } from "./helpers";
 
@@ -47,19 +48,31 @@ const updateCalendarYear = ({
 	companyValues: CompanyCalendarValues;
 	investor: InvestorCalendarValues;
 }) => {
+	let totalReserves = 0;
+
 	year.months.forEach((month, i) => {
 		const prevMonth = getPrevMonth({ year, prevYear, month, i });
-		updateCalendarMonth({ month, prevMonth, companyValues, investor });
+		const { monthTotalReserves } = updateCalendarMonth({
+			month,
+			prevMonth,
+			companyValues,
+			investor,
+		});
+
+		// Update total reserves
+		totalReserves += monthTotalReserves;
 	});
 
 	// Update calendar values
 	updateCalendarValuesCapital({
-		investor,
-		companyValues,
 		unitOfTime: year,
 		prevUnitOfTime: prevYear,
-		totalReserves: year.totalReserves,
+		totalReserves,
 	});
+
+	return {
+		monthTotalReserves: totalReserves,
+	};
 };
 
 const updateCalendarMonth = ({
@@ -73,19 +86,31 @@ const updateCalendarMonth = ({
 	companyValues: CompanyCalendarValues;
 	investor: InvestorCalendarValues;
 }) => {
+	let totalReserves = 0;
+
 	month.days.forEach((day, i) => {
 		const prevDay = getPrevDay({ month, prevMonth, day, i });
-		updateCalendarDay({ day, prevDay, companyValues, investor });
+		const { dayTotalReserves } = updateCalendarDay({
+			day,
+			prevDay,
+			companyValues,
+			investor,
+		});
+
+		// Update total reserves
+		totalReserves += dayTotalReserves;
 	});
 
 	// Update calendar values
 	updateCalendarValuesCapital({
-		investor,
-		companyValues,
 		unitOfTime: month,
 		prevUnitOfTime: prevMonth,
-		totalReserves: month.totalReserves,
+		totalReserves,
 	});
+
+	return {
+		monthTotalReserves: totalReserves,
+	};
 };
 
 const updateCalendarDay = ({
@@ -99,12 +124,23 @@ const updateCalendarDay = ({
 	companyValues: CompanyCalendarValues;
 	investor: InvestorCalendarValues;
 }) => {
+	let totalReserves = 0;
+	// Only for first day
+	if (
+		(day as DayCalendar).date &&
+		moment(day.date).isSame(companyValues.startDate)
+	) {
+		totalReserves = investor.initialInvestment; // NOTE THIS IS NOT TAXED IF IT'S EQUITY FINANCING
+	}
+
 	// Update calendar values
 	updateCalendarValuesCapital({
-		investor,
-		companyValues,
 		unitOfTime: day,
 		prevUnitOfTime: prevDay,
-		totalReserves: day.totalReserves,
+		totalReserves,
 	});
+
+	return {
+		dayTotalReserves: totalReserves,
+	};
 };
