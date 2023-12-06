@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
+import { generateInitCalendar } from "../utils/calendarInitialize";
 import { updateCalendarCapital } from "../utils/calendarUpdate/capital";
+import { updateCalendarInvestor } from "../utils/calendarUpdate/investors";
 import { updateCalendarLease } from "../utils/calendarUpdate/lease";
 import { updateCalendarProduct } from "../utils/calendarUpdate/product";
 import { updateCalendarTaxes } from "../utils/calendarUpdate/taxes";
@@ -14,7 +16,6 @@ import {
 	getLeaseCalendarValues,
 } from "../utils/calendarValues";
 import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
-import useGenerateInitialCalendar from "./useGenerateInitialCalendar";
 
 /**
  * Generates initial calendar
@@ -25,9 +26,11 @@ import useGenerateInitialCalendar from "./useGenerateInitialCalendar";
 export default () => {
 	const visionFormDemoState = useSelector(getVisionFormDemoSelector);
 	const { products, investors, leases } = visionFormDemoState;
+	const startDate = visionFormDemoState.overviewStartDate;
+	const endDate = visionFormDemoState.overviewEndDate;
 
 	// Memoized: generate the initial calendar
-	const calendar = useGenerateInitialCalendar();
+	const calendar = generateInitCalendar(startDate, endDate);
 
 	// Memoized: calculate all lease traffic curve data points
 	const leasesFootTrafficCurveIdDataPointsMap =
@@ -97,19 +100,19 @@ export default () => {
 		companyValues: getCompanyCalendarValues(visionFormDemoState),
 	});
 
-	// //
-	// // 4. Investors: update all investors based on earned revenue calculated from products
-	// // Right now investors only get money after taxes (assuming the only investor owns the whole company)
-	// //
-	// investors.forEach((i) => {
-	// 	// Investor values to be processed on
-	// 	const investor: InvestorCalendarValues = getInvestorCalendarValues(i);
-	// 	updateCalendarInvestor({
-	// 		calendar,
-	// 		companyValues: getCompanyCalendarValues(visionFormDemoState),
-	// 		investor,
-	// 	});
-	// });
+	//
+	// 4. Investors: update all investors based on earned revenue calculated from products
+	// Right now investors only get money after taxes (assuming the only investor owns the whole company)
+	//
+	investors.forEach((i) => {
+		// Investor values to be processed on
+		const investor: InvestorCalendarValues = getInvestorCalendarValues(i);
+		updateCalendarInvestor({
+			calendar,
+			companyValues: getCompanyCalendarValues(visionFormDemoState),
+			investor,
+		});
+	});
 
 	return calendar;
 };

@@ -31,6 +31,9 @@ export const initTotalValues: CompanyCalendarTotal = {
 
 	// Total reserves (company treasury)
 	totalReserves: 0,
+
+	// Total Invested
+	totalInvested: 0,
 };
 
 export const initLifetimeValues: CompanyCalendarLifetime = {
@@ -48,4 +51,7 @@ export const initLifetimeValues: CompanyCalendarLifetime = {
 
 	// Reserves
 	lifetimeReserves: 0,
+
+	// Invested
+	lifetimeInvested: 0,
 };

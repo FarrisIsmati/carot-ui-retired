@@ -1,5 +1,5 @@
-import { updateReserves } from "./company";
-import { UpdateCalendarValuesInvestorsProps } from "./investor";
+import { CalendarType } from "@/types/VisionForm/calendar";
+import { updateInvested, updateReserves } from "./company";
 
 /**
  * Update revenue, expenses, product for any unit of time (day, month, year)
@@ -8,11 +8,14 @@ import { UpdateCalendarValuesInvestorsProps } from "./investor";
 export const updateCalendarValuesCapital = ({
 	unitOfTime,
 	prevUnitOfTime,
-	totalReserves,
-}: Omit<
-	UpdateCalendarValuesInvestorsProps,
-	"totalExpenses" | "totalRevenue" | "companyValues" | "investor"
-> & { totalReserves: number }) => {
+	totalInvested,
+}: {
+	unitOfTime: CalendarType;
+	prevUnitOfTime: CalendarType | null;
+	totalInvested: number;
+}) => {
 	// Reserves
-	updateReserves(unitOfTime, prevUnitOfTime, totalReserves);
+	updateReserves(unitOfTime, prevUnitOfTime, totalInvested);
+	// Invested
+	updateInvested(unitOfTime, prevUnitOfTime, totalInvested);
 };

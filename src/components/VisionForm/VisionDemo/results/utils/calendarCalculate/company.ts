@@ -74,3 +74,21 @@ export const updateReserves = (
 		2
 	);
 };
+
+/**
+ * Updates object with company cash inplace
+ * @param obj
+ * @param prevObj
+ * @param revenue
+ */
+export const updateInvested = (
+	obj: CalendarType,
+	prevObj: CalendarType | null,
+	invested: number
+) => {
+	obj.totalInvested = round(obj.totalInvested + invested, 2);
+	obj.lifetimeInvested = round(
+		prevObj ? prevObj.lifetimeInvested + obj.totalInvested : obj.totalInvested,
+		2
+	);
+};

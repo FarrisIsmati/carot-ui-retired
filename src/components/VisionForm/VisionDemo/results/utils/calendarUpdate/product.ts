@@ -88,7 +88,10 @@ const updateCalendarYear = ({
 	//
 	// Get Product
 	//
-	const product = genInitProductCalendar(values);
+	if (!(values.productId in year.products)) {
+		year.products[values.productId] = genInitProductCalendar(values);
+	}
+	const product = year.products[values.productId];
 	const prevProduct = prevYear && prevYear.products[values.productId];
 
 	year.months.forEach((month, i) => {
@@ -151,7 +154,10 @@ const updateCalendarMonth = ({
 	//
 	// Get Product
 	//
-	const product = genInitProductCalendar(values);
+	if (!(values.productId in month.products)) {
+		month.products[values.productId] = genInitProductCalendar(values);
+	}
+	const product = month.products[values.productId];
 	const prevProduct = prevMonth && prevMonth.products[values.productId];
 
 	month.days.forEach((day, i) => {
@@ -221,7 +227,10 @@ const updateCalendarDay = ({
 	//
 	// Get Product
 	//
-	const product = genInitProductCalendar(values);
+	if (!(values.productId in day.products)) {
+		day.products[values.productId] = genInitProductCalendar(values);
+	}
+	const product = day.products[values.productId];
 	const prevProduct = prevDay && prevDay.products[values.productId];
 
 	//

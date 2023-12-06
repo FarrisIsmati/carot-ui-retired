@@ -160,21 +160,10 @@ const updateCalendarDay = ({
 		profit: totalProfit,
 		taxRate: companyValues.taxRate,
 	});
-	console.log(
-		day.date,
-		"totalYear",
-		totalYear.profit,
-		"profit",
-		totalProfit,
-		"taxes",
-		totalTaxes
-	);
-
 	// What we've paid so far for taxes
 	totalYear.taxes += totalTaxes;
 	// Reserves
-	const totalReserves = totalYear.profit - totalTaxes;
-
+	const totalReserves = -1 * totalTaxes; // Taxes bring down total reserves
 	// Update calendar values
 	updateCalendarValuesTaxes({
 		companyValues,

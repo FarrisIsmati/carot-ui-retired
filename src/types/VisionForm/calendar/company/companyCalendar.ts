@@ -25,6 +25,9 @@ export interface CompanyCalendarTotal {
 
 	// Total reserves (company treasury)
 	totalReserves: number;
+
+	// Total invested
+	totalInvested: number;
 }
 
 // Current lifetime results at the given time interval
@@ -43,6 +46,9 @@ export interface CompanyCalendarLifetime {
 
 	// Life time reserves (company treasury)
 	lifetimeReserves: number;
+
+	// Life time invested
+	lifetimeInvested: number;
 }
 
 export interface CompanyCalendarItemized {

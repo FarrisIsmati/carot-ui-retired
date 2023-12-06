@@ -1,11 +1,6 @@
-import { CalendarType } from "@/types/VisionForm/calendar";
-import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
-import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { round } from "lodash";
-import { genInitInvestorCalendar } from "../calendarInitialize";
 
 import { InvestorCalendar } from "@/types/VisionForm/calendar/investor/investorCalendar";
-import { calculateTaxes } from "./helpers";
 
 /**
  * Updates investor object with new company reserves inplace
@@ -18,10 +13,11 @@ export const updateEarned = (
 	prevObj: InvestorCalendar | null,
 	earned: number
 ) => {
-	obj.totalEarned = earned;
-	obj.lifetimeEarned = prevObj
-		? round(prevObj.lifetimeEarned + obj.totalEarned, 2)
-		: obj.totalEarned;
+	obj.totalEarned += earned;
+	obj.lifetimeEarned = round(
+		prevObj ? prevObj.lifetimeEarned + obj.totalEarned : obj.totalEarned,
+		2
+	);
 };
 
 /**
@@ -35,23 +31,21 @@ export const updatePercentageOfInitialInvestmentRecouped = (
 	prevObj: InvestorCalendar | null,
 	percent: number
 ) => {
-	obj.totalPercentageInitialInvestmentRecouped = percent;
-	obj.lifetimePercentageInitialInvestmentRecouped = prevObj
-		? round(
-				prevObj.lifetimePercentageInitialInvestmentRecouped +
-					obj.totalPercentageInitialInvestmentRecouped,
-				2
-		  )
-		: obj.totalPercentageInitialInvestmentRecouped;
+	obj.totalPercentageInitialInvestmentRecouped += percent;
+	obj.lifetimePercentageInitialInvestmentRecouped = round(
+		prevObj
+			? prevObj.lifetimePercentageInitialInvestmentRecouped +
+					obj.totalPercentageInitialInvestmentRecouped
+			: obj.totalPercentageInitialInvestmentRecouped,
+		4
+	);
 };
 
 export interface UpdateCalendarValuesInvestorsProps {
-	investor: InvestorCalendarValues;
-	companyValues: CompanyCalendarValues;
-	unitOfTime: CalendarType;
-	prevUnitOfTime: CalendarType | null;
-	totalRevenue: number;
-	totalExpenses: number;
+	investor: InvestorCalendar;
+	prevInvestor: InvestorCalendar | null;
+	earned: number;
+	percentageInvestmentRecouped: number;
 }
 
 /**
@@ -59,34 +53,11 @@ export interface UpdateCalendarValuesInvestorsProps {
  * @param param0
  */
 export const updateCalendarValuesInvestor = ({
-	investor: i,
-	companyValues,
-	unitOfTime,
-	prevUnitOfTime,
-	totalRevenue,
-	totalExpenses,
+	investor,
+	prevInvestor,
+	earned,
+	percentageInvestmentRecouped,
 }: UpdateCalendarValuesInvestorsProps) => {
-	const { taxRate } = companyValues;
-	const companyProfit = totalRevenue - totalExpenses;
-	const companyTaxes = calculateTaxes(companyProfit, taxRate);
-	const companyReserves = companyProfit - companyTaxes;
-
-	//
-	// Investor
-	//
-	if (!(i.id in unitOfTime.investors)) {
-		unitOfTime.investors[i.id] = genInitInvestorCalendar(i);
-	}
-	const investor = unitOfTime.investors[i.id];
-	const prevInvestor = prevUnitOfTime?.investors[i.id] ?? null;
-
-	const equity = round(100 / i.equity, 2);
-	const earned = round(companyReserves * equity, 2);
-	const percentageInvestmentRecouped = round(
-		100 * (earned / investor.initialInvestment),
-		4
-	);
-
 	// Earned
 	updateEarned(investor, prevInvestor, earned);
 	// Percentage of initial investment recouped

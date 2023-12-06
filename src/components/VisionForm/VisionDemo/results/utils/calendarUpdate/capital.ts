@@ -35,6 +35,8 @@ export const updateCalendarCapital = ({
 
 	// Reserves
 	calendar.lifetimeReserves = lastCalendarYear.lifetimeReserves;
+	// Invested
+	calendar.lifetimeInvested = lastCalendarYear.lifetimeInvested;
 };
 
 const updateCalendarYear = ({
@@ -48,11 +50,11 @@ const updateCalendarYear = ({
 	companyValues: CompanyCalendarValues;
 	investor: InvestorCalendarValues;
 }) => {
-	let totalReserves = 0;
+	let totalInvested = 0;
 
 	year.months.forEach((month, i) => {
 		const prevMonth = getPrevMonth({ year, prevYear, month, i });
-		const { monthTotalReserves } = updateCalendarMonth({
+		const { monthTotalInvested } = updateCalendarMonth({
 			month,
 			prevMonth,
 			companyValues,
@@ -60,18 +62,18 @@ const updateCalendarYear = ({
 		});
 
 		// Update total reserves
-		totalReserves += monthTotalReserves;
+		totalInvested += monthTotalInvested;
 	});
 
 	// Update calendar values
 	updateCalendarValuesCapital({
 		unitOfTime: year,
 		prevUnitOfTime: prevYear,
-		totalReserves,
+		totalInvested,
 	});
 
 	return {
-		monthTotalReserves: totalReserves,
+		monthTotalInvested: totalInvested,
 	};
 };
 
@@ -86,11 +88,11 @@ const updateCalendarMonth = ({
 	companyValues: CompanyCalendarValues;
 	investor: InvestorCalendarValues;
 }) => {
-	let totalReserves = 0;
+	let totalInvested = 0;
 
 	month.days.forEach((day, i) => {
 		const prevDay = getPrevDay({ month, prevMonth, day, i });
-		const { dayTotalReserves } = updateCalendarDay({
+		const { dayTotalInvested } = updateCalendarDay({
 			day,
 			prevDay,
 			companyValues,
@@ -98,18 +100,18 @@ const updateCalendarMonth = ({
 		});
 
 		// Update total reserves
-		totalReserves += dayTotalReserves;
+		totalInvested += dayTotalInvested;
 	});
 
 	// Update calendar values
 	updateCalendarValuesCapital({
 		unitOfTime: month,
 		prevUnitOfTime: prevMonth,
-		totalReserves,
+		totalInvested,
 	});
 
 	return {
-		monthTotalReserves: totalReserves,
+		monthTotalInvested: totalInvested,
 	};
 };
 
@@ -124,23 +126,23 @@ const updateCalendarDay = ({
 	companyValues: CompanyCalendarValues;
 	investor: InvestorCalendarValues;
 }) => {
-	let totalReserves = 0;
+	let totalInvested = 0;
 	// Only for first day
 	if (
 		(day as DayCalendar).date &&
 		moment(day.date).isSame(companyValues.startDate)
 	) {
-		totalReserves = investor.initialInvestment; // NOTE THIS IS NOT TAXED IF IT'S EQUITY FINANCING
+		totalInvested = investor.initialInvestment; // NOTE THIS IS NOT TAXED IF IT'S EQUITY FINANCING
 	}
 
 	// Update calendar values
 	updateCalendarValuesCapital({
 		unitOfTime: day,
 		prevUnitOfTime: prevDay,
-		totalReserves,
+		totalInvested,
 	});
 
 	return {
-		dayTotalReserves: totalReserves,
+		dayTotalInvested: totalInvested,
 	};
 };
