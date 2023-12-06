@@ -22,7 +22,7 @@ interface ProductCalendarTotal {
 	totalProfit: number;
 
 	// Taxes
-	totalTaxed: number;
+	totalTaxes: number;
 }
 
 interface ProductCalendarLifetime {
@@ -36,5 +36,5 @@ interface ProductCalendarLifetime {
 	lifetimeProfit: number;
 
 	// Taxes
-	lifetimeTaxed: number;
+	lifetimeTaxes: number;
 }

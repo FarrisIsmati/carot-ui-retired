@@ -7,11 +7,13 @@ import {
 import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 
 import {} from "../calendarCalculate/company";
+import { calculateTaxes } from "../calendarCalculate/helpers";
 import { updateCalendarValuesTaxes } from "../calendarCalculate/taxes";
 import { getPrevDay, getPrevMonth } from "./helpers";
 
 interface TotalYear {
 	profit: number;
+	taxes: number;
 }
 
 //
@@ -30,12 +32,14 @@ export const updateCalendarTaxes = ({
 		// Captures the total values for the current year (so we know profits for the given year tax purposes)
 		const totalYear = {
 			profit: 0,
+			taxes: 0,
 		};
 
 		const prevYear =
 			calendar.years[0].year === year.year ? null : calendar.years[i - 1];
 
 		updateCalendarYear({ year, prevYear, companyValues, totalYear });
+		console.log("new year");
 	});
 
 	const lastCalendarYear = calendar.years[calendar.years.length - 1];
@@ -44,7 +48,7 @@ export const updateCalendarTaxes = ({
 	// Company
 	//
 	// Taxes
-	calendar.lifetimeTaxed = lastCalendarYear.lifetimeTaxed;
+	calendar.lifetimeTaxes = lastCalendarYear.lifetimeTaxes;
 	// Reserves
 	calendar.lifetimeReserves = lastCalendarYear.lifetimeReserves;
 };
@@ -60,16 +64,21 @@ const updateCalendarYear = ({
 	companyValues: CompanyCalendarValues;
 	totalYear: TotalYear;
 }) => {
-	let totalRevenue = 0;
-	let totalExpenses = 0;
+	let totalTaxes = 0;
+	let totalReserves = 0;
 
 	year.months.forEach((month, i) => {
 		const prevMonth = getPrevMonth({ year, prevYear, month, i });
 
-		updateCalendarMonth({ month, prevMonth, companyValues, totalYear });
+		const { monthTotalTaxes, monthTotalReserves } = updateCalendarMonth({
+			month,
+			prevMonth,
+			companyValues,
+			totalYear,
+		});
 		// Calculate yearly total revenue
-		totalRevenue += month.totalRevenue;
-		totalExpenses += month.totalExpenses;
+		totalTaxes += monthTotalTaxes;
+		totalReserves += monthTotalReserves;
 	});
 
 	// Update calendar values
@@ -77,7 +86,8 @@ const updateCalendarYear = ({
 		companyValues,
 		unitOfTime: year,
 		prevUnitOfTime: prevYear,
-		totalYearProfit: totalYear.profit,
+		totalTaxes,
+		totalReserves,
 	});
 };
 
@@ -92,17 +102,23 @@ const updateCalendarMonth = ({
 	companyValues: CompanyCalendarValues;
 	totalYear: TotalYear;
 }) => {
-	let totalRevenue = 0;
-	let totalExpenses = 0;
+	let totalTaxes = 0;
+	let totalReserves = 0;
 
 	month.days.forEach((day, i) => {
 		const prevDay = getPrevDay({ month, prevMonth, day, i });
 
-		updateCalendarDay({ day, prevDay, companyValues, totalYear });
+		const { dayTotalTaxes, dayTotalReserves } = updateCalendarDay({
+			day,
+			prevDay,
+			companyValues,
+			totalYear,
+		});
 
 		// Calculate monthly total revenue
-		totalRevenue += day.totalRevenue;
-		totalExpenses += day.totalExpenses;
+		totalTaxes += dayTotalTaxes;
+		console.log("Month", totalTaxes);
+		totalReserves += dayTotalReserves;
 	});
 
 	// Update calendar values
@@ -110,8 +126,14 @@ const updateCalendarMonth = ({
 		companyValues,
 		unitOfTime: month,
 		prevUnitOfTime: prevMonth,
-		totalYearProfit: totalYear.profit,
+		totalTaxes,
+		totalReserves,
 	});
+
+	return {
+		monthTotalTaxes: totalTaxes,
+		monthTotalReserves: totalReserves,
+	};
 };
 
 const updateCalendarDay = ({
@@ -126,19 +148,35 @@ const updateCalendarDay = ({
 	totalYear: TotalYear;
 }) => {
 	//
-	// Revenue, expense, profit, etc.
+	// Company TODO FIND ROUNDING ERROR HERE
 	//
-	// Revenue
-	const totalRevenue = day.totalRevenue;
-	// Expenses
-	const totalExpenses = day.totalExpenses;
-	// Yearly profit
-	totalYear.profit = totalYear.profit + totalRevenue - totalExpenses;
+	// Profit
+	const totalProfit = day.totalRevenue - day.totalExpenses;
+	// Yearly profit (What profit we have so far for the year)
+	totalYear.profit += totalProfit;
+	// Taxes
+	const totalTaxes = calculateTaxes({
+		totalYearProfit: totalYear.profit,
+		totalYearTaxes: totalYear.taxes,
+		profit: totalProfit,
+		taxRate: companyValues.taxRate,
+	});
+	// What we've paid so far for taxes
+	totalYear.taxes += totalTaxes;
+	// Reserves
+	const totalReserves = totalYear.profit - totalTaxes;
+
 	// Update calendar values
 	updateCalendarValuesTaxes({
 		companyValues,
 		unitOfTime: day,
 		prevUnitOfTime: prevDay,
-		totalYearProfit: totalYear.profit,
+		totalTaxes,
+		totalReserves,
 	});
+
+	return {
+		dayTotalTaxes: totalTaxes,
+		dayTotalReserves: totalReserves,
+	};
 };

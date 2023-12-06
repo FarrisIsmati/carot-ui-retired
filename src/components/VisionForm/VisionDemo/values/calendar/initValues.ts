@@ -24,7 +24,7 @@ export const initTotalValues: CompanyCalendarTotal = {
 	totalExpenses: 0,
 
 	// Total taxes paid
-	totalTaxed: 0,
+	totalTaxes: 0,
 
 	// Total profit
 	totalProfit: 0,
@@ -41,7 +41,7 @@ export const initLifetimeValues: CompanyCalendarLifetime = {
 	lifetimeExpenses: 0,
 
 	// Taxes
-	lifetimeTaxed: 0,
+	lifetimeTaxes: 0,
 
 	// Profit
 	lifetimeProfit: 0,

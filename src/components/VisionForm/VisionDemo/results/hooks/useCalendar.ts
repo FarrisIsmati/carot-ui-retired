@@ -6,6 +6,7 @@ import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/locatio
 import { updateCalendarCapital } from "../utils/calendarUpdate/capital";
 import { updateCalendarLease } from "../utils/calendarUpdate/lease";
 import { updateCalendarProduct } from "../utils/calendarUpdate/product";
+import { updateCalendarTaxes } from "../utils/calendarUpdate/taxes";
 import {
 	getAllCalendarValues,
 	getCompanyCalendarValues,
@@ -14,25 +15,6 @@ import {
 } from "../utils/calendarValues";
 import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
 import useGenerateInitialCalendar from "./useGenerateInitialCalendar";
-
-// import { getVisionFormDemoSelector } from "@/redux/visionFormDemo/selectors";
-// import { useSelector } from "react-redux";
-// import { updateCalendarLease } from "../utils/calendarUpdate/lease";
-
-// import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
-// import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
-// import { updateCalendarCapital } from "../utils/calendarUpdate/capital";
-// import { updateCalendarInvestor } from "../utils/calendarUpdate/investors";
-// import { updateCalendarProduct } from "../utils/calendarUpdate/product";
-// import { updateCalendarTaxes } from "../utils/calendarUpdate/taxes";
-// import {
-// 	getAllCalendarValues,
-// 	getCompanyCalendarValues,
-// 	getInvestorCalendarValues,
-// 	getLeaseCalendarValues,
-// } from "../utils/calendarValues";
-// import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
-// import useGenerateInitialCalendar from "./useGenerateInitialCalendar";
 
 /**
  * Generates initial calendar
@@ -107,13 +89,13 @@ export default () => {
 		});
 	});
 
-	// //
-	// // 3. Taxes
-	// //
-	// updateCalendarTaxes({
-	// 	calendar,
-	// 	companyValues: getCompanyCalendarValues(visionFormDemoState),
-	// });
+	//
+	// 3. Taxes
+	//
+	updateCalendarTaxes({
+		calendar,
+		companyValues: getCompanyCalendarValues(visionFormDemoState),
+	});
 
 	// //
 	// // 4. Investors: update all investors based on earned revenue calculated from products

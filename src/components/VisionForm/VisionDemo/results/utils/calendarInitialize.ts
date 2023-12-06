@@ -41,11 +41,11 @@ export const genInitProductCalendar = (
 		totalExpenses: 0,
 		totalRevenue: 0,
 		totalProfit: 0,
-		totalTaxed: 0,
+		totalTaxes: 0,
 		lifetimeExpenses: 0,
 		lifetimeRevenue: 0,
 		lifetimeProfit: 0,
-		lifetimeTaxed: 0,
+		lifetimeTaxes: 0,
 	};
 	return product;
 };

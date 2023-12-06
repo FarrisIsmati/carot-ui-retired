@@ -50,7 +50,7 @@ export const updateCalendarProduct = ({
 	// Profit
 	product.lifetimeProfit = lastProduct.lifetimeProfit;
 	// Taxes
-	product.lifetimeTaxed = lastProduct.lifetimeTaxed;
+	product.lifetimeTaxes = lastProduct.lifetimeTaxes;
 	calendar.products[product.id] = product;
 
 	//
@@ -63,7 +63,7 @@ export const updateCalendarProduct = ({
 	// Profit
 	calendar.lifetimeProfit = lastCalendarYear.lifetimeProfit;
 	// Taxes
-	calendar.lifetimeTaxed = lastCalendarYear.lifetimeTaxed;
+	calendar.lifetimeTaxes = lastCalendarYear.lifetimeTaxes;
 	// Reserves
 	calendar.lifetimeReserves = lastCalendarYear.lifetimeReserves;
 };

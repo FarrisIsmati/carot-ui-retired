@@ -3,7 +3,6 @@ import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/compa
 import { ProductCalendar } from "@/types/VisionForm/calendar/product/productCalendar";
 import { round } from "lodash";
 import { updateReserves } from "./company";
-import { calculateTaxes } from "./helpers";
 
 /**
  * Updates object with new profits inplace
@@ -14,12 +13,13 @@ import { calculateTaxes } from "./helpers";
 export const updateTaxes = (
 	obj: ProductCalendar | CalendarType,
 	prevObj: ProductCalendar | CalendarType | null,
-	taxed: number
+	totalTaxes: number
 ) => {
-	obj.totalTaxed = taxed;
-	obj.lifetimeTaxed = prevObj
-		? round(prevObj.lifetimeTaxed + obj.totalTaxed, 2)
-		: obj.totalTaxed;
+	obj.totalTaxes = round(obj.totalTaxes + totalTaxes, 2);
+	obj.lifetimeTaxes = round(
+		prevObj ? prevObj.lifetimeTaxes + obj.totalTaxes : obj.totalTaxes,
+		2
+	);
 };
 
 export interface UpdateCalendarValuesTaxesProps {
@@ -27,7 +27,8 @@ export interface UpdateCalendarValuesTaxesProps {
 	companyValues: CompanyCalendarValues;
 	unitOfTime: CalendarType;
 	prevUnitOfTime: CalendarType | null;
-	totalYearProfit: number;
+	totalTaxes: number;
+	totalReserves: number;
 }
 
 /**
@@ -35,20 +36,16 @@ export interface UpdateCalendarValuesTaxesProps {
  * @param param0
  */
 export const updateCalendarValuesTaxes = ({
-	companyValues,
 	unitOfTime,
 	prevUnitOfTime,
-	totalYearProfit,
+	totalTaxes,
+	totalReserves,
 }: UpdateCalendarValuesTaxesProps) => {
-	const { taxRate } = companyValues;
-
 	//
 	// Company
 	//
-	const companyTaxes = calculateTaxes(totalYearProfit, taxRate);
-	const companyReserves = totalYearProfit - companyTaxes;
 	// Taxes
-	updateTaxes(unitOfTime, prevUnitOfTime, companyTaxes);
+	updateTaxes(unitOfTime, prevUnitOfTime, totalTaxes);
 	// Reserves
-	updateReserves(unitOfTime, prevUnitOfTime, companyReserves);
+	updateReserves(unitOfTime, prevUnitOfTime, totalReserves);
 };

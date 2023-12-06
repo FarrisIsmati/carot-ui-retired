@@ -18,7 +18,7 @@ export interface CompanyCalendarTotal {
 	totalExpenses: number;
 
 	// Total taxes paid
-	totalTaxed: number;
+	totalTaxes: number;
 
 	// Total profit
 	totalProfit: number;
@@ -36,7 +36,7 @@ export interface CompanyCalendarLifetime {
 	lifetimeExpenses: number;
 
 	// Life time taxes paid
-	lifetimeTaxed: number;
+	lifetimeTaxes: number;
 
 	// Life time profit
 	lifetimeProfit: number;

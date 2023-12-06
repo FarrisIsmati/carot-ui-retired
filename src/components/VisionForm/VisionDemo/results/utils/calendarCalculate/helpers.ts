@@ -2,12 +2,38 @@ import { AllCalendarValues } from "@/types/VisionForm/calendar/company/companyCa
 import { round } from "lodash";
 import moment from "moment";
 
-// Helps calculate taxes
-export const calculateTaxes = (profit: number, taxRate: number) => {
-	if (profit <= 0) {
+/**
+ * Total year profit determines if the user is net positive or net negative so if the given profit should be taxed
+ * @param totalYearProfit
+ * @param profit
+ * @param taxRate
+ * @returns
+ */
+export const calculateTaxes = ({
+	totalYearProfit,
+	totalYearTaxes,
+	profit,
+	taxRate,
+}: {
+	totalYearProfit: number;
+	totalYearTaxes: number;
+	profit: number;
+	taxRate: number;
+}) => {
+	// If there is no profit for current year no need to add taxes
+	if (totalYearProfit <= 0) {
 		return 0;
 	}
-	return round(profit * (taxRate / 100));
+
+	// If we started to loose profits while profitable for the year, reduce
+	if (totalYearTaxes > 0 && profit <= 0) {
+		// If profit will make taxes negative just force taxes down to 0
+		if (totalYearTaxes + profit < 0) {
+			return -1 * totalYearTaxes;
+		}
+		return profit; // we want to subtract profit from taxes owed
+	}
+	return round(profit * (taxRate / 100), 2);
 };
 
 /**
