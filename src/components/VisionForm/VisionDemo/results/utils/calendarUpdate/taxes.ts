@@ -39,7 +39,6 @@ export const updateCalendarTaxes = ({
 			calendar.years[0].year === year.year ? null : calendar.years[i - 1];
 
 		updateCalendarYear({ year, prevYear, companyValues, totalYear });
-		console.log("new year");
 	});
 
 	const lastCalendarYear = calendar.years[calendar.years.length - 1];
@@ -117,7 +116,6 @@ const updateCalendarMonth = ({
 
 		// Calculate monthly total revenue
 		totalTaxes += dayTotalTaxes;
-		console.log("Month", totalTaxes);
 		totalReserves += dayTotalReserves;
 	});
 
@@ -148,7 +146,7 @@ const updateCalendarDay = ({
 	totalYear: TotalYear;
 }) => {
 	//
-	// Company TODO FIND ROUNDING ERROR HERE
+	// Company
 	//
 	// Profit
 	const totalProfit = day.totalRevenue - day.totalExpenses;
@@ -157,10 +155,21 @@ const updateCalendarDay = ({
 	// Taxes
 	const totalTaxes = calculateTaxes({
 		totalYearProfit: totalYear.profit,
+		prevTotalYearProfit: totalYear.profit - totalProfit,
 		totalYearTaxes: totalYear.taxes,
 		profit: totalProfit,
 		taxRate: companyValues.taxRate,
 	});
+	console.log(
+		day.date,
+		"totalYear",
+		totalYear.profit,
+		"profit",
+		totalProfit,
+		"taxes",
+		totalTaxes
+	);
+
 	// What we've paid so far for taxes
 	totalYear.taxes += totalTaxes;
 	// Reserves

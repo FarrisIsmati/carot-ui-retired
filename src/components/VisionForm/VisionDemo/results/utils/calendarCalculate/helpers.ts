@@ -5,17 +5,20 @@ import moment from "moment";
 /**
  * Total year profit determines if the user is net positive or net negative so if the given profit should be taxed
  * @param totalYearProfit
+ * @param prevTotalYearProfit
  * @param profit
  * @param taxRate
  * @returns
  */
 export const calculateTaxes = ({
 	totalYearProfit,
+	prevTotalYearProfit,
 	totalYearTaxes,
 	profit,
 	taxRate,
 }: {
 	totalYearProfit: number;
+	prevTotalYearProfit: number;
 	totalYearTaxes: number;
 	profit: number;
 	taxRate: number;
@@ -33,7 +36,14 @@ export const calculateTaxes = ({
 		}
 		return profit; // we want to subtract profit from taxes owed
 	}
-	return round(profit * (taxRate / 100), 2);
+
+	// Offsetting current profit with previous profit
+	if (prevTotalYearProfit < 0 && totalYearProfit > 0) {
+		return (profit + prevTotalYearProfit) * (taxRate / 100);
+	}
+
+	// Normal profit tax rate
+	return profit * (taxRate / 100);
 };
 
 /**

@@ -1,7 +1,6 @@
 import { CalendarType } from "@/types/VisionForm/calendar";
 import { CompanyCalendarValues } from "@/types/VisionForm/calendar/company/companyCalendarValues";
 import { ProductCalendar } from "@/types/VisionForm/calendar/product/productCalendar";
-import { round } from "lodash";
 import { updateReserves } from "./company";
 
 /**
@@ -15,11 +14,10 @@ export const updateTaxes = (
 	prevObj: ProductCalendar | CalendarType | null,
 	totalTaxes: number
 ) => {
-	obj.totalTaxes = round(obj.totalTaxes + totalTaxes, 2);
-	obj.lifetimeTaxes = round(
-		prevObj ? prevObj.lifetimeTaxes + obj.totalTaxes : obj.totalTaxes,
-		2
-	);
+	obj.totalTaxes = obj.totalTaxes + totalTaxes;
+	obj.lifetimeTaxes = prevObj
+		? prevObj.lifetimeTaxes + obj.totalTaxes
+		: obj.totalTaxes;
 };
 
 export interface UpdateCalendarValuesTaxesProps {
