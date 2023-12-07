@@ -94,9 +94,9 @@ export default React.forwardRef<HTMLElement, ActionInputProps>(
 					/>
 					{errorText && !disabled && (
 						<MarginTopType
-							colorSet={colorSet}
+							colorset={colorSet}
 							error={error}
-							font={semanticFonts.bodySmall}
+							semanticfont={semanticFonts.bodySmall}
 						>
 							{errorText}
 						</MarginTopType>
