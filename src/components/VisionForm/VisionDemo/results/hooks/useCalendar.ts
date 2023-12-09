@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { InvestorCalendarValues } from "@/types/VisionForm/calendar/investor/investorCalendarValues";
 import { LocationLeaseCalendarValues } from "@/types/VisionForm/calendar/location/leaseCalendarValues";
 import { generateInitCalendar } from "../utils/calendarInitialize";
-import { genCalendarResults } from "../utils/calendarResults";
+import { CalendarResult, genCalendarResults } from "../utils/calendarResults";
 import { updateCalendarCapital } from "../utils/calendarUpdate/capital";
 import { updateCalendarInvestor } from "../utils/calendarUpdate/investors";
 import { updateCalendarLease } from "../utils/calendarUpdate/lease";
@@ -24,7 +24,7 @@ import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
  * Continues to update calendar if form values change (need to resubmit form)
  */
 
-export default () => {
+export default (): CalendarResult[] => {
 	const visionFormDemoState = useSelector(getVisionFormDemoSelector);
 	const { products, investors, leases } = visionFormDemoState;
 	const startDate = visionFormDemoState.overviewStartDate;
@@ -115,6 +115,8 @@ export default () => {
 		});
 	});
 
-	console.log("Calendar", calendar);
+	if (!investors.length) {
+		return [];
+	}
 	return genCalendarResults(calendar);
 };

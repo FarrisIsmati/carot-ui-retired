@@ -2,6 +2,12 @@
 // Generates the final array that the data visualizers will use to display data
 //
 
+export interface CalendarResult {
+	date: Date;
+	lifetimeRevenue: number;
+	lifetimeExpenses: number;
+}
+
 import {
 	Calendar,
 	DayCalendar,
@@ -9,8 +15,8 @@ import {
 	YearCalendar,
 } from "@/types/VisionForm/calendar";
 
-export const genCalendarResults = (calendar: Calendar) => {
-	const results: DayCalendar[] = [];
+export const genCalendarResults = (calendar: Calendar): CalendarResult[] => {
+	const results: CalendarResult[] = [];
 	calendar.years.forEach((year) => {
 		updateCalendarYear(year, results);
 	});
@@ -31,7 +37,7 @@ const updateCalendarMonth = (month: MonthCalendar, results: any[]) => {
 
 const updateCalendarDay = (day: DayCalendar, results: any[]) => {
 	results.push({
-		date: day.date,
+		date: new Date(day.date),
 		lifetimeRevenue: day.lifetimeRevenue,
 		lifetimeExpenses: day.lifetimeExpenses,
 	});

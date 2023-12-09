@@ -2,7 +2,6 @@ import Type from "@/components/common/Type";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import { spacer12, spacer4, spacer8 } from "@/styles/sizes";
-import { Props as LegendProps } from "recharts/types/component/Legend";
 import { styled } from "styled-components";
 
 const LegendContainer = styled.div`
@@ -28,22 +27,19 @@ const LegendCircle = styled.div<{ color?: string }>`
 		props.color || colorBaseMap[ColorBaseCore.BLACK]};
 `;
 
-export default (props: LegendProps) => {
-	const { payload } = props;
-
-	if (payload) {
-		return (
-			<LegendContainer>
-				{payload.map((entry, index) => (
-					<LegenedItem key={`item-${index}`}>
-						<LegendCircle color={entry.color} />
-						<Type semanticfont={semanticFonts.bodyLarge}>{entry.value}</Type>
-					</LegenedItem>
-				))}
-			</LegendContainer>
-		);
-	}
-
-	// TODO: Fix
-	return <p>EMPTY</p>;
+export default ({
+	payload,
+}: {
+	payload: { color: string; value: string }[];
+}) => {
+	return (
+		<LegendContainer>
+			{payload.map((entry, index) => (
+				<LegenedItem key={`item-${index}`}>
+					<LegendCircle color={entry.color} />
+					<Type semanticfont={semanticFonts.bodyLarge}>{entry.value}</Type>
+				</LegenedItem>
+			))}
+		</LegendContainer>
+	);
 };

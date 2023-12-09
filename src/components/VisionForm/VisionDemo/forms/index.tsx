@@ -18,7 +18,7 @@ const StyledSubmitButton = styled(ButtonPrimary)`
 `;
 
 const handleSubmit = (values: VisionFormValues, dispatch: Dispatch<any>) => {
-	console.log(values);
+	// console.log(values);
 	dispatch(submitVisionFormDemo(values));
 };
 
