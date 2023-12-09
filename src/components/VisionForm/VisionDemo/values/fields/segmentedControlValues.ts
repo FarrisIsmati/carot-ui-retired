@@ -1,4 +1,4 @@
-import { SegmentedControlOption } from "@/components/common/SegmentedControl";
+import { SegmentedControlOption } from "@/designSystem/SegmentedControl";
 import {
 	PhysicalFinanceType,
 	PhysicalUseType,

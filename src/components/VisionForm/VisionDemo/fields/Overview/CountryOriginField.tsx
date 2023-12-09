@@ -2,8 +2,8 @@ import {
 	useGetDropdownDefaultValue,
 	useVisionFormField,
 } from "@/components/VisionForm/utils/form";
-import { DropdownData } from "@/components/common/Dropdown/types";
 import FormDropdown from "@/components/form/FormDropdown";
+import { DropdownData } from "@/designSystem/Dropdown/types";
 import { Sizes } from "@/styles/sizes";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { countryToCurrencyTypeMap } from "../../../utils/currency";

@@ -1,8 +1,8 @@
-import TextField from "@/components/common/TextField";
 import {
 	hasVisibleErrors,
 	useVisionFormField,
 } from "@/components/VisionForm/utils/form";
+import TextField from "@/designSystem/TextField";
 import { Sizes } from "@/styles/sizes";
 import { AllFormValues } from "@/types/VisionForm";
 

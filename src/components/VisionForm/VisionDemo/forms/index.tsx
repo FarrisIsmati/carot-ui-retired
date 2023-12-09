@@ -1,4 +1,4 @@
-import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
+import ButtonPrimary from "@/designSystem/Button/ButtonPrimary";
 import { submitVisionFormDemo } from "@/redux/visionFormDemo/actions";
 import { spacer8 } from "@/styles/sizes";
 import { VisionFormValues } from "@/types/VisionForm";

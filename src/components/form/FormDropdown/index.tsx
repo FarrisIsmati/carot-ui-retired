@@ -2,8 +2,8 @@ import {
 	hasVisibleErrors,
 	useVisionFormField,
 } from "@/components/VisionForm/utils/form";
-import Dropdown from "@/components/common/Dropdown";
-import { DropdownData } from "@/components/common/Dropdown/types";
+import Dropdown from "@/designSystem/Dropdown";
+import { DropdownData } from "@/designSystem/Dropdown/types";
 import { Sizes } from "@/styles/sizes";
 import { AllFormValues } from "@/types/VisionForm";
 

@@ -1,6 +1,6 @@
 import SegmentedControl, {
 	SegmentedControlOption,
-} from "@/components/common/SegmentedControl";
+} from "@/designSystem/SegmentedControl";
 import _ from "lodash";
 import { useState } from "react";
 import { FieldInputProps } from "react-final-form";

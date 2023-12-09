@@ -4,7 +4,7 @@ import {
 } from "@/components/VisionForm/utils/form";
 import TextFieldNumeric, {
 	TextFieldNumericProps,
-} from "@/components/common/TextField/TextFieldNumeric";
+} from "@/designSystem/TextField/TextFieldNumeric";
 import { Sizes } from "@/styles/sizes";
 import { AllFormValues, AllFormValuesInputModeLess } from "@/types/VisionForm";
 import { InputModeEnum } from "@/types/VisionForm/common/values";

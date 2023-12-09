@@ -4,6 +4,7 @@ import { Sizes, spacer2 } from "@/styles/sizes";
 import { KeyboardDetectionContext } from "@/utils/context";
 import { Add } from "@material-ui/icons";
 import React, { useContext, useEffect, useRef, useState } from "react";
+
 import Dot from "../Badge/Dot";
 import { IconWrapper } from "../IconWrapper";
 import { FormInputProps } from "../TextField";

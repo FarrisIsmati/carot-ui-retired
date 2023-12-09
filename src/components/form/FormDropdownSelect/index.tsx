@@ -4,7 +4,7 @@ import {
 } from "@/components/VisionForm/utils/form";
 import DropdownSelect, {
 	DropdownSelectProps,
-} from "@/components/common/Dropdown/DropdownSelect";
+} from "@/designSystem/Dropdown/DropdownSelect";
 import { AllFormValues } from "@/types/VisionForm";
 
 export interface FormDropdownSelectProps extends DropdownSelectProps {

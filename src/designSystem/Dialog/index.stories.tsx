@@ -1,4 +1,4 @@
-import Dialog from "./";
+import Dialog from ".";
 export default {
 	component: Dialog,
 	title: "Dialog",

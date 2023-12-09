@@ -1,5 +1,5 @@
 import { useCurrencySymbol } from "@/components/VisionForm/utils/currency";
-import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
+import ButtonPrimary from "@/designSystem/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
 import { VisionFormValues } from "@/types/VisionForm";
 import { InvestorSection } from "@/types/VisionForm/capitalSection/InvestorSection";

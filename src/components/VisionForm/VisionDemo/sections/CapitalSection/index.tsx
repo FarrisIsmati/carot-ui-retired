@@ -1,5 +1,5 @@
-import DropdownSelect from "@/components/common/Dropdown/DropdownSelect";
-import Type from "@/components/common/Type";
+import DropdownSelect from "@/designSystem/Dropdown/DropdownSelect";
+import Type from "@/designSystem/Type";
 import { semanticFonts } from "@/styles/fonts";
 import { CapitalType } from "@/types/VisionForm/capitalSection";
 import { useState } from "react";

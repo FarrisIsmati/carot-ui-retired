@@ -65,6 +65,10 @@ export type ChipProps = Omit<StyledWrapperProps, "size"> & {
 	 * Clicking on right icon
 	 */
 	onClickIconRight?: (e: any) => void;
+	/**
+	 * Sets the active state for the chip
+	 */
+	isActive?: boolean;
 };
 
 export const chipPadding = (size: Sizes, iconPosition: IconPosition) => {
@@ -100,6 +104,7 @@ export const ChipStyled = styled(
 	${(props) => {
 		const clickable =
 			props.onClick || props.onClickIconLeft || props.onClickIconRight;
+		const isActive = props.isActive;
 		return css`
 			${semanticFonts.bodySmall}
 			width: fit-content;

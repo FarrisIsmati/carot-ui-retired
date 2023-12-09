@@ -27,11 +27,13 @@ export default ({
 	currencySymbol,
 	width: actualWidth,
 	height: actualHeight,
+	TimeFilter,
 }: {
 	data: CalendarResult[];
 	currencySymbol: string;
 	width: number;
 	height: number;
+	TimeFilter?: JSX.Element;
 }) => {
 	const ref = useRef<SVGElement>(null);
 
@@ -87,6 +89,7 @@ export default ({
 
 	return (
 		<Container>
+			{data.length > 0 && TimeFilter}
 			<LineChartWrapper>
 				<svg
 					width={actualWidth}

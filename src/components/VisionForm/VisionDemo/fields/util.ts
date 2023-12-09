@@ -1,4 +1,4 @@
-import { DateFormatEnum } from "@/components/common/DatePicker/types";
+import { DateFormatEnum } from "@/designSystem/DatePicker/types";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import _ from "lodash";
 

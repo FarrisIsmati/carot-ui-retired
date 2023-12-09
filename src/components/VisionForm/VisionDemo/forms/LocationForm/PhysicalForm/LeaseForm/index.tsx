@@ -1,7 +1,7 @@
 // This section is a subform
 // The values do not impact the main form's validations only the sub form
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
-import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
+import ButtonPrimary from "@/designSystem/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
 import { VisionFormValues } from "@/types/VisionForm";
 import { PhysicalLeaseLocationSection } from "@/types/VisionForm/locationSection";

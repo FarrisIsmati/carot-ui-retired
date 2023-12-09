@@ -1,7 +1,7 @@
 "use client";
+import ButtonText from "@/designSystem/Button/ButtonText";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
-import ButtonText from "../common/Button/ButtonText";
 import { StyledNavbar, StyledNavbuttonsContainer } from "./styles";
 
 export default () => {

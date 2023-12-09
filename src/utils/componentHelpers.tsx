@@ -1,4 +1,4 @@
-import Type from "@/components/common/Type";
+import Type from "@/designSystem/Type";
 import { ColorSet } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import React from "react";

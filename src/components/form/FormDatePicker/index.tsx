@@ -1,8 +1,8 @@
-import DatePicker, { DatePickerProps } from "@/components/common/DatePicker";
 import {
 	hasVisibleErrors,
 	useVisionFormField,
 } from "@/components/VisionForm/utils/form";
+import DatePicker, { DatePickerProps } from "@/designSystem/DatePicker";
 import { AllFormValues } from "@/types/VisionForm";
 
 export interface FormDatePickerProps {

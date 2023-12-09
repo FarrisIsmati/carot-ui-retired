@@ -1,4 +1,4 @@
-import Type from "@/components/common/Type";
+import Type from "@/designSystem/Type";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import { spacer12, spacer4, spacer8 } from "@/styles/sizes";

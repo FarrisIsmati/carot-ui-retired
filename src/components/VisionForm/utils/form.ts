@@ -1,4 +1,4 @@
-import { DropdownData } from "@/components/common/Dropdown/types";
+import { DropdownData } from "@/designSystem/Dropdown/types";
 import { AllFormValues, AllFormValuesNoArrays } from "@/types/VisionForm";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { FieldMetaState, useField } from "react-final-form";

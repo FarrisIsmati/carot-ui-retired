@@ -2,7 +2,7 @@
 // The values do not impact the main form's validations only the sub form
 import { useCurrencySymbol } from "@/components/VisionForm/utils/currency";
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
-import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
+import ButtonPrimary from "@/designSystem/Button/ButtonPrimary";
 import { spacer8 } from "@/styles/sizes";
 import { VisionFormValues } from "@/types/VisionForm";
 import { RevenueSection } from "@/types/VisionForm/revenueSection";

@@ -1,5 +1,5 @@
-import { dateFormatMapper } from "@/components/common/DatePicker";
-import { DateFormatEnum } from "@/components/common/DatePicker/types";
+import { dateFormatMapper } from "@/designSystem/DatePicker";
+import { DateFormatEnum } from "@/designSystem/DatePicker/types";
 import { VisionFormValues } from "@/types/VisionForm";
 import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { CurrencyTypes } from "@/types/VisionForm/common/currency";

@@ -1,44 +1,24 @@
-import {
-	getDropdownIndex,
-	getDropdownValue,
-} from "@/components/VisionForm/utils/form";
-import scrollToCursor from "@/components/common/Dropdown/utils/scrollToCursor";
+import scrollToCursor from "@/designSystem/Dropdown/utils/scrollToCursor";
 import { ColorSet, SemanticSetCores, getColorSet } from "@/styles/colors";
 import { Sizes, spacer156, spacer320 } from "@/styles/sizes";
 import { PseudoClassProps, StyledWrapperProps } from "@/utils/typeHelpers";
 import { useEffect, useRef, useState } from "react";
-import { FieldInputProps } from "react-final-form";
 import Overlay, { OverlayDirections } from "../Overlay";
 import DropdownItem from "./DropdownItem";
 import { DropdownList } from "./DropdownList";
-import DropdownTrigger from "./DropdownTrigger";
+import DropdownTriggerSelect from "./DropdownTriggerSelect";
 import useNavigateDropdown from "./hooks/useNavigateDropdown";
 import useOffClick from "./hooks/useOffClick";
 import { StyledContainer } from "./styles";
 import { DropdownData } from "./types";
 
-export type DropdownProps = Omit<
-	StyledWrapperProps,
-	"defaultValue" | "onChange"
-> &
+export type DropdownSelectProps = Omit<StyledWrapperProps, "label"> &
 	Pick<PseudoClassProps, "isHover" | "isFocus"> & {
-		/**
-		 * If true adds styling to indicate error state
-		 */
-		error?: boolean;
-		/**
-		 * Label title
-		 */
-		label?: string;
 		/**
 		 * Set the semantic color used by the button
 		 * @default SECONDARY
 		 **/
 		colorSet?: ColorSet;
-		/**
-		 * Text to display for an error state
-		 */
-		errorText?: string;
 		/**
 		 * Placeholder text
 		 */
@@ -48,37 +28,39 @@ export type DropdownProps = Omit<
 		 */
 		dataset: DropdownData<any>[];
 		/**
-		 * Field input props
-		 */
-		input?: FieldInputProps<any, HTMLElement>;
-		/**
 		 * Size of the field (width)
 		 * @default LARGE
 		 */
 		dropdownSize?: Sizes;
 		/**
-		 * Default value params
+		 * On select
 		 */
-		defaultValue?: DropdownData<any>;
+		onselect?: (value: DropdownData<any>) => void;
 		/**
-		 * Action to perform on change
+		 * Is feature completely locked (demo purposes)
 		 */
-		onChange?: (selectedItemDataset: DropdownData<any>) => void;
+		islocked?: boolean;
+		/**
+		 * If true adds styling to indicate error state
+		 */
+		error?: boolean;
+		/**
+		 * Text to display for an error state
+		 */
+		errorText?: string;
 	};
 
 export default ({
-	label,
 	colorSet = getColorSet(SemanticSetCores.SECONDARY),
-	error,
-	errorText,
 	disabled,
 	placeholder,
 	dataset,
-	input,
+	onselect,
+	islocked,
 	dropdownSize = Sizes.LARGE,
-	defaultValue,
-	onChange,
-}: DropdownProps) => {
+	error,
+	errorText,
+}: DropdownSelectProps) => {
 	// Dropdown
 	const dropdownRef = useRef(null);
 
@@ -103,44 +85,30 @@ export default ({
 	}
 
 	//
-	// State management
-	//
-	// If default value set it
-	useEffect(() => {
-		if (defaultValue && !selectedItem) {
-			setSelectedItem(defaultValue); // Local display state
-
-			// If form value isn't set to default value, update it also
-			if (input?.value !== defaultValue.id) {
-				input?.onChange?.(defaultValue.id); // Form state
-			}
-		}
-	}, [defaultValue]);
-
-	// Set selected item to anything onChange
-	useEffect(() => {
-		if (selectedItem?.id !== input?.value) {
-			const newSelectedItem = getDropdownValue(dataset, input?.value) ?? null;
-			setSelectedItem(newSelectedItem);
-			setCursor(getDropdownIndex(dataset, newSelectedItem?.id));
-		}
-	}, [input?.value]);
-
-	//
-	// Navigation
+	// Hooks
 	//
 	// Use keys to navigate dropdown
 	const { cursor, setCursor, cursorRef } = useNavigateDropdown({
 		isMenuOpen,
 		dataset,
+		disabled: disabled || islocked,
 		parent: dropdownListRef.current,
 		focusEl: dropdownTriggerRef.current,
-		disabled: !!disabled,
 	});
+
+	// Close menu when clicking off
+	useOffClick(dropdownRef, () => setIsMenuOpen(false));
+
+	// Select item (updates local and form state if passed in)
+	const onSelect = (selectedItemDataset: DropdownData<any>, value: string) => {
+		onselect?.(selectedItemDataset);
+		setSelectedItem(selectedItemDataset); // Local display state
+		setIsMenuOpen(false);
+	};
 
 	useEffect(() => {
 		// Scroll to selected item if menu is open
-		if (isMenuOpen) {
+		if (isMenuOpen && dataset.length) {
 			scrollToCursor({
 				parent: dropdownListRef.current,
 				cursor,
@@ -148,70 +116,53 @@ export default ({
 			});
 		} else {
 			// Reset cursor when menu closed
-			if (selectedItem) {
-				setCursor(getDropdownIndex(dataset, selectedItem.id));
+			if (dataset.length && selectedItem) {
+				setCursor(dataset.findIndex((item) => item.id === selectedItem?.id));
 			} else {
 				setCursor(0);
 			}
 		}
 	}, [isMenuOpen]);
 
-	//
-	// Keyboard interaction
-	//
 	// On enter key press
 	const onEnterPress = (e: React.KeyboardEvent<any>) => {
-		if (!disabled && e.key === "Enter" && e.target === document.activeElement) {
+		if (
+			!disabled &&
+			!islocked &&
+			e.key === "Enter" &&
+			e.target === document.activeElement
+		) {
 			// Open menu if focused and hitting enter key
 			if (!isMenuOpen) {
 				setIsMenuOpen(true);
 			}
 			// Close menu if focused and hitting enter key to select item
 			if (isMenuOpen) {
-				onSelect(dataset[cursor], dataset[cursor].id);
+				onSelect(dataset[cursor], dataset[cursor].value);
 			}
 		}
 	};
 
-	//
-	// Dropdown interaction
-	//
-	// Select item (updates local and form state if passed in)
-	const onSelect = (selectedItemDataset: DropdownData<any>, value: string) => {
-		setSelectedItem(selectedItemDataset); // Local display state
-		input?.onChange?.(value); // Form state
-		setIsMenuOpen(false);
-		// Extra changes a user wants to execute
-		onChange?.(selectedItemDataset);
-	};
-
-	// Close menu when clicking off
-	useOffClick(dropdownRef, () => setIsMenuOpen(false));
-
 	return (
 		<StyledContainer ref={dropdownRef}>
 			{/* Button triggers dropdown to open */}
-			<DropdownTrigger
+			<DropdownTriggerSelect
 				ref={dropdownTriggerRef}
-				label={label}
 				colorSet={colorSet}
-				error={error}
-				errorText={errorText}
-				disabled={disabled}
+				disabled={disabled || islocked || !dataset.length}
 				isMenuOpen={isMenuOpen}
 				onClickMenu={() => {
-					if (disabled) {
+					if (disabled || islocked || !dataset.length) {
 						return;
 					}
 					setIsMenuOpen(!isMenuOpen);
 				}}
-				onBlur={(e) => {
-					input?.onBlur(e);
-				}}
 				onKeyDown={onEnterPress}
-				selectedItem={selectedItem}
 				placeholder={placeholder}
 				dropdownSize={dropdownSize}
+				islocked={islocked}
+				error={error}
+				errorText={errorText}
 			/>
 
 			{/* Dropdown menu */}
@@ -229,17 +180,24 @@ export default ({
 										key={e.id}
 										onClick={() => {
 											// Disabled entire dropdown disabled, e.disabled only row is disabled
-											if (disabled || e.disabled) {
+											if (
+												islocked ||
+												disabled ||
+												e.disabled ||
+												!dataset.length
+											) {
 												return;
 											}
-											onSelect(e, e.id);
+											onSelect(e, e.value);
 										}}
 										active={
 											e.id === selectedItem?.id ||
 											e.id === hoveredItem?.id ||
 											i === cursor
 										}
-										disabled={disabled || e.disabled}
+										disabled={
+											islocked || disabled || e.disabled || !dataset.length
+										}
 										colorSet={colorSet}
 										onMouseEnter={() => setHoveredItem(e)}
 										onMouseLeave={() => setHoveredItem(null)}

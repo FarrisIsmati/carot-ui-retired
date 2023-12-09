@@ -1,7 +1,7 @@
 "use client";
 import VisionDemo from "@/components/VisionForm/VisionDemo";
-import ButtonPrimary from "@/components/common/Button/ButtonPrimary";
-import Type from "@/components/common/Type";
+import ButtonPrimary from "@/designSystem/Button/ButtonPrimary";
+import Type from "@/designSystem/Type";
 import { createStore } from "@/redux/store";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { StyledPageContainer } from "@/styles/common";

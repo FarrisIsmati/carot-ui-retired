@@ -1,4 +1,4 @@
-import Type from "@/components/common/Type";
+import Type from "@/designSystem/Type";
 import { semanticFonts } from "@/styles/fonts";
 
 import CompanyNameField from "../../fields/Overview/CompanyNameField";

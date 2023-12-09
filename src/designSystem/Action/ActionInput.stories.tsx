@@ -1,4 +1,5 @@
 import ActionInput from "./ActionInput";
+
 export default {
 	component: ActionInput,
 	title: "Action Input",

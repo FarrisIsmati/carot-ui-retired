@@ -1,4 +1,4 @@
-import scrollToCursor from "@/components/common/Dropdown/utils/scrollToCursor";
+import scrollToCursor from "@/designSystem/Dropdown/utils/scrollToCursor";
 import { useEffect, useRef, useState } from "react";
 import useKeyPress from "../../hooks/useKeyPress";
 import { DropdownData, PressType } from "../types";

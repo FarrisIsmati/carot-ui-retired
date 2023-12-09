@@ -1,7 +1,7 @@
-import Type from "@/components/common/Type";
+import Type from "@/designSystem/Type";
 import { semanticFonts } from "@/styles/fonts";
 
-import DropdownSelect from "@/components/common/Dropdown/DropdownSelect";
+import DropdownSelect from "@/designSystem/Dropdown/DropdownSelect";
 import { staffTypeDropdownValues } from "../../values/fields/dropdownValues";
 import { FieldsContainer } from "../styles";
 
