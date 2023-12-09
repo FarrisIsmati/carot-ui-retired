@@ -1,4 +1,4 @@
-import { Margin } from "@/types/d3";
+import { Margin } from "@/types/Charts";
 
 export default ({
 	margin: userMargin,

@@ -1,4 +1,5 @@
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
+import { ChartTimeframeEnum } from "@/types/Charts/ChartTimeFrame";
 import * as d3 from "d3";
 import { round } from "lodash";
 import numeral from "numeral";
@@ -28,6 +29,35 @@ const setDomainScale = ({
 };
 
 /**
+ * Sets the appropiate D3 time scale
+ * @param chartTimeframe
+ * @returns
+ */
+const getTicks = (chartTimeframe: ChartTimeframeEnum) => {
+	if (chartTimeframe === ChartTimeframeEnum.Month) {
+		return d3.timeMonth.every(2);
+	}
+	if (chartTimeframe === ChartTimeframeEnum.Year) {
+		return d3.timeYear.every(1);
+	}
+	return d3.timeMonth.every(2);
+};
+
+/**
+ * Sets the appropiate D3 time scale
+ * @param chartTimeframe
+ * @returns
+ */
+const getTickFormat = (chartTimeframe: ChartTimeframeEnum) => {
+	if (chartTimeframe === ChartTimeframeEnum.Month) {
+		return d3.timeFormat("%b %Y");
+	}
+	if (chartTimeframe === ChartTimeframeEnum.Year) {
+		return d3.timeFormat("%Y");
+	}
+	return d3.timeFormat("%b %Y");
+};
+/**
  * Set X Axis
  * @param param0
  */
@@ -35,14 +65,24 @@ const setxAxis = ({
 	x,
 	svg,
 	height,
+	chartTimeframe,
 }: {
 	x: d3.ScaleTime<number, number, never>;
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
 	height: number;
+	chartTimeframe: ChartTimeframeEnum;
 }) => {
-	// X axis
+	const X_AXIS_ID = "X_AXIS_ID";
+	const xAxisSVG = d3.select(`#${X_AXIS_ID}`);
+	// Not empty
+	if (!xAxisSVG.empty()) {
+		xAxisSVG.remove();
+	}
+
+	// After clearing or already empty add X axis
 	svg
 		.append("g")
+		.attr("id", X_AXIS_ID)
 		.attr("transform", `translate(0, ${height})`)
 		// @ts-ignore
 		.call(
@@ -50,8 +90,9 @@ const setxAxis = ({
 				.axisBottom(x)
 				.tickSize(4)
 				.tickPadding(6)
-				.ticks(d3.timeMonth.every(2))
-				.tickFormat(d3.timeFormat("%b %Y"))
+				.ticks(getTicks(chartTimeframe))
+				//@ts-ignore
+				.tickFormat(getTickFormat(chartTimeframe))
 		)
 		.call((g) => g.select(".domain").remove())
 		.call((g) =>
@@ -110,15 +151,24 @@ const setyAxis = ({
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
 	currencySymbol: string;
 }) => {
+	const Y_AXIS_ID = "Y_AXIS_ID";
+	const yAxisSVG = d3.select(`#${Y_AXIS_ID}`);
+
+	// Not empty
+	if (!yAxisSVG.empty()) {
+		yAxisSVG.remove();
+	}
+
 	const yTickValues = generateYaxisTickValues({
 		tickCount: 4,
 		data,
 		yRangeField,
 	});
 
-	// Y axis
+	// After clearing or already empty add Y axis
 	svg
 		.append("g")
+		.attr("id", Y_AXIS_ID)
 		.call(
 			d3
 				.axisLeft(y)
@@ -194,6 +244,7 @@ export default ({
 	height,
 	width,
 	currencySymbol,
+	chartTimeframe,
 }: {
 	data: any[];
 	x: d3.ScaleTime<number, number, never>;
@@ -204,12 +255,14 @@ export default ({
 	height: number;
 	width: number;
 	currencySymbol: string;
+	chartTimeframe: ChartTimeframeEnum;
 }) => {
-	// Set the scale of the x and y axis
+	// Set the scale of the x and y axis (RANGE OF DATA)
 	setDomainScale({ x, y, xRangeField, yRangeField, data });
 
-	// Set axis
-	setxAxis({ x, svg, height });
+	// Set X axis (Filter time scale)
+	setxAxis({ x, svg, height, chartTimeframe });
+	// Set Y axis
 	const { yTickValues } = setyAxis({
 		y,
 		svg,

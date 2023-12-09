@@ -1,5 +1,5 @@
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
-import { LineChartKeyMapType } from "@/types/d3";
+import { LineChartKeyMapType } from "@/types/Charts";
 
 export const legendColorMap: LineChartKeyMapType = {
 	lifetimeRevenue: colorBaseMap[ColorBaseCore.RED_5],

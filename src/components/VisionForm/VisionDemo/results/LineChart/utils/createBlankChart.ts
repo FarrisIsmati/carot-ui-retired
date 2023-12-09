@@ -1,4 +1,4 @@
-import { Margin } from "@/types/d3";
+import { Margin } from "@/types/Charts";
 import * as d3 from "d3";
 import { RefObject } from "react";
 

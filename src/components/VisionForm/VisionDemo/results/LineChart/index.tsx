@@ -3,6 +3,7 @@ import getDimensions from "@/components/VisionForm/VisionDemo/results/LineChart/
 import setAxis from "@/components/VisionForm/VisionDemo/results/LineChart/utils/setAxis";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { spacer16, spacer24, spacer4, spacer8 } from "@/styles/sizes";
+import { ChartTimeframeEnum } from "@/types/Charts/ChartTimeFrame";
 import * as d3 from "d3";
 import { useRef } from "react";
 import styled from "styled-components";
@@ -22,17 +23,23 @@ const LineChartWrapper = styled.div`
 	background-color: ${colorBaseMap[ColorBaseCore.WHITE]};
 `;
 
+const TimeFilterContainer = styled.div`
+	margin-bottom: ${spacer16};
+`;
+
 export default ({
 	data,
 	currencySymbol,
 	width: actualWidth,
 	height: actualHeight,
+	chartTimeframe,
 	TimeFilter,
 }: {
 	data: CalendarResult[];
 	currencySymbol: string;
 	width: number;
 	height: number;
+	chartTimeframe: ChartTimeframeEnum;
 	TimeFilter?: JSX.Element;
 }) => {
 	const ref = useRef<SVGElement>(null);
@@ -55,6 +62,7 @@ export default ({
 		// Set axis (x & y axis plus formatting)
 		setAxis({
 			currencySymbol,
+			chartTimeframe,
 			height,
 			width,
 			data,
@@ -89,8 +97,10 @@ export default ({
 
 	return (
 		<Container>
-			{data.length > 0 && TimeFilter}
 			<LineChartWrapper>
+				{data.length > 0 && (
+					<TimeFilterContainer>{TimeFilter}</TimeFilterContainer>
+				)}
 				<svg
 					width={actualWidth}
 					height={actualHeight}

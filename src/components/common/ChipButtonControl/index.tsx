@@ -3,21 +3,21 @@ import { spacer4 } from "@/styles/sizes";
 import { Dispatch, SetStateAction } from "react";
 import { styled } from "styled-components";
 
-export interface ChipButtonControlState {
-	[chip: string]: boolean;
-}
+export type ChipButtonControlState<T extends string | number | symbol> = {
+	[key in T]: boolean;
+};
 
 const Container = styled.div`
 	display: flex;
 	gap: ${spacer4};
 `;
 
-export default ({
+export default <T extends string | number | symbol>({
 	state,
 	setState,
 }: {
-	state: ChipButtonControlState;
-	setState: Dispatch<SetStateAction<ChipButtonControlState>>;
+	state: ChipButtonControlState<T>;
+	setState: Dispatch<SetStateAction<ChipButtonControlState<T>>>;
 }) => {
 	return (
 		<Container>
@@ -26,14 +26,16 @@ export default ({
 					onClick={() => {
 						Object.keys(state).forEach((key) => {
 							if (key === label) {
+								// @ts-ignore
 								state[key] = true;
 								return;
 							}
+							// @ts-ignore
 							state[key] = false;
 						});
 						setState({ ...state });
 					}}
-					isActive={isActive}
+					isActive={isActive as boolean}
 				>
 					{label}
 				</ButtonChip>
