@@ -1,11 +1,8 @@
-import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { LineChartKeyMapType } from "@/types/Charts";
 
-export const legendColorMap: LineChartKeyMapType = {
-	lifetimeRevenue: colorBaseMap[ColorBaseCore.RED_5],
-	lifetimeExpenses: colorBaseMap[ColorBaseCore.GREEN_5],
-};
-
+//
+// For all field sin legend key map it will be added to legend
+//
 export const legendKeyMap: LineChartKeyMapType = {
 	lifetimeRevenue: "Revenue",
 	lifetimeExpenses: "Expenses",

@@ -1,15 +1,16 @@
-import createBlankChart from "@/components/VisionForm/VisionDemo/results/LineChart/utils/createBlankChart";
-import getDimensions from "@/components/VisionForm/VisionDemo/results/LineChart/utils/getDimensions";
-import setAxis from "@/components/VisionForm/VisionDemo/results/LineChart/utils/setAxis";
+import createBlankChart from "@/components/common/Charts/LineChart/utils/createBlankChart";
+import getDimensions from "@/components/common/Charts/LineChart/utils/getDimensions";
+import setAxis from "@/components/common/Charts/LineChart/utils/setAxis";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { spacer16, spacer24, spacer4, spacer8 } from "@/styles/sizes";
 import { ChartTimeframeEnum } from "@/types/Charts/ChartTimeFrame";
+import { legendColorMap } from "@/types/Charts/Legend";
 import * as d3 from "d3";
 import { useRef } from "react";
 import styled from "styled-components";
-import { CalendarResult } from "../utils/calendarResults";
+import { CalendarResult } from "../../../VisionForm/VisionDemo/results/utils/calendarResults";
 import Legend from "./Legend";
-import { createLegendPayload, legendColorMap } from "./utils/legend";
+import { createLegendPayload } from "./utils/legend";
 
 const Container = styled.div`
 	display: flex;
@@ -28,6 +29,8 @@ const TimeFilterContainer = styled.div`
 `;
 
 export default ({
+	xRangeField,
+	yRangeField,
 	data,
 	currencySymbol,
 	width: actualWidth,
@@ -35,11 +38,15 @@ export default ({
 	chartTimeframe,
 	TimeFilter,
 }: {
+	xRangeField: string;
+	yRangeField: string;
 	data: CalendarResult[];
 	currencySymbol: string;
 	width: number;
 	height: number;
+	// Defines what timescale is selected
 	chartTimeframe: ChartTimeframeEnum;
+	// Component to select what the time scale/frame is
 	TimeFilter?: JSX.Element;
 }) => {
 	const ref = useRef<SVGElement>(null);
@@ -69,8 +76,8 @@ export default ({
 			svg,
 			x,
 			y,
-			xRangeField: "date",
-			yRangeField: "lifetimeRevenue",
+			xRangeField,
+			yRangeField,
 		});
 
 		const fields = Object.keys(data[0]) as Array<keyof (typeof data)[0]>;
@@ -104,7 +111,7 @@ export default ({
 				<svg
 					width={actualWidth}
 					height={actualHeight}
-					id="lineChartCalendar"
+					id="lineChart"
 					// @ts-ignore
 					ref={ref}
 				/>
