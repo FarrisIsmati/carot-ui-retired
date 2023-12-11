@@ -30,7 +30,7 @@ export const VisionDemoForm = () => {
 			initialValues={visionFormDemoInitialValues}
 			validate={(values) => VisionFormValidator(testData1)}
 			subscription={{ submitting: true, pristine: true }}
-			onSubmit={(values) => handleSubmit(testData1, dispatch)}
+			onSubmit={(values) => handleSubmit(values, dispatch)} //testData1
 			render={({ handleSubmit }) => (
 				<div>
 					<Sections onSubmit={handleSubmit} />

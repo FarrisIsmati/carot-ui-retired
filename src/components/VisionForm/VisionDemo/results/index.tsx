@@ -33,6 +33,7 @@ const getChartTimeframeFromState = (
 export default () => {
 	// Creates a calendar everytime the form state on redux updates (redux triggers the calendar update)
 	const [calendar, calendarData] = useCalendar();
+	console.log(calendarData);
 	const currencySymbol = useSelector(getCurrencySymbol);
 
 	const [chartTimeframeState, setChartTimeFilterState] = useState<
