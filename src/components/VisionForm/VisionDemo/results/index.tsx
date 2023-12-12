@@ -9,7 +9,9 @@ import { useSelector } from "react-redux";
 import { styled } from "styled-components";
 import LineChart from "../../../common/Charts/LineChart";
 import { ResultsOverview } from "./Overview";
+import { defaultVisionDemoLineChartData } from "./defaultData";
 import useCalendar from "./hooks/useCalendar";
+import { CalendarResult } from "./utils/calendarResults";
 
 const StickyContainer = styled.div`
 	display: flex;
@@ -33,7 +35,12 @@ const getChartTimeframeFromState = (
 export default () => {
 	// Creates a calendar everytime the form state on redux updates (redux triggers the calendar update)
 	const [calendar, calendarData] = useCalendar();
-	console.log(calendarData);
+
+	// Set initial data
+	const data: CalendarResult[] = !calendarData.length
+		? defaultVisionDemoLineChartData
+		: calendarData;
+
 	const currencySymbol = useSelector(getCurrencySymbol);
 
 	const [chartTimeframeState, setChartTimeFilterState] = useState<
@@ -49,9 +56,10 @@ export default () => {
 			<StickyContainer>
 				<ResultsOverview currencySymbol={currencySymbol} calendar={calendar} />
 				<LineChart
+					isDefaultData={calendarData.length === 0}
 					xRangeField="date"
 					yRangeField="lifetimeRevenue"
-					data={calendarData}
+					data={data}
 					currencySymbol={currencySymbol}
 					height={400}
 					width={829}

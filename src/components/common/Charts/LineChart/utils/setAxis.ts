@@ -116,7 +116,9 @@ const generateYaxisTickValues = ({
 }) => {
 	const max = d3.max(data, (d) => d[yRangeField]) as number;
 	const arr = [];
-	for (let num = max / tickCount; num <= max; num += max / tickCount) {
+
+	// This gets a better rounded number to display e.g. (1,450,000 vs 1,453,238)
+	const getTickValue = (num: number) => {
 		// Take number, get its digits, get 1XXX (digits)
 		const digits = (Math.log(num) * Math.LOG10E + 1) | 0;
 
@@ -124,13 +126,20 @@ const generateYaxisTickValues = ({
 		const digitsNum = generateNumberByDigits(digits);
 
 		// Divide the number by the digit number
-		const multiplier = round(num / digitsNum);
+		const multiplier = round(num / digitsNum, 2);
 
 		// Multiply floor result with the 1XXX (digits)
 		const res = multiplier * digitsNum;
 
-		arr.push(res);
+		return res;
+	};
+
+	for (let i = 1; i <= tickCount + 1; i++) {
+		const num = (max / tickCount) * i;
+		console.log(i, "-", num, getTickValue(num));
+		arr.push(getTickValue(num));
 	}
+
 	return arr;
 };
 
@@ -160,7 +169,7 @@ const setyAxis = ({
 	}
 
 	const yTickValues = generateYaxisTickValues({
-		tickCount: 4,
+		tickCount: 5,
 		data,
 		yRangeField,
 	});

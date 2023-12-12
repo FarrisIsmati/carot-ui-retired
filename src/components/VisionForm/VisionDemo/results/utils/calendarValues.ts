@@ -69,7 +69,7 @@ export const getCompanyCalendarValues = (
 	return {
 		startDate: visionFormDemoState.overviewStartDate,
 		endDate: visionFormDemoState.overviewEndDate,
-		taxRate: visionFormDemoState[taxRateKey],
+		taxRate: parseInt(visionFormDemoState[taxRateKey] as unknown as string),
 	};
 };
 
@@ -100,8 +100,8 @@ export const getInvestorCalendarValues = (
 	return {
 		name: investor[name],
 		id: investor[id],
-		equity: investor[equity],
-		initialInvestment: investor[initialInvestment] as number,
+		equity: parseInt(investor[equity] as unknown as string),
+		initialInvestment: parseInt(investor[initialInvestment] as string),
 	};
 };
 
@@ -145,9 +145,11 @@ export const getProductCalendarValues = (
 		productName: product[productName],
 		productId: product[productId],
 		locationId: product[locationIds],
-		customerConversionRate: product[customerConversionRateKey] as number,
-		costToProduce: product[revenueCostToProduceKey] as number,
-		retailPrice: product[revenueRetailPriceKey] as number,
+		customerConversionRate: parseInt(
+			product[customerConversionRateKey] as string
+		),
+		costToProduce: parseInt(product[revenueCostToProduceKey] as string),
+		retailPrice: parseInt(product[revenueRetailPriceKey] as string),
 	};
 };
 
@@ -219,13 +221,19 @@ export const getLeaseCalendarValues = ({
 	return {
 		name: lease[name],
 		id: lease[id],
-		costPerUnit: lease[costPerUnitKey] as number,
-		initialConstructionCost: lease[initialConstructionCostKey] as number,
-		size: lease[sizeKey] as number,
-		maxOccupancy: lease[maxOccupancyKey] as number,
-		trafficTurnoverTime: lease[trafficTurnoverTimeKey] as number,
-		daysOpenPerWeekGeneric: lease[daysOpenPerWeekGenericKey] as number,
-		hoursOpenPerDayGeneric: lease[hoursOpenPerDayGenericKey] as number,
+		costPerUnit: parseInt(lease[costPerUnitKey] as string),
+		initialConstructionCost: parseInt(
+			lease[initialConstructionCostKey] as string
+		),
+		size: parseInt(lease[sizeKey] as string),
+		maxOccupancy: parseInt(lease[maxOccupancyKey] as string),
+		trafficTurnoverTime: parseInt(lease[trafficTurnoverTimeKey] as string),
+		daysOpenPerWeekGeneric: parseInt(
+			lease[daysOpenPerWeekGenericKey] as string
+		),
+		hoursOpenPerDayGeneric: parseInt(
+			lease[hoursOpenPerDayGenericKey] as string
+		),
 		leaseFootTrafficCurveDataPoints:
 			leasesFootTrafficCurveIdDataPointsMap[lease.id],
 	};
