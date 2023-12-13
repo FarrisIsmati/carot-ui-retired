@@ -1,8 +1,8 @@
-export enum ChartTimeframeEnum {
+export enum ChartFilterEnum {
 	Month = "Month",
 	Year = "Year",
 }
 
 export type TimeFilterState = {
-	[key in ChartTimeframeEnum]: boolean;
+	[key in ChartFilterEnum]: boolean;
 };

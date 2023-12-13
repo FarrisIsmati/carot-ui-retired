@@ -1,5 +1,5 @@
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
-import { ChartTimeframeEnum } from "@/types/Charts/ChartTimeFrame";
+import { ChartFilterEnum } from "@/types/Charts/Filter";
 import * as d3 from "d3";
 import { round } from "lodash";
 import numeral from "numeral";
@@ -13,31 +13,31 @@ const setDomainScale = ({
 	data,
 	x,
 	y,
-	xRangeField,
-	yRangeField,
+	xField,
+	yField,
 }: {
 	x: d3.ScaleTime<number, number, never>;
 	y: d3.ScaleLinear<number, number, never>;
-	xRangeField: string;
-	yRangeField: string;
+	xField: string;
+	yField: string;
 	data: any[];
 }) => {
 	// @ts-ignore
-	x.domain(d3.extent(data, (d) => d[xRangeField]));
+	x.domain(d3.extent(data, (d) => d[xField]));
 	// @ts-ignore
-	y.domain([0, d3.max(data, (d) => d[yRangeField])]);
+	y.domain([0, d3.max(data, (d) => d[yField])]);
 };
 
 /**
  * Sets the appropiate D3 time scale
- * @param chartTimeframe
+ * @param filter
  * @returns
  */
-const getTicks = (chartTimeframe: ChartTimeframeEnum) => {
-	if (chartTimeframe === ChartTimeframeEnum.Month) {
+const getTicks = (filter: ChartFilterEnum) => {
+	if (filter === ChartFilterEnum.Month) {
 		return d3.timeMonth.every(2);
 	}
-	if (chartTimeframe === ChartTimeframeEnum.Year) {
+	if (filter === ChartFilterEnum.Year) {
 		return d3.timeYear.every(1);
 	}
 	return d3.timeMonth.every(2);
@@ -45,14 +45,14 @@ const getTicks = (chartTimeframe: ChartTimeframeEnum) => {
 
 /**
  * Sets the appropiate D3 time scale
- * @param chartTimeframe
+ * @param filter
  * @returns
  */
-const getTickFormat = (chartTimeframe: ChartTimeframeEnum) => {
-	if (chartTimeframe === ChartTimeframeEnum.Month) {
+const getTickFormat = (filter: ChartFilterEnum) => {
+	if (filter === ChartFilterEnum.Month) {
 		return d3.timeFormat("%b %Y");
 	}
-	if (chartTimeframe === ChartTimeframeEnum.Year) {
+	if (filter === ChartFilterEnum.Year) {
 		return d3.timeFormat("%Y");
 	}
 	return d3.timeFormat("%b %Y");
@@ -65,12 +65,12 @@ const setxAxis = ({
 	x,
 	svg,
 	height,
-	chartTimeframe,
+	filter,
 }: {
 	x: d3.ScaleTime<number, number, never>;
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
 	height: number;
-	chartTimeframe: ChartTimeframeEnum;
+	filter: ChartFilterEnum;
 }) => {
 	const X_AXIS_ID = "X_AXIS_ID";
 	const xAxisSVG = d3.select(`#${X_AXIS_ID}`);
@@ -90,9 +90,9 @@ const setxAxis = ({
 				.axisBottom(x)
 				.tickSize(4)
 				.tickPadding(6)
-				.ticks(getTicks(chartTimeframe))
+				.ticks(getTicks(filter))
 				//@ts-ignore
-				.tickFormat(getTickFormat(chartTimeframe))
+				.tickFormat(getTickFormat(filter))
 		)
 		.call((g) => g.select(".domain").remove())
 		.call((g) =>
@@ -108,13 +108,13 @@ const setxAxis = ({
 const generateYaxisTickValues = ({
 	tickCount,
 	data,
-	yRangeField,
+	yField,
 }: {
 	tickCount: number;
 	data: any[];
-	yRangeField: string;
+	yField: string;
 }) => {
-	const max = d3.max(data, (d) => d[yRangeField]) as number;
+	const max = d3.max(data, (d) => d[yField]) as number;
 	const arr = [];
 
 	// This gets a better rounded number to display e.g. (1,450,000 vs 1,453,238)
@@ -136,7 +136,6 @@ const generateYaxisTickValues = ({
 
 	for (let i = 1; i <= tickCount + 1; i++) {
 		const num = (max / tickCount) * i;
-		console.log(i, "-", num, getTickValue(num));
 		arr.push(getTickValue(num));
 	}
 
@@ -150,13 +149,13 @@ const generateYaxisTickValues = ({
 const setyAxis = ({
 	y,
 	data,
-	yRangeField,
+	yField,
 	svg,
 	currencySymbol,
 }: {
 	y: any;
 	data: any[];
-	yRangeField: string;
+	yField: string;
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
 	currencySymbol: string;
 }) => {
@@ -171,7 +170,7 @@ const setyAxis = ({
 	const yTickValues = generateYaxisTickValues({
 		tickCount: 5,
 		data,
-		yRangeField,
+		yField,
 	});
 
 	// After clearing or already empty add Y axis
@@ -247,37 +246,37 @@ export default ({
 	x,
 	y,
 	data,
-	xRangeField,
-	yRangeField,
+	xField,
+	yField,
 	svg,
 	height,
 	width,
 	currencySymbol,
-	chartTimeframe,
+	filter,
 }: {
 	data: any[];
 	x: d3.ScaleTime<number, number, never>;
 	y: d3.ScaleLinear<number, number, never>;
-	xRangeField: string;
-	yRangeField: string;
+	xField: string;
+	yField: string;
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
 	height: number;
 	width: number;
 	currencySymbol: string;
-	chartTimeframe: ChartTimeframeEnum;
+	filter: ChartFilterEnum;
 }) => {
 	// Set the scale of the x and y axis (RANGE OF DATA)
-	setDomainScale({ x, y, xRangeField, yRangeField, data });
+	setDomainScale({ x, y, xField, yField, data });
 
 	// Set X axis (Filter time scale)
-	setxAxis({ x, svg, height, chartTimeframe });
+	setxAxis({ x, svg, height, filter });
 	// Set Y axis
 	const { yTickValues } = setyAxis({
 		y,
 		svg,
 		currencySymbol,
 		data,
-		yRangeField,
+		yField,
 	});
 
 	// Set grid lines

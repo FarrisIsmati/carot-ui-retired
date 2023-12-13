@@ -5,6 +5,6 @@ export const getVisionFormDemoSelector = (state: ReduxStore) => {
 	return state.visionFormDemo;
 };
 
-export const getCurrencySymbol = (state: ReduxStore) => {
+export const getVFDemoCurrencySymbol = (state: ReduxStore) => {
 	return currencyToSymbolMap[state.visionFormDemo.overviewCurrency];
 };

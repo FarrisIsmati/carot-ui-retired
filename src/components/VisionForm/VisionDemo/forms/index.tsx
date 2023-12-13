@@ -28,9 +28,9 @@ export const VisionDemoForm = () => {
 	return (
 		<Form<VisionFormValues>
 			initialValues={visionFormDemoInitialValues}
-			validate={(values) => VisionFormValidator(testData1)}
+			validate={(values) => VisionFormValidator(testData1)} //testData1
 			subscription={{ submitting: true, pristine: true }}
-			onSubmit={(values) => handleSubmit(values, dispatch)} //testData1
+			onSubmit={(values) => handleSubmit(testData1, dispatch)} //testData1
 			render={({ handleSubmit }) => (
 				<div>
 					<Sections onSubmit={handleSubmit} />
