@@ -21,6 +21,7 @@ export default ({ curveType, length }: GrowthCurveGraphProps) => {
 		[curveType, length]
 	);
 	return (
+		// RECHARTS
 		<LineChart
 			width={pxStringToNum(spacer320)}
 			height={pxStringToNum(spacer320)}

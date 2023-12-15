@@ -3,13 +3,15 @@ import { ChartFilterEnum } from "@/types/Charts/Filter";
 import * as d3 from "d3";
 import { round } from "lodash";
 import numeral from "numeral";
+import { Dispatch, SetStateAction } from "react";
+import { ChartProps } from "../LineChart";
 import { generateNumberByDigits } from "./helpers";
 
 /**
  * Set the x axis and y axis extent
  * @param param0
  */
-const setDomainScale = ({
+export const updateDomainScale = ({
 	data,
 	x,
 	y,
@@ -22,9 +24,8 @@ const setDomainScale = ({
 	yField: string;
 	data: any[];
 }) => {
-	// @ts-ignore
-	x.domain(d3.extent(data, (d) => d[xField]));
-	// @ts-ignore
+	// Set the scale of the x and y axis (RANGE OF DATA)
+	x.domain(d3.extent(data, (d) => d[xField]) as [number, number]);
 	y.domain([0, d3.max(data, (d) => d[yField])]);
 };
 
@@ -33,7 +34,7 @@ const setDomainScale = ({
  * @param filter
  * @returns
  */
-const getTicks = (filter: ChartFilterEnum) => {
+export const getTicks = (filter: ChartFilterEnum) => {
 	if (filter === ChartFilterEnum.Month) {
 		return d3.timeMonth.every(2);
 	}
@@ -48,7 +49,7 @@ const getTicks = (filter: ChartFilterEnum) => {
  * @param filter
  * @returns
  */
-const getTickFormat = (filter: ChartFilterEnum) => {
+export const getTickFormat = (filter: ChartFilterEnum) => {
 	if (filter === ChartFilterEnum.Month) {
 		return d3.timeFormat("%b %Y");
 	}
@@ -57,27 +58,34 @@ const getTickFormat = (filter: ChartFilterEnum) => {
 	}
 	return d3.timeFormat("%b %Y");
 };
+
+export const X_AXIS_ID = "X_AXIS_ID";
+
 /**
  * Set X Axis
  * @param param0
  */
-const setxAxis = ({
+export const createXAxis = ({
 	x,
 	svg,
 	height,
 	filter,
+	setChart,
 }: {
 	x: d3.ScaleTime<number, number, never>;
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
 	height: number;
 	filter: ChartFilterEnum;
+	setChart: Dispatch<SetStateAction<ChartProps | undefined>>;
 }) => {
-	const X_AXIS_ID = "X_AXIS_ID";
-	const xAxisSVG = d3.select(`#${X_AXIS_ID}`);
-	// Not empty
-	if (!xAxisSVG.empty()) {
-		xAxisSVG.remove();
-	}
+	const xAxis = d3
+		.axisBottom(x)
+		.tickSize(4)
+		.tickPadding(6)
+		.ticks(getTicks(filter))
+		//@ts-ignore
+		.tickFormat(getTickFormat(filter));
+	setChart((prev) => ({ ...(prev as ChartProps), xAxis }));
 
 	// After clearing or already empty add X axis
 	svg
@@ -85,16 +93,10 @@ const setxAxis = ({
 		.attr("id", X_AXIS_ID)
 		.attr("transform", `translate(0, ${height})`)
 		// @ts-ignore
-		.call(
-			d3
-				.axisBottom(x)
-				.tickSize(4)
-				.tickPadding(6)
-				.ticks(getTicks(filter))
-				//@ts-ignore
-				.tickFormat(getTickFormat(filter))
+		.call(xAxis)
+		.call((g) =>
+			g.selectAll("path").attr("stroke", colorBaseMap[ColorBaseCore.NEUTRAL_8])
 		)
-		.call((g) => g.select(".domain").remove())
 		.call((g) =>
 			g.selectAll("line").attr("stroke", colorBaseMap[ColorBaseCore.NEUTRAL_8])
 		);
@@ -105,7 +107,7 @@ const setxAxis = ({
  * @param tickCount
  * @returns
  */
-const generateYaxisTickValues = ({
+export const generateYaxisTickValues = ({
 	tickCount,
 	data,
 	yField,
@@ -115,6 +117,7 @@ const generateYaxisTickValues = ({
 	yField: string;
 }) => {
 	const max = d3.max(data, (d) => d[yField]) as number;
+
 	const arr = [];
 
 	// This gets a better rounded number to display e.g. (1,450,000 vs 1,453,238)
@@ -126,7 +129,7 @@ const generateYaxisTickValues = ({
 		const digitsNum = generateNumberByDigits(digits);
 
 		// Divide the number by the digit number
-		const multiplier = round(num / digitsNum, 2);
+		const multiplier = round(num / digitsNum, 1);
 
 		// Multiply floor result with the 1XXX (digits)
 		const res = multiplier * digitsNum;
@@ -136,55 +139,53 @@ const generateYaxisTickValues = ({
 
 	for (let i = 1; i <= tickCount + 1; i++) {
 		const num = (max / tickCount) * i;
+
 		arr.push(getTickValue(num));
 	}
 
 	return arr;
 };
+export const Y_AXIS_ID = "Y_AXIS_ID";
 
 /**
  * Set Y Axis
  * @param param0
  */
-const setyAxis = ({
+export const createYAxis = ({
 	y,
 	data,
 	yField,
 	svg,
+	height,
 	currencySymbol,
+	setChart,
 }: {
 	y: any;
 	data: any[];
 	yField: string;
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
+	height: number;
 	currencySymbol: string;
+	setChart: Dispatch<SetStateAction<ChartProps | undefined>>;
 }) => {
-	const Y_AXIS_ID = "Y_AXIS_ID";
-	const yAxisSVG = d3.select(`#${Y_AXIS_ID}`);
-
-	// Not empty
-	if (!yAxisSVG.empty()) {
-		yAxisSVG.remove();
-	}
-
 	const yTickValues = generateYaxisTickValues({
 		tickCount: 5,
 		data,
 		yField,
 	});
 
-	// After clearing or already empty add Y axis
+	const yAxis = d3
+		.axisLeft(y)
+		.tickSize(0)
+		.tickPadding(4)
+		.tickValues(yTickValues)
+		.tickFormat((d) => `${currencySymbol}${numeral(d).format("0,0")}`);
+	setChart((prev) => ({ ...(prev as ChartProps), yAxis }));
+
 	svg
 		.append("g")
 		.attr("id", Y_AXIS_ID)
-		.call(
-			d3
-				.axisLeft(y)
-				.tickSize(0)
-				.tickPadding(4)
-				.tickValues(yTickValues)
-				.tickFormat((d) => `${currencySymbol}${numeral(d).format("0,0")}`)
-		)
+		.call(yAxis)
 		.call((g) => g.select(".domain").remove())
 		.call((g) =>
 			g
@@ -200,7 +201,7 @@ const setyAxis = ({
 /**
  * Set the guiding lines of the grid (designed to be inline with y axis)
  */
-const setGridLines = ({
+export const createGridLines = ({
 	y,
 	yTickValues,
 	svg,
@@ -211,6 +212,15 @@ const setGridLines = ({
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
 	width: number;
 }) => {
+	const gridClass = "gridLine";
+	const gridLines = d3.selectAll(`.${gridClass}`);
+
+	// Not empty
+	// TODO: figure out how to transition gridlines
+	if (!gridLines.empty()) {
+		gridLines.remove();
+	}
+
 	//
 	// Add grid lines
 	//
@@ -218,6 +228,7 @@ const setGridLines = ({
 		.selectAll("yGrid")
 		.data([0, ...yTickValues])
 		.join("line")
+		.attr("class", gridClass)
 		.attr("x1", 0)
 		.attr("x2", width)
 		.attr("y1", (d) => y(d))
@@ -226,7 +237,7 @@ const setGridLines = ({
 		.attr("stroke-width", 1);
 };
 
-const setTickFont = (
+export const updateTickFont = (
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>
 ) => {
 	// Set tick font
@@ -253,6 +264,7 @@ export default ({
 	width,
 	currencySymbol,
 	filter,
+	setChart,
 }: {
 	data: any[];
 	x: d3.ScaleTime<number, number, never>;
@@ -264,24 +276,27 @@ export default ({
 	width: number;
 	currencySymbol: string;
 	filter: ChartFilterEnum;
+	setChart: Dispatch<SetStateAction<ChartProps | undefined>>;
 }) => {
-	// Set the scale of the x and y axis (RANGE OF DATA)
-	setDomainScale({ x, y, xField, yField, data });
+	// Update the scale of the x and y axis (RANGE OF DATA)
+	updateDomainScale({ x, y, xField, yField, data });
 
-	// Set X axis (Filter time scale)
-	setxAxis({ x, svg, height, filter });
-	// Set Y axis
-	const { yTickValues } = setyAxis({
+	// Create X axis (Filter time scale)
+	createXAxis({ x, svg, height, filter, setChart });
+	// Cretae Y axis
+	const { yTickValues } = createYAxis({
 		y,
 		svg,
 		currencySymbol,
 		data,
 		yField,
+		height,
+		setChart,
 	});
 
-	// Set grid lines
-	setGridLines({ y, yTickValues, svg, width });
+	// Create grid lines
+	createGridLines({ y, yTickValues, svg, width });
 
-	// Set font
-	setTickFont(svg);
+	// Update font
+	updateTickFont(svg);
 };

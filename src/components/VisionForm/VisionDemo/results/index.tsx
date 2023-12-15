@@ -4,7 +4,8 @@ import ChipButtonControl, {
 	ChipButtonControlState,
 } from "@/components/common/ChipButtonControl";
 import { getVFDemoCurrencySymbol } from "@/redux/visionFormDemo/selectors";
-import { spacer16, spacer24 } from "@/styles/sizes";
+import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
+import { spacer16, spacer24, spacer4 } from "@/styles/sizes";
 import { ChartFilterEnum } from "@/types/Charts/Filter";
 import { legendColorMap } from "@/types/Charts/Legend";
 import { useState } from "react";
@@ -17,16 +18,22 @@ import useCalendar from "./hooks/useCalendar";
 import { CalendarResult } from "./utils/calendarResults";
 import { getChartFilterData } from "./utils/chartFilter";
 
+const ChartFilterContainer = styled.div`
+	background-color: ${colorBaseMap[ColorBaseCore.WHITE]};
+	border-radius: ${spacer4};
+	background-color: ${colorBaseMap[ColorBaseCore.WHITE]};
+`;
+
+const FilterContainer = styled.div`
+	margin: ${spacer16} ${spacer24} 0 ${spacer16};
+`;
+
 const StickyContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: ${spacer16};
 	position: sticky;
 	top: ${spacer16};
-`;
-
-const FilterContainer = styled.div`
-	margin: ${spacer16} ${spacer24} 0 ${spacer16};
 `;
 
 export default () => {
@@ -61,7 +68,7 @@ export default () => {
 				{/* Top bar data preview */}
 				<ResultsOverview calendar={calendar} currencySymbol={currencySymbol} />
 				{/* Chart */}
-				<div>
+				<ChartFilterContainer>
 					<FilterContainer>
 						<ChipButtonControl state={filterData} setState={setFilterData} />
 					</FilterContainer>
@@ -72,10 +79,11 @@ export default () => {
 						yField="lifetimeRevenue"
 						height={400}
 						width={829}
+						margin={{ top: 10, right: 20, bottom: 20, left: 20 }}
 						filter={filter}
 						currencySymbol={currencySymbol}
 					/>
-				</div>
+				</ChartFilterContainer>
 				{/* Legend */}
 				{isDataLoaded && (
 					<Legend payload={createLegendPayload(legendColorMap)} />

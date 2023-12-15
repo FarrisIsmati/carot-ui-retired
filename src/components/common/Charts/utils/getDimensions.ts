@@ -1,7 +1,9 @@
 import { Margin } from "@/types/Charts";
-import { useMemo } from "react";
 
-const getDimensions = ({
+/**
+ * Returns the correct dimensions of the SVG if a margin is going to be used
+ */
+export default ({
 	margin: userMargin,
 	width: actualWidth,
 	height: actualHeight,
@@ -22,25 +24,3 @@ const getDimensions = ({
 		height,
 	};
 };
-
-/**
- * Returns the correct dimensions of the SVG if a margin is going to be used
- */
-export default ({
-	width,
-	height,
-	margin,
-}: {
-	width: number;
-	height: number;
-	margin?: Margin;
-}) =>
-	useMemo(
-		() =>
-			getDimensions({
-				width,
-				height,
-				margin,
-			}),
-		[]
-	);
