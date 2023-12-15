@@ -124,10 +124,6 @@ const updateCalendarYear = ({
 		prevUnitOfTime: prevYear,
 		product,
 		prevProduct,
-		totalRevenue,
-		totalExpenses,
-		totalProfit,
-		totalReserves,
 		productRevenue,
 		productExpenses,
 		productProfit,
@@ -190,10 +186,6 @@ const updateCalendarMonth = ({
 		prevUnitOfTime: prevMonth,
 		product,
 		prevProduct,
-		totalRevenue,
-		totalExpenses,
-		totalProfit,
-		totalReserves,
 		productRevenue,
 		productExpenses,
 		productProfit,
@@ -240,6 +232,7 @@ const updateCalendarDay = ({
 	// Revenue
 	const productRevenue = customersPerDay * values.retailPrice;
 	const totalRevenue = productRevenue + day.totalRevenue;
+
 	// Expenses
 	const productExpenses = customersPerDay * values.costToProduce;
 	const totalExpenses = productExpenses + day.totalExpenses;
@@ -256,10 +249,6 @@ const updateCalendarDay = ({
 		prevUnitOfTime: prevDay,
 		product,
 		prevProduct,
-		totalRevenue,
-		totalExpenses,
-		totalProfit,
-		totalReserves,
 		productRevenue,
 		productExpenses,
 		productProfit,

@@ -1,6 +1,7 @@
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { ChartFilterEnum } from "@/types/Charts/Filter";
 import * as d3 from "d3";
+import numeral from "numeral";
 import { ChartProps } from "../LineChart";
 import {
 	X_AXIS_ID,
@@ -50,11 +51,13 @@ const updateChartXAxis = ({
  * @param param0
  */
 const updateChartYAxis = ({
+	currencySymbol,
 	yAxis,
 	svg,
 	data,
 	yField,
 }: {
+	currencySymbol: string;
 	yAxis: d3.Axis<d3.AxisDomain>;
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
 	data: any[];
@@ -67,7 +70,9 @@ const updateChartYAxis = ({
 		yField,
 	});
 
-	yAxis.tickValues(yTickValues);
+	yAxis
+		.tickValues(yTickValues)
+		.tickFormat((d) => `${currencySymbol}${numeral(d).format("0,0")}`);
 	svg
 		.select(`#${Y_AXIS_ID}`)
 		.transition()
@@ -90,6 +95,7 @@ const updateChartYAxis = ({
  * Update axis for chart
  */
 export default ({
+	currencySymbol,
 	data,
 	chart,
 	filter,
@@ -97,6 +103,7 @@ export default ({
 	yField,
 	width,
 }: {
+	currencySymbol: string;
 	data: any[];
 	chart: ChartProps;
 	filter: ChartFilterEnum;
@@ -119,6 +126,7 @@ export default ({
 	if (yAxis) {
 		// Update Y axis
 		const { yTickValues } = updateChartYAxis({
+			currencySymbol,
 			yAxis,
 			svg,
 			data,

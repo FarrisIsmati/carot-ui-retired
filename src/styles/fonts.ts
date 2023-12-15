@@ -72,6 +72,12 @@ export const semanticFonts = {
 		font-size: ${spacer32} !important;
 		/* line-height: ${spacer40} !important; */
 	`,
+	headlineMediumStrong: css`
+		${fontFamilyB}
+		font-weight: 700 !important;
+		font-size: ${spacer24} !important;
+		/* line-height: ${spacer32} !important; */
+	`,
 	headlineMedium: css`
 		${fontFamilyB}
 		font-weight: 400 !important;

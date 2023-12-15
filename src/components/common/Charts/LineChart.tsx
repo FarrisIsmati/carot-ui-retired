@@ -91,6 +91,7 @@ export default ({
 	// Only should run on updates to data
 	if (isDataLoaded && chart) {
 		updateChart({
+			currencySymbol,
 			chart,
 			filter,
 			xField,

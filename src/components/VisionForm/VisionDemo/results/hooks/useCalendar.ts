@@ -72,6 +72,7 @@ export default (): [Calendar | undefined, CalendarResult[]] => {
 				leaseState: lease,
 				leasesFootTrafficCurveIdDataPointsMap,
 			});
+
 			updateCalendarProduct({
 				calendar,
 				values,

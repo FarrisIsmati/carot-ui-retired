@@ -3,8 +3,8 @@ import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import { spacer16, spacer24, spacer32, spacer4 } from "@/styles/sizes";
 import { Calendar } from "@/types/VisionForm/calendar";
-import numeral from "numeral";
 import { styled } from "styled-components";
+import AnimateNumber from "./AnimateNumber";
 
 const Container = styled.div`
 	display: flex;
@@ -49,10 +49,6 @@ export const ResultsOverview = ({
 	currencySymbol,
 	calendar,
 }: ResultsOverviewProps) => {
-	const invested = numeral(calendar?.lifetimeInvested ?? 0).format("0,0[.]00");
-	const revenue = numeral(calendar?.lifetimeRevenue ?? 0).format("0,0[.]00");
-	const profit = numeral(calendar?.lifetimeProfit ?? 0).format("0,0[.]00");
-	const expenses = numeral(calendar?.lifetimeExpenses ?? 0).format("0,0[.]00");
 	const years = calendar?.years.length;
 	return (
 		<Container>
@@ -72,7 +68,9 @@ export const ResultsOverview = ({
 						<Type semanticfont={semanticFonts.bodyMedium}>
 							{currencySymbol}
 						</Type>
-						<Type semanticfont={semanticFonts.headlineLarge}>{invested}</Type>
+						<Type semanticfont={semanticFonts.headlineMediumStrong}>
+							<AnimateNumber value={calendar?.lifetimeInvested ?? 0} />
+						</Type>
 					</AmountContainer>
 				</ResultContainer>
 
@@ -91,7 +89,9 @@ export const ResultsOverview = ({
 						<Type semanticfont={semanticFonts.bodyMedium}>
 							{currencySymbol}
 						</Type>
-						<Type semanticfont={semanticFonts.headlineLarge}>{revenue}</Type>
+						<Type semanticfont={semanticFonts.headlineMediumStrong}>
+							<AnimateNumber value={calendar?.lifetimeRevenue ?? 0} />
+						</Type>
 					</AmountContainer>
 				</ResultContainer>
 				{/* Expenses */}
@@ -106,7 +106,9 @@ export const ResultsOverview = ({
 						<Type semanticfont={semanticFonts.bodyMedium}>
 							{currencySymbol}
 						</Type>
-						<Type semanticfont={semanticFonts.headlineLarge}>{expenses}</Type>
+						<Type semanticfont={semanticFonts.headlineMediumStrong}>
+							<AnimateNumber value={calendar?.lifetimeExpenses ?? 0} />
+						</Type>
 					</AmountContainer>
 				</ResultContainer>
 
@@ -124,7 +126,9 @@ export const ResultsOverview = ({
 						<Type semanticfont={semanticFonts.bodyMedium}>
 							{currencySymbol}
 						</Type>
-						<Type semanticfont={semanticFonts.headlineLarge}>{profit}</Type>
+						<Type semanticfont={semanticFonts.headlineMediumStrong}>
+							<AnimateNumber value={calendar?.lifetimeProfit ?? 0} />
+						</Type>
 					</AmountContainer>
 				</ResultContainer>
 			</ResultsContainer>

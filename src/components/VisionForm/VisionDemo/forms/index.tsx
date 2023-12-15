@@ -9,7 +9,7 @@ import type { Dispatch } from "redux";
 import { styled } from "styled-components";
 import Sections from "../sections";
 import { visionFormDemoInitialValues } from "../values/forms/VisionFormDemoInitialValues";
-import { testData1, testData2 } from "../values/forms/testData";
+import { testData1, testData2, testData3 } from "../values/forms/testData";
 
 // Add Button
 
@@ -53,6 +53,11 @@ export const VisionDemoForm = () => {
 							onClick={() => handleSubmitTestData(testData2, dispatch)}
 						>
 							Submit Data 2
+						</StyledSubmitButton>
+						<StyledSubmitButton
+							onClick={() => handleSubmitTestData(testData3, dispatch)}
+						>
+							Submit Data 3
 						</StyledSubmitButton>
 					</div>
 				);

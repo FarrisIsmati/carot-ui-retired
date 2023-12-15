@@ -4,6 +4,7 @@ import updateChartAxis from "./updateChartAxis";
 import updateChartLines from "./updateChartLines";
 
 interface UpdateCreateChartProps {
+	currencySymbol: string;
 	chart: ChartProps;
 	filter: ChartFilterEnum;
 	xField: string;
@@ -13,6 +14,7 @@ interface UpdateCreateChartProps {
 }
 
 export default ({
+	currencySymbol,
 	chart,
 	filter,
 	xField,
@@ -21,7 +23,15 @@ export default ({
 	width,
 }: UpdateCreateChartProps) => {
 	// Update axis
-	updateChartAxis({ data, chart, filter, xField, yField, width });
+	updateChartAxis({
+		currencySymbol,
+		data,
+		chart,
+		filter,
+		xField,
+		yField,
+		width,
+	});
 
 	// Update lines
 	updateChartLines({ data, chart });

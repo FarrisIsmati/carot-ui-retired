@@ -28,18 +28,21 @@ const FilterContainer = styled.div`
 	margin: ${spacer16} ${spacer24} 0 ${spacer16};
 `;
 
-const StickyContainer = styled.div`
+const StickyContainer = styled.div<{ width: number }>`
 	display: flex;
 	flex-direction: column;
 	gap: ${spacer16};
 	position: sticky;
 	top: ${spacer16};
+	max-width: ${(props) => props.width};
 `;
+
+export const ResultsDimensions = { height: 400, width: 900 };
 
 export default () => {
 	// Creates a calendar everytime the form state on redux updates (redux triggers the calendar update)
 	const [calendar, calendarData] = useCalendar();
-
+	console.log(calendar);
 	// Chart data (if not set add default chart data)
 	const data: CalendarResult[] = !calendarData.length
 		? defaultVisionDemoLineChartData
@@ -64,7 +67,7 @@ export default () => {
 	return (
 		<div>
 			{/* Div required to allow sticky container to work  */}
-			<StickyContainer>
+			<StickyContainer width={ResultsDimensions.width}>
 				{/* Top bar data preview */}
 				<ResultsOverview calendar={calendar} currencySymbol={currencySymbol} />
 				{/* Chart */}
@@ -77,8 +80,8 @@ export default () => {
 						isDataLoaded={isDataLoaded}
 						xField="date"
 						yField="lifetimeRevenue"
-						height={400}
-						width={829}
+						height={ResultsDimensions.height}
+						width={ResultsDimensions.width}
 						margin={{ top: 10, right: 20, bottom: 20, left: 20 }}
 						filter={filter}
 						currencySymbol={currencySymbol}
