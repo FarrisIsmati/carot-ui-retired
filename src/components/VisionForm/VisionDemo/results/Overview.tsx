@@ -5,6 +5,7 @@ import { spacer16, spacer24, spacer32, spacer4 } from "@/styles/sizes";
 import { Calendar } from "@/types/VisionForm/calendar";
 import { styled } from "styled-components";
 import AnimateNumber from "./AnimateNumber";
+import { CalendarResult } from "./utils/calendarResults";
 
 const Container = styled.div`
 	display: flex;
@@ -42,12 +43,14 @@ const AmountContainer = styled.div`
 
 export interface ResultsOverviewProps {
 	currencySymbol: string;
+	data: CalendarResult[];
 	calendar?: Calendar;
 }
 
 export const ResultsOverview = ({
 	currencySymbol,
 	calendar,
+	data,
 }: ResultsOverviewProps) => {
 	const years = calendar?.years.length;
 	return (

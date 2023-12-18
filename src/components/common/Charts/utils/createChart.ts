@@ -1,4 +1,3 @@
-import { CalendarResult } from "@/components/VisionForm/VisionDemo/results/utils/calendarResults";
 import { Margin } from "@/types/Charts";
 import { ChartFilterEnum } from "@/types/Charts/Filter";
 import * as d3 from "d3";
@@ -12,11 +11,12 @@ interface useSetChartProps {
 	width: number;
 	height: number;
 	margin: Margin;
-	data: CalendarResult[];
-	xField: string;
-	yField: string;
+	data: {}[];
+	xRange: [number, number];
+	yRange: [number, number];
 	filter: ChartFilterEnum;
 	currencySymbol: string;
+	initialLineChartData: {};
 	setChart: Dispatch<SetStateAction<ChartProps | undefined>>;
 }
 
@@ -29,9 +29,10 @@ export default ({
 	ref,
 	margin,
 	data,
-	xField,
-	yField,
+	xRange,
+	yRange,
 	filter,
+	initialLineChartData,
 	currencySymbol,
 	setChart,
 }: useSetChartProps) => {
@@ -61,11 +62,11 @@ export default ({
 		svg,
 		x,
 		y,
-		xField,
-		yField,
+		xRange,
+		yRange,
 		setChart,
 	});
 
 	// Create lines
-	createChartLines({ x, y, svg, data, setChart });
+	createChartLines({ x, y, svg, data, initialLineChartData, setChart });
 };

@@ -55,19 +55,18 @@ const updateChartYAxis = ({
 	yAxis,
 	svg,
 	data,
-	yField,
+	yRange,
 }: {
 	currencySymbol: string;
 	yAxis: d3.Axis<d3.AxisDomain>;
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
 	data: any[];
-	yField: string;
+	yRange: [number, number];
 }) => {
 	// Create grid lines
 	const yTickValues = generateYaxisTickValues({
 		tickCount: 5,
-		data,
-		yField,
+		yRange,
 	});
 
 	yAxis
@@ -99,22 +98,22 @@ export default ({
 	data,
 	chart,
 	filter,
-	xField,
-	yField,
+	xRange,
+	yRange,
 	width,
 }: {
 	currencySymbol: string;
 	data: any[];
 	chart: ChartProps;
 	filter: ChartFilterEnum;
-	xField: string;
-	yField: string;
+	xRange: [number, number];
+	yRange: [number, number];
 	width: number;
 }) => {
 	const { x, xAxis, y, yAxis, svg } = chart;
 
 	// Update axis (x & y axis plus formatting)
-	updateDomainScale({ x, y, xField, yField, data });
+	updateDomainScale({ x, y, xRange, yRange });
 
 	if (xAxis) {
 		// Update X axis (Filter time scale)
@@ -130,7 +129,7 @@ export default ({
 			yAxis,
 			svg,
 			data,
-			yField,
+			yRange,
 		});
 
 		// Create grid lines

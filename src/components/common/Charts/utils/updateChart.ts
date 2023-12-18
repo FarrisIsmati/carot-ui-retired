@@ -7,8 +7,8 @@ interface UpdateCreateChartProps {
 	currencySymbol: string;
 	chart: ChartProps;
 	filter: ChartFilterEnum;
-	xField: string;
-	yField: string;
+	xRange: [number, number];
+	yRange: [number, number];
 	data: any[];
 	width: number;
 }
@@ -17,8 +17,8 @@ export default ({
 	currencySymbol,
 	chart,
 	filter,
-	xField,
-	yField,
+	xRange,
+	yRange,
 	data,
 	width,
 }: UpdateCreateChartProps) => {
@@ -28,8 +28,8 @@ export default ({
 		data,
 		chart,
 		filter,
-		xField,
-		yField,
+		xRange,
+		yRange,
 		width,
 	});
 

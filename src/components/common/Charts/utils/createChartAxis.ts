@@ -12,21 +12,19 @@ import { generateNumberByDigits } from "./helpers";
  * @param param0
  */
 export const updateDomainScale = ({
-	data,
 	x,
 	y,
-	xField,
-	yField,
+	xRange,
+	yRange,
 }: {
 	x: d3.ScaleTime<number, number, never>;
 	y: d3.ScaleLinear<number, number, never>;
-	xField: string;
-	yField: string;
-	data: any[];
+	xRange: [number, number];
+	yRange: [number, number];
 }) => {
 	// Set the scale of the x and y axis (RANGE OF DATA)
-	x.domain(d3.extent(data, (d) => d[xField]) as [number, number]);
-	y.domain([0, d3.max(data, (d) => d[yField])]);
+	x.domain(xRange);
+	y.domain(yRange);
 };
 
 /**
@@ -109,14 +107,12 @@ export const createXAxis = ({
  */
 export const generateYaxisTickValues = ({
 	tickCount,
-	data,
-	yField,
+	yRange,
 }: {
 	tickCount: number;
-	data: any[];
-	yField: string;
+	yRange: [number, number];
 }) => {
-	const max = d3.max(data, (d) => d[yField]) as number;
+	const max = yRange[0] < 0 ? yRange[1] + -1 * yRange[0] : yRange[1];
 
 	const arr = [];
 
@@ -138,7 +134,12 @@ export const generateYaxisTickValues = ({
 	};
 
 	for (let i = 1; i <= tickCount + 1; i++) {
-		const num = (max / tickCount) * i;
+		const num = (max / tickCount) * i + yRange[0];
+
+		// Add 0 to tick if showing negative numbers
+		if (num !== 0 && i - 2 >= 0 && arr[i - 2] < 0 && num > 0) {
+			arr.push(0);
+		}
 
 		arr.push(getTickValue(num));
 	}
@@ -154,7 +155,7 @@ export const Y_AXIS_ID = "Y_AXIS_ID";
 export const createYAxis = ({
 	y,
 	data,
-	yField,
+	yRange,
 	svg,
 	height,
 	currencySymbol,
@@ -162,7 +163,7 @@ export const createYAxis = ({
 }: {
 	y: any;
 	data: any[];
-	yField: string;
+	yRange: [number, number];
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
 	height: number;
 	currencySymbol: string;
@@ -170,8 +171,7 @@ export const createYAxis = ({
 }) => {
 	const yTickValues = generateYaxisTickValues({
 		tickCount: 5,
-		data,
-		yField,
+		yRange,
 	});
 
 	const yAxis = d3
@@ -257,8 +257,8 @@ export default ({
 	x,
 	y,
 	data,
-	xField,
-	yField,
+	xRange,
+	yRange,
 	svg,
 	height,
 	width,
@@ -269,8 +269,8 @@ export default ({
 	data: any[];
 	x: d3.ScaleTime<number, number, never>;
 	y: d3.ScaleLinear<number, number, never>;
-	xField: string;
-	yField: string;
+	xRange: [number, number];
+	yRange: [number, number];
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
 	height: number;
 	width: number;
@@ -279,7 +279,7 @@ export default ({
 	setChart: Dispatch<SetStateAction<ChartProps | undefined>>;
 }) => {
 	// Update the scale of the x and y axis (RANGE OF DATA)
-	updateDomainScale({ x, y, xField, yField, data });
+	updateDomainScale({ x, y, xRange, yRange });
 
 	// Create X axis (Filter time scale)
 	createXAxis({ x, svg, height, filter, setChart });
@@ -289,7 +289,7 @@ export default ({
 		svg,
 		currencySymbol,
 		data,
-		yField,
+		yRange,
 		height,
 		setChart,
 	});

@@ -10,40 +10,38 @@ interface CreateLineProps {
 	key: keyof Omit<CalendarResult, "date">;
 	x: d3.ScaleTime<number, number, never>;
 	y: d3.ScaleLinear<number, number, never>;
+	initialLineChartData: {};
 }
 
 // Create a blank line (for initializing chart)
 export const createChartLine = ({
 	svg,
 	data,
+	initialLineChartData,
 	key,
 	x,
 	y,
-}: CreateLineProps): d3.Selection<
-	SVGPathElement,
-	CalendarResult[],
-	null,
-	undefined
-> => {
-	const initialLineChartData = {
-		date: data[0].date,
-		lifetimeRevenue: 0,
-		lifetimeExpenses: 0,
-	};
-
+}: CreateLineProps): d3.Selection<SVGPathElement, any[], null, undefined> => {
 	const lineAttr = d3
 		.line()
-		.x((d) => x((d as unknown as CalendarResult).date))
-		.y((d) => y((d as unknown as CalendarResult)[key]));
+		.x((d) => {
+			// @ts-ignore
+			if (!d.date) {
+				throw new Error("Line chart data must include a date field");
+			}
+			// @ts-ignore
+			return x(d.date);
+		})
+		// @ts-ignore
+		.y((d) => y(d[key]));
 
-	const res: d3.Selection<SVGPathElement, CalendarResult[], null, undefined> =
-		svg
-			.append("path")
-			.data([[initialLineChartData]])
-			.attr("fill", "none")
-			.attr("stroke", legendColorMap[key])
-			.attr("stroke-width", 0)
-			.attr("d", lineAttr as unknown as readonly (string | number)[]);
+	const res: d3.Selection<SVGPathElement, any[], null, undefined> = svg
+		.append("path")
+		.data([[initialLineChartData]])
+		.attr("fill", "none")
+		.attr("stroke", legendColorMap[key])
+		.attr("stroke-width", 0)
+		.attr("d", lineAttr as unknown as readonly (string | number)[]);
 	return res;
 };
 
@@ -52,10 +50,18 @@ interface CreateChartLinesProps {
 	x: d3.ScaleTime<number, number, never>;
 	y: d3.ScaleLinear<number, number, never>;
 	svg: d3.Selection<SVGGElement, unknown, null, undefined>;
+	initialLineChartData: {};
 	setChart: Dispatch<SetStateAction<ChartProps | undefined>>;
 }
 
-export default ({ x, y, svg, data, setChart }: CreateChartLinesProps) => {
+export default ({
+	x,
+	y,
+	svg,
+	data,
+	initialLineChartData,
+	setChart,
+}: CreateChartLinesProps) => {
 	// Create init lines (will have no data)
 	const fields = Object.keys(data[0]) as Array<keyof (typeof data)[0]>;
 	fields.forEach((k) => {
@@ -67,6 +73,7 @@ export default ({ x, y, svg, data, setChart }: CreateChartLinesProps) => {
 
 		// Create initial blank lines (so update lines has reference to lines)
 		const line = createChartLine({
+			initialLineChartData,
 			x,
 			y,
 			svg,

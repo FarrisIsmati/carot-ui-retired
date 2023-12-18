@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import createChart from "./utils/createChart";
 import getDimensions from "./utils/getDimensions";
+import { getXRange, getYRange } from "./utils/helpers";
 import updateChart from "./utils/updateChart";
 
 const Container = styled.div`
@@ -35,11 +36,12 @@ export interface ChartProps {
 export interface LineChartProps {
 	data: any[]; // Data values represented
 	isDataLoaded: boolean; // Whether or not to render blank chart before data is set
-	xField: string; // X field to represent on data
-	yField: string; // Y field to represent on data
+	xField?: string; // X field to represent on data
+	yField?: string; // Y field to represent on data
 	width: number; // Sizing
 	height: number; // Sizing
 	margin: Margin;
+	initialLineChartData: {};
 	filter: ChartFilterEnum; // Defines what timescale is selected
 	currencySymbol?: string;
 }
@@ -47,12 +49,13 @@ export interface LineChartProps {
 export default ({
 	data,
 	isDataLoaded,
-	xField,
+	xField = "date",
 	yField,
 	width: w,
 	height: h,
 	margin: m,
 	filter,
+	initialLineChartData,
 	currencySymbol = "",
 }: LineChartProps) => {
 	// Ref
@@ -60,6 +63,11 @@ export default ({
 
 	// Chart elements
 	const [chart, setChart] = useState<ChartProps>();
+
+	// Get greatest extent of X Field
+	const xRange = getXRange({ data, xField });
+	// Get greatest extent of Y Fields
+	const yRange = getYRange({ data, yField });
 
 	// Get width height + margins
 	const { width, height, margin } = useMemo(
@@ -76,9 +84,10 @@ export default ({
 	useEffect(() => {
 		createChart({
 			currencySymbol,
+			initialLineChartData,
 			filter,
-			xField,
-			yField,
+			xRange,
+			yRange,
 			width,
 			height,
 			data,
@@ -94,8 +103,8 @@ export default ({
 			currencySymbol,
 			chart,
 			filter,
-			xField,
-			yField,
+			xRange,
+			yRange,
 			data,
 			width: w,
 		});

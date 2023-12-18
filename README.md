@@ -93,3 +93,12 @@ We start to update revenue and expenses of company through a series of loops thr
 For each loop (capital, product, location, investor, taxes) we traverse the calendar, if any date specific values need to be set, we will catch the date in the `calendarUpdate` functions. Also all values will be set from the `calendarUpdate` functions and passed into the `calendarCalculate` functions. Every `calendarUpdate` loop (day, month, year) will return the values that's being passed into `calendarCalculate` functions because we are only adding those values to the main calendar object so we want what we changed and not the full value because if we pass that in then we are doubling the value.
 
 If updating the form, updating results some or all of these above steps need to be updated to get it to work.
+
+** Updating the Results Legend **
+Update multiple places
+
+1. VisionForm/VisionDemo/results/defaultData.ts (starting data)
+2. VisionForm/VisionDemo/results/utils/calendarResults.ts (update data)
+3. VisionForm/VisionDemo/results/index.tsx (starting data)
+4. types/Charts/Legend.ts (legend color)
+5. common/Charts/utils/legend.ts (key map)

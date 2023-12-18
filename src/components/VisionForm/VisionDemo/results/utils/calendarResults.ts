@@ -6,6 +6,7 @@ export interface CalendarResult {
 	date: Date;
 	lifetimeRevenue: number;
 	lifetimeExpenses: number;
+	lifetimeProfit: number;
 }
 
 import {
@@ -23,22 +24,26 @@ export const genCalendarResults = (calendar: Calendar): CalendarResult[] => {
 	return results;
 };
 
-const updateCalendarYear = (year: YearCalendar, results: any[]) => {
+const updateCalendarYear = (year: YearCalendar, results: CalendarResult[]) => {
 	year.months.forEach((month) => {
 		updateCalendarMonth(month, results);
 	});
 };
 
-const updateCalendarMonth = (month: MonthCalendar, results: any[]) => {
+const updateCalendarMonth = (
+	month: MonthCalendar,
+	results: CalendarResult[]
+) => {
 	month.days.forEach((day) => {
 		updateCalendarDay(day, results);
 	});
 };
 
-const updateCalendarDay = (day: DayCalendar, results: any[]) => {
+const updateCalendarDay = (day: DayCalendar, results: CalendarResult[]) => {
 	results.push({
 		date: new Date(day.date),
 		lifetimeRevenue: day.lifetimeRevenue,
+		lifetimeProfit: day.lifetimeProfit,
 		lifetimeExpenses: day.lifetimeExpenses,
 	});
 };

@@ -5,6 +5,7 @@ import { LineChartKeyMapType } from "@/types/Charts";
 //
 export const legendKeyMap: LineChartKeyMapType = {
 	lifetimeRevenue: "Revenue",
+	lifetimeProfit: "Profit",
 	lifetimeExpenses: "Expenses",
 };
 

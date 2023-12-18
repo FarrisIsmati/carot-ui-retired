@@ -1,13 +1,12 @@
 "use client";
 import VisionDemo from "@/components/VisionForm/VisionDemo";
-import ButtonPrimary from "@/designSystem/Button/ButtonPrimary";
+import BlurbSmall from "@/components/common/Blurb/BlurbSmall";
 import Type from "@/designSystem/Type";
 import { createStore } from "@/redux/store";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { StyledPageContainer } from "@/styles/common";
 import { semanticFonts } from "@/styles/fonts";
 import {
-	Sizes,
 	spacer12,
 	spacer16,
 	spacer24,
@@ -54,12 +53,7 @@ export default () => {
 							financial planning tool. Easy to use and completely free.
 						</Type>
 					</div>
-					<StyledTempBlurb>
-						<Type semanticfont={semanticFonts.headlineSmall}>
-							Some interesting words
-						</Type>
-						<ButtonPrimary size={Sizes.SMALL}>Button</ButtonPrimary>
-					</StyledTempBlurb>
+					<BlurbSmall body={"Some interesting words"} buttonText="Button" />
 				</StyledHeaderSection>
 
 				{/* Vision Demo Form */}

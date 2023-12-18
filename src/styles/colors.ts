@@ -172,6 +172,7 @@ export enum ColorBaseCore {
 	ERROR_5 = "ERROR_5",
 	ERROR_6 = "ERROR_6",
 	ERROR_7 = "ERROR_7",
+	BLUE_5 = "BLUE_5",
 }
 
 export const colorBaseMap = {
@@ -204,6 +205,7 @@ export const colorBaseMap = {
 	[ColorBaseCore.ERROR_5]: "#DC362E",
 	[ColorBaseCore.ERROR_6]: "#E46962",
 	[ColorBaseCore.ERROR_7]: "#EC928E",
+	[ColorBaseCore.BLUE_5]: "#5A94E5",
 };
 
 export const semanticPalletMap = {

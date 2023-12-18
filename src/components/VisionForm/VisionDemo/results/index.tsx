@@ -1,3 +1,4 @@
+import BlurbLarge from "@/components/common/Blurb/BlurbLarge";
 import Legend from "@/components/common/Charts/Legend";
 import { createLegendPayload } from "@/components/common/Charts/utils/legend";
 import ChipButtonControl, {
@@ -5,7 +6,7 @@ import ChipButtonControl, {
 } from "@/components/common/ChipButtonControl";
 import { getVFDemoCurrencySymbol } from "@/redux/visionFormDemo/selectors";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
-import { spacer16, spacer24, spacer4 } from "@/styles/sizes";
+import { spacer16, spacer24, spacer4, spacer40 } from "@/styles/sizes";
 import { ChartFilterEnum } from "@/types/Charts/Filter";
 import { legendColorMap } from "@/types/Charts/Legend";
 import { useState } from "react";
@@ -37,12 +38,16 @@ const StickyContainer = styled.div<{ width: number }>`
 	max-width: ${(props) => props.width};
 `;
 
+const StyledBlurbLarge = styled(BlurbLarge)`
+	margin-top: ${spacer40};
+`;
+
 export const ResultsDimensions = { height: 400, width: 900 };
 
 export default () => {
 	// Creates a calendar everytime the form state on redux updates (redux triggers the calendar update)
 	const [calendar, calendarData] = useCalendar();
-	console.log(calendar);
+
 	// Chart data (if not set add default chart data)
 	const data: CalendarResult[] = !calendarData.length
 		? defaultVisionDemoLineChartData
@@ -64,12 +69,24 @@ export default () => {
 	const cs = useSelector(getVFDemoCurrencySymbol);
 	const currencySymbol = isDataLoaded ? cs : "";
 
+	// Initial Line Chart Data
+	const initialLineChartData: CalendarResult = {
+		date: data[0].date,
+		lifetimeRevenue: 0,
+		lifetimeProfit: 0,
+		lifetimeExpenses: 0,
+	};
+
 	return (
 		<div>
 			{/* Div required to allow sticky container to work  */}
 			<StickyContainer width={ResultsDimensions.width}>
 				{/* Top bar data preview */}
-				<ResultsOverview calendar={calendar} currencySymbol={currencySymbol} />
+				<ResultsOverview
+					calendar={calendar}
+					data={data}
+					currencySymbol={currencySymbol}
+				/>
 				{/* Chart */}
 				<ChartFilterContainer>
 					<FilterContainer>
@@ -78,8 +95,9 @@ export default () => {
 					<LineChart
 						data={data}
 						isDataLoaded={isDataLoaded}
+						initialLineChartData={initialLineChartData}
 						xField="date"
-						yField="lifetimeRevenue"
+						// yField="lifetimeRevenue"
 						height={ResultsDimensions.height}
 						width={ResultsDimensions.width}
 						margin={{ top: 10, right: 20, bottom: 20, left: 20 }}
@@ -91,6 +109,12 @@ export default () => {
 				{isDataLoaded && (
 					<Legend payload={createLegendPayload(legendColorMap)} />
 				)}
+
+				<StyledBlurbLarge
+					headline="Get more"
+					body="Way more options to fill in, numbers to see, and charts that make you go “hmm... interesting.”"
+					buttonText="Sign up free"
+				/>
 			</StickyContainer>
 		</div>
 	);
