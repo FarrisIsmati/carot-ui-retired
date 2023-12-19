@@ -53,6 +53,9 @@ export const ResultsOverview = ({
 	data,
 }: ResultsOverviewProps) => {
 	const years = calendar?.years.length;
+
+	// TODO: On filtered set of data (use data instead of calendar for data points)
+
 	return (
 		<Container>
 			<Type semanticfont={semanticFonts.headlineSmall}>
