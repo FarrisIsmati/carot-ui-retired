@@ -4,11 +4,8 @@ import { InputModeEnum } from "@/types/VisionForm/common/values";
 
 // Checks if a field with an input mode of (low, average, high) has an error on any of the three
 export const useHasInputModeError = (
-	fieldName?: keyof AllFormValuesInputModeLess
+	fieldName: keyof AllFormValuesInputModeLess
 ) => {
-	if (!fieldName) {
-		return undefined;
-	}
 	const lowField = useVisionFormField(`${fieldName}${InputModeEnum.Low}`);
 	const averageField = useVisionFormField(
 		`${fieldName}${InputModeEnum.Average}`
@@ -17,6 +14,7 @@ export const useHasInputModeError = (
 	const lowFieldError = lowField.meta.error as string | undefined;
 	const averageFieldError = averageField.meta.error as string | undefined;
 	const highFieldError = highField.meta.error as string | undefined;
+
 	return [lowFieldError, averageFieldError, highFieldError].find(
 		(error) => !!error
 	);

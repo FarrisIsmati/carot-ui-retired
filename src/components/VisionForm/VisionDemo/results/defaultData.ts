@@ -1,5 +1,5 @@
+import { CalendarResult } from "@/types/Charts";
 import moment from "moment";
-import { CalendarResult } from "./utils/calendarResults";
 
 // Default
 export const defaultVisionDemoLineChartData: CalendarResult[] = [

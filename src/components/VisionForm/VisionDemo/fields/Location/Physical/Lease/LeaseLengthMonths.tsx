@@ -1,5 +1,5 @@
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
-import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
+import FormTextFieldNumericInputMode from "@/components/form/FormTextFieldNumeric/FormTextFieldInputMode";
 import { Sizes } from "@/styles/sizes";
 import { AllFormValuesInputModeLess } from "@/types/VisionForm";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
@@ -13,7 +13,7 @@ const LeaseLengthMonths = () => {
 	const leaseLengthField = useVisionFormField(`${fieldNameBase}${inputMode}`);
 
 	return (
-		<FormTextFieldNumeric
+		<FormTextFieldNumericInputMode
 			label={`Length months`}
 			fieldNameBase={"leaseLengthMonths"}
 			inputMode={inputMode}

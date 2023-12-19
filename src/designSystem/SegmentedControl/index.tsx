@@ -83,6 +83,7 @@ const SegmentedControl = React.forwardRef<HTMLElement, SegementedControlProps>(
 			<Container {...props} ref={ref} role="group">
 				{options.map((option, i) => (
 					<ButtonSegmentedControl
+						key={option.id}
 						onClick={(e) => {
 							e.preventDefault();
 							if (!option.disabled) {

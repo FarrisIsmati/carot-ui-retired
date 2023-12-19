@@ -1,4 +1,4 @@
-import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
+import FormTextFieldNumericInputMode from "@/components/form/FormTextFieldNumeric/FormTextFieldInputMode";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { useContext } from "react";
 import LocationFormContext from "../../../forms/LocationForm/LocationFormContext";
@@ -11,7 +11,7 @@ const ConstructionCost = () => {
 	const formContext = useContext(LocationFormContext);
 
 	return (
-		<FormTextFieldNumeric
+		<FormTextFieldNumericInputMode
 			label={`Initial construction cost`}
 			fieldNameBase={"constructionCost"}
 			inputMode={inputMode}

@@ -2,13 +2,7 @@
 // Generates the final array that the data visualizers will use to display data
 //
 
-export interface CalendarResult {
-	date: Date;
-	lifetimeRevenue: number;
-	lifetimeExpenses: number;
-	lifetimeProfit: number;
-}
-
+import { CalendarResult } from "@/types/Charts";
 import {
 	Calendar,
 	DayCalendar,

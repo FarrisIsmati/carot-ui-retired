@@ -1,4 +1,4 @@
-import { CalendarResult } from "@/components/VisionForm/VisionDemo/results/utils/calendarResults";
+import { CalendarResult } from "@/types/Charts";
 import { legendColorMap } from "@/types/Charts/Legend";
 import * as d3 from "d3";
 import { ChartProps } from "../LineChart";

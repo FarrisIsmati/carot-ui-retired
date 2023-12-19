@@ -1,5 +1,5 @@
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
-import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
+import FormTextFieldNumericInputMode from "@/components/form/FormTextFieldNumeric/FormTextFieldInputMode";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 
 const CustomerConversionRateField = () => {
@@ -15,7 +15,7 @@ const CustomerConversionRateField = () => {
 	);
 
 	return (
-		<FormTextFieldNumeric
+		<FormTextFieldNumericInputMode
 			label={`Customer conversion rate`}
 			fieldNameBase={fieldNameBase}
 			inputMode={inputMode}

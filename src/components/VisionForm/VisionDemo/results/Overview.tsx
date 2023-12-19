@@ -2,10 +2,10 @@ import Type from "@/designSystem/Type";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import { spacer16, spacer24, spacer32, spacer4 } from "@/styles/sizes";
+import { CalendarResult } from "@/types/Charts";
 import { Calendar } from "@/types/VisionForm/calendar";
 import { styled } from "styled-components";
 import AnimateNumber from "./AnimateNumber";
-import { CalendarResult } from "./utils/calendarResults";
 
 const Container = styled.div`
 	display: flex;

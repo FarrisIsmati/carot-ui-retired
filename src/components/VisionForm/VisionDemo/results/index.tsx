@@ -7,6 +7,7 @@ import ChipButtonControl, {
 import { getVFDemoCurrencySymbol } from "@/redux/visionFormDemo/selectors";
 import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { spacer16, spacer24, spacer4, spacer40 } from "@/styles/sizes";
+import { CalendarResult } from "@/types/Charts";
 import { ChartFilterEnum } from "@/types/Charts/Filter";
 import { legendColorMap } from "@/types/Charts/Legend";
 import { useState } from "react";
@@ -16,7 +17,6 @@ import LineChart from "../../../common/Charts/LineChart";
 import { ResultsOverview } from "./Overview";
 import { defaultVisionDemoLineChartData } from "./defaultData";
 import useCalendar from "./hooks/useCalendar";
-import { CalendarResult } from "./utils/calendarResults";
 import { getChartFilterData } from "./utils/chartFilter";
 
 const ChartFilterContainer = styled.div`

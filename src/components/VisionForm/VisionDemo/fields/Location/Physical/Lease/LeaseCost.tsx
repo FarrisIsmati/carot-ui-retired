@@ -3,7 +3,7 @@ import {
 	MeasurementSystemType,
 	getMeasurementSystem,
 } from "@/components/VisionForm/utils/measurement";
-import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
+import FormTextFieldNumericInputMode from "@/components/form/FormTextFieldNumeric/FormTextFieldInputMode";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { useContext } from "react";
 
@@ -21,7 +21,7 @@ const LeaseCost = () => {
 		measurementSystem === MeasurementSystemType.IMPERIAL ? "ft²" : "m²";
 
 	return (
-		<FormTextFieldNumeric
+		<FormTextFieldNumericInputMode
 			label={`Cost per ${measurementLabel}`}
 			fieldNameBase={"leaseCost"}
 			inputMode={inputMode}

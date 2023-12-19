@@ -1,4 +1,4 @@
-import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
+import FormTextFieldNumericInputMode from "@/components/form/FormTextFieldNumeric/FormTextFieldInputMode";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { useContext } from "react";
 import CapitalFormContext from "../../../forms/CapitalForm/CapitalFormContext";
@@ -12,7 +12,7 @@ const InvestorStartingCash = () => {
 	const inputMode = InputModeEnum.Average;
 
 	return (
-		<FormTextFieldNumeric
+		<FormTextFieldNumericInputMode
 			label={"Cash"}
 			fieldNameBase={"investorStartingCash"}
 			placeholder={"Starting cash"}

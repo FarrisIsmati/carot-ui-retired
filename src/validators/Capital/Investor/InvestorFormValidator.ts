@@ -5,7 +5,7 @@ import {
 	investorStartingCashValidator,
 } from "./InvestorFormValidators";
 
-export default (formValues: InvestorSection) => {
+const InvestorFormValidator = (formValues: InvestorSection) => {
 	// Investor
 	const investorName = investorNameValidator(formValues.investorName);
 
@@ -37,3 +37,5 @@ export default (formValues: InvestorSection) => {
 		investorEquityPercentage,
 	};
 };
+
+export default InvestorFormValidator;

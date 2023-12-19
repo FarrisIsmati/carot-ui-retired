@@ -1,7 +1,7 @@
 import { TaxesSection } from "@/types/VisionForm/taxesSection";
 import { taxRateGenericValidator } from "./TaxesValidators";
 
-export default (formValues: TaxesSection) => {
+const TaxesValidator = (formValues: TaxesSection) => {
 	// Starting cash
 	const taxRateGenericLow = taxRateGenericValidator(
 		formValues.taxRateGenericLow
@@ -20,3 +20,5 @@ export default (formValues: TaxesSection) => {
 		taxRateGenericHigh,
 	};
 };
+
+export default TaxesValidator;

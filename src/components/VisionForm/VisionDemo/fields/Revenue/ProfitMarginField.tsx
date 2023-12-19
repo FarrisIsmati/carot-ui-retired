@@ -1,4 +1,4 @@
-import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
+import FormTextFieldNumericInputMode from "@/components/form/FormTextFieldNumeric/FormTextFieldInputMode";
 import { Sizes } from "@/styles/sizes";
 import { useContext } from "react";
 import useRevenueFields from "../../Sections/RevenueSection/hooks/useRevenueFields";
@@ -22,7 +22,7 @@ const ProfitMarginField = () => {
 	} = useRevenueFields();
 
 	return (
-		<FormTextFieldNumeric
+		<FormTextFieldNumericInputMode
 			label={"Margin"}
 			fieldNameBase={"revenueProfitMargin"}
 			placeholder={"Profit margin"}

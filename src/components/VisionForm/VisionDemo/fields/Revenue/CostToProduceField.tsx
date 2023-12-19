@@ -1,4 +1,4 @@
-import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
+import FormTextFieldNumericInputMode from "@/components/form/FormTextFieldNumeric/FormTextFieldInputMode";
 import { Sizes } from "@/styles/sizes";
 import { useContext } from "react";
 import useRevenueFields from "../../Sections/RevenueSection/hooks/useRevenueFields";
@@ -18,7 +18,7 @@ const CostToProduceField = () => {
 	} = useRevenueFields();
 
 	return (
-		<FormTextFieldNumeric
+		<FormTextFieldNumericInputMode
 			label={"Cost"}
 			fieldNameBase={"revenueCostToProduce"}
 			inputMode={revenueCostToProduceInputMode}

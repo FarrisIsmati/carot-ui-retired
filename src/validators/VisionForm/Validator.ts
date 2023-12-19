@@ -9,7 +9,7 @@ import {
 	overviewStartDateValidator,
 } from "./Validators";
 
-export default (formValues: VisionFormValues) => {
+const Validator = (formValues: VisionFormValues) => {
 	//
 	// Overview
 	//
@@ -49,3 +49,5 @@ export default (formValues: VisionFormValues) => {
 		...taxes,
 	};
 };
+
+export default Validator;

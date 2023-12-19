@@ -1,5 +1,5 @@
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
-import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
+import FormTextFieldNumericInputMode from "@/components/form/FormTextFieldNumeric/FormTextFieldInputMode";
 import { Sizes } from "@/styles/sizes";
 import { AllFormValuesInputModeLess } from "@/types/VisionForm";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
@@ -16,7 +16,7 @@ const DaysOpenPerWeekGeneric = () => {
 	);
 
 	return (
-		<FormTextFieldNumeric
+		<FormTextFieldNumericInputMode
 			label={"Days open per week"}
 			fieldNameBase={"daysOpenPerWeekGeneric"}
 			inputMode={inputMode}

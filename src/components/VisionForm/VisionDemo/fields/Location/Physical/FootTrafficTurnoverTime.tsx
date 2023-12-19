@@ -1,4 +1,4 @@
-import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
+import FormTextFieldNumericInputMode from "@/components/form/FormTextFieldNumeric/FormTextFieldInputMode";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 
 const FootTrafficTurnoverTime = () => {
@@ -6,7 +6,7 @@ const FootTrafficTurnoverTime = () => {
 	const inputMode = InputModeEnum.Average;
 
 	return (
-		<FormTextFieldNumeric
+		<FormTextFieldNumericInputMode
 			label={`Foot traffic turnover time (m)`}
 			fieldNameBase={"trafficTurnoverTime"}
 			inputMode={inputMode}

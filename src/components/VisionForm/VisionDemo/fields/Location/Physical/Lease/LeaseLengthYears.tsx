@@ -1,4 +1,4 @@
-import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
+import FormTextFieldNumericInputMode from "@/components/form/FormTextFieldNumeric/FormTextFieldInputMode";
 import { Sizes } from "@/styles/sizes";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 
@@ -7,7 +7,7 @@ const LeaseLengthYears = () => {
 	const inputMode = InputModeEnum.Average;
 
 	return (
-		<FormTextFieldNumeric
+		<FormTextFieldNumericInputMode
 			label={`Length years`}
 			fieldNameBase={"leaseLengthYears"}
 			inputMode={inputMode}

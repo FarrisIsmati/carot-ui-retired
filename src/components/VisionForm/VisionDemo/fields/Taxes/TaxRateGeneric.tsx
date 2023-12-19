@@ -1,5 +1,5 @@
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
-import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
+import FormTextFieldNumericInputMode from "@/components/form/FormTextFieldNumeric/FormTextFieldInputMode";
 import { AllFormValuesInputModeLess } from "@/types/VisionForm";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 
@@ -14,7 +14,7 @@ const TaxRateGeneric = () => {
 	);
 
 	return (
-		<FormTextFieldNumeric
+		<FormTextFieldNumericInputMode
 			label={"Tax Rate"}
 			fieldNameBase={"taxRateGeneric"}
 			placeholder={"Tax rate"}

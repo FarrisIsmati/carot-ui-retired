@@ -1,5 +1,7 @@
 import { LoanSection } from "@/types/VisionForm/capitalSection/LoanSection";
 
-export default (formValues: LoanSection) => {
+const LoanFormValidator = (formValues: LoanSection) => {
 	return {};
 };
+
+export default LoanFormValidator;

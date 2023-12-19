@@ -1,6 +1,10 @@
 // Dimensions
-
-import { CalendarResult } from "@/components/VisionForm/VisionDemo/results/utils/calendarResults";
+export interface CalendarResult {
+	date: Date;
+	lifetimeRevenue: number;
+	lifetimeExpenses: number;
+	lifetimeProfit: number;
+}
 
 export interface Margin {
 	top: number;
