@@ -1,3 +1,5 @@
+import FilterWarningsPlugin from "webpack-filter-warnings-plugin";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: false,
