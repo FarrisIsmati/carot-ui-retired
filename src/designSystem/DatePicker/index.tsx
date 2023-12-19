@@ -4,14 +4,13 @@ import { PseudoClassProps, StyledWrapperProps } from "@/utils/typeHelpers";
 import { useRef, useState } from "react";
 
 import moment from "moment";
-import { Value } from "node_modules/react-calendar/dist/esm/shared/types";
 import { FieldInputProps } from "react-final-form";
 import useOffClick from "../Dropdown/hooks/useOffClick";
 import Overlay, { OverlayDirections } from "../Overlay";
 import Calendar from "./Calendar";
 import DatePickerTrigger from "./DatePickerTrigger";
 import { StyledContainer } from "./styles";
-import { DateFormatEnum } from "./types";
+import { DateFormatEnum, Value } from "./types";
 
 export const dateFormatMapper = {
 	[DateFormatEnum.DDMMYYYY]: "DD/MM/YYYY",
