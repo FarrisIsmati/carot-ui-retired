@@ -115,6 +115,7 @@ const Dropdown = ({
 				input?.onChange?.(defaultValue.id); // Form state
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [defaultValue]);
 
 	// Set selected item to anything onChange
@@ -124,6 +125,7 @@ const Dropdown = ({
 			setSelectedItem(newSelectedItem);
 			setCursor(getDropdownIndex(dataset, newSelectedItem?.id));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [input?.value]);
 
 	//
@@ -154,6 +156,7 @@ const Dropdown = ({
 				setCursor(0);
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isMenuOpen]);
 
 	//

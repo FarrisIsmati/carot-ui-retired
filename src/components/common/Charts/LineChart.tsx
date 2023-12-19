@@ -77,6 +77,7 @@ const LineChart = ({
 				height: h,
 				margin: m,
 			}),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[w, h, m.top, m.bottom, m.left, m.right]
 	);
 
@@ -95,6 +96,7 @@ const LineChart = ({
 			margin,
 			setChart,
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	// Only should run on updates to data

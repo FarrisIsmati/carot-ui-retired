@@ -62,6 +62,7 @@ const ActionInput = React.forwardRef<HTMLElement, ActionInputProps>(
 			) {
 				onEnterItem();
 			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [enterPress]);
 
 		// Add error state if error text included

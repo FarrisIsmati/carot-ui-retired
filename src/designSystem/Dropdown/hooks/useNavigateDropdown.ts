@@ -54,6 +54,7 @@ const useNavigateDropdown = ({
 				});
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [downPress, isMenuOpen]);
 
 	// Key up press
@@ -82,6 +83,7 @@ const useNavigateDropdown = ({
 				scrollToCursor({ parent, cursor, cursorRef, press: PressType.UP });
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [upPress, isMenuOpen]);
 
 	// Returned functionality needed to interact with state

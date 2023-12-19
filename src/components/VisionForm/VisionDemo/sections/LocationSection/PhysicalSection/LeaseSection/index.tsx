@@ -29,6 +29,7 @@ const LeaseSection = () => {
 	// Traffic curve length in days
 	const trafficCurveLength = useMemo(
 		() => datesDifference(formContext!.startDate, formContext!.endDate, "days"),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[formContext!.startDate, formContext!.endDate]
 	);
 

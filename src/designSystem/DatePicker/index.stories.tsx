@@ -33,25 +33,25 @@ export const AlternateFormatting = () => (
 	</DatePickerContainer>
 );
 
-export const withLabel = () => (
+export const WithLabel = () => (
 	<DatePickerContainer>
 		<DatePicker placeholder={"Start date"} />
 	</DatePickerContainer>
 );
 
-export const disabled = () => (
+export const Disabled = () => (
 	<DatePickerContainer>
 		<DatePicker placeholder={"Start date"} disabled />
 	</DatePickerContainer>
 );
 
-export const withError = () => (
+export const WithError = () => (
 	<DatePickerContainer>
 		<DatePicker placeholder={"Start date"} error />
 	</DatePickerContainer>
 );
 
-export const withErrorText = () => (
+export const WithErrorText = () => (
 	<DatePickerContainer>
 		<DatePicker placeholder={"Start date"} errorText="Invalid date" />
 	</DatePickerContainer>

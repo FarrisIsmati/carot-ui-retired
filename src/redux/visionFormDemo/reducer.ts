@@ -2,7 +2,7 @@ import { visionFormDemoInitialValues } from "@/components/VisionForm/VisionDemo/
 import { VisionFormValues } from "@/types/VisionForm";
 import { SUBMIT_VISION_FORM_DEMO } from "./constants";
 
-export default (
+const visionFormDemoReducer = (
 	state: VisionFormValues = visionFormDemoInitialValues,
 	action: any
 ) => {
@@ -17,3 +17,5 @@ export default (
 			return state;
 	}
 };
+
+export default visionFormDemoReducer;

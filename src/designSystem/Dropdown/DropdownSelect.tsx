@@ -122,6 +122,7 @@ const DropdownSelect = ({
 				setCursor(0);
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isMenuOpen]);
 
 	// On enter key press
