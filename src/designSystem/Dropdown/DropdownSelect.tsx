@@ -108,7 +108,7 @@ export default ({
 
 	useEffect(() => {
 		// Scroll to selected item if menu is open
-		if (isMenuOpen && dataset.length) {
+		if (isMenuOpen && dataset && dataset.length) {
 			scrollToCursor({
 				parent: dropdownListRef.current,
 				cursor,

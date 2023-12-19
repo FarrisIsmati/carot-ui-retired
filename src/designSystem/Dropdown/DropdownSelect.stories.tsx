@@ -10,7 +10,7 @@ const DropdownContainer = styled.div`
 	height: 600px;
 `;
 
-export const SampleDropdownDataset1 = [
+const SampleDropdownDataset1 = [
 	{ value: "Option 1", id: "option1" },
 	{ value: "Option 2", id: "option2" },
 	{ value: "Option 3", id: "option3" },
@@ -24,8 +24,13 @@ export const SampleDropdownDataset1 = [
 	{ value: "Option 11", id: "option11" },
 ];
 
-export const Default = () => (
-	<DropdownContainer>
-		<DropdownSelect placeholder="Choose one" dataset={SampleDropdownDataset1} />
-	</DropdownContainer>
-);
+export const Default = () => {
+	return (
+		<DropdownContainer>
+			<DropdownSelect
+				placeholder="Choose one"
+				dataset={SampleDropdownDataset1}
+			/>
+		</DropdownContainer>
+	);
+};
