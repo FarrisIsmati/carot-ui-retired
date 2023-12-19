@@ -130,7 +130,7 @@ const updateCalendarDay = ({
 	// Only for first day
 	if (
 		(day as DayCalendar).date &&
-		moment(new Date(day.date)).isSame(companyValues.startDate)
+		moment(day.date).isSame(companyValues.startDate)
 	) {
 		totalInvested = investor.initialInvestment; // NOTE THIS IS NOT TAXED IF IT'S EQUITY FINANCING
 	}

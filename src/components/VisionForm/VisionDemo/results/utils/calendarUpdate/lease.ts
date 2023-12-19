@@ -193,7 +193,7 @@ const updateCalendarDay = ({
 	//
 	// Add initial construction costs to first day
 	//
-	if (day.date && moment(new Date(day.date)).isSame(companyValues.startDate)) {
+	if (day.date && moment(day.date).isSame(companyValues.startDate)) {
 		totalExpenses += leaseValues.initialConstructionCost;
 	}
 
@@ -202,10 +202,7 @@ const updateCalendarDay = ({
 	//
 	const lease = genInitLeaseCalendar(leaseValues);
 	const prevLease = prevDay && prevDay.leases[leaseValues.id];
-	const leaseCost = round(
-		lease.periodCost / moment(new Date(day.date)).daysInMonth(),
-		2
-	); // Estimating a daily cost will cost the monthly divided by days in month
+	const leaseCost = round(lease.periodCost / moment(day.date).daysInMonth(), 2); // Estimating a daily cost will cost the monthly divided by days in month
 	totalExpenses += leaseCost;
 
 	//

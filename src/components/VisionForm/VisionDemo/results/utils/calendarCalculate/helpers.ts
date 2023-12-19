@@ -56,7 +56,7 @@ export const calcCustomersPerDay = (
 	date: string
 ) => {
 	// Current day number
-	const day = moment(new Date(date)).diff(values.startDate, "days");
+	const day = moment(date).diff(values.startDate, "days");
 	// Hours open per day (only calculating generic not by actual hour)
 	const hoursOpen = values.hoursOpenPerDayGeneric;
 	// How long on average a patron will spend within the physical store
