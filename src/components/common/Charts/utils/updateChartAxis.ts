@@ -6,13 +6,35 @@ import { ChartProps } from "../LineChart";
 import {
 	X_AXIS_ID,
 	Y_AXIS_ID,
-	createGridLines,
 	generateYaxisTickValues,
 	getTickFormat,
 	getTicks,
 	updateDomainScale,
 	updateTickFont,
 } from "./createChartAxis";
+
+/**
+ * Set the guiding lines of the grid (designed to be inline with y axis)
+ */
+export const updateGridLines = ({
+	y,
+	yTickValues,
+	width,
+}: {
+	y: any;
+	yTickValues: number[];
+	width: number;
+}) => {
+	const gridClass = "gridLine";
+	const gridLines = d3.selectAll(`.${gridClass}`).data([0, ...yTickValues]);
+
+	gridLines
+		.transition()
+		.attr("x1", 0)
+		.attr("x2", width)
+		.attr("y1", (d) => y(d))
+		.attr("y2", (d) => y(d));
+};
 
 /**
  * Set X Axis
@@ -133,7 +155,7 @@ const updateChartAxis = ({
 		});
 
 		// Create grid lines
-		createGridLines({ y, yTickValues, svg, width });
+		updateGridLines({ y, yTickValues, width });
 
 		// Update font
 		updateTickFont(svg);

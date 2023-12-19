@@ -213,18 +213,11 @@ export const createGridLines = ({
 	width: number;
 }) => {
 	const gridClass = "gridLine";
-	const gridLines = d3.selectAll(`.${gridClass}`);
-
-	// Not empty
-	// TODO: figure out how to transition gridlines
-	if (!gridLines.empty()) {
-		gridLines.remove();
-	}
 
 	//
 	// Add grid lines
 	//
-	svg
+	const gridLines = svg
 		.selectAll("yGrid")
 		.data([0, ...yTickValues])
 		.join("line")
@@ -294,11 +287,11 @@ const createChartAxis = ({
 		setChart,
 	});
 
-	// Create grid lines
-	createGridLines({ y, yTickValues, svg, width });
-
 	// Update font
 	updateTickFont(svg);
+
+	// Create grid lines
+	createGridLines({ y, yTickValues, svg, width });
 };
 
 export default createChartAxis;
