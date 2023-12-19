@@ -1,3 +1,4 @@
+import Sections from "@/components/VisionForm/VisionDemo/Sections";
 import ButtonPrimary from "@/designSystem/Button/ButtonPrimary";
 import { submitVisionFormDemo } from "@/redux/visionFormDemo/actions";
 import { spacer8 } from "@/styles/sizes";
@@ -7,7 +8,6 @@ import { Form } from "react-final-form";
 import { useDispatch } from "react-redux";
 import type { Dispatch } from "redux";
 import { styled } from "styled-components";
-import Sections from "../Sections/Sections";
 import { visionFormDemoInitialValues } from "../values/forms/VisionFormDemoInitialValues";
 import { testData1, testData2, testData3 } from "../values/forms/testData";
 
