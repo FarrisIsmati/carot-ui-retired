@@ -9,9 +9,9 @@ export default {
 };
 
 const defaultOptions: SegmentedControlOption[] = [
-	{ id: "opt1", value: "1", isActive: false },
-	{ id: "opt2", value: "2", isActive: false },
-	{ id: "opt3", value: "3", isActive: false },
+	{ id: "opt1", value: "1", isActive: false, disabled: false },
+	{ id: "opt2", value: "2", isActive: false, disabled: false },
+	{ id: "opt3", value: "3", isActive: false, disabled: true },
 ];
 
 // Segmented Control

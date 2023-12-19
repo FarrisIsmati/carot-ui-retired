@@ -106,7 +106,7 @@ const Label = React.forwardRef<HTMLElement, BadgeProps>(
 		} catch (e) {
 			// If string only set content to string wrapped in Type component
 			content = (
-				<Type font={semanticFonts.labelSmall} colorSet={colorSet}>
+				<Type semanticfont={semanticFonts.labelSmall} colorset={colorSet}>
 					{children}
 				</Type>
 			);
