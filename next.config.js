@@ -1,4 +1,4 @@
-import FilterWarningsPlugin from "webpack-filter-warnings-plugin";
+const FilterWarningsPlugin = require("webpack-filter-warnings-plugin");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
