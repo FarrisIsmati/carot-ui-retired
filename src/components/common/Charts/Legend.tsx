@@ -27,7 +27,7 @@ const LegendCircle = styled.div<{ color?: string }>`
 		props.color || colorBaseMap[ColorBaseCore.BLACK]};
 `;
 
-export default ({
+const Legend = ({
 	payload,
 }: {
 	payload: { color: string; value: string }[];
@@ -43,3 +43,5 @@ export default ({
 		</LegendContainer>
 	);
 };
+
+export default Legend;

@@ -19,7 +19,7 @@ import {
 } from "../../../styles";
 import GrowthCurveGraph from "../../GrowthCurveGraph";
 
-export default () => {
+const LeaseSection = () => {
 	// Context
 	const formContext = useContext(LocationFormContext);
 
@@ -56,3 +56,5 @@ export default () => {
 		</FieldsContainer>
 	);
 };
+
+export default LeaseSection;

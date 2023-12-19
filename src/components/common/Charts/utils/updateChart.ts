@@ -13,7 +13,7 @@ interface UpdateCreateChartProps {
 	width: number;
 }
 
-export default ({
+const updateChart = ({
 	currencySymbol,
 	chart,
 	filter,
@@ -36,3 +36,5 @@ export default ({
 	// Update lines
 	updateChartLines({ data, chart });
 };
+
+export default updateChart;

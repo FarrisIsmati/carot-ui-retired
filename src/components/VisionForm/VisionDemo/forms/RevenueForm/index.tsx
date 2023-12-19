@@ -55,7 +55,7 @@ export const handleSubmitLease = ({
 	form.restart(revenueFormInitialValues);
 };
 
-export default ({ children }: LeaseFormProps) => {
+const RevenueForm = ({ children }: LeaseFormProps) => {
 	// Vision form for reference in handle submit lease
 	const visionForm = useForm<VisionFormValues>();
 	const visionFormState = useFormState<VisionFormValues>();
@@ -92,3 +92,5 @@ export default ({ children }: LeaseFormProps) => {
 		</RevenueFormContextProvider>
 	);
 };
+
+export default RevenueForm;

@@ -9,7 +9,7 @@ import { CountriesEnum } from "@/types/VisionForm/common/countries";
 import { countryToCurrencyTypeMap } from "../../../utils/currency";
 import { countryOriginDropdownValues } from "../../values/fields/dropdownValues";
 
-export default () => {
+const CountryOriginField = () => {
 	const currencyField = useVisionFormField("overviewCurrency");
 
 	const changeCurrency = (selectedItemDataset: DropdownData<any>) => {
@@ -33,3 +33,5 @@ export default () => {
 		/>
 	);
 };
+
+export default CountryOriginField;

@@ -7,7 +7,7 @@ const ButtonTertiaryStyled = styled(ButtonPrimary)`
 	background-color: transparent;
 `;
 
-export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
+const ButtonTertiary = React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 	(
 		{ size, colorSet = getColorSet(SemanticSetCores.SECONDARY), ...props },
 		ref
@@ -22,3 +22,5 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 		);
 	}
 );
+
+export default ButtonTertiary;

@@ -4,7 +4,7 @@ import { ColorBaseCore, colorBaseMap } from "@/styles/colors";
 import { semanticFonts } from "@/styles/fonts";
 import { StyledNavbar, StyledNavbuttonsContainer } from "./styles";
 
-export default () => {
+const Navbar = () => {
 	return (
 		<StyledNavbar>
 			{/* Logo */}
@@ -40,3 +40,5 @@ export default () => {
 		</StyledNavbar>
 	);
 };
+
+export default Navbar;

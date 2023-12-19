@@ -103,7 +103,7 @@ export type StyledTextFieldNumericProps = TextFieldNumericProps & {
 	useBrowserDefaultFocusStyle: boolean;
 };
 
-export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
+const TextFieldNumeric = React.forwardRef<HTMLElement, TextFieldNumericProps>(
 	function FormInput({
 		error,
 		disabled,
@@ -250,3 +250,5 @@ export default React.forwardRef<HTMLElement, TextFieldNumericProps>(
 		);
 	}
 );
+
+export default TextFieldNumeric;

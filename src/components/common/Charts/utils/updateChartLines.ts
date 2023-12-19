@@ -8,7 +8,7 @@ interface UpdateChartLineProps {
 	chart: ChartProps;
 }
 
-export default ({ data, chart }: UpdateChartLineProps) => {
+const updateChartLines = ({ data, chart }: UpdateChartLineProps) => {
 	const { x, y, lines } = chart;
 	// Update line
 	const existingLinesKey = Object.keys(lines);
@@ -37,3 +37,5 @@ export default ({ data, chart }: UpdateChartLineProps) => {
 		});
 	}
 };
+
+export default updateChartLines;

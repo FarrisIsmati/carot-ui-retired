@@ -2,7 +2,7 @@ import { useVisionFormField } from "@/components/VisionForm/utils/form";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { useState } from "react";
 
-export default () => {
+const useRevenueFields = () => {
 	// Get all input modes
 	const [revenueCostToProduceInputMode, setRevenueCostToProduceInputMode] =
 		useState(InputModeEnum.Average);
@@ -41,3 +41,5 @@ export default () => {
 		revenueProfitAmountField,
 	};
 };
+
+export default useRevenueFields;

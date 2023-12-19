@@ -46,7 +46,7 @@ export const CountStyled = styled(
 	}}
 `;
 
-export default React.forwardRef<HTMLElement, BadgeProps>(
+const Count = React.forwardRef<HTMLElement, BadgeProps>(
 	(
 		{
 			colorSet = getColorSet(SemanticSetCores.PRIMARY),
@@ -72,3 +72,5 @@ export default React.forwardRef<HTMLElement, BadgeProps>(
 		);
 	}
 );
+
+export default Count;

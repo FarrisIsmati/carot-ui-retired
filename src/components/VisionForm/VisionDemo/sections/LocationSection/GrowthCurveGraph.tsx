@@ -15,7 +15,7 @@ export interface GrowthCurveGraphProps {
 	length: number;
 }
 
-export default ({ curveType, length }: GrowthCurveGraphProps) => {
+const GrowthCurveGraph = ({ curveType, length }: GrowthCurveGraphProps) => {
 	const curveDataPoints = useMemo(
 		() => createGrowthCurve(curveType, length),
 		[curveType, length]
@@ -51,3 +51,5 @@ export default ({ curveType, length }: GrowthCurveGraphProps) => {
 		</LineChart>
 	);
 };
+
+export default GrowthCurveGraph;

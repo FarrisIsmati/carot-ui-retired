@@ -39,7 +39,7 @@ const StyledPlainTooltipContentContainer = styled.div`
 	gap: ${spacer8};
 `;
 
-export default React.forwardRef<HTMLElement, PlainTooltipProps>(
+const PlainTooltip = React.forwardRef<HTMLElement, PlainTooltipProps>(
 	(
 		{
 			colorset = getColorSet(SemanticSetCores.DARK),
@@ -78,3 +78,5 @@ export default React.forwardRef<HTMLElement, PlainTooltipProps>(
 		);
 	}
 );
+
+export default PlainTooltip;

@@ -6,6 +6,8 @@ export const StyledReactCalendar = styled(Calendar)`
 	pointer-events: all;
 `;
 
-export default ({ onChange, value }: CalendarProps) => {
+const CalendarComponent = ({ onChange, value }: CalendarProps) => {
 	return <StyledReactCalendar onChange={onChange} value={value} />;
 };
+
+export default CalendarComponent;

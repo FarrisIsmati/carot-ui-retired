@@ -3,7 +3,10 @@ import { useEffect } from "react";
 /**
  * Hook that alerts clicks outside of the passed ref
  */
-export default (ref: React.MutableRefObject<any>, offClick: () => void) => {
+const useOffClick = (
+	ref: React.MutableRefObject<any>,
+	offClick: () => void
+) => {
 	useEffect(() => {
 		/**
 		 * Alert if clicked on outside of element
@@ -21,3 +24,5 @@ export default (ref: React.MutableRefObject<any>, offClick: () => void) => {
 		};
 	}, [ref]);
 };
+
+export default useOffClick;

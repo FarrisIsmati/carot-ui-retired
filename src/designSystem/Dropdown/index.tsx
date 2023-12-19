@@ -66,7 +66,7 @@ export type DropdownProps = Omit<
 		onChange?: (selectedItemDataset: DropdownData<any>) => void;
 	};
 
-export default ({
+const Dropdown = ({
 	label,
 	colorSet = getColorSet(SemanticSetCores.SECONDARY),
 	error,
@@ -255,3 +255,5 @@ export default ({
 		</StyledContainer>
 	);
 };
+
+export default Dropdown;

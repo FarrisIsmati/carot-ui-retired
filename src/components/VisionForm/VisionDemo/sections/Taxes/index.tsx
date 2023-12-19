@@ -4,7 +4,7 @@ import { semanticFonts } from "@/styles/fonts";
 import TaxRateGeneric from "../../fields/Taxes/TaxRateGeneric";
 import { FieldsContainer } from "../styles";
 
-export default () => {
+const Taxes = () => {
 	return (
 		<FieldsContainer>
 			<Type semanticfont={semanticFonts.headlineSmall}>Taxes</Type>
@@ -12,3 +12,5 @@ export default () => {
 		</FieldsContainer>
 	);
 };
+
+export default Taxes;

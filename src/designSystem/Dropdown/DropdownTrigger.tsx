@@ -65,7 +65,7 @@ export type DropdownTriggerProps = StyledWrapperProps &
 		dropdownSize?: Sizes;
 	};
 
-export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
+const DropdownTrigger = React.forwardRef<HTMLElement, DropdownTriggerProps>(
 	function DropdownTrigger(
 		{
 			onClickMenu,
@@ -153,3 +153,5 @@ export default React.forwardRef<HTMLElement, DropdownTriggerProps>(
 		);
 	}
 );
+
+export default DropdownTrigger;

@@ -72,7 +72,7 @@ export const LabelStyled = styled(
 	}}
 `;
 
-export default React.forwardRef<HTMLElement, BadgeProps>(
+const Label = React.forwardRef<HTMLElement, BadgeProps>(
 	(
 		{
 			colorSet = getColorSet(SemanticSetCores.PRIMARY),
@@ -132,3 +132,5 @@ export default React.forwardRef<HTMLElement, BadgeProps>(
 		);
 	}
 );
+
+export default Label;

@@ -58,7 +58,7 @@ export const handleSubmitLease = ({
 	form.restart(LeaseFormInitialValues);
 };
 
-export default ({ children }: LeaseFormProps) => {
+const LeaseForm = ({ children }: LeaseFormProps) => {
 	// Vision form for reference in handle submit lease
 	const visionForm = useForm<VisionFormValues>();
 
@@ -88,3 +88,5 @@ export default ({ children }: LeaseFormProps) => {
 		</LocationFormContextProvider>
 	);
 };
+
+export default LeaseForm;

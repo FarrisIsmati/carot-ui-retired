@@ -253,7 +253,7 @@ export const updateTickFont = (
 /**
  * Set axis for chart
  */
-export default ({
+const createChartAxis = ({
 	x,
 	y,
 	data,
@@ -300,3 +300,5 @@ export default ({
 	// Update font
 	updateTickFont(svg);
 };
+
+export default createChartAxis;

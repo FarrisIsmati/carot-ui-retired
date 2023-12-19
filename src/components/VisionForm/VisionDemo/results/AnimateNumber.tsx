@@ -7,7 +7,11 @@ interface AnimateNumberProps {
 	duration?: number;
 }
 
-export default ({ value, decimals = 2, duration = 1 }: AnimateNumberProps) => {
+const AnimateNumber = ({
+	value,
+	decimals = 2,
+	duration = 1,
+}: AnimateNumberProps) => {
 	// Revenue
 	const valueRef = useRef(value ?? 0);
 	const curVal = value ?? 0;
@@ -32,3 +36,5 @@ export default ({ value, decimals = 2, duration = 1 }: AnimateNumberProps) => {
 		</CountUp>
 	);
 };
+
+export default AnimateNumber;

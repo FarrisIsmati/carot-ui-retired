@@ -7,7 +7,7 @@ import { Form } from "react-final-form";
 import { useDispatch } from "react-redux";
 import type { Dispatch } from "redux";
 import { styled } from "styled-components";
-import Sections from "../sections";
+import Sections from "../Sections";
 import { visionFormDemoInitialValues } from "../values/forms/VisionFormDemoInitialValues";
 import { testData1, testData2, testData3 } from "../values/forms/testData";
 

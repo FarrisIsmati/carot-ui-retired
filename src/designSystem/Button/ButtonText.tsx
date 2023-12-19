@@ -69,7 +69,7 @@ export const StyledTextButton = styled(
 	}}
 `;
 
-export default React.forwardRef<HTMLElement, ButtonTextProps>(
+const ButtonText = React.forwardRef<HTMLElement, ButtonTextProps>(
 	(
 		{
 			colorset = getColorSet(SemanticSetCores.BASE),
@@ -115,3 +115,5 @@ export default React.forwardRef<HTMLElement, ButtonTextProps>(
 		);
 	}
 );
+
+export default ButtonText;

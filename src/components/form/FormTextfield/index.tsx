@@ -17,7 +17,7 @@ export interface FormTextFieldSelectorProps {
 	size?: Sizes;
 }
 
-export default ({
+const FormTextField = ({
 	label,
 	placeholder,
 	fieldName,
@@ -41,3 +41,5 @@ export default ({
 		/>
 	);
 };
+
+export default FormTextField;

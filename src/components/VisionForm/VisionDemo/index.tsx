@@ -1,7 +1,7 @@
 import { spacer40 } from "@/styles/sizes";
 import { styled } from "styled-components";
+import Results from "./Results";
 import { VisionDemoForm } from "./forms";
-import Results from "./results";
 
 const StyledContainer = styled.div`
 	display: flex;
@@ -9,7 +9,7 @@ const StyledContainer = styled.div`
 	margin-top: ${spacer40};
 `;
 
-export default () => {
+const VisionDemo = () => {
 	return (
 		<StyledContainer>
 			<VisionDemoForm />
@@ -17,3 +17,5 @@ export default () => {
 		</StyledContainer>
 	);
 };
+
+export default VisionDemo;

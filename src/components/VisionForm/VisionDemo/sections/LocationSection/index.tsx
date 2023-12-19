@@ -9,7 +9,7 @@ import { locationTypeDropdownValues } from "../../values/fields/dropdownValues";
 import { FieldsContainer } from "../styles";
 import PhysicalSection from "./PhysicalSection";
 
-export default () => {
+const LocationSection = () => {
 	const [locationType, setLocationType] = useState<LocationType | null>(null);
 	const constext = useContext(LocationFormContext);
 
@@ -28,3 +28,5 @@ export default () => {
 		</FieldsContainer>
 	);
 };
+
+export default LocationSection;

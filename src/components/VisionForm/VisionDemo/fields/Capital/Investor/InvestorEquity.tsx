@@ -1,6 +1,6 @@
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 
-export default () => {
+const InvestorEquity = () => {
 	return (
 		<FormTextFieldNumeric
 			label={"Equity"}
@@ -11,3 +11,5 @@ export default () => {
 		/>
 	);
 };
+
+export default InvestorEquity;

@@ -1,4 +1,4 @@
-import LoansAndInvestorsSection from "./CapitalSection";
+import CapitalSection from "./CapitalSection";
 import LocationSection from "./LocationSection";
 import BusinessTypeSection from "./OverviewSection";
 import RevenueSection from "./RevenueSection";
@@ -9,11 +9,11 @@ interface MainSectionProps {
 	onSubmit: () => void;
 }
 
-export default ({ onSubmit }: MainSectionProps) => {
+const Sections = ({ onSubmit }: MainSectionProps) => {
 	return (
 		<div>
 			<BusinessTypeSection />
-			<LoansAndInvestorsSection />
+			<CapitalSection />
 			<LocationSection />
 			<RevenueSection />
 			<Staff />
@@ -21,3 +21,5 @@ export default ({ onSubmit }: MainSectionProps) => {
 		</div>
 	);
 };
+
+export default Sections;

@@ -25,7 +25,7 @@ export type DropdownItemProps = StyledWrapperProps &
 		active: boolean;
 	};
 
-export default React.forwardRef<HTMLUListElement, DropdownItemProps>(
+const DropdownItem = React.forwardRef<HTMLUListElement, DropdownItemProps>(
 	function DropdownList(
 		{ colorSet = getColorSet(SemanticSetCores.SECONDARY), ...props },
 		ref
@@ -40,3 +40,5 @@ export default React.forwardRef<HTMLUListElement, DropdownItemProps>(
 		);
 	}
 );
+
+export default DropdownItem;

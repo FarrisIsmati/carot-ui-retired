@@ -3,7 +3,7 @@ import { Margin } from "@/types/Charts";
 /**
  * Returns the correct dimensions of the SVG if a margin is going to be used
  */
-export default ({
+const getDimensions = ({
 	margin: userMargin,
 	width: actualWidth,
 	height: actualHeight,
@@ -24,3 +24,5 @@ export default ({
 		height,
 	};
 };
+
+export default getDimensions;

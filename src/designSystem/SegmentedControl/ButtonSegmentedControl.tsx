@@ -47,8 +47,11 @@ export const ButtonSegmentedControlStyled = styled(
 	}}
 `;
 
-export default React.forwardRef<HTMLElement, ButtonSegmentedControlProps>(
-	({ ...props }, ref) => {
-		return <ButtonSegmentedControlStyled {...props} ref={ref} />;
-	}
-);
+const ButtonSegmentedControl = React.forwardRef<
+	HTMLElement,
+	ButtonSegmentedControlProps
+>(({ ...props }, ref) => {
+	return <ButtonSegmentedControlStyled {...props} ref={ref} />;
+});
+
+export default ButtonSegmentedControl;

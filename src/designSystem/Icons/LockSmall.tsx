@@ -21,7 +21,7 @@ const StyledSVG = styled.svg<LockSmallProps>`
 			: props.colorSet?.text.default};
 `;
 
-export default ({
+const LockSmall = ({
 	colorSet = getColorSet(SemanticSetCores.BASE),
 	disabled,
 }: LockSmallProps) => (
@@ -40,3 +40,5 @@ export default ({
 		/>
 	</StyledSVG>
 );
+
+export default LockSmall;

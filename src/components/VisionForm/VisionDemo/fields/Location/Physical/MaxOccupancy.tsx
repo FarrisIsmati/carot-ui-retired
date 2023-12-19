@@ -1,7 +1,7 @@
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 
-export default () => {
+const MaxOccupancy = () => {
 	// Input mode
 	const inputMode = InputModeEnum.Average;
 
@@ -15,3 +15,5 @@ export default () => {
 		/>
 	);
 };
+
+export default MaxOccupancy;

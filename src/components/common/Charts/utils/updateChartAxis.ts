@@ -93,7 +93,7 @@ const updateChartYAxis = ({
 /**
  * Update axis for chart
  */
-export default ({
+const updateChartAxis = ({
 	currencySymbol,
 	data,
 	chart,
@@ -141,3 +141,5 @@ export default ({
 		throw new Error("yAxis doesn't exist");
 	}
 };
+
+export default updateChartAxis;

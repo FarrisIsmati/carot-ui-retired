@@ -44,7 +44,7 @@ export type FormTextFieldSelectorProps = TextFieldNumericProps & {
 	inputMode?: InputModeEnum;
 };
 
-export default ({
+const FormTextFieldNumeric = ({
 	label,
 	placeholder,
 	fieldName,
@@ -64,7 +64,7 @@ export default ({
 	const field = useVisionFormField(fieldNameFull);
 	const input = field.input;
 
-	const inputModeError = fieldNameBase && useHasInputModeError(fieldNameBase);
+	const inputModeError = useHasInputModeError(fieldNameBase);
 
 	return (
 		<TextFieldNumeric
@@ -87,3 +87,5 @@ export default ({
 		/>
 	);
 };
+
+export default FormTextFieldNumeric;

@@ -1,7 +1,7 @@
 import FormDropdown from "@/components/form/FormDropdown";
 import { industryDropdownValues } from "../../values/fields/dropdownValues";
 
-export default () => {
+const IndustryField = () => {
 	return (
 		<FormDropdown
 			label="Industry"
@@ -11,3 +11,5 @@ export default () => {
 		/>
 	);
 };
+
+export default IndustryField;

@@ -2,7 +2,7 @@ import { SemanticSetCores, getColorSet } from "@/styles/colors";
 import React from "react";
 import Chip, { ChipProps } from ".";
 
-export default React.forwardRef<HTMLElement, ChipProps>(
+const ChipAlt = React.forwardRef<HTMLElement, ChipProps>(
 	(
 		{ colorSet = getColorSet(SemanticSetCores.PRIMARY_ALT_2), ...props },
 		ref
@@ -10,3 +10,5 @@ export default React.forwardRef<HTMLElement, ChipProps>(
 		return <Chip colorSet={colorSet} {...props} ref={ref} />;
 	}
 );
+
+export default ChipAlt;

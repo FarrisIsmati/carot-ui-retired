@@ -46,7 +46,7 @@ export interface LineChartProps {
 	currencySymbol?: string;
 }
 
-export default ({
+const LineChart = ({
 	data,
 	isDataLoaded,
 	xField = "date",
@@ -124,3 +124,5 @@ export default ({
 		</Container>
 	);
 };
+
+export default LineChart;

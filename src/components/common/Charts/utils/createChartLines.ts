@@ -54,7 +54,7 @@ interface CreateChartLinesProps {
 	setChart: Dispatch<SetStateAction<ChartProps | undefined>>;
 }
 
-export default ({
+const createChartLines = ({
 	x,
 	y,
 	svg,
@@ -89,3 +89,5 @@ export default ({
 		});
 	});
 };
+
+export default createChartLines;

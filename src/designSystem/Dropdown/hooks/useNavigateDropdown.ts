@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import useKeyPress from "../../hooks/useKeyPress";
 import { DropdownData, PressType } from "../types";
 
-export default ({
+const useNavigateDropdown = ({
 	isMenuOpen,
 	dataset,
 	parent,
@@ -87,3 +87,5 @@ export default ({
 	// Returned functionality needed to interact with state
 	return { cursor, setCursor, cursorRef };
 };
+
+export default useNavigateDropdown;

@@ -24,7 +24,7 @@ interface BlurbSmallProps {
 	buttonText: string;
 }
 
-export default ({ body, buttonText }: BlurbSmallProps) => {
+const BlurbSmall = ({ body, buttonText }: BlurbSmallProps) => {
 	return (
 		<StyledTempBlurb>
 			<Type semanticfont={semanticFonts.headlineSmall}>{body}</Type>
@@ -32,3 +32,5 @@ export default ({ body, buttonText }: BlurbSmallProps) => {
 		</StyledTempBlurb>
 	);
 };
+
+export default BlurbSmall;

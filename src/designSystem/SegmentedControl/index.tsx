@@ -65,7 +65,7 @@ const Container = styled(
 	}}
 `;
 
-export default React.forwardRef<HTMLElement, SegementedControlProps>(
+const SegmentedControl = React.forwardRef<HTMLElement, SegementedControlProps>(
 	(
 		{
 			colorSet = getColorSet(SemanticSetCores.SECONDARY),
@@ -104,3 +104,5 @@ export default React.forwardRef<HTMLElement, SegementedControlProps>(
 		);
 	}
 );
+
+export default SegmentedControl;

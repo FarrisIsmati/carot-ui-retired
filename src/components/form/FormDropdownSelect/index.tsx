@@ -14,7 +14,7 @@ export interface FormDropdownSelectProps extends DropdownSelectProps {
 	fieldName: keyof AllFormValues;
 }
 
-export default ({
+const FormDropdownSelect = ({
 	fieldName,
 	placeholder,
 	dataset,
@@ -38,3 +38,5 @@ export default ({
 		/>
 	);
 };
+
+export default FormDropdownSelect;

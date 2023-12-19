@@ -20,7 +20,7 @@ export interface FormDropdownSelectorProps {
 	onChange?: (selectedItemDataset: DropdownData<any>) => void;
 }
 
-export default ({
+const FormDropdown = ({
 	label,
 	placeholder,
 	fieldName,
@@ -48,3 +48,5 @@ export default ({
 		/>
 	);
 };
+
+export default FormDropdown;

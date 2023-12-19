@@ -4,7 +4,7 @@ import { PhysicalFinanceType } from "@/types/VisionForm/locationSection";
 import { Dispatch, SetStateAction } from "react";
 import { physicalFinanceTypeValues } from "../../../values/fields/segmentedControlValues";
 
-export default ({
+const PhysicalFinanceTypeControl = ({
 	setFinanceType,
 }: {
 	setFinanceType: Dispatch<SetStateAction<PhysicalFinanceType>>;
@@ -19,4 +19,5 @@ export default ({
 		/>
 	);
 };
-// TODO FIX
+
+export default PhysicalFinanceTypeControl;

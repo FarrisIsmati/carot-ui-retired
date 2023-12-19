@@ -5,7 +5,7 @@ import { useContext } from "react";
 import RevenueFormContext from "../../forms/RevenueForm/RevenueFormContext";
 import { getLocationIdsDropdownValues } from "../../values/fields/dropdownValues";
 
-export default () => {
+const LocationIdField = () => {
 	// locationIds field
 	const locationIdsField = useVisionFormField("locationIds");
 
@@ -29,3 +29,5 @@ export default () => {
 		/>
 	);
 };
+
+export default LocationIdField;

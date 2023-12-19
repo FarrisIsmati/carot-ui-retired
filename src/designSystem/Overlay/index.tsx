@@ -32,11 +32,7 @@ const Trigger = styled.span`
 	position: absolute;
 `;
 
-export type OverlayPlacement = {
-	placement?: OverlayDirections;
-};
-
-export const Overlay = styled.div<OverlayTriggerProps>`
+const OverlayStyled = styled.div<OverlayTriggerProps>`
 	display: flex;
 	pointer-events: none;
 	position: absolute;
@@ -52,7 +48,7 @@ export const Overlay = styled.div<OverlayTriggerProps>`
 		`}
 `;
 
-export default React.forwardRef<HTMLElement, OverlayTriggerProps>(
+const Overlay = React.forwardRef<HTMLElement, OverlayTriggerProps>(
 	function OverlayTriggerComponent(
 		{ children, placement, withPortal, closeOverlay, width, ...props },
 		ref
@@ -64,16 +60,18 @@ export default React.forwardRef<HTMLElement, OverlayTriggerProps>(
 						overlayPosition={ref.current.getBoundingClientRect()}
 						closeOverlay={closeOverlay}
 					>
-						<Overlay placement={placement} width={width}>
+						<OverlayStyled placement={placement} width={width}>
 							{children}
-						</Overlay>
+						</OverlayStyled>
 					</OverlayPortal>
 				) : (
-					<Overlay placement={placement} width={width}>
+					<OverlayStyled placement={placement} width={width}>
 						{children}
-					</Overlay>
+					</OverlayStyled>
 				)}
 			</Trigger>
 		);
 	}
 );
+
+export default Overlay;

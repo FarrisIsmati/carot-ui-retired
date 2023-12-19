@@ -35,8 +35,9 @@ const TypeListItemElement = styled(
 	padding-block-end: ${(props) => !props.condensed && `1em`};
 `;
 
-export default React.forwardRef<HTMLElement, TypeListItemProps>(
+const TypeListItem = React.forwardRef<HTMLElement, TypeListItemProps>(
 	({ ...props }, ref) => {
 		return <TypeListItemElement {...props} ref={ref} />;
 	}
 );
+export default TypeListItem;

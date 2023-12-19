@@ -2,7 +2,7 @@ import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { Sizes } from "@/styles/sizes";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 
-export default () => {
+const LeaseLengthYears = () => {
 	// Input mode
 	const inputMode = InputModeEnum.Average;
 
@@ -18,3 +18,5 @@ export default () => {
 		/>
 	);
 };
+
+export default LeaseLengthYears;

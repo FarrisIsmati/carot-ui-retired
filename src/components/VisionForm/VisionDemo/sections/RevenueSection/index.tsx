@@ -10,7 +10,7 @@ import RetailPriceField from "../../fields/Revenue/RetailPriceField";
 import RevenueForm from "../../forms/RevenueForm";
 import { FieldsContainer, StyledDoubleDropdownContainer } from "../styles";
 
-export default () => {
+const RevenueSection = () => {
 	return (
 		<FieldsContainer>
 			<Type semanticfont={semanticFonts.headlineSmall}>Goods & Services</Type>
@@ -32,3 +32,5 @@ export default () => {
 		</FieldsContainer>
 	);
 };
+
+export default RevenueSection;

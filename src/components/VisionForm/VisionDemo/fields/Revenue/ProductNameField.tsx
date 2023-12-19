@@ -1,7 +1,7 @@
 import { useVisionFormField } from "@/components/VisionForm/utils/form";
 import FormTextField from "@/components/form/FormTextField";
 
-export default () => {
+const ProductNameField = () => {
 	const test = useVisionFormField("productName");
 
 	return (
@@ -12,3 +12,5 @@ export default () => {
 		/>
 	);
 };
+
+export default ProductNameField;

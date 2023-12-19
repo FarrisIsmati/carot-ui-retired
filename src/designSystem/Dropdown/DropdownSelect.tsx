@@ -50,7 +50,7 @@ export type DropdownSelectProps = Omit<StyledWrapperProps, "label"> &
 		errorText?: string;
 	};
 
-export default ({
+const DropdownSelect = ({
 	colorSet = getColorSet(SemanticSetCores.SECONDARY),
 	disabled,
 	placeholder,
@@ -213,3 +213,5 @@ export default ({
 		</StyledContainer>
 	);
 };
+
+export default DropdownSelect;

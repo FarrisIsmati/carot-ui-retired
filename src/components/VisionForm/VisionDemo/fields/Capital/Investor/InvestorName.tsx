@@ -1,6 +1,6 @@
 import FormTextField from "@/components/form/FormTextField";
 
-export default () => {
+const InvestorName = () => {
 	return (
 		<FormTextField
 			label={"Name"}
@@ -9,3 +9,5 @@ export default () => {
 		/>
 	);
 };
+
+export default InvestorName;

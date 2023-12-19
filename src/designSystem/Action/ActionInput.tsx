@@ -25,7 +25,7 @@ export interface ActionInputProps
 	onAdd: () => void;
 }
 
-export default React.forwardRef<HTMLElement, ActionInputProps>(
+const ActionInput = React.forwardRef<HTMLElement, ActionInputProps>(
 	function FormInput({
 		error,
 		disabled,
@@ -123,3 +123,5 @@ export default React.forwardRef<HTMLElement, ActionInputProps>(
 		);
 	}
 );
+
+export default ActionInput;

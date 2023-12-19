@@ -36,7 +36,7 @@ const StyledHeaderSection = styled.section`
 	margin-bottom: ${spacer24};
 `;
 
-export default () => {
+const VisionDemoPage = () => {
 	const store = createStore();
 
 	return (
@@ -62,3 +62,5 @@ export default () => {
 		</Provider>
 	);
 };
+
+export default VisionDemoPage;

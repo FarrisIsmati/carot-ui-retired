@@ -68,7 +68,7 @@ export type DatePickerProps = Omit<
 		onChange?: (selectedItemDataset: any) => void;
 	};
 
-export default ({
+const DatePicker = ({
 	label,
 	colorSet = getColorSet(SemanticSetCores.SECONDARY),
 	error,
@@ -167,3 +167,5 @@ export default ({
 		</StyledContainer>
 	);
 };
+
+export default DatePicker;

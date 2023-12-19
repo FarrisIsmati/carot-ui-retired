@@ -9,7 +9,7 @@ import { capitalTypeDropdownValues } from "../../values/fields/dropdownValues";
 import { FieldsContainer } from "../styles";
 import InvestorSection from "./InvestorSection";
 
-export default () => {
+const CapitalSection = () => {
 	const [capitalType, setCapitalType] = useState<CapitalType | null>(null);
 
 	return (
@@ -37,3 +37,5 @@ export default () => {
 		</FieldsContainer>
 	);
 };
+
+export default CapitalSection;

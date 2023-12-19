@@ -9,7 +9,7 @@ import IndustryField from "../../fields/Overview/IndustryField";
 import StartDate from "../../fields/Overview/StartDate";
 import { FieldsContainer, StyledDoubleDropdownContainer } from "../styles";
 
-export default () => {
+const OverviewSection = () => {
 	return (
 		<FieldsContainer noMargin>
 			<Type semanticfont={semanticFonts.headlineSmall}>Business Type</Type>
@@ -26,3 +26,5 @@ export default () => {
 		</FieldsContainer>
 	);
 };
+
+export default OverviewSection;

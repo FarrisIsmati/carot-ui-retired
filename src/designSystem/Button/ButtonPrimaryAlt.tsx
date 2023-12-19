@@ -2,7 +2,7 @@ import { SemanticSetCores, getColorSet } from "@/styles/colors";
 import React from "react";
 import ButtonPrimary, { ButtonPrimaryProps } from "./ButtonPrimary";
 
-export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
+const ButtonPrimaryAlt = React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 	(
 		{ size, colorSet = getColorSet(SemanticSetCores.PRIMARY_ALT), ...props },
 		ref
@@ -12,3 +12,5 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 		);
 	}
 );
+
+export default ButtonPrimaryAlt;

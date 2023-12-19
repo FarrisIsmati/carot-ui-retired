@@ -34,7 +34,7 @@ export const StyledList = styled(
 	`}
 `;
 
-export default React.forwardRef<HTMLElement, ListProps>(function List(
+const List = React.forwardRef<HTMLElement, ListProps>(function List(
 	{ gap = spacer16, children, ...props },
 	ref
 ) {
@@ -44,3 +44,5 @@ export default React.forwardRef<HTMLElement, ListProps>(function List(
 		</StyledList>
 	);
 });
+
+export default List;

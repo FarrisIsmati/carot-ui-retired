@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function (targetKey: string, preventDefault?: boolean) {
+const useKeyPress = (targetKey: string, preventDefault?: boolean) => {
 	preventDefault = !!preventDefault;
 
 	const [keyPressed, setKeyPressed] = useState(false);
@@ -36,4 +36,6 @@ export default function (targetKey: string, preventDefault?: boolean) {
 	});
 
 	return keyPressed;
-}
+};
+
+export default useKeyPress;

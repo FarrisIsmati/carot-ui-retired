@@ -24,7 +24,7 @@ export interface SegmentedControlProps<T> {
 	input?: FieldInputProps<T, HTMLElement>;
 }
 
-export default ({
+const FormSegmentedControl = ({
 	width,
 	data,
 	input,
@@ -53,3 +53,5 @@ export default ({
 		/>
 	);
 };
+
+export default FormSegmentedControl;

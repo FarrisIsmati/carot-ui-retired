@@ -2,7 +2,7 @@ import { useGetDropdownDefaultValue } from "@/components/VisionForm/utils/form";
 import FormDropdown from "@/components/form/FormDropdown";
 import { legalStructureDropdownValues } from "../../values/fields/dropdownValues";
 
-export default () => {
+const LegalStructureField = () => {
 	return (
 		<FormDropdown
 			label="STRUCTURE"
@@ -16,3 +16,5 @@ export default () => {
 		/>
 	);
 };
+
+export default LegalStructureField;

@@ -9,7 +9,7 @@ export interface FormDatePickerProps {
 	fieldName: keyof AllFormValues;
 }
 
-export default ({
+const FormDatePicker = ({
 	fieldName,
 	...props
 }: FormDatePickerProps & DatePickerProps) => {
@@ -28,3 +28,5 @@ export default ({
 		/>
 	);
 };
+
+export default FormDatePicker;

@@ -23,7 +23,7 @@ interface useSetChartProps {
 /**
  * Create chart
  */
-export default ({
+const createChart = ({
 	width,
 	height,
 	ref,
@@ -70,3 +70,5 @@ export default ({
 	// Create lines
 	createChartLines({ x, y, svg, data, initialLineChartData, setChart });
 };
+
+export default createChart;

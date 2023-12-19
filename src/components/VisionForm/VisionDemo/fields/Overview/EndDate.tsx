@@ -2,7 +2,7 @@ import { useVisionFormField } from "@/components/VisionForm/utils/form";
 import FormDatePicker from "@/components/form/FormDatePicker";
 import { getCountryDateFormat } from "../util";
 
-export default () => {
+const EndDate = () => {
 	const countryValue = useVisionFormField("overviewCountryOrigin").input.value;
 	const endDateValue = useVisionFormField("overviewEndDate").input.value;
 	return (
@@ -16,3 +16,5 @@ export default () => {
 		/>
 	);
 };
+
+export default EndDate;

@@ -17,7 +17,7 @@ import {
 	getInvestorCalendarValues,
 	getLeaseCalendarValues,
 } from "../utils/calendarValues";
-import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
+import useCalcAllLeaseCurveDataPoints from "./useCalcAllLeaseCurveDataPoints";
 
 /**
  * Generates initial calendar
@@ -25,7 +25,7 @@ import { useCalcAllLeaseCurveDataPoints } from "./useCurves";
  * Continues to update calendar if form values change (need to resubmit form)
  */
 
-export default (): [Calendar | undefined, CalendarResult[]] => {
+const useCalendar = (): [Calendar | undefined, CalendarResult[]] => {
 	const visionFormDemoState = useSelector(getVisionFormDemoSelector);
 	const { products, investors, leases } = visionFormDemoState;
 	const startDate = visionFormDemoState.overviewStartDate;
@@ -122,3 +122,5 @@ export default (): [Calendar | undefined, CalendarResult[]] => {
 	}
 	return [calendar, genCalendarResults(calendar)];
 };
+
+export default useCalendar;

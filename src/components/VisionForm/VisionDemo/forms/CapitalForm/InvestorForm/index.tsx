@@ -41,7 +41,7 @@ const handleSubmitInvestors = ({
 	form.restart(InvestorsFormInitialValues);
 };
 
-export default ({
+const InvestorForm = ({
 	children,
 }: {
 	/**
@@ -70,3 +70,5 @@ export default ({
 		</CapitalFormContextProvider>
 	);
 };
+
+export default InvestorForm;

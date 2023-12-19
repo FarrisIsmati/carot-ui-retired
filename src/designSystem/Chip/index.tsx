@@ -161,7 +161,7 @@ export const ChipStyled = styled(
 	}}
 `;
 
-export default React.forwardRef<HTMLElement, ChipProps>(
+const Chip = React.forwardRef<HTMLElement, ChipProps>(
 	(
 		{
 			colorSet = getColorSet(SemanticSetCores.SECONDARY),
@@ -225,3 +225,5 @@ export default React.forwardRef<HTMLElement, ChipProps>(
 		);
 	}
 );
+
+export default Chip;

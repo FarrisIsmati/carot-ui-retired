@@ -35,7 +35,7 @@ export const handleSubmitLoan = ({
 	form.restart(LoanFormInitialValues);
 };
 
-export default ({
+const LoanForm = ({
 	children,
 }: {
 	/**
@@ -64,3 +64,5 @@ export default ({
 		</CapitalFormContextProvider>
 	);
 };
+
+export default LoanForm;

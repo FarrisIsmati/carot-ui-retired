@@ -4,7 +4,7 @@ import { PhysicalUseType } from "@/types/VisionForm/locationSection";
 import { Dispatch, SetStateAction } from "react";
 import { physicalUseTypeValues } from "../../../values/fields/segmentedControlValues";
 
-export default ({
+const PhysicalUseTypeControl = ({
 	setUseType,
 }: {
 	setUseType: Dispatch<SetStateAction<PhysicalUseType>>;
@@ -20,4 +20,4 @@ export default ({
 	);
 };
 
-// TODO FIX
+export default PhysicalUseTypeControl;

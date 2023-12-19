@@ -2,7 +2,7 @@ import { useGetDropdownDefaultValue } from "@/components/VisionForm/utils/form";
 import FormDropdown from "@/components/form/FormDropdown";
 import { trafficCurveDropdownValues } from "../../../values/fields/dropdownValues";
 
-export default () => {
+const FootTrafficCurve = () => {
 	return (
 		<FormDropdown
 			label="Foot traffic curve"
@@ -16,3 +16,5 @@ export default () => {
 		/>
 	);
 };
+
+export default FootTrafficCurve;

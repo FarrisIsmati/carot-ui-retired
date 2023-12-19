@@ -80,7 +80,7 @@ export type StyledInputProps = FormInputProps & {
 	useBrowserDefaultFocusStyle: boolean;
 };
 
-export default React.forwardRef<HTMLElement, FormInputProps>(
+const TextField = React.forwardRef<HTMLElement, FormInputProps>(
 	function FormInput({
 		error,
 		disabled,
@@ -216,3 +216,5 @@ export default React.forwardRef<HTMLElement, FormInputProps>(
 		);
 	}
 );
+
+export default TextField;

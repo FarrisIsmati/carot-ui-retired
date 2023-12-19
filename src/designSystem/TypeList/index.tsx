@@ -20,7 +20,7 @@ export type TypeListProps = StyledWrapperProps & {
 	condensedAll?: boolean;
 };
 
-const TypeList = styled(
+const TypeListStyled = styled(
 	React.forwardRef<HTMLElement, TypeListProps>(function TypeList(
 		{ component: Component = "ul", ...props },
 		ref
@@ -37,8 +37,10 @@ const TypeList = styled(
 	overflow-wrap: break-word;
 `;
 
-export default React.forwardRef<HTMLElement, TypeListProps>(
+const TypeList = React.forwardRef<HTMLElement, TypeListProps>(
 	({ ...props }, ref) => {
-		return <TypeList {...props} ref={ref} />;
+		return <TypeListStyled {...props} ref={ref} />;
 	}
 );
+
+export default TypeList;

@@ -10,7 +10,7 @@ import LeaseForm from "../../../forms/LocationForm/PhysicalForm/LeaseForm";
 import { FieldsContainer } from "../../styles";
 import LeaseSection from "./LeaseSection";
 
-export default () => {
+const PhysicalSection = () => {
 	const [financeType, setFinanceType] = useState(PhysicalFinanceType.LEASE);
 	const [useType, setUseType] = useState(PhysicalUseType.RETAIL); // Currently no use for useType (not giving office option)
 
@@ -27,3 +27,5 @@ export default () => {
 		</FieldsContainer>
 	);
 };
+
+export default PhysicalSection;

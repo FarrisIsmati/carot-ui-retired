@@ -7,7 +7,7 @@ import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { useContext } from "react";
 
-export default () => {
+const LeaseSize = () => {
 	// Input mode
 	const inputMode = InputModeEnum.Average;
 
@@ -30,3 +30,5 @@ export default () => {
 		/>
 	);
 };
+
+export default LeaseSize;

@@ -7,7 +7,7 @@ const StyledListRow = styled(ListRow)`
 	background-color: transparent;
 `;
 
-export default React.forwardRef<HTMLElement, ListProps>(function List(
+const ListRowAlt = React.forwardRef<HTMLElement, ListProps>(function List(
 	{
 		children,
 		colorSet = getColorSet(SemanticSetCores.SECONDARY),
@@ -27,3 +27,5 @@ export default React.forwardRef<HTMLElement, ListProps>(function List(
 		</StyledListRow>
 	);
 });
+
+export default ListRowAlt;

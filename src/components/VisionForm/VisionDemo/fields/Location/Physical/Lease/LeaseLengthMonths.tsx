@@ -4,7 +4,7 @@ import { Sizes } from "@/styles/sizes";
 import { AllFormValuesInputModeLess } from "@/types/VisionForm";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 
-export default () => {
+const LeaseLengthMonths = () => {
 	// Input mode
 	const inputMode = InputModeEnum.Average;
 
@@ -30,3 +30,5 @@ export default () => {
 		/>
 	);
 };
+
+export default LeaseLengthMonths;

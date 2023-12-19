@@ -81,7 +81,7 @@ const StyledDialogActionContainer = styled.div`
 	gap: ${spacer12};
 `;
 
-export default React.forwardRef<HTMLElement, DialogProps>(
+const Dialog = React.forwardRef<HTMLElement, DialogProps>(
 	(
 		{
 			firstAction,
@@ -135,3 +135,5 @@ export default React.forwardRef<HTMLElement, DialogProps>(
 		);
 	}
 );
+
+export default Dialog;

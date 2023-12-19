@@ -44,7 +44,7 @@ const StyledBlurbLarge = styled(BlurbLarge)`
 
 export const ResultsDimensions = { height: 400, width: 900 };
 
-export default () => {
+const Results = () => {
 	// Creates a calendar everytime the form state on redux updates (redux triggers the calendar update)
 	const [calendar, calendarData] = useCalendar();
 
@@ -119,3 +119,5 @@ export default () => {
 		</div>
 	);
 };
+
+export default Results;

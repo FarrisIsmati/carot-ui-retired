@@ -190,7 +190,7 @@ export const ChipStyled = styled(
 	}}
 `;
 
-export default React.forwardRef<HTMLElement, ChipProps>(
+const ButtonChip = React.forwardRef<HTMLElement, ChipProps>(
 	(
 		{
 			colorSet = getColorSet(SemanticSetCores.BASE_INVERTED),
@@ -256,3 +256,5 @@ export default React.forwardRef<HTMLElement, ChipProps>(
 		);
 	}
 );
+
+export default ButtonChip;

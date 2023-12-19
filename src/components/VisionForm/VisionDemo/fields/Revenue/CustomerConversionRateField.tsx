@@ -2,7 +2,7 @@ import { useVisionFormField } from "@/components/VisionForm/utils/form";
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 
-export default () => {
+const CustomerConversionRateField = () => {
 	// Input mode
 	const inputMode = InputModeEnum.Average;
 
@@ -30,3 +30,5 @@ export default () => {
 		/>
 	);
 };
+
+export default CustomerConversionRateField;

@@ -52,7 +52,7 @@ export const StyledListItem = styled(
 	`}
 `;
 
-export default React.forwardRef<HTMLElement, ListProps>(function List(
+const ListRow = React.forwardRef<HTMLElement, ListProps>(function List(
 	{
 		children,
 		colorSet = getColorSet(SemanticSetCores.SECONDARY),
@@ -70,8 +70,8 @@ export default React.forwardRef<HTMLElement, ListProps>(function List(
 		// If string only set content to string wrapped in Type component
 		content = (
 			<Type
-				font={semanticFonts.bodyLarge}
-				colorSet={getColorSet(SemanticSetCores.BASE)}
+				semanticfont={semanticFonts.bodyLarge}
+				colorset={getColorSet(SemanticSetCores.BASE)}
 			>
 				{children}
 			</Type>
@@ -82,7 +82,7 @@ export default React.forwardRef<HTMLElement, ListProps>(function List(
 			{content}
 			{supportingText && (
 				<Type
-					font={semanticFonts.bodySmall}
+					semanticfont={semanticFonts.bodySmall}
 					color={colorBaseMap[ColorBaseCore.NEUTRAL_3]}
 				>
 					{supportingText}
@@ -91,3 +91,5 @@ export default React.forwardRef<HTMLElement, ListProps>(function List(
 		</StyledListItem>
 	);
 });
+
+export default ListRow;

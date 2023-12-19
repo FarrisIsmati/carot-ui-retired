@@ -1,11 +1,11 @@
 import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { Sizes } from "@/styles/sizes";
 import { useContext } from "react";
+import useRevenueFields from "../../Sections/RevenueSection/hooks/useRevenueFields";
 import RevenueFormContext from "../../forms/RevenueForm/RevenueFormContext";
-import useRevenueFields from "../../sections/RevenueSection/hooks/useRevenueFields";
 import { marginCalculator, profitCalculator } from "../util";
 
-export default () => {
+const CostToProduceField = () => {
 	// Context
 	const formContext = useContext(RevenueFormContext);
 	const prefix = formContext?.currencySymbol;
@@ -43,3 +43,5 @@ export default () => {
 		/>
 	);
 };
+
+export default CostToProduceField;

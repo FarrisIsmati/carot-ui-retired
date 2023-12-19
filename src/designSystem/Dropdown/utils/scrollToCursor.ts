@@ -1,7 +1,7 @@
 import { MutableRefObject } from "react";
 import { PressType } from "../types";
 
-export default ({
+const scrollToCursor = ({
 	parent,
 	cursor,
 	cursorRef,
@@ -55,3 +55,5 @@ export default ({
 		}
 	}
 };
+
+export default scrollToCursor;

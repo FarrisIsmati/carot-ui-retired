@@ -12,7 +12,7 @@ const Container = styled.div`
 	gap: ${spacer4};
 `;
 
-export default <T extends string | number | symbol>({
+const ChipButtonControl = <T extends string | number | symbol>({
 	state,
 	setState,
 }: {
@@ -23,6 +23,7 @@ export default <T extends string | number | symbol>({
 		<Container>
 			{Object.entries(state).map(([label, isActive]) => (
 				<ButtonChip
+					key={label}
 					onClick={() => {
 						Object.keys(state).forEach((key) => {
 							if (key === label) {
@@ -43,3 +44,5 @@ export default <T extends string | number | symbol>({
 		</Container>
 	);
 };
+
+export default ChipButtonControl;

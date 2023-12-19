@@ -5,7 +5,7 @@ import DropdownSelect from "@/designSystem/Dropdown/DropdownSelect";
 import { staffTypeDropdownValues } from "../../values/fields/dropdownValues";
 import { FieldsContainer } from "../styles";
 
-export default () => {
+const Staff = () => {
 	return (
 		<FieldsContainer>
 			<Type semanticfont={semanticFonts.headlineSmall}>Staff</Type>
@@ -19,3 +19,5 @@ export default () => {
 		</FieldsContainer>
 	);
 };
+
+export default Staff;

@@ -64,7 +64,7 @@ export type DatePickerTriggerProps = Omit<StyledWrapperProps, "size"> &
 		size?: Sizes;
 	};
 
-export default React.forwardRef<HTMLElement, DatePickerTriggerProps>(
+const DatePickerTrigger = React.forwardRef<HTMLElement, DatePickerTriggerProps>(
 	function DatePickerTrigger(
 		{
 			onClickMenu,
@@ -151,3 +151,5 @@ export default React.forwardRef<HTMLElement, DatePickerTriggerProps>(
 		);
 	}
 );
+
+export default DatePickerTrigger;

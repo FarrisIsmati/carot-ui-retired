@@ -93,7 +93,7 @@ const StyledRichTooltipActionContainer = styled.div`
 	gap: ${spacer12};
 `;
 
-export default React.forwardRef<HTMLElement, RichTooltipProps>(
+const RichTooltip = React.forwardRef<HTMLElement, RichTooltipProps>(
 	(
 		{
 			firstAction,
@@ -150,3 +150,5 @@ export default React.forwardRef<HTMLElement, RichTooltipProps>(
 		);
 	}
 );
+
+export default RichTooltip;

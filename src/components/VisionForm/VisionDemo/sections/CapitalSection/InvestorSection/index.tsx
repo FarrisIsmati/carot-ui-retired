@@ -14,7 +14,7 @@ const StyledContainer = styled.div`
 	gap: ${spacer8};
 `;
 
-export default () => {
+const InvestorSection = () => {
 	return (
 		<StyledContainer>
 			<Type semanticfont={semanticFonts.bodyMedium}>Add Investor</Type>
@@ -24,3 +24,5 @@ export default () => {
 		</StyledContainer>
 	);
 };
+
+export default InvestorSection;

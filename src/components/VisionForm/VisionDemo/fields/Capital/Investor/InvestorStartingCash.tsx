@@ -3,7 +3,7 @@ import { InputModeEnum } from "@/types/VisionForm/common/values";
 import { useContext } from "react";
 import CapitalFormContext from "../../../forms/CapitalForm/CapitalFormContext";
 
-export default () => {
+const InvestorStartingCash = () => {
 	// Context
 	const formContext = useContext(CapitalFormContext);
 	const prefix = formContext?.currencySymbol;
@@ -22,3 +22,5 @@ export default () => {
 		/>
 	);
 };
+
+export default InvestorStartingCash;

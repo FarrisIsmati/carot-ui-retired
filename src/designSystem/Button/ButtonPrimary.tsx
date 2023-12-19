@@ -137,7 +137,7 @@ export const ButtonStyled = styled(
 	}}
 `;
 
-export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
+const ButtonPrimary = React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 	(
 		{
 			colorSet = getColorSet(SemanticSetCores.PRIMARY),
@@ -194,3 +194,5 @@ export default React.forwardRef<HTMLElement, ButtonPrimaryProps>(
 		);
 	}
 );
+
+export default ButtonPrimary;

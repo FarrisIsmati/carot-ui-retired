@@ -27,7 +27,7 @@ interface BlurbLargeProps {
 	buttonText: string;
 }
 
-export default ({ headline, body, buttonText }: BlurbLargeProps) => {
+const BlurbLarge = ({ headline, body, buttonText }: BlurbLargeProps) => {
 	return (
 		<StyledTempBlurb>
 			<Type semanticfont={semanticFonts.headlineSmall}>{headline}</Type>
@@ -38,3 +38,5 @@ export default ({ headline, body, buttonText }: BlurbLargeProps) => {
 		</StyledTempBlurb>
 	);
 };
+
+export default BlurbLarge;

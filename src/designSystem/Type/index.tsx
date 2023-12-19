@@ -69,7 +69,7 @@ export const TypeStyled = styled(
 	}}
 `;
 
-export default React.forwardRef<HTMLEmbedElement, TypeProps>(
+const Type = React.forwardRef<HTMLEmbedElement, TypeProps>(
 	function TypeComponent(
 		{
 			semanticfont = semanticFonts.bodyMedium,
@@ -95,3 +95,5 @@ export default React.forwardRef<HTMLEmbedElement, TypeProps>(
 		);
 	}
 );
+
+export default Type;

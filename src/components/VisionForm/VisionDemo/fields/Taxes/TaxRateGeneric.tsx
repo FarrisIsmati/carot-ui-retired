@@ -3,7 +3,7 @@ import FormTextFieldNumeric from "@/components/form/FormTextFieldNumeric";
 import { AllFormValuesInputModeLess } from "@/types/VisionForm";
 import { InputModeEnum } from "@/types/VisionForm/common/values";
 
-export default () => {
+const TaxRateGeneric = () => {
 	// Input mode
 	const inputMode = InputModeEnum.Average;
 
@@ -30,3 +30,5 @@ export default () => {
 		/>
 	);
 };
+
+export default TaxRateGeneric;

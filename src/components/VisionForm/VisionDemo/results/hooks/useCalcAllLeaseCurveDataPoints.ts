@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
  * Note this only handles traffic curves, if adding more curves need to modify function
  * @returns CurveDataPointMap
  */
-export const useCalcAllLeaseCurveDataPoints = (): CurveDataPointMap => {
+const useCalcAllLeaseCurveDataPoints = (): CurveDataPointMap => {
 	const visionFormDemoState = useSelector(getVisionFormDemoSelector);
 
 	return useMemo(() => {
@@ -47,8 +47,10 @@ export const useCalcAllLeaseCurveDataPoints = (): CurveDataPointMap => {
 	}, [
 		visionFormDemoState.overviewStartDate,
 		visionFormDemoState.overviewEndDate,
-		visionFormDemoState?.leases.length,
+		visionFormDemoState?.leases,
 		// FIXME/TODO - when ability to create custom curves is added, make sure it's a top level form state
 		// Then if length changes we can recompute this function
 	]);
 };
+
+export default useCalcAllLeaseCurveDataPoints;
