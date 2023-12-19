@@ -94,7 +94,7 @@ const generateInitDayCalendars = (curDate: string, endDate: string) => {
 	const days = new Array(length).fill({});
 	return days.map((_, i) => {
 		const resultsDay: DayCalendar = {
-			date: moment(curDate).add(i, "days").format("MM/DD/YYYY"),
+			date: moment(new Date(curDate)).add(i, "days").format("MM/DD/YYYY"),
 			isOpen: false, // default to closed
 			products: {},
 			leases: {},
@@ -113,14 +113,17 @@ const generateInitMonthCalendars = (curDate: string, endDate: string) => {
 	const months = new Array(length).fill({});
 
 	// Incase starting month is not january need to offset month index by starting month index
-	const startingMonthIndex = moment(curDate).month();
+	const startingMonthIndex = moment(new Date(curDate)).month();
 
 	return months.map((_, i) => {
 		// First value needs to be itself, otherwise all other months need to start at first day of month before incrementing month by index
 		const startingDate =
 			i === 0
 				? curDate
-				: moment(curDate).startOf("month").add(i, "month").format("MM/DD/YYYY");
+				: moment(new Date(curDate))
+						.startOf("month")
+						.add(i, "month")
+						.format("MM/DD/YYYY");
 		const resultsMonth: MonthCalendar = {
 			days: generateInitDayCalendars(startingDate, endDate),
 			month: getMonthFromIndex(i + startingMonthIndex),
@@ -165,7 +168,7 @@ const generateInitYearCalendars = (startDate: string, endDate: string) => {
 
 // Create inital calendar results
 export const generateInitCalendar = (startDate: string, endDate: string) => {
-	if (moment(endDate).isBefore(startDate)) {
+	if (moment(new Date(endDate)).isBefore(new Date(startDate))) {
 		throw new Error("Cannot have an end date starting before your start date");
 	}
 	const resultsCalendar: Calendar = {

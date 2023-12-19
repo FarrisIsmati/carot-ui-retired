@@ -12,7 +12,7 @@ export const datesDifference = (
 		return 0;
 	}
 
-	return moment(endDate).diff(startDate, unitOfTime);
+	return moment(new Date(endDate)).diff(new Date(startDate), unitOfTime);
 };
 
 /**
@@ -27,14 +27,20 @@ export const calculateDayCalendarsLength = (
 ) => {
 	// If end month and year is same as cur date, use end date instead of end of month
 	const isCurMonthAndYearSameAsEndMonthAndYear =
-		moment(curDate).isSame(endDate, "year") &&
-		moment(curDate).isSame(endDate, "month");
+		moment(new Date(curDate)).isSame(new Date(endDate), "year") &&
+		moment(new Date(curDate)).isSame(new Date(endDate), "month");
 
 	if (isCurMonthAndYearSameAsEndMonthAndYear) {
-		return moment(endDate).date() - moment(curDate).date() + 1;
+		return (
+			moment(new Date(endDate)).date() - moment(new Date(curDate)).date() + 1
+		);
 	}
 
-	return moment(curDate).daysInMonth() - moment(curDate).date() + 1;
+	return (
+		moment(new Date(curDate)).daysInMonth() -
+		moment(new Date(curDate)).date() +
+		1
+	);
 };
 
 /**
@@ -48,14 +54,23 @@ export const calculateMonthCalendarsLength = (
 	endDate: string
 ) => {
 	// If cur year is same as end year, use end date
-	const isCurYearSameAsEndYear = moment(curDate).isSame(endDate, "year");
+	const isCurYearSameAsEndYear = moment(new Date(curDate)).isSame(
+		new Date(endDate),
+		"year"
+	);
 
 	if (isCurYearSameAsEndYear) {
-		return moment(endDate).month() - moment(curDate).month() + 1;
+		return (
+			moment(new Date(endDate)).month() - moment(new Date(curDate)).month() + 1
+		);
 	}
 
 	// If cur year is not same as end year, use end of year
-	return moment(curDate).endOf("year").month() - moment(curDate).month() + 1;
+	return (
+		moment(new Date(curDate)).endOf("year").month() -
+		moment(new Date(curDate)).month() +
+		1
+	);
 };
 
 /**
@@ -68,7 +83,9 @@ export const calculateYearCalendarsLength = (
 	startDate: string,
 	endDate: string
 ) => {
-	return moment(endDate).year() - moment(startDate).year() + 1;
+	return (
+		moment(new Date(endDate)).year() - moment(new Date(startDate)).year() + 1
+	);
 };
 
 /**
@@ -87,6 +104,6 @@ export const getMonthFromIndex = (i: number) => {
  * @returns
  */
 export const getCurrentYear = (curDate: string, i?: number) => {
-	const year = moment(curDate).year();
+	const year = moment(new Date(curDate)).year();
 	return i ? year + i : year;
 };
